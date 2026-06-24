@@ -13,7 +13,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.expensetracker.app"
+        // applicationId is the permanent, Play Store–unique package name — it does not need
+        // to match `namespace` above (which only governs the generated R class package and
+        // is what the app's own Kotlin source files are declared under). Keeping `namespace`
+        // unchanged avoids renaming every package declaration in the codebase.
+        applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
