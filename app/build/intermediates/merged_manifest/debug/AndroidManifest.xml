@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.expensetracker.app"
+    package="com.agtech.expensetracker"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="26"
-        android:targetSdkVersion="34" />
+        android:targetSdkVersion="35" />
 
     <permission
-        android:name="com.expensetracker.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.agtech.expensetracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.expensetracker.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.agtech.expensetracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:name="com.expensetracker.app.ExpenseApp"
@@ -46,7 +46,7 @@
         -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.expensetracker.app.fileprovider"
+            android:authorities="com.agtech.expensetracker.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -60,7 +60,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.expensetracker.app.androidx-startup"
+            android:authorities="com.agtech.expensetracker.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

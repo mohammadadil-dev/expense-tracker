@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.expensetracker.app",
+  "applicationId": "com.agtech.expensetracker",
   "variantName": "debug",
   "elements": [
     {

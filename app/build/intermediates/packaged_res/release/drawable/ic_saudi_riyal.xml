@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Official Saudi Riyal symbol (approved by SAMA, Feb 2025; encoded as U+20C1 in Unicode 17.0).
+    Traced from the official artwork as a vector path because most devices don't yet ship a
+    font with a U+20C1 glyph (it renders as a blank/tofu box on current Android system fonts).
+    Drawn at the symbol's native proportions (685x765 viewport, ~0.9:1 width:height) so it
+    never looks stretched. Tint to match surrounding text color at each call site.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="22.34dp"
+    android:viewportWidth="685"
+    android:viewportHeight="765">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M685,624 L427,679 L411,722 L404,765 L661,711 L677,669 Z M483,40 L403,109 L403,353 L324,371 L322,0 L244,64 L242,387 L64,426 L40,512 L241,470 L242,574 L23,621 L0,707 L260,644 L321,554 L323,452 L403,437 L403,600 L662,545 L685,459 L483,500 L483,419 L661,381 L685,298 L483,335 Z" />
+</vector>
