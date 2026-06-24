@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent_indigo">#4F46E5</color>
+    <color name="accent_indigo_dark">#4338CA</color>
+    <color name="bg_app">#F4F5F8</color>
+    <color name="card_white">#FFFFFF</color>
+    <color name="text_primary">#1F2430</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_muted">#9CA3AF</color>
+    <color name="border_light">#E8E9ED</color>
+    <color name="danger_red">#DC2626</color>
+    <color name="success_green">#059669</color>
+</resources>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">खर्च ट्रैकर</string>
+    <string name="dashboard_subtitle">अपने खर्च दर्ज करें, श्रेणियों को ट्रैक करें, और समय के साथ रुझान देखें।</string>
+    <string name="manage_categories">श्रेणियाँ प्रबंधित करें</string>
+    <string name="reset_data">डेटा रीसेट करें</string>
+
+    <string name="your_name_label">आपका नाम</string>
+    <string name="your_name_hint">जैसे: मोहम्मद</string>
+    <string name="your_name_note">इसका उपयोग केवल आपके डैशबोर्ड अभिवादन को व्यक्तिगत बनाने के लिए होता है। यह कहीं भी नहीं भेजा जाता।</string>
+
+    <string name="nav_dashboard">डैशबोर्ड</string>
+    <string name="nav_categories">श्रेणियाँ</string>
+    <string name="nav_settings">सेटिंग्स</string>
+
+    <string name="stat_total_spent">कुल खर्च</string>
+    <string name="stat_transactions">लेन-देन</string>
+    <string name="stat_top_category">प्रमुख श्रेणी</string>
+    <string name="stat_daily_average">दैनिक औसत</string>
+    <string name="stat_this_month">इस महीने</string>
+    <string name="stat_per_day">इस महीने प्रतिदिन</string>
+    <string name="stat_no_prior_data">पिछले महीने का डेटा उपलब्ध नहीं</string>
+    <string name="stat_vs_last_month">पिछले महीने की तुलना में</string>
+    <string name="stat_same_as_last_month">पिछले महीने जितना ही</string>
+    <string name="stat_up_from_zero">पिछले महीने के %1$s से अधिक</string>
+
+    <string name="greeting_morning">सुप्रभात</string>
+    <string name="greeting_afternoon">शुभ दोपहर</string>
+    <string name="greeting_evening">शुभ संध्या</string>
+    <string name="greeting_morning_named">सुप्रभात, %1$s</string>
+    <string name="greeting_afternoon_named">शुभ दोपहर, %1$s</string>
+    <string name="greeting_evening_named">शुभ संध्या, %1$s</string>
+
+    <string name="health_band_excellent">उत्कृष्ट</string>
+    <string name="health_band_good">अच्छा</string>
+    <string name="health_band_fair">ठीक</string>
+    <string name="health_band_needs_attention">ध्यान देने की आवश्यकता</string>
+    <string name="health_sub_budget">बजट</string>
+    <string name="health_sub_trend">रुझान</string>
+    <string name="health_sub_consistency">नियमितता</string>
+    <string name="health_sub_subscriptions">सब्सक्रिप्शन</string>
+
+    <string name="bento_monthly_spending">मासिक खर्च</string>
+    <string name="bento_budget_remaining">शेष बजट</string>
+    <string name="bento_budget_no_target">कोई बजट निर्धारित नहीं</string>
+    <string name="bento_budget_remaining_subtitle">%1$s बजट में से</string>
+    <string name="bento_savings_goal">बचत लक्ष्य</string>
+    <string name="bento_savings_goal_subtitle">%1$s लक्ष्य की ओर</string>
+    <string name="bento_savings_goal_no_data">कुछ हफ्तों तक ट्रैक करें</string>
+    <string name="bento_subscription_cost">सब्सक्रिप्शन खर्च</string>
+    <string name="bento_subscription_subtitle">इस महीने के खर्च का %1$s</string>
+
+    <string name="ai_insights_feed_title">एआई इनसाइट्स</string>
+    <string name="insight_trend_down">आपका खर्च पिछले सप्ताह की तुलना में %1$s कम है।</string>
+    <string name="insight_trend_up">आपका खर्च पिछले सप्ताह की तुलना में %1$s अधिक है।</string>
+    <string name="insight_trend_flat">आपका खर्च पिछले सप्ताह जितना ही है।</string>
+    <string name="insight_category_increase">%1$s पर खर्च इस महीने %2$s बढ़ गया है।</string>
+    <string name="insight_category_decrease">%1$s पर खर्च इस महीने %2$s घट गया है।</string>
+    <string name="insight_projected_savings">आप इस महीने %1$s बचाने की राह पर हैं।</string>
+    <string name="insight_projected_overspend">इस महीने आपके बजट से %1$s अधिक खर्च होने की संभावना है।</string>
+    <string name="insight_strongest_day">आपका सबसे अच्छा बचत वाला दिन %1$s है।</string>
+    <string name="insight_subscription_load">सब्सक्रिप्शन इस महीने के खर्च का %1$s हिस्सा हैं।</string>
+    <string name="insight_daily_average">इस महीने आपका औसत खर्च प्रतिदिन %1$s है।</string>
+    <string name="insight_not_enough_data">व्यक्तिगत इनसाइट्स अनलॉक करने के लिए कुछ खर्च जोड़ें।</string>
+
+    <string name="breakdown_title">श्रेणी के अनुसार विवरण</string>
+    <string name="no_expenses_breakdown">अभी तक विवरण के लिए कोई खर्च नहीं है।</string>
+    <string name="trend_title">मासिक रुझान (पिछले 12 महीने)</string>
+
+    <string name="add_expense">खर्च जोड़ें</string>
+    <string name="edit_expense">खर्च संपादित करें</string>
+    <string name="category_label">श्रेणी</string>
+    <string name="description_label">विवरण</string>
+    <string name="description_hint">उदाहरण: सुपरमार्केट से किराना सामान</string>
+    <string name="amount_label">राशि</string>
+    <string name="date_label">तारीख़</string>
+    <string name="add">जोड़ें</string>
+    <string name="update">अपडेट करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="save">सहेजें</string>
+
+    <string name="expenses_this_month">इस महीने के खर्च</string>
+    <string name="no_expenses_this_month">इस महीने के लिए अभी तक कोई खर्च दर्ज नहीं हुआ है।</string>
+    <string name="edit">संपादित करें</string>
+    <string name="delete">हटाएं</string>
+    <string name="delete_expense_confirm">इस खर्च को हटाएं?</string>
+    <string name="today">आज</string>
+    <string name="yesterday">कल</string>
+    <string name="view_mode_day">दिन के अनुसार</string>
+    <string name="view_mode_category">श्रेणी के अनुसार</string>
+    <string name="view_mode_grid">ग्रिड</string>
+    <string name="view_mode_calendar">कैलेंडर</string>
+    <string name="calendar_tap_hint">खर्च देखने के लिए किसी दिन पर टैप करें</string>
+    <string name="no_expenses_this_day">इस दिन कोई खर्च नहीं है।</string>
+    <string name="export_pdf">PDF निर्यात करें</string>
+    <string name="export_pdf_chooser_title">अपनी रिपोर्ट सहेजें या साझा करें</string>
+    <string name="export_report_title">मासिक खर्च रिपोर्ट</string>
+    <string name="export_total_label">कुल</string>
+    <string name="export_customer_id_label">ग्राहक आईडी: %1$s</string>
+    <string name="export_started">आपकी PDF रिपोर्ट तैयार की जा रही है…</string>
+
+    <string name="add_category">श्रेणी जोड़ें</string>
+    <string name="new_category_hint">नई श्रेणी का नाम</string>
+    <string name="delete_category_confirm">इस श्रेणी का उपयोग करने वाले खर्च पहली शेष श्रेणी में स्थानांतरित कर दिए जाएंगे। जारी रखें?</string>
+    <string name="keep_one_category_warning">आपको कम से कम एक श्रेणी रखनी होगी।</string>
+    <string name="enter_category_name">कृपया एक श्रेणी का नाम दर्ज करें।</string>
+
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="language_label">भाषा</string>
+    <string name="language_english">अंग्रेज़ी</string>
+    <string name="language_arabic">अरबी</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="currency_label">मुद्रा</string>
+    <string name="currency_custom_hint">कस्टम प्रतीक</string>
+    <string name="convert_currency_title">मुद्रा बदलें</string>
+    <string name="convert_currency_message">अपने मौजूदा खर्चों को %1$s से %2$s में बदलने के लिए विनिमय दर दर्ज करें (1 %1$s = ? %2$s)। आपकी सभी सहेजी गई राशियों को इस दर से गुणा किया जाएगा।</string>
+    <string name="convert_currency_rate_hint">विनिमय दर</string>
+    <string name="convert">बदलें</string>
+    <string name="error_invalid_rate">0 से अधिक एक मान्य दर दर्ज करें।</string>
+    <string name="reset_all_data">सभी डेटा रीसेट करें</string>
+    <string name="reset_confirm_1">इससे इस डिवाइस पर सभी खर्च और कस्टम श्रेणियाँ हमेशा के लिए हटा दी जाएंगी। जारी रखें?</string>
+    <string name="reset_confirm_2">क्या आप पूरी तरह से आश्वस्त हैं? इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="data_local_note">आपका सारा डेटा इस डिवाइस पर ही रहता है। कुछ भी किसी सर्वर पर अपलोड नहीं किया जाता।</string>
+    <string name="detected_region_note">आपके डिवाइस से पता चला: %1$s</string>
+    <string name="more_section_title">अधिक</string>
+    <string name="share_app">यह ऐप साझा करें</string>
+    <string name="share_app_message">%1$s देखें — यह वह ऐप है जिसका उपयोग मैं अपने खर्चों को ट्रैक करने के लिए करता हूँ: %2$s</string>
+    <string name="rate_us">हमें रेट करें</string>
+    <string name="about_section_title">ऐप के बारे में</string>
+    <string name="customer_id_label">ग्राहक आईडी</string>
+    <string name="customer_id_copied">ग्राहक आईडी कॉपी हो गई</string>
+    <string name="powered_by_footer">AG Tech द्वारा संचालित</string>
+    <string name="app_version_label">संस्करण 1.0</string>
+
+    <string name="sms_detection_title">SMS पहचान</string>
+    <string name="sms_detection_toggle_label">SMS से लेन-देन का पता लगाएं</string>
+    <string name="sms_detection_description">जब आपको बैंक, UPI या कार्ड का SMS मिलता है, तो ऐप सिर्फ़ उस एक संदेश को पढ़ने की अनुमति माँगता है, फिर उसे नीचे दी गई समीक्षा सूची में जोड़ देता है — जब तक आप पुष्टि नहीं करते, कुछ भी सहेजा नहीं जाता। यह पहचान केवल ऐप खुला होने पर ही काम करती है।</string>
+    <string name="sms_pending_banner">SMS से %1$d लेन-देन मिले — समीक्षा के लिए टैप करें</string>
+    <string name="sms_review_title">%1$d लेन-देन की समीक्षा करें</string>
+    <string name="sms_review_subtitle">खर्च के रूप में सहेजने से पहले हर एक की पुष्टि करें या उसे संपादित करें।</string>
+    <string name="sms_accept">स्वीकार करें</string>
+    <string name="sms_dismiss">अस्वीकार करें</string>
+
+    <string name="toast_expense_added">खर्च जोड़ा गया।</string>
+    <string name="toast_expense_updated">खर्च अपडेट हो गया।</string>
+    <string name="toast_expense_deleted">खर्च हटा दिया गया।</string>
+    <string name="toast_all_reset">सभी डेटा रीसेट हो गया।</string>
+    <string name="error_invalid_amount">0 से अधिक एक मान्य राशि दर्ज करें।</string>
+    <string name="error_select_date">कृपया एक तारीख़ चुनें।</string>
+
+    <string name="done">हो गया</string>
+    <string name="close">बंद करें</string>
+    <string name="ok">ठीक है</string>
+    <string name="select_date">तारीख़ चुनें</string>
+    <string name="splash_tagline">हर खर्च को आसानी से ट्रैक करें</string>
+    <string name="calendar_picker_title">कैलेंडर</string>
+
+    <!-- Default category names (resolved by key so they localize automatically) -->
+    <string name="cat_housing">आवास</string>
+    <string name="cat_food">भोजन और किराना</string>
+    <string name="cat_transport">परिवहन</string>
+    <string name="cat_utilities">उपयोगिता बिल</string>
+    <string name="cat_entertainment">मनोरंजन</string>
+    <string name="cat_healthcare">स्वास्थ्य सेवा</string>
+    <string name="cat_shopping">खरीदारी</string>
+    <string name="cat_subscriptions">सदस्यताएं</string>
+    <string name="cat_savings">बचत और निवेश</string>
+    <string name="cat_other">अन्य</string>
+
+    <!-- Budget tracking (Phase 1): standing monthly targets, overall + per-category -->
+    <string name="budget_title">बजट</string>
+    <string name="manage_budget">बजट प्रबंधित करें</string>
+    <string name="budget_set_prompt">अपने खर्च पर नज़र रखने के लिए एक मासिक बजट सेट करें।</string>
+    <string name="budget_set_cta">बजट सेट करें</string>
+    <string name="budget_spent_of">%2$s में से %1$s</string>
+    <string name="budget_left">%1$s शेष</string>
+    <string name="budget_over_by">बजट से %1$s अधिक खर्च हुआ</string>
+    <string name="budget_pacing_hint">%1$s/दिन, %2$d दिन शेष</string>
+    <string name="budget_manage_sheet_title">बजट प्रबंधित करें</string>
+    <string name="budget_overall_label">कुल मासिक बजट</string>
+    <string name="budget_overall_hint">उदाहरण: 30000</string>
+    <string name="error_invalid_budget_amount">एक मान्य राशि दर्ज करें, या इसे खाली छोड़कर बजट हटाएं।</string>
+</resources>
