@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Android 13+ themed-icon silhouette: the system applies its own single-color tint,
+         so only shape/alpha matters here, not the actual fillColor values. -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M32,38 L74,38 A6,6 0 0 1 80,44 L80,68 A6,6 0 0 1 74,74 L32,74 A6,6 0 0 1 26,68 L26,44 A6,6 0 0 1 32,38 Z" />
+    <path
+        android:fillColor="#FF000000"
+        android:fillAlpha="0.45"
+        android:pathData="M62,58 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 Z" />
+</vector>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Wallet body (rounded) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,38 L74,38 A6,6 0 0 1 80,44 L80,68 A6,6 0 0 1 74,74 L32,74 A6,6 0 0 1 26,68 L26,44 A6,6 0 0 1 32,38 Z" />
+    <!-- Wallet flap accent -->
+    <path
+        android:fillColor="#C7D2FE"
+        android:pathData="M26,44 L80,44 L80,50 L26,50 Z" />
+    <!-- Coin -->
+    <path
+        android:fillColor="#3730A3"
+        android:pathData="M62,58 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 Z" />
+    <!-- Coin shine -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.55"
+        android:pathData="M62,58 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z" />
+</vector>

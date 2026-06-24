@@ -1,0 +1,39 @@
+package com.expensetracker.app.data
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface ExpenseDao {
+
+    @Query("SELECT * FROM expenses ORDER BY date DESC, id DESC")
+    fun observeAll(): Flow<List<ExpenseEntity>>
+
+    @Query("SELECT * FROM expenses WHERE monthKey = :monthKey ORDER BY date DESC, id DESC")
+    fun observeByMonth(monthKey: String): Flow<List<ExpenseEntity>>
+
+    @Insert
+    suspend fun insert(expense: ExpenseEntity): Long
+
+    @Update
+    suspend fun update(expense: ExpenseEntity)
+
+    @Delete
+    suspend fun delete(expense: ExpenseEntity)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM expenses WHERE categoryId = :categoryId)")
+    suspend fun categoryInUse(categoryId: Long): Boolean
+
+    @Query("UPDATE expenses SET categoryId = :newCategoryId WHERE categoryId = :oldCategoryId")
+    suspend fun reassignCategory(oldCategoryId: Long, newCategoryId: Long)
+
+    @Query("UPDATE expenses SET amount = amount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
+
+    @Query("DELETE FROM expenses")
+    suspend fun deleteAll()
+}
