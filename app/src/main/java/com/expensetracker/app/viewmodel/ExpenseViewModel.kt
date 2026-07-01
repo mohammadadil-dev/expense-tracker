@@ -13,6 +13,7 @@ import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.data.PendingSmsExpense
 import com.expensetracker.app.util.DateUtils
 import com.expensetracker.app.util.LocaleHelper
+import com.expensetracker.app.util.ReminderScheduler
 import com.expensetracker.app.util.SmsExpenseParser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -57,6 +58,12 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
+
+    private val _reminderEnabled = MutableStateFlow(settings.reminderEnabled)
+    val reminderEnabled: StateFlow<Boolean> = _reminderEnabled
+
+    private val _reminderHour = MutableStateFlow(settings.reminderHour)
+    val reminderHour: StateFlow<Int> = _reminderHour
 
     private val _monthlySalary = MutableStateFlow(settings.monthlySalary)
     val monthlySalary: StateFlow<Double> = _monthlySalary
@@ -173,6 +180,22 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun setSmsDetectionEnabled(enabled: Boolean) {
         settings.smsDetectionEnabled = enabled
         _smsDetectionEnabled.value = enabled
+    }
+
+    fun setReminderEnabled(enabled: Boolean) {
+        settings.reminderEnabled = enabled
+        _reminderEnabled.value = enabled
+        val ctx = getApplication<Application>().applicationContext
+        if (enabled) ReminderScheduler.schedule(ctx, settings.reminderHour)
+        else ReminderScheduler.cancel(ctx)
+    }
+
+    fun setReminderHour(hour: Int) {
+        settings.reminderHour = hour
+        _reminderHour.value = hour
+        if (settings.reminderEnabled) {
+            ReminderScheduler.schedule(getApplication<Application>().applicationContext, hour)
+        }
     }
 
     fun setMonthlySalary(amount: Double) {

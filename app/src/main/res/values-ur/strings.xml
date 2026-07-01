@@ -30,6 +30,8 @@
     <string name="greeting_morning_named">صبح بخیر، %1$s</string>
     <string name="greeting_afternoon_named">دوپہر بخیر، %1$s</string>
     <string name="greeting_evening_named">شام بخیر، %1$s</string>
+    <string name="greeting_hello">ہیلو 👋</string>
+    <string name="greeting_hello_named">ہیلو، %1$s 👋</string>
 
     <string name="health_band_excellent">بہترین</string>
     <string name="health_band_good">اچھا</string>
@@ -56,9 +58,9 @@
     <string name="insight_trend_flat">آپ کے اخراجات پچھلے ہفتے جتنے رہے۔</string>
     <string name="insight_category_increase">%1$s اخراجات اس مہینے %2$s بڑھ گئے۔</string>
     <string name="insight_category_decrease">%1$s اخراجات اس مہینے %2$s کم ہو گئے۔</string>
-    <string name="insight_projected_savings">آپ اس مہینے %1$s بچانے کی راہ پر ہیں۔</string>
-    <string name="insight_projected_overspend">آپ اس مہینے بجٹ سے %1$s زیادہ خرچ کریں گے۔</string>
-    <string name="insight_strongest_day">آپ کا سب سے بہترین بچت کا دن %1$s ہے۔</string>
+    <string name="insight_projected_savings">اس رفتار سے آپ پچھلے مہینے کے مقابلے %1$s بچا سکتے ہیں۔</string>
+    <string name="insight_projected_overspend">اس رفتار سے آپ پچھلے مہینے سے %1$s زیادہ خرچ کر سکتے ہیں۔</string>
+    <string name="insight_strongest_day">آپ عموماً %1$s کو سب سے کم خرچ کرتے ہیں۔</string>
     <string name="insight_subscription_load">سبسکرپشنز اس مہینے کے اخراجات کا %1$s ہیں۔</string>
     <string name="insight_daily_average">آپ اس مہینے روزانہ اوسطاً %1$s خرچ کر رہے ہیں۔</string>
     <string name="insight_not_enough_data">ذاتی بصیرتیں آن لاک کرنے کے لیے چند اخراجات شامل کریں۔</string>
@@ -111,6 +113,7 @@
     <string name="language_arabic">Arabic (العربية)</string>
     <string name="language_hindi">Hindi (हिन्दी)</string>
     <string name="language_urdu">اردو</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">Tagalog (Filipino)</string>
     <string name="currency_label">کرنسی</string>
     <string name="currency_custom_hint">کسٹم علامت</string>
@@ -241,4 +244,12 @@
     <string name="stat_spent_label">خرچ</string>
     <string name="stat_remaining_label">باقی</string>
     <string name="months_budget_label">%1$s بجٹ</string>
+
+    <!-- Daily reminder notification -->
+    <string name="reminder_section_title">روزانہ یاددہانی</string>
+    <string name="reminder_toggle_label">شام کی اخراجات یاددہانی</string>
+    <string name="reminder_toggle_desc">اپنے اخراجات درج کرنے کے لیے روزانہ یاددہانی حاصل کریں</string>
+    <string name="reminder_time_label">یاددہانی کا وقت</string>
+    <string name="reminder_notification_title">کیا آپ نے آج کے اخراجات درج کیے؟ 💸</string>
+    <string name="reminder_notification_body">آج کے چھوٹے ہوئے اخراجات جلدی شامل کرنے کے لیے ٹیپ کریں۔</string>
 </resources>

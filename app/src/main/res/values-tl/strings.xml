@@ -30,6 +30,8 @@
     <string name="greeting_morning_named">Magandang umaga, %1$s</string>
     <string name="greeting_afternoon_named">Magandang hapon, %1$s</string>
     <string name="greeting_evening_named">Magandang gabi, %1$s</string>
+    <string name="greeting_hello">Kamusta 👋</string>
+    <string name="greeting_hello_named">Kamusta, %1$s 👋</string>
 
     <string name="health_band_excellent">Mahusay</string>
     <string name="health_band_good">Mabuti</string>
@@ -56,9 +58,9 @@
     <string name="insight_trend_flat">Ang iyong paggastos ay katulad ng nakaraang linggo.</string>
     <string name="insight_category_increase">Tumaas ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
     <string name="insight_category_decrease">Bumaba ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
-    <string name="insight_projected_savings">Nasa tamang landas ka para makatipid ng %1$s ngayong buwan.</string>
-    <string name="insight_projected_overspend">Inaasahang lalampas ng %1$s ang iyong badyet ngayong buwan.</string>
-    <string name="insight_strongest_day">Ang iyong pinakamalakas na araw ng ipon ay %1$s.</string>
+    <string name="insight_projected_savings">Sa ganitong bilis, maaari kang makatipid ng %1$s kumpara sa nakaraang buwan.</string>
+    <string name="insight_projected_overspend">Sa ganitong bilis, maaari kang gumastos ng %1$s higit sa nakaraang buwan.</string>
+    <string name="insight_strongest_day">Kadalasan, pinakamababa ang iyong gastos tuwing %1$s.</string>
     <string name="insight_subscription_load">Ang mga subscription ay bumubuo ng %1$s ng paggastos ngayong buwan.</string>
     <string name="insight_daily_average">Nagagastos ka ng average na %1$s bawat araw ngayong buwan.</string>
     <string name="insight_not_enough_data">Magdagdag ng ilang gastusin upang ma-unlock ang mga personalisadong insight.</string>
@@ -111,6 +113,7 @@
     <string name="language_arabic">Arabic (العربية)</string>
     <string name="language_hindi">Hindi (हिन्दी)</string>
     <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">Tagalog (Filipino)</string>
     <string name="currency_label">Pera</string>
     <string name="currency_custom_hint">Custom na simbolo</string>
@@ -240,4 +243,12 @@
     <string name="stat_spent_label">Ginastos</string>
     <string name="stat_remaining_label">Natitira</string>
     <string name="months_budget_label">Badyet ng %1$s</string>
+
+    <!-- Daily reminder notification -->
+    <string name="reminder_section_title">Paalala sa Araw-araw</string>
+    <string name="reminder_toggle_label">Paalala sa gastos tuwing gabi</string>
+    <string name="reminder_toggle_desc">Makatanggap ng paalala araw-araw para itala ang iyong mga gastos</string>
+    <string name="reminder_time_label">Oras ng paalala</string>
+    <string name="reminder_notification_title">Naitala mo na ba ang iyong mga gastos ngayon? 💸</string>
+    <string name="reminder_notification_body">I-tap para mabilis na idagdag ang mga napalampas mong gastos ngayon.</string>
 </resources>

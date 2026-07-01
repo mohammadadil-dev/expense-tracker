@@ -1,9 +1,13 @@
 package com.expensetracker.app.ui.screens
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -29,6 +33,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Check
@@ -57,6 +62,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -138,16 +144,26 @@ fun SettingsScreen(
     val languagePref by viewModel.languagePref.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val smsDetectionEnabled by viewModel.smsDetectionEnabled.collectAsState()
+    val reminderEnabled by viewModel.reminderEnabled.collectAsState()
+    val reminderHour by viewModel.reminderHour.collectAsState()
     val allExpenses by viewModel.allExpenses.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
     var showResetStep1 by remember { mutableStateOf(false) }
     var showResetStep2 by remember { mutableStateOf(false) }
+    var showTimePicker by remember { mutableStateOf(false) }
+    var pickerHour by remember { mutableStateOf(reminderHour) }
     var pendingCurrencySymbol by remember { mutableStateOf<String?>(null) }
     var rateText by remember { mutableStateOf("") }
     var rateError by remember { mutableStateOf(false) }
     var langExpanded by remember { mutableStateOf(false) }
     var currExpanded by remember { mutableStateOf(false) }
+
+    val notifPermLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) viewModel.setReminderEnabled(true)
+    }
 
     val detectedCurrency = remember { CurrencyLocaleMapper.detectFromDevice(context) }
     val customerIdCopiedLabel = stringResource(R.string.customer_id_copied)
@@ -293,6 +309,7 @@ fun SettingsScreen(
                     "hi" to stringResource(R.string.language_hindi),
                     "ur" to stringResource(R.string.language_urdu),
                     "tl" to stringResource(R.string.language_tagalog),
+                    "bn" to stringResource(R.string.language_bengali),
                 )
                 val currentLangLabel = langOptions.firstOrNull { it.first == languagePref }?.second ?: "English"
                 ExposedDropdownMenuBox(
@@ -404,6 +421,71 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary
                         )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            AnimatedSection(visible = contentVisible, delayMillis = 105) {
+                SettingsSectionHeader(icon = Icons.Filled.Alarm, title = stringResource(R.string.reminder_section_title))
+                Spacer(Modifier.height(8.dp))
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = CardWhite),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(R.string.reminder_toggle_label),
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Switch(
+                                checked = reminderEnabled,
+                                onCheckedChange = { enabled ->
+                                    if (enabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                        notifPermLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                    } else {
+                                        viewModel.setReminderEnabled(enabled)
+                                    }
+                                }
+                            )
+                        }
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            text = stringResource(R.string.reminder_toggle_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                        if (reminderEnabled) {
+                            Spacer(Modifier.height(12.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { pickerHour = reminderHour; showTimePicker = true }
+                                    .padding(vertical = 4.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.reminder_time_label),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                Text(
+                                    text = formatReminderHour(reminderHour),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = AccentIndigo
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -557,6 +639,37 @@ fun SettingsScreen(
             }
         )
     }
+
+    if (showTimePicker) {
+        AlertDialog(
+            onDismissRequest = { showTimePicker = false },
+            title = { Text(stringResource(R.string.reminder_time_label)) },
+            text = {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = formatReminderHour(pickerHour),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Slider(
+                        value = pickerHour.toFloat(),
+                        onValueChange = { pickerHour = it.toInt() },
+                        valueRange = 0f..23f,
+                        steps = 22
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.setReminderHour(pickerHour)
+                    showTimePicker = false
+                }) { Text(stringResource(R.string.done)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showTimePicker = false }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
 }
 
 /** Wraps a settings block in a gentle staggered fade + slide-up entrance. */
@@ -652,6 +765,17 @@ private fun SettingsActionRow(icon: ImageVector, label: String, onClick: () -> U
         Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
         Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = TextMuted)
     }
+}
+
+/** Formats a 24-hour value (0–23) as a friendly 12-hour AM/PM string, e.g. 21 → "9:00 PM". */
+private fun formatReminderHour(hour: Int): String {
+    val amPm = if (hour < 12) "AM" else "PM"
+    val h = when {
+        hour == 0 -> 12
+        hour > 12 -> hour - 12
+        else -> hour
+    }
+    return "$h:00 $amPm"
 }
 
 /** Bottom-of-screen brand footer — small, muted, out of the way. */

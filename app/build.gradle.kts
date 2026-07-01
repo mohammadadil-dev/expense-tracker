@@ -79,7 +79,7 @@ dependencies {
     // consent flow — is guaranteed to resolve.
     implementation("androidx.activity:activity-ktx:1.9.1")
 
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -104,10 +104,14 @@ dependencies {
     // permissions review the way full SMS access would for a non-default-SMS-app like this one.
     implementation("com.google.android.gms:play-services-auth:21.4.0")
 
+    // WorkManager — schedules the daily "Did you log today?" reminder notification.
+    // Survives app restarts and device reboots; battery-friendly vs AlarmManager.
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.12.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
     debugImplementation("androidx.compose.ui:ui-tooling")

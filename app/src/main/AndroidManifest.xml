@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Daily "Did you log today?" reminder (Android 13+ requires runtime grant) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- WorkManager re-schedules the reminder automatically after device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".ExpenseApp"
         android:allowBackup="true"
