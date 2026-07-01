@@ -67,6 +67,9 @@ attr actionOverflowMenuStyle
 attr actionProviderClass
 attr actionViewClass
 attr activityChooserViewStyle
+attr adSize
+attr adSizes
+attr adUnitId
 attr alertDialogButtonGroupStyle
 attr alertDialogCenterButtons
 attr alertDialogStyle
@@ -349,6 +352,10 @@ attr windowMinWidthMinor
 attr windowNoTitle
 bool abc_action_bar_embed_tabs
 bool abc_config_actionMenuItemAllCaps
+bool enable_system_alarm_service_default
+bool enable_system_foreground_service_default
+bool enable_system_job_service_default
+bool workmanager_test_configuration
 color abc_background_cache_hint_selector_material_dark
 color abc_background_cache_hint_selector_material_light
 color abc_btn_colored_borderless_text_material
@@ -392,6 +399,10 @@ color bright_foreground_inverse_material_dark
 color bright_foreground_inverse_material_light
 color bright_foreground_material_dark
 color bright_foreground_material_light
+color browser_actions_bg_grey
+color browser_actions_divider_color
+color browser_actions_text_color
+color browser_actions_title_color
 color button_material_dark
 color button_material_light
 color call_notification_answer_color
@@ -542,6 +553,8 @@ dimen abc_text_size_subhead_material
 dimen abc_text_size_subtitle_material_toolbar
 dimen abc_text_size_title_material
 dimen abc_text_size_title_material_toolbar
+dimen browser_actions_context_menu_max_width
+dimen browser_actions_context_menu_min_padding
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -660,6 +673,8 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable admob_close_button_black_circle_white_cross
+drawable admob_close_button_white_circle_black_cross
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -784,6 +799,11 @@ id auto
 id beginning
 id blocking
 id bottom
+id browser_actions_header_text
+id browser_actions_menu_item_icon
+id browser_actions_menu_item_text
+id browser_actions_menu_items
+id browser_actions_menu_view
 id buttonPanel
 id center_vertical
 id checkbox
@@ -822,6 +842,7 @@ id info
 id inspection_slot_table_set
 id is_pooling_container_tag
 id italic
+id layout
 id light
 id line1
 id line3
@@ -953,6 +974,9 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout admob_empty_layout
+layout browser_actions_context_menu_page
+layout browser_actions_context_menu_row
 layout custom_dialog
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
@@ -1007,6 +1031,7 @@ string app_version_label
 string bento_budget_no_target
 string bento_budget_remaining
 string bento_budget_remaining_subtitle
+string bento_debts_title
 string bento_monthly_spending
 string bento_savings_goal
 string bento_savings_goal_no_data
@@ -1014,6 +1039,7 @@ string bento_savings_goal_subtitle
 string bento_subscription_cost
 string bento_subscription_subtitle
 string breakdown_title
+string budget_cap_label
 string budget_left
 string budget_manage_sheet_title
 string budget_over_by
@@ -1034,6 +1060,7 @@ string call_notification_incoming_text
 string call_notification_ongoing_text
 string call_notification_screening_text
 string cancel
+string cat_debt_payments
 string cat_entertainment
 string cat_food
 string cat_healthcare
@@ -1070,6 +1097,7 @@ string convert
 string convert_currency_message
 string convert_currency_rate_hint
 string convert_currency_title
+string copy_toast_msg
 string currency_custom_hint
 string currency_label
 string customer_id_copied
@@ -1077,10 +1105,47 @@ string customer_id_label
 string dashboard_subtitle
 string data_local_note
 string date_label
+string debt_add_title
+string debt_direction_label
+string debt_direction_owe
+string debt_direction_owed
+string debt_edit_title
+string debt_history_title
+string debt_insight_accelerate
+string debt_mark_settled
+string debt_name_hint
+string debt_name_label
+string debt_no_emi_hint
+string debt_no_payments
+string debt_notes_hint
+string debt_notes_label
+string debt_paid_of_principal
+string debt_payment_hint
+string debt_payment_label
+string debt_payoff_projection
+string debt_principal_hint
+string debt_principal_label
+string debt_rate_hint
+string debt_rate_label
+string debt_record_payment
+string debt_reopen
+string debt_settled_badge
+string debt_start_date_label
+string debts_empty_subtitle
+string debts_empty_title
+string debts_net_owed_to_you
+string debts_net_settled
+string debts_net_title
+string debts_net_you_owe
+string debts_section_owed_to_you
+string debts_section_settled
+string debts_section_you_owe
+string debts_title
 string default_error_message
 string default_popup_window_title
 string delete
 string delete_category_confirm
+string delete_debt_confirm
 string delete_expense_confirm
 string description_hint
 string description_label
@@ -1090,6 +1155,9 @@ string dropdown_menu
 string edit
 string edit_expense
 string enter_category_name
+string error_debt_name_required
+string error_debt_payment_invalid
+string error_debt_rate_invalid
 string error_invalid_amount
 string error_invalid_budget_amount
 string error_invalid_rate
@@ -1101,6 +1169,9 @@ string export_pdf_chooser_title
 string export_report_title
 string export_started
 string export_total_label
+string fallback_menu_item_copy_link
+string fallback_menu_item_open_in_browser
+string fallback_menu_item_share_link
 string greeting_afternoon
 string greeting_afternoon_named
 string greeting_evening
@@ -1133,6 +1204,9 @@ string language_arabic
 string language_english
 string language_hindi
 string language_label
+string language_tagalog
+string language_urdu
+string load_more
 string m3c_bottom_sheet_collapse_description
 string m3c_bottom_sheet_dismiss_description
 string m3c_bottom_sheet_drag_handle_description
@@ -1191,7 +1265,11 @@ string m3c_tooltip_long_press_label
 string m3c_tooltip_pane_description
 string manage_budget
 string manage_categories
+string months_budget_label
 string more_section_title
+string native_body
+string native_headline
+string native_media_view
 string nav_categories
 string nav_dashboard
 string nav_settings
@@ -1201,17 +1279,41 @@ string no_expenses_breakdown
 string no_expenses_this_day
 string no_expenses_this_month
 string not_selected
+string notifications_permission_confirm
+string notifications_permission_decline
+string notifications_permission_title
 string off
+string offline_notification_text
+string offline_notification_title
+string offline_opt_in_confirm
+string offline_opt_in_confirmation
+string offline_opt_in_decline
+string offline_opt_in_message
+string offline_opt_in_title
 string ok
 string on
+string payment_note_hint
+string payment_note_label
 string powered_by_footer
 string range_end
 string range_start
 string rate_us
+string recent_transactions_label
 string reset_all_data
 string reset_confirm_1
 string reset_confirm_2
 string reset_data
+string s1
+string s2
+string s3
+string s4
+string s5
+string s6
+string s7
+string salary_label
+string salary_set_hint
+string salary_set_label
+string salary_set_title
 string save
 string search_menu_title
 string select_date
@@ -1227,11 +1329,14 @@ string sms_dismiss
 string sms_pending_banner
 string sms_review_subtitle
 string sms_review_title
+string spending_by_category
 string splash_tagline
 string stat_daily_average
 string stat_no_prior_data
 string stat_per_day
+string stat_remaining_label
 string stat_same_as_last_month
+string stat_spent_label
 string stat_this_month
 string stat_top_category
 string stat_total_spent
@@ -1251,10 +1356,12 @@ string tooltip_description
 string tooltip_label
 string trend_title
 string update
+string view_all_label
 string view_mode_calendar
 string view_mode_category
 string view_mode_day
 string view_mode_grid
+string watermark_label_prefix
 string yesterday
 string your_name_hint
 string your_name_label
@@ -1529,6 +1636,7 @@ style Theme_AppCompat_Light_DialogWhenLarge
 style Theme_AppCompat_Light_NoActionBar
 style Theme_AppCompat_NoActionBar
 style Theme_ExpenseTracker
+style Theme_IAPTheme
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -1620,6 +1728,7 @@ styleable ActionMenuView
 styleable ActionMode background backgroundSplit closeItemLayout height subtitleTextStyle titleTextStyle
 styleable ActivityChooserView expandActivityOverflowButtonDrawable initialActivityCount
 styleable ActivityNavigator android_name action data dataPattern targetPackage
+styleable AdsAttrs adSize adSizes adUnitId
 styleable AlertDialog android_layout buttonIconDimen buttonPanelSideLayout listItemLayout listLayout multiChoiceItemLayout showTitle singleChoiceItemLayout
 styleable AnimatedStateListDrawableCompat android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable AnimatedStateListDrawableItem android_id android_drawable
@@ -1671,4 +1780,6 @@ styleable View android_theme android_focusable paddingEnd paddingStart theme
 styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 styleable ViewStubCompat android_id android_layout android_inflatedId
 xml file_paths
+xml gma_ad_services_config
+xml image_share_filepaths
 xml locales_config

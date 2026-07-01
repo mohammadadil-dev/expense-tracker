@@ -110,6 +110,8 @@
     <string name="language_english">الإنجليزية</string>
     <string name="language_arabic">العربية</string>
     <string name="language_hindi">الهندية</string>
+    <string name="language_urdu">الأردية (اردو)</string>
+    <string name="language_tagalog">التاغالوغية (Filipino)</string>
     <string name="currency_label">العملة</string>
     <string name="currency_custom_hint">رمز مخصص</string>
     <string name="convert_currency_title">تحويل العملة</string>
@@ -166,6 +168,7 @@
     <string name="cat_subscriptions">الاشتراكات</string>
     <string name="cat_savings">الادخار والاستثمار</string>
     <string name="cat_other">أخرى</string>
+    <string name="cat_debt_payments">مدفوعات الدين أو القرض</string>
 
     <!-- Budget tracking (Phase 1): standing monthly targets, overall + per-category -->
     <string name="budget_title">الميزانية</string>
@@ -180,4 +183,66 @@
     <string name="budget_overall_label">الميزانية الشهرية الإجمالية</string>
     <string name="budget_overall_hint">مثال: 30000</string>
     <string name="error_invalid_budget_amount">أدخل مبلغًا صحيحًا، أو اتركه فارغًا لمسح الميزانية.</string>
+
+    <!-- Debts & Loans (Phase 2): both directions, full payoff planning, AI-style insights -->
+    <string name="debts_title">الديون والقروض</string>
+    <string name="bento_debts_title">الديون والقروض</string>
+    <string name="debts_net_title">الموقف الصافي</string>
+    <string name="debts_net_owed_to_you">صافي المستحق لك</string>
+    <string name="debts_net_you_owe">صافي ما عليك</string>
+    <string name="debts_net_settled">كل شيء مسوّى</string>
+    <string name="debts_section_you_owe">ما عليك</string>
+    <string name="debts_section_owed_to_you">المستحق لك</string>
+    <string name="debts_section_settled">مسوّى</string>
+    <string name="debts_empty_title">لا توجد ديون أو قروض بعد</string>
+    <string name="debts_empty_subtitle">تابع الأموال التي عليك أو المستحقة لك، مع خطة سداد لكل منها.</string>
+    <string name="delete_debt_confirm">حذف هذا الدين وكامل سجل دفعاته؟ لا يمكن التراجع عن هذا الإجراء.</string>
+
+    <string name="debt_add_title">إضافة دين أو قرض</string>
+    <string name="debt_edit_title">تعديل الدين أو القرض</string>
+    <string name="debt_direction_label">الاتجاه</string>
+    <string name="debt_direction_owe">أنا مدين</string>
+    <string name="debt_direction_owed">مستحق لي</string>
+    <string name="debt_name_label">الاسم</string>
+    <string name="debt_name_hint">مثال: قرض سيارة، قرض شخصي لصديق</string>
+    <string name="error_debt_name_required">أدخل اسمًا لهذا الدين.</string>
+    <string name="debt_principal_label">المبلغ الأساسي</string>
+    <string name="debt_principal_hint">المبلغ الإجمالي المُقترَض أو المُقرَض</string>
+    <string name="debt_rate_label">معدل الفائدة (% سنويًا)</string>
+    <string name="debt_rate_hint">مثال: 12 (أدخل 0 إذا كان بدون فائدة)</string>
+    <string name="error_debt_rate_invalid">أدخل معدلًا صحيحًا، 0 أو أكثر.</string>
+    <string name="debt_payment_label">الدفعة الشهرية</string>
+    <string name="debt_payment_hint">مثال: 5000 (اتركه 0 إذا لم يوجد جدول ثابت)</string>
+    <string name="error_debt_payment_invalid">أدخل مبلغًا صحيحًا، 0 أو أكثر.</string>
+    <string name="debt_start_date_label">تاريخ البدء</string>
+    <string name="debt_notes_label">ملاحظات (اختياري)</string>
+    <string name="debt_notes_hint">مثال: اسم الجهة، الغرض من الدين</string>
+
+    <string name="debt_paid_of_principal">%1$s من %2$s</string>
+    <string name="debt_settled_badge">مسوّى</string>
+    <string name="debt_payoff_projection">السداد المتوقع بحلول %1$s (%2$d شهر)</string>
+    <string name="debt_insight_accelerate">سدّد الدين أسرع بـ%1$d شهر بإضافة %2$s شهريًا.</string>
+    <string name="debt_no_emi_hint">أضف دفعة شهرية لعرض توقع السداد.</string>
+    <string name="debt_reopen">إعادة فتح</string>
+    <string name="debt_mark_settled">تمييز كمسوّى</string>
+    <string name="debt_history_title">سجل الدفعات</string>
+    <string name="debt_no_payments">لا توجد دفعات مسجلة بعد.</string>
+    <string name="debt_record_payment">تسجيل دفعة</string>
+
+    <string name="payment_note_label">ملاحظة (اختياري)</string>
+    <string name="payment_note_hint">مثال: دفعة جزئية، دُفع نقدًا</string>
+
+    <!-- Dashboard redesign — home cards -->
+    <string name="salary_label">الراتب</string>
+    <string name="budget_cap_label">حد الميزانية</string>
+    <string name="spending_by_category">الإنفاق حسب الفئة</string>
+    <string name="recent_transactions_label">المعاملات الأخيرة</string>
+    <string name="view_all_label">عرض الكل</string>
+    <string name="load_more">تحميل المزيد</string>
+    <string name="salary_set_title">تعيين الدخل الشهري</string>
+    <string name="salary_set_label">صافي الراتب الشهري</string>
+    <string name="salary_set_hint">مثال: 50000</string>
+    <string name="stat_spent_label">المُنفق</string>
+    <string name="stat_remaining_label">المتبقي</string>
+    <string name="months_budget_label">ميزانية %1$s</string>
 </resources>

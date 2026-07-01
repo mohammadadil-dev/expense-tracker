@@ -3,4 +3,6 @@
     <locale android:name="en" />
     <locale android:name="ar" />
     <locale android:name="hi" />
+    <locale android:name="ur" />
+    <locale android:name="fil" />
 </locale-config>

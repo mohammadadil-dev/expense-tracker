@@ -31,8 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -96,7 +98,20 @@ fun BentoCard(
                     spotColor = gradientColors.first().copy(alpha = 0.45f)
                 )
                 .clip(shape)
-                .background(Brush.linearGradient(gradientColors))
+                .drawBehind {
+                    // Guard against zero-size: Android's LinearGradient throws
+                    // IllegalArgumentException when start == end (both map to 0,0
+                    // if size is zero during first layout pass).
+                    if (size.width > 0f && size.height > 0f) {
+                        drawRect(
+                            brush = Brush.linearGradient(
+                                colors = gradientColors,
+                                start = Offset.Zero,
+                                end = Offset(size.width, size.height)
+                            )
+                        )
+                    }
+                }
                 .border(width = 1.dp, color = Color.White.copy(alpha = 0.16f), shape = shape)
                 .then(clickableModifier)
         ) {

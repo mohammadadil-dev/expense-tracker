@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,9 +53,17 @@ fun BudgetManageSheet(
         mutableStateOf(overallBudget?.amount?.let { formatPlainAmount(it) } ?: "")
     }
     var overallError by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 24.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+                .imePadding()
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 24.dp)
+        ) {
             Text(text = stringResource(R.string.budget_manage_sheet_title), style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(16.dp))
 
@@ -89,6 +100,7 @@ fun BudgetManageSheet(
                     val trimmed = overallText.trim()
                     if (trimmed.isEmpty()) {
                         onSave(0.0)
+                        onDismiss()
                         return@IconButton
                     }
                     val amount = trimmed.toDoubleOrNull()
@@ -97,6 +109,7 @@ fun BudgetManageSheet(
                         return@IconButton
                     }
                     onSave(amount)
+                    onDismiss()
                 }) {
                     Icon(Icons.Filled.Check, contentDescription = stringResource(R.string.done))
                 }
@@ -109,10 +122,7 @@ fun BudgetManageSheet(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
-            TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.close))
-            }
+            Spacer(Modifier.height(8.dp))
         }
     }
 }

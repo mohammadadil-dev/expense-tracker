@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Required by AdMob to serve ads and check network status -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".ExpenseApp"
         android:allowBackup="true"
@@ -22,6 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            AdMob App ID — REQUIRED even in test mode or the app will crash at startup.
+            Replace the test value below with your real App ID from https://admob.google.com
+            (Apps → App settings → App ID) before publishing to the Play Store.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8890346685665889~3572471547" />
 
         <!-- Lets us hand a generated PDF report to the system share/save chooser without
              needing any storage permission or leaving the device — purely local file I/O. -->

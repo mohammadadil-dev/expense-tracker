@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.expensetracker.app.ExpenseApp
 import com.expensetracker.app.data.BudgetEntity
 import com.expensetracker.app.data.CategoryEntity
+import com.expensetracker.app.data.DebtEntity
+import com.expensetracker.app.data.DebtPaymentEntity
 import com.expensetracker.app.data.DeleteCategoryResult
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.data.PendingSmsExpense
@@ -39,6 +41,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         .flatMapLatest { key -> repository.expensesForMonth(key) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** False until user explicitly picks a currency on the setup screen. */
+    val isCurrencySetupDone: Boolean get() = settings.currencySetupDone
+
+    fun markCurrencySetupDone() { settings.currencySetupDone = true }
+
     private val _currencySymbol = MutableStateFlow(settings.currencySymbol)
     val currencySymbol: StateFlow<String> = _currencySymbol
 
@@ -51,12 +58,23 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
 
+    private val _monthlySalary = MutableStateFlow(settings.monthlySalary)
+    val monthlySalary: StateFlow<Double> = _monthlySalary
+
     val pendingSmsExpenses: StateFlow<List<PendingSmsExpense>> = repository.pendingSmsExpenses
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Standing budget targets (overall + per-category) — only the spend they're compared
     // against resets each month; these rows themselves persist until edited or cleared.
     val budgets: StateFlow<List<BudgetEntity>> = repository.budgets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    // Debts/loans (both directions) and their full payment history. Outstanding balance is
+    // never stored — always derived live from principal minus payments, see DebtEntity.
+    val debts: StateFlow<List<DebtEntity>> = repository.debts
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val debtPayments: StateFlow<List<DebtPaymentEntity>> = repository.debtPayments
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Stable for the lifetime of the install — generated once and persisted, never reassigned.
@@ -157,6 +175,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         _smsDetectionEnabled.value = enabled
     }
 
+    fun setMonthlySalary(amount: Double) {
+        settings.monthlySalary = amount
+        _monthlySalary.value = amount
+    }
+
     /**
      * Called with the raw text of an SMS the user just approved via the system consent prompt.
      * Silently does nothing if the message doesn't look like a debit transaction, or if SMS
@@ -199,5 +222,44 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
             repository.dismissPendingSmsExpense(item)
             onDone()
         }
+    }
+
+    fun saveDebt(
+        id: Long?,
+        name: String,
+        direction: String,
+        principal: Double,
+        interestRatePercent: Double,
+        minimumPayment: Double,
+        startDate: String,
+        notes: String?,
+        onDone: () -> Unit
+    ) {
+        viewModelScope.launch {
+            repository.addOrUpdateDebt(id, name, direction, principal, interestRatePercent, minimumPayment, startDate, notes)
+            onDone()
+        }
+    }
+
+    fun deleteDebt(debt: DebtEntity, onDone: () -> Unit) {
+        viewModelScope.launch {
+            repository.deleteDebt(debt)
+            onDone()
+        }
+    }
+
+    fun setDebtClosed(debt: DebtEntity, isClosed: Boolean) {
+        viewModelScope.launch { repository.setDebtClosed(debt, isClosed) }
+    }
+
+    fun recordDebtPayment(debt: DebtEntity, amount: Double, date: String, note: String?, onDone: () -> Unit) {
+        viewModelScope.launch {
+            repository.recordDebtPayment(debt, amount, date, note)
+            onDone()
+        }
+    }
+
+    fun deleteDebtPayment(payment: DebtPaymentEntity) {
+        viewModelScope.launch { repository.deleteDebtPayment(payment) }
     }
 }

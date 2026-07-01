@@ -5,11 +5,8 @@ public final class SplashScreenKt {
     private static final long SPLASH_HOLD_MS = 1700L;
     
     /**
-     * A short, self-animated brand moment shown once on cold start: the same wallet+coin motif
-     * as the launcher icon fades/scales in, then a coin "drops" into the wallet with a small
-     * bounce, before auto-advancing to the dashboard. Pure Compose — no extra splash-screen
-     * library/dependency needed, and no network or assets involved (just drawn shapes), so it
-     * costs nothing and stays fully offline like the rest of the app.
+     * Brand splash: deep forest-green gradient background (matching the budget ring card),
+     * wallet icon with amber coin dropping in, app name + tagline fade up.
      */
     @androidx.compose.runtime.Composable()
     public static final void SplashScreen(@org.jetbrains.annotations.NotNull()

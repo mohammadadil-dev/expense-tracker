@@ -41,6 +41,8 @@ public final class ExpenseDao_Impl implements ExpenseDao {
 
   private final EntityDeletionOrUpdateAdapter<ExpenseEntity> __updateAdapterOfExpenseEntity;
 
+  private final SharedSQLiteStatement __preparedStmtOfDeleteById;
+
   private final SharedSQLiteStatement __preparedStmtOfReassignCategory;
 
   private final SharedSQLiteStatement __preparedStmtOfScaleAllAmounts;
@@ -123,6 +125,14 @@ public final class ExpenseDao_Impl implements ExpenseDao {
         statement.bindLong(7, entity.getId());
       }
     };
+    this.__preparedStmtOfDeleteById = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "DELETE FROM expenses WHERE id = ?";
+        return _query;
+      }
+    };
     this.__preparedStmtOfReassignCategory = new SharedSQLiteStatement(__db) {
       @Override
       @NonNull
@@ -198,6 +208,31 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           return Unit.INSTANCE;
         } finally {
           __db.endTransaction();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object deleteById(final long id, final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteById.acquire();
+        int _argIndex = 1;
+        _stmt.bindLong(_argIndex, id);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfDeleteById.release(_stmt);
         }
       }
     }, $completion);

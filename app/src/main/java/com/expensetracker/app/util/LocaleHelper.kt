@@ -16,6 +16,11 @@ object LocaleHelper {
         val locales = when (pref) {
             "ar" -> LocaleListCompat.forLanguageTags("ar")
             "hi" -> LocaleListCompat.forLanguageTags("hi")
+            "ur" -> LocaleListCompat.forLanguageTags("ur")
+            // Android normalises "tl" (Tagalog) to the canonical BCP 47 tag "fil" (Filipino)
+            // when resolving resources — so the locale tag must be "fil" or Android falls back
+            // to English because it looks for values-fil/, not values-tl/.
+            "tl" -> LocaleListCompat.forLanguageTags("fil")
             else -> LocaleListCompat.forLanguageTags("en")
         }
         AppCompatDelegate.setApplicationLocales(locales)

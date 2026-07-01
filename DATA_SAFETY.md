@@ -27,6 +27,7 @@ Play Console requires this regardless of how you answered above. Host `PRIVACY_P
 ## Adjacent forms you'll also hit (not part of Data Safety, but in the same review flow)
 
 - **Ads declaration**: answer **No** — the app has no ad SDK anywhere in its dependencies.
+- **Advertising ID declaration** (required for apps targeting API 33+): answer **"No, my app does not use advertising ID."** Verified by checking `app/build.gradle.kts` (no ad/analytics SDK, no `play-services-ads-identifier`) and `AndroidManifest.xml` (no `com.google.android.gms.permission.AD_ID`). The only Google Play Services dependency, `play-services-auth`, is used solely for the SMS User Consent prompt and doesn't touch advertising ID.
 - **Target audience and content**: this is a general-purpose finance utility, not designed for or directed at children — answer accordingly in the age-group questionnaire.
 - **Content rating questionnaire**: answer **No** to all the violence/gambling/etc. prompts — it's a finance utility with no objectionable content. You'll come out at the lowest rating tier (e.g., "PEGI 3" / "Everyone").
 - **Permissions declaration form (restricted permissions like SMS/Call Log)**: **this app does not need to file it.** That form only applies to apps that declare the dangerous `READ_SMS` / `RECEIVE_SMS` permissions in the manifest. This app's `AndroidManifest.xml` declares none — it uses the SMS User Consent API specifically because it's exempt from that permission and from this declaration requirement.

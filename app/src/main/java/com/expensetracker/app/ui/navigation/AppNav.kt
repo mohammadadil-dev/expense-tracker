@@ -10,15 +10,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.expensetracker.app.ui.screens.CurrencySetupScreen
 import com.expensetracker.app.ui.screens.DashboardScreen
+import com.expensetracker.app.ui.screens.DebtsScreen
 import com.expensetracker.app.ui.screens.SettingsScreen
 import com.expensetracker.app.ui.screens.SplashScreen
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 
 private object Routes {
     const val SPLASH = "splash"
+    const val CURRENCY_SETUP = "currency_setup"
     const val DASHBOARD = "dashboard"
     const val SETTINGS = "settings"
+    const val DEBTS = "debts"
 }
 
 private const val TRANSITION_MS = 260
@@ -42,8 +46,24 @@ fun AppNav() {
         composable(Routes.SPLASH) {
             SplashScreen(
                 onFinished = {
-                    navController.navigate(Routes.DASHBOARD) {
+                    val next = if (viewModel.isCurrencySetupDone) Routes.DASHBOARD else Routes.CURRENCY_SETUP
+                    navController.navigate(next) {
                         popUpTo(Routes.SPLASH) { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable(
+            Routes.CURRENCY_SETUP,
+            enterTransition = { fadeIn(tween(TRANSITION_MS)) },
+            exitTransition = { fadeOut(tween(TRANSITION_MS)) }
+        ) {
+            CurrencySetupScreen(
+                onCurrencyChosen = { symbol ->
+                    viewModel.setCurrencySymbol(symbol)
+                    viewModel.markCurrencySetupDone()
+                    navController.navigate(Routes.DASHBOARD) {
+                        popUpTo(Routes.CURRENCY_SETUP) { inclusive = true }
                     }
                 }
             )
@@ -60,7 +80,8 @@ fun AppNav() {
         ) {
             DashboardScreen(
                 viewModel = viewModel,
-                onOpenSettings = { navController.navigate(Routes.SETTINGS) }
+                onOpenSettings = { navController.navigate(Routes.SETTINGS) },
+                onOpenDebts = { navController.navigate(Routes.DEBTS) }
             )
         }
         composable(
@@ -73,6 +94,20 @@ fun AppNav() {
             }
         ) {
             SettingsScreen(
+                viewModel = viewModel,
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable(
+            Routes.DEBTS,
+            enterTransition = {
+                fadeIn(tween(TRANSITION_MS)) + slideInHorizontally(tween(TRANSITION_MS)) { it }
+            },
+            popExitTransition = {
+                fadeOut(tween(TRANSITION_MS)) + slideOutHorizontally(tween(TRANSITION_MS)) { it }
+            }
+        ) {
+            DebtsScreen(
                 viewModel = viewModel,
                 onBack = { navController.popBackStack() }
             )

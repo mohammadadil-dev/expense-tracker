@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Expense Tracker</string>
+    <string name="dashboard_subtitle">Itala ang mga gastusin, subaybayan ang mga kategorya, at tingnan ang mga trend sa paglipas ng panahon.</string>
+    <string name="manage_categories">Pamahalaan ang mga Kategorya</string>
+    <string name="reset_data">I-reset ang Data</string>
+
+    <string name="your_name_label">Iyong Pangalan</string>
+    <string name="your_name_hint">hal. Mohammad</string>
+    <string name="your_name_note">Ginagamit lamang para i-personalize ang pagbati sa dashboard. Hindi ipinapadala kahit saan.</string>
+
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_categories">Mga Kategorya</string>
+    <string name="nav_settings">Mga Setting</string>
+
+    <string name="stat_total_spent">Kabuuang Ginastos</string>
+    <string name="stat_transactions">Mga Transaksyon</string>
+    <string name="stat_top_category">Nangungunang Kategorya</string>
+    <string name="stat_daily_average">Araw-araw na Average</string>
+    <string name="stat_this_month">ngayong buwan</string>
+    <string name="stat_per_day">bawat araw ngayong buwan</string>
+    <string name="stat_no_prior_data">Walang data sa nakaraang buwan</string>
+    <string name="stat_vs_last_month">kumpara sa nakaraang buwan</string>
+    <string name="stat_same_as_last_month">Katulad ng nakaraang buwan</string>
+    <string name="stat_up_from_zero">Tumaas mula %1$s noong nakaraang buwan</string>
+
+    <string name="greeting_morning">Magandang umaga</string>
+    <string name="greeting_afternoon">Magandang hapon</string>
+    <string name="greeting_evening">Magandang gabi</string>
+    <string name="greeting_morning_named">Magandang umaga, %1$s</string>
+    <string name="greeting_afternoon_named">Magandang hapon, %1$s</string>
+    <string name="greeting_evening_named">Magandang gabi, %1$s</string>
+
+    <string name="health_band_excellent">Mahusay</string>
+    <string name="health_band_good">Mabuti</string>
+    <string name="health_band_fair">Katamtaman</string>
+    <string name="health_band_needs_attention">Kailangan ng Atensyon</string>
+    <string name="health_sub_budget">Badyet</string>
+    <string name="health_sub_trend">Trend</string>
+    <string name="health_sub_consistency">Konsistensya</string>
+    <string name="health_sub_subscriptions">Mga Subscription</string>
+
+    <string name="bento_monthly_spending">Buwanang Paggastos</string>
+    <string name="bento_budget_remaining">Natitirang Badyet</string>
+    <string name="bento_budget_no_target">Walang nakatakdang badyet</string>
+    <string name="bento_budget_remaining_subtitle">ng badyet na %1$s</string>
+    <string name="bento_savings_goal">Layunin sa Ipon</string>
+    <string name="bento_savings_goal_subtitle">patungo sa layuning %1$s</string>
+    <string name="bento_savings_goal_no_data">Subaybayan ng ilang linggo upang ma-unlock</string>
+    <string name="bento_subscription_cost">Gastos sa Subscription</string>
+    <string name="bento_subscription_subtitle">%1$s ng buwanang paggastos</string>
+
+    <string name="ai_insights_feed_title">Mga AI Insight</string>
+    <string name="insight_trend_down">Ang iyong paggastos ay %1$s na mas mababa kaysa noong nakaraang linggo.</string>
+    <string name="insight_trend_up">Ang iyong paggastos ay %1$s na mas mataas kaysa noong nakaraang linggo.</string>
+    <string name="insight_trend_flat">Ang iyong paggastos ay katulad ng nakaraang linggo.</string>
+    <string name="insight_category_increase">Tumaas ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
+    <string name="insight_category_decrease">Bumaba ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
+    <string name="insight_projected_savings">Nasa tamang landas ka para makatipid ng %1$s ngayong buwan.</string>
+    <string name="insight_projected_overspend">Inaasahang lalampas ng %1$s ang iyong badyet ngayong buwan.</string>
+    <string name="insight_strongest_day">Ang iyong pinakamalakas na araw ng ipon ay %1$s.</string>
+    <string name="insight_subscription_load">Ang mga subscription ay bumubuo ng %1$s ng paggastos ngayong buwan.</string>
+    <string name="insight_daily_average">Nagagastos ka ng average na %1$s bawat araw ngayong buwan.</string>
+    <string name="insight_not_enough_data">Magdagdag ng ilang gastusin upang ma-unlock ang mga personalisadong insight.</string>
+
+    <string name="breakdown_title">Pagkakahati-hati ayon sa Kategorya</string>
+    <string name="no_expenses_breakdown">Wala pang mga gastusin na ipapakita.</string>
+    <string name="trend_title">Buwanang Trend (Nakaraang 12 Buwan)</string>
+
+    <string name="add_expense">Magdagdag ng Gastos</string>
+    <string name="edit_expense">I-edit ang Gastos</string>
+    <string name="category_label">Kategorya</string>
+    <string name="description_label">Paglalarawan</string>
+    <string name="description_hint">hal. Pagkain sa supermarket</string>
+    <string name="amount_label">Halaga</string>
+    <string name="date_label">Petsa</string>
+    <string name="add">Idagdag</string>
+    <string name="update">I-update</string>
+    <string name="cancel">Kanselahin</string>
+    <string name="save">I-save</string>
+
+    <string name="expenses_this_month">Mga Gastos Ngayong Buwan</string>
+    <string name="no_expenses_this_month">Wala pang naitaang gastos ngayong buwan.</string>
+    <string name="edit">I-edit</string>
+    <string name="delete">Tanggalin</string>
+    <string name="delete_expense_confirm">Tanggalin ang gastos na ito?</string>
+    <string name="today">Ngayon</string>
+    <string name="yesterday">Kahapon</string>
+    <string name="view_mode_day">Araw-araw</string>
+    <string name="view_mode_category">Ayon sa Kategorya</string>
+    <string name="view_mode_grid">Grid</string>
+    <string name="view_mode_calendar">Kalendaryo</string>
+    <string name="calendar_tap_hint">I-tap ang isang araw upang makita ang mga gastos nito</string>
+    <string name="no_expenses_this_day">Walang gastos sa araw na ito.</string>
+    <string name="export_pdf">I-export ang PDF</string>
+    <string name="export_pdf_chooser_title">I-save o ibahagi ang iyong ulat</string>
+    <string name="export_report_title">Buwanang Ulat ng Gastos</string>
+    <string name="export_total_label">Kabuuan</string>
+    <string name="export_customer_id_label">Customer ID: %1$s</string>
+    <string name="export_started">Inihahanda ang iyong PDF na ulat…</string>
+
+    <string name="add_category">Magdagdag ng Kategorya</string>
+    <string name="new_category_hint">Pangalan ng bagong kategorya</string>
+    <string name="delete_category_confirm">Ang mga gastos na gumagamit ng kategoryang ito ay itatakda sa unang natitirang kategorya. Magpatuloy?</string>
+    <string name="keep_one_category_warning">Kailangan mong panatilihin ang kahit isang kategorya.</string>
+    <string name="enter_category_name">Maglagay ng pangalan ng kategorya.</string>
+
+    <string name="settings_title">Mga Setting</string>
+    <string name="language_label">Wika</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="currency_label">Pera</string>
+    <string name="currency_custom_hint">Custom na simbolo</string>
+    <string name="convert_currency_title">I-convert ang Pera</string>
+    <string name="convert_currency_message">Ilagay ang halaga ng palitan upang i-convert ang iyong mga umiiral na gastos mula sa %1$s patungong %2$s (1 %1$s = ? %2$s).</string>
+    <string name="convert_currency_rate_hint">Halaga ng palitan</string>
+    <string name="convert">I-convert</string>
+    <string name="error_invalid_rate">Maglagay ng wastong halaga na mas malaki sa 0.</string>
+    <string name="reset_all_data">I-reset ang Lahat ng Data</string>
+    <string name="reset_confirm_1">Permanenteng mabubura ang lahat ng gastos at custom na kategorya sa device na ito. Magpatuloy?</string>
+    <string name="reset_confirm_2">Sigurado ka ba? Hindi ito maaaring bawiin.</string>
+    <string name="data_local_note">Ang lahat ng iyong data ay nananatili sa device na ito. Walang ini-upload sa anumang server.</string>
+    <string name="detected_region_note">Natukoy mula sa iyong device: %1$s</string>
+    <string name="more_section_title">Higit pa</string>
+    <string name="share_app">Ibahagi ang app na ito</string>
+    <string name="share_app_message">Tingnan ang %1$s — ang app na ginagamit ko para subaybayan ang aking mga gastos: %2$s</string>
+    <string name="rate_us">I-rate kami</string>
+    <string name="about_section_title">Tungkol sa App</string>
+    <string name="customer_id_label">Customer ID</string>
+    <string name="customer_id_copied">Nakopya ang Customer ID</string>
+    <string name="powered_by_footer">Pinapagana ng AG Tech</string>
+    <string name="app_version_label">Bersyon 1.0</string>
+
+    <string name="sms_detection_title">Pagtuklas ng SMS</string>
+    <string name="sms_detection_toggle_label">Tuklasin ang mga transaksyon mula sa SMS</string>
+    <string name="sms_detection_description">Kapag nakatanggap ka ng bank, UPI, o card SMS, hihingi ang app ng pahintulot na basahin lamang ang isang mensaheng iyon, pagkatapos ay idaragdag ito sa review queue — walang nai-save hanggang hindi mo ito kinukumpirma.</string>
+    <string name="sms_pending_banner">%1$d transaksyon na natukoy mula sa SMS — i-tap upang suriin</string>
+    <string name="sms_review_title">Suriin ang %1$d Transaksyon</string>
+    <string name="sms_review_subtitle">Kumpirmahin o i-edit ang bawat isa bago ito mai-save bilang gastos.</string>
+    <string name="sms_accept">Tanggapin</string>
+    <string name="sms_dismiss">Tanggihan</string>
+
+    <string name="toast_expense_added">Naidagdag ang gastos.</string>
+    <string name="toast_expense_updated">Na-update ang gastos.</string>
+    <string name="toast_expense_deleted">Natanggal ang gastos.</string>
+    <string name="toast_all_reset">Na-reset ang lahat ng data.</string>
+    <string name="error_invalid_amount">Maglagay ng wastong halaga na mas malaki sa 0.</string>
+    <string name="error_select_date">Pumili ng petsa.</string>
+
+    <string name="done">Tapos na</string>
+    <string name="close">Isara</string>
+    <string name="ok">OK</string>
+    <string name="select_date">Pumili ng petsa</string>
+    <string name="splash_tagline">Subaybayan ang bawat gastos nang walang kahirap-hirap</string>
+    <string name="calendar_picker_title">Kalendaryo</string>
+
+    <string name="cat_housing">Tirahan</string>
+    <string name="cat_food">Pagkain at Grocery</string>
+    <string name="cat_transport">Transportasyon</string>
+    <string name="cat_utilities">Mga Utility</string>
+    <string name="cat_entertainment">Libangan</string>
+    <string name="cat_healthcare">Pangangalagang Pangkalusugan</string>
+    <string name="cat_shopping">Pamimili</string>
+    <string name="cat_subscriptions">Mga Subscription</string>
+    <string name="cat_savings">Ipon at Pamumuhunan</string>
+    <string name="cat_other">Iba pa</string>
+    <string name="cat_debt_payments">Bayad ng Utang o Loan</string>
+
+    <string name="budget_title">Badyet</string>
+    <string name="manage_budget">Pamahalaan ang Badyet</string>
+    <string name="budget_set_prompt">Magtakda ng buwanang badyet upang makita kung paano ang iyong paggastos.</string>
+    <string name="budget_set_cta">Magtakda ng Badyet</string>
+    <string name="budget_spent_of">%1$s ng %2$s</string>
+    <string name="budget_left">%1$s natitira</string>
+    <string name="budget_over_by">%1$s na hihigit sa badyet</string>
+    <string name="budget_pacing_hint">%1$s/araw para sa %2$d pang araw</string>
+    <string name="budget_manage_sheet_title">Pamahalaan ang Badyet</string>
+    <string name="budget_overall_label">Kabuuang Buwanang Badyet</string>
+    <string name="budget_overall_hint">hal. 30000</string>
+    <string name="error_invalid_budget_amount">Maglagay ng wastong halaga, o iwanang blangko upang i-clear.</string>
+
+    <string name="debts_title">Mga Utang at Loan</string>
+    <string name="bento_debts_title">Mga Utang at Loan</string>
+    <string name="debts_net_title">Net na Posisyon</string>
+    <string name="debts_net_owed_to_you">Kabuuang utang sa iyo</string>
+    <string name="debts_net_you_owe">Kabuuang utang mo</string>
+    <string name="debts_net_settled">Naaayos na ang lahat</string>
+    <string name="debts_section_you_owe">Utang Mo</string>
+    <string name="debts_section_owed_to_you">Utang sa Iyo</string>
+    <string name="debts_section_settled">Naaayos</string>
+    <string name="debts_empty_title">Wala pang mga utang o loan</string>
+    <string name="debts_empty_subtitle">Subaybayan ang perang utang mo o utang sa iyo, na may plano sa pagbabayad para sa bawat isa.</string>
+    <string name="delete_debt_confirm">Tanggalin ang utang na ito at ang buong kasaysayan ng bayad nito? Hindi ito maaaring bawiin.</string>
+
+    <string name="debt_add_title">Magdagdag ng Utang o Loan</string>
+    <string name="debt_edit_title">I-edit ang Utang o Loan</string>
+    <string name="debt_direction_label">Direksyon</string>
+    <string name="debt_direction_owe">May Utang Ako</string>
+    <string name="debt_direction_owed">May Utang sa Akin</string>
+    <string name="debt_name_label">Pangalan</string>
+    <string name="debt_name_hint">hal. Car Loan, Personal na Utang sa Kaibigan</string>
+    <string name="error_debt_name_required">Maglagay ng pangalan para sa utang na ito.</string>
+    <string name="debt_principal_label">Pangunahing Halaga</string>
+    <string name="debt_principal_hint">Kabuuang halagang hiniram o ipinagpautang</string>
+    <string name="debt_rate_label">Rate ng Interes (% bawat taon)</string>
+    <string name="debt_rate_hint">hal. 12 (ilagay ang 0 kung walang interes)</string>
+    <string name="error_debt_rate_invalid">Maglagay ng wastong rate, 0 pataas.</string>
+    <string name="debt_payment_label">Buwanang Bayad (EMI)</string>
+    <string name="debt_payment_hint">hal. 5000 (ilagay ang 0 kung walang nakatakdang iskedyul)</string>
+    <string name="error_debt_payment_invalid">Maglagay ng wastong halaga, 0 pataas.</string>
+    <string name="debt_start_date_label">Petsa ng Pagsisimula</string>
+    <string name="debt_notes_label">Mga Tala (opsyonal)</string>
+    <string name="debt_notes_hint">hal. pangalan ng nagpapautang, layunin</string>
+
+    <string name="debt_paid_of_principal">%1$s na nabayad sa %2$s</string>
+    <string name="debt_settled_badge">Naaayos</string>
+    <string name="debt_payoff_projection">Mababayaran sa %1$s (%2$d buwan)</string>
+    <string name="debt_insight_accelerate">Mababayaran nang %1$d buwan nang mas maaga sa pamamagitan ng pagdagdag ng %2$s/buwan.</string>
+    <string name="debt_no_emi_hint">Magdagdag ng buwanang bayad upang makita ang pagtataya ng pagbabayad.</string>
+    <string name="debt_reopen">Buksan muli</string>
+    <string name="debt_mark_settled">Markahan bilang Naaayos</string>
+    <string name="debt_history_title">Kasaysayan ng Bayad</string>
+    <string name="debt_no_payments">Wala pang naitaang mga bayad.</string>
+    <string name="debt_record_payment">Itala ang Bayad</string>
+
+    <string name="payment_note_label">Tala (opsyonal)</string>
+    <string name="payment_note_hint">hal. bahagyang bayad, binayad sa cash</string>
+
+    <string name="salary_label">Sahod</string>
+    <string name="budget_cap_label">Limitasyon ng Badyet</string>
+    <string name="spending_by_category">Paggastos ayon sa Kategorya</string>
+    <string name="recent_transactions_label">Mga Kamakailan na Transaksyon</string>
+    <string name="view_all_label">Tingnan Lahat</string>
+    <string name="salary_set_title">Itakda ang Buwanang Kita</string>
+    <string name="salary_set_label">Buwanang Take-Home</string>
+    <string name="salary_set_hint">hal. 50000</string>
+    <string name="stat_spent_label">Ginastos</string>
+    <string name="stat_remaining_label">Natitira</string>
+    <string name="months_budget_label">Badyet ng %1$s</string>
+</resources>

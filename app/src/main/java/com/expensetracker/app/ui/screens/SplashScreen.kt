@@ -22,28 +22,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
-import com.expensetracker.app.ui.theme.AccentIndigo
-import com.expensetracker.app.ui.theme.AccentIndigoDark
+import com.expensetracker.app.ui.theme.AccentGreenDark
+import com.expensetracker.app.ui.theme.AccentGreenMid
+import com.expensetracker.app.ui.theme.BrandAmber
 import kotlinx.coroutines.delay
 
 private const val SPLASH_HOLD_MS = 1700L
 
 /**
- * A short, self-animated brand moment shown once on cold start: the same wallet+coin motif
- * as the launcher icon fades/scales in, then a coin "drops" into the wallet with a small
- * bounce, before auto-advancing to the dashboard. Pure Compose — no extra splash-screen
- * library/dependency needed, and no network or assets involved (just drawn shapes), so it
- * costs nothing and stays fully offline like the rest of the app.
+ * Brand splash: deep forest-green gradient background (matching the budget ring card),
+ * wallet icon with amber coin dropping in, app name + tagline fade up.
  */
 @Composable
 fun SplashScreen(onFinished: () -> Unit) {
@@ -51,6 +51,7 @@ fun SplashScreen(onFinished: () -> Unit) {
     val walletAlpha = remember { Animatable(0f) }
     val coinDrop = remember { Animatable(-1.4f) }
     val textAlpha = remember { Animatable(0f) }
+    val ringProgress = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
         walletScale.animateTo(1f, animationSpec = tween(500, easing = FastOutSlowInEasing))
@@ -66,6 +67,10 @@ fun SplashScreen(onFinished: () -> Unit) {
         )
     }
     LaunchedEffect(Unit) {
+        delay(400)
+        ringProgress.animateTo(0.72f, animationSpec = tween(900, easing = FastOutSlowInEasing))
+    }
+    LaunchedEffect(Unit) {
         delay(500)
         textAlpha.animateTo(1f, animationSpec = tween(450))
     }
@@ -77,58 +82,110 @@ fun SplashScreen(onFinished: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(AccentIndigo, AccentIndigoDark))),
+            .drawBehind {
+                // Float.MAX_VALUE * √2 overflows float32 to Infinity, making
+                // Skia's gradient matrix degenerate → IllegalArgumentException.
+                // Use actual draw-scope size for a well-formed diagonal gradient.
+                if (size.width > 0f && size.height > 0f) {
+                    drawRect(
+                        brush = Brush.linearGradient(
+                            colors = listOf(AccentGreenDark, AccentGreenMid),
+                            start = Offset.Zero,
+                            end = Offset(size.width, size.height)
+                        )
+                    )
+                }
+            },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+            // Icon area: amber ring + wallet-coin combo
             Box(
                 modifier = Modifier
-                    .size(112.dp)
+                    .size(140.dp)
                     .scale(walletScale.value)
                     .alpha(walletAlpha.value),
                 contentAlignment = Alignment.Center
             ) {
-                Canvas(modifier = Modifier.size(112.dp)) {
+                Canvas(modifier = Modifier.size(140.dp)) {
                     val w = size.width
                     val h = size.height
+                    val center = Offset(w / 2f, h / 2f)
 
-                    // Wallet body (rounded rect, centered)
-                    val walletWidth = w * 0.62f
-                    val walletHeight = h * 0.40f
-                    val walletLeft = (w - walletWidth) / 2f
-                    val walletTop = (h - walletHeight) / 2f
-                    val corner = CornerRadius(walletWidth * 0.12f, walletWidth * 0.12f)
+                    // ── Amber progress ring around the icon ──────────────────
+                    val ringStroke = 8.dp.toPx()
+                    val ringInset = ringStroke / 2f + 4.dp.toPx()
+                    val ringSize = Size(w - ringInset * 2, h - ringInset * 2)
+                    // Track
+                    drawArc(
+                        color = Color.White.copy(alpha = 0.12f),
+                        startAngle = 135f,
+                        sweepAngle = 270f,
+                        useCenter = false,
+                        topLeft = Offset(ringInset, ringInset),
+                        size = ringSize,
+                        style = Stroke(width = ringStroke, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+                    )
+                    // Progress arc (amber)
+                    if (ringProgress.value > 0f) {
+                        drawArc(
+                            color = BrandAmber,
+                            startAngle = 135f,
+                            sweepAngle = 270f * ringProgress.value,
+                            useCenter = false,
+                            topLeft = Offset(ringInset, ringInset),
+                            size = ringSize,
+                            style = Stroke(width = ringStroke, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+                        )
+                    }
+
+                    // ── Wallet body ──────────────────────────────────────────
+                    val walletW = w * 0.52f
+                    val walletH = h * 0.36f
+                    val walletLeft = center.x - walletW / 2f
+                    val walletTop = center.y - walletH / 2f
+                    val corner = CornerRadius(walletW * 0.14f, walletW * 0.14f)
                     drawRoundRect(
                         color = Color.White,
                         topLeft = Offset(walletLeft, walletTop),
-                        size = Size(walletWidth, walletHeight),
+                        size = Size(walletW, walletH),
                         cornerRadius = corner
                     )
-                    // Flap accent near the top of the wallet — uses the dark brand violet
-                    // directly (not AccentIndigoLight, which is now a pale lavender tint built
-                    // for light surfaces and would barely show up against this white wallet).
+                    // Flap — forest green mid-tone on white wallet
                     drawRoundRect(
-                        color = AccentIndigoDark,
+                        color = AccentGreenMid,
                         topLeft = Offset(walletLeft, walletTop),
-                        size = Size(walletWidth, walletHeight * 0.22f),
-                        cornerRadius = CornerRadius(walletWidth * 0.12f, walletWidth * 0.12f)
+                        size = Size(walletW, walletH * 0.24f),
+                        cornerRadius = CornerRadius(walletW * 0.14f, walletW * 0.14f)
                     )
 
-                    // Coin drops in from above into its resting spot on the wallet's edge
-                    val coinRadius = walletWidth * 0.16f
-                    val restCenter = Offset(walletLeft + walletWidth * 0.74f, walletTop + walletHeight * 0.52f)
+                    // ── Amber coin drops in ──────────────────────────────────
+                    val coinR = walletW * 0.18f
+                    val restCenter = Offset(walletLeft + walletW * 0.76f, walletTop + walletH * 0.54f)
                     val travel = h * 0.5f
                     translate(top = coinDrop.value * travel) {
-                        drawCircle(color = AccentIndigoDark, radius = coinRadius, center = restCenter)
+                        // Amber coin body
+                        drawCircle(color = BrandAmber, radius = coinR, center = restCenter)
+                        // Inner ring detail
                         drawCircle(
-                            color = Color.White.copy(alpha = 0.55f),
-                            radius = coinRadius * 0.4f,
-                            center = restCenter
+                            color = Color(0xFFFF8C00),
+                            radius = coinR * 0.60f,
+                            center = restCenter,
+                            style = Stroke(width = coinR * 0.12f)
+                        )
+                        // Shine
+                        drawCircle(
+                            color = Color.White.copy(alpha = 0.50f),
+                            radius = coinR * 0.30f,
+                            center = restCenter.copy(x = restCenter.x - coinR * 0.15f, y = restCenter.y - coinR * 0.15f)
                         )
                     }
                 }
             }
-            Spacer(Modifier.height(22.dp))
+
+            Spacer(Modifier.height(24.dp))
+
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleLarge,
@@ -139,7 +196,7 @@ fun SplashScreen(onFinished: () -> Unit) {
             Text(
                 text = stringResource(R.string.splash_tagline),
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(alpha = 0.85f),
+                color = BrandAmber.copy(alpha = 0.90f),
                 modifier = Modifier.alpha(textAlpha.value)
             )
         }

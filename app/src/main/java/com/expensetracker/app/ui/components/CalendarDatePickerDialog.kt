@@ -118,7 +118,7 @@ fun CalendarDatePickerDialog(
                         dayToIso = { day -> DateUtils.hijriToIso(hijriYear, hijriMonth, day) },
                         selectedDateIso = selectedDateIso,
                         todayIso = todayIso,
-                        onDaySelected = { selectedDateIso = it }
+                        onDaySelected = { onConfirm(it) }
                     )
                 } else {
                     MonthNavHeader(
@@ -135,16 +135,11 @@ fun CalendarDatePickerDialog(
                         dayToIso = { day -> "$gregorianMonthKey-${day.toString().padStart(2, '0')}" },
                         selectedDateIso = selectedDateIso,
                         todayIso = todayIso,
-                        onDaySelected = { selectedDateIso = it }
+                        onDaySelected = { onConfirm(it) }
                     )
                 }
 
-                Spacer(Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
-                    Spacer(Modifier.width(4.dp))
-                    TextButton(onClick = { onConfirm(selectedDateIso) }) { Text(stringResource(R.string.ok)) }
-                }
+                Spacer(Modifier.height(8.dp))
             }
         }
     }

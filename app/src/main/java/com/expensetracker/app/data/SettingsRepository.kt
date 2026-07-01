@@ -6,7 +6,7 @@ import android.content.Context
  * Tiny SharedPreferences wrapper for the few persistent settings the app needs.
  * No cloud sync, no account, nothing leaves the device.
  */
-class SettingsRepository(context: Context) {
+class SettingsRepository(private val context: Context) {
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
@@ -15,8 +15,17 @@ class SettingsRepository(context: Context) {
         get() = prefs.getString(KEY_LANGUAGE, "en") ?: "en"
         set(value) = prefs.edit().putString(KEY_LANGUAGE, value).apply()
 
+    /**
+     * True only after the user has explicitly picked a currency on the setup screen.
+     * Intentionally separate from KEY_CURRENCY so that existing installs with a
+     * previously auto-detected/defaulted currency still see the picker on next launch.
+     */
+    var currencySetupDone: Boolean
+        get() = prefs.getBoolean(KEY_CURRENCY_SETUP_DONE, false)
+        set(value) = prefs.edit().putBoolean(KEY_CURRENCY_SETUP_DONE, value).apply()
+
     var currencySymbol: String
-        get() = prefs.getString(KEY_CURRENCY, "$") ?: "$"
+        get() = prefs.getString(KEY_CURRENCY, null) ?: "$"
         set(value) = prefs.edit().putString(KEY_CURRENCY, value).apply()
 
     /** Optional first name used to personalize the Home dashboard greeting
@@ -36,6 +45,12 @@ class SettingsRepository(context: Context) {
     var smsDetectionEnabled: Boolean
         get() = prefs.getBoolean(KEY_SMS_DETECTION_ENABLED, false)
         set(value) = prefs.edit().putBoolean(KEY_SMS_DETECTION_ENABLED, value).apply()
+
+    /** Monthly take-home income / salary — shown on the Home dashboard alongside the budget cap
+     * so the user can see both what they earn and what they intend to spend. 0 means "not set". */
+    var monthlySalary: Double
+        get() = java.lang.Double.longBitsToDouble(prefs.getLong(KEY_MONTHLY_SALARY, 0L))
+        set(value) = prefs.edit().putLong(KEY_MONTHLY_SALARY, java.lang.Double.doubleToLongBits(value)).apply()
 
     /**
      * A short, locally generated identifier unique to this install — never transmitted
@@ -59,9 +74,11 @@ class SettingsRepository(context: Context) {
         private const val PREFS_NAME = "expense_tracker_settings"
         private const val KEY_LANGUAGE = "language"
         private const val KEY_CURRENCY = "currency"
+        private const val KEY_CURRENCY_SETUP_DONE = "currency_setup_done"
         private const val KEY_DISPLAY_NAME = "display_name"
         private const val KEY_FIRST_RUN_DONE = "first_run_done"
         private const val KEY_CUSTOMER_ID = "customer_id"
         private const val KEY_SMS_DETECTION_ENABLED = "sms_detection_enabled"
+        private const val KEY_MONTHLY_SALARY = "monthly_salary"
     }
 }
