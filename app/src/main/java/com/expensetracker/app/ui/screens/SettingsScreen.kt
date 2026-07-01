@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -26,11 +25,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -51,13 +47,15 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -98,7 +96,35 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 
-private val commonCurrencySymbols = listOf("$", "€", "£", "¥", "₹", "₪", "₩", "₺", "ر.س", "د.إ", "R$", "₱", "฿", "₫", "RM", "Rp")
+private data class CurrencyOption(val symbol: String, val label: String)
+
+private val allCurrencies = listOf(
+    CurrencyOption("$",    "$ — US Dollar (USA / Canada / Australia)"),
+    CurrencyOption("€",    "€ — Euro (Europe)"),
+    CurrencyOption("£",    "£ — British Pound (UK)"),
+    CurrencyOption("₹",    "₹ — Indian Rupee (India)"),
+    CurrencyOption("₨",    "₨ — Pakistani Rupee (Pakistan)"),
+    CurrencyOption("৳",    "৳ — Bangladeshi Taka (Bangladesh)"),
+    CurrencyOption("₱",    "₱ — Philippine Peso (Philippines)"),
+    CurrencyOption("ر.س",  "SAR — Saudi Riyal (Saudi Arabia)"),
+    CurrencyOption("د.إ",  "AED — UAE Dirham (UAE)"),
+    CurrencyOption("ج.م",  "EGP — Egyptian Pound (Egypt)"),
+    CurrencyOption("د.ك",  "KWD — Kuwaiti Dinar (Kuwait)"),
+    CurrencyOption("ر.ق",  "QAR — Qatari Riyal (Qatar)"),
+    CurrencyOption("¥",    "¥ — Japanese Yen / Chinese Yuan (JP / CN)"),
+    CurrencyOption("₩",    "₩ — Korean Won (South Korea)"),
+    CurrencyOption("₺",    "₺ — Turkish Lira (Turkey)"),
+    CurrencyOption("₽",    "₽ — Russian Ruble (Russia)"),
+    CurrencyOption("R$",   "R$ — Brazilian Real (Brazil)"),
+    CurrencyOption("Rp",   "Rp — Indonesian Rupiah (Indonesia)"),
+    CurrencyOption("RM",   "RM — Malaysian Ringgit (Malaysia)"),
+    CurrencyOption("฿",    "฿ — Thai Baht (Thailand)"),
+    CurrencyOption("₫",    "₫ — Vietnamese Dong (Vietnam)"),
+    CurrencyOption("₪",    "₪ — Israeli Shekel (Israel)"),
+    CurrencyOption("₦",    "₦ — Nigerian Naira (Nigeria)"),
+    CurrencyOption("R",    "R — South African Rand (South Africa)"),
+    CurrencyOption("KSh",  "KSh — Kenyan Shilling (Kenya)"),
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -120,8 +146,10 @@ fun SettingsScreen(
     var pendingCurrencySymbol by remember { mutableStateOf<String?>(null) }
     var rateText by remember { mutableStateOf("") }
     var rateError by remember { mutableStateOf(false) }
+    var langExpanded by remember { mutableStateOf(false) }
+    var currExpanded by remember { mutableStateOf(false) }
 
-    val detectedCurrency = remember { CurrencyLocaleMapper.detectFromDevice() }
+    val detectedCurrency = remember { CurrencyLocaleMapper.detectFromDevice(context) }
     val customerIdCopiedLabel = stringResource(R.string.customer_id_copied)
 
     // Drives a gentle staggered fade/slide-in for each section the first time this screen
@@ -135,6 +163,7 @@ fun SettingsScreen(
     // reliable across emulators/devices instead of waiting on the framework callback.
     fun changeLanguage(pref: String) {
         viewModel.setLanguagePref(pref)
+        onBack()  // Pop back to dashboard before recreating so the back stack is clean
         activity?.recreate()
     }
 
@@ -146,6 +175,7 @@ fun SettingsScreen(
         if (newSymbol.isNotBlank() && newSymbol != currencySymbol) {
             if (allExpenses.isEmpty()) {
                 viewModel.setCurrencySymbol(newSymbol)
+                onBack()
             } else {
                 rateText = ""
                 rateError = false
@@ -235,7 +265,10 @@ fun SettingsScreen(
                     label = { Text(stringResource(R.string.your_name_hint)) },
                     singleLine = true,
                     trailingIcon = {
-                        IconButton(onClick = { viewModel.setDisplayName(nameInput.trim()) }) {
+                        IconButton(onClick = {
+                            viewModel.setDisplayName(nameInput.trim())
+                            onBack()
+                        }) {
                             Icon(Icons.Filled.Check, contentDescription = stringResource(R.string.done))
                         }
                     },
@@ -254,26 +287,39 @@ fun SettingsScreen(
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))
                 Spacer(Modifier.height(8.dp))
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = CardWhite),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                val langOptions = listOf(
+                    "en" to stringResource(R.string.language_english),
+                    "ar" to stringResource(R.string.language_arabic),
+                    "hi" to stringResource(R.string.language_hindi),
+                    "ur" to stringResource(R.string.language_urdu),
+                    "tl" to stringResource(R.string.language_tagalog),
+                )
+                val currentLangLabel = langOptions.firstOrNull { it.first == languagePref }?.second ?: "English"
+                ExposedDropdownMenuBox(
+                    expanded = langExpanded,
+                    onExpandedChange = { langExpanded = it }
                 ) {
-                    Column(modifier = Modifier.padding(8.dp)) {
-                        LanguageOption(
-                            label = stringResource(R.string.language_english),
-                            selected = languagePref == "en",
-                            onClick = { changeLanguage("en") }
-                        )
-                        LanguageOption(
-                            label = stringResource(R.string.language_arabic),
-                            selected = languagePref == "ar",
-                            onClick = { changeLanguage("ar") }
-                        )
-                        LanguageOption(
-                            label = stringResource(R.string.language_hindi),
-                            selected = languagePref == "hi",
-                            onClick = { changeLanguage("hi") }
-                        )
+                    OutlinedTextField(
+                        value = currentLangLabel,
+                        onValueChange = {},
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = langExpanded) },
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                        modifier = Modifier.fillMaxWidth().menuAnchor()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = langExpanded,
+                        onDismissRequest = { langExpanded = false }
+                    ) {
+                        langOptions.forEach { (code, label) ->
+                            DropdownMenuItem(
+                                text = { Text(label) },
+                                onClick = { langExpanded = false; changeLanguage(code) },
+                                trailingIcon = if (languagePref == code) {
+                                    { Icon(Icons.Filled.Check, contentDescription = null, tint = AccentIndigo) }
+                                } else null
+                            )
+                        }
                     }
                 }
             }
@@ -289,36 +335,32 @@ fun SettingsScreen(
                     color = TextSecondary
                 )
                 Spacer(Modifier.height(8.dp))
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(commonCurrencySymbols) { symbol ->
-                        val selected = symbol == currencySymbol
-                        val chipBg by animateColorAsState(
-                            targetValue = if (selected) AccentIndigo else CardWhite,
-                            animationSpec = tween(160),
-                            label = "currencyChipBg"
-                        )
-                        val chipFg by animateColorAsState(
-                            targetValue = if (selected) OnAccent else MaterialTheme.colorScheme.onSurface,
-                            animationSpec = tween(160),
-                            label = "currencyChipFg"
-                        )
-                        Box(
-                            modifier = Modifier
-                                .background(color = chipBg, shape = RoundedCornerShape(8.dp))
-                                .clickableNoRipple { requestCurrencyChange(symbol) }
-                                .padding(horizontal = 14.dp, vertical = 10.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            if (CurrencyLocaleMapper.isSaudiRiyalSymbol(symbol)) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_saudi_riyal),
-                                    contentDescription = symbol,
-                                    tint = chipFg,
-                                    modifier = Modifier.size(16.dp)
-                                )
-                            } else {
-                                Text(text = symbol, color = chipFg)
-                            }
+                val currentCurrencyLabel = allCurrencies.firstOrNull { it.symbol == currencySymbol }?.label
+                    ?: currencySymbol
+                ExposedDropdownMenuBox(
+                    expanded = currExpanded,
+                    onExpandedChange = { currExpanded = it }
+                ) {
+                    OutlinedTextField(
+                        value = currentCurrencyLabel,
+                        onValueChange = {},
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = currExpanded) },
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                        modifier = Modifier.fillMaxWidth().menuAnchor()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = currExpanded,
+                        onDismissRequest = { currExpanded = false }
+                    ) {
+                        allCurrencies.forEach { option ->
+                            DropdownMenuItem(
+                                text = { Text(option.label) },
+                                onClick = { currExpanded = false; requestCurrencyChange(option.symbol) },
+                                trailingIcon = if (currencySymbol == option.symbol) {
+                                    { Icon(Icons.Filled.Check, contentDescription = null, tint = AccentIndigo) }
+                                } else null
+                            )
                         }
                     }
                 }
@@ -468,6 +510,7 @@ fun SettingsScreen(
                     } else {
                         viewModel.convertCurrency(newSymbol, rate) {
                             pendingCurrencySymbol = null
+                            onBack()
                         }
                     }
                 }) { Text(stringResource(R.string.convert)) }
@@ -549,21 +592,6 @@ private fun SettingsSectionHeader(icon: ImageVector, title: String) {
         }
         Spacer(Modifier.width(10.dp))
         Text(title, style = MaterialTheme.typography.titleMedium)
-    }
-}
-
-@Composable
-private fun LanguageOption(label: String, selected: Boolean, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickableNoRipple(onClick)
-            .padding(vertical = 8.dp, horizontal = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(selected = selected, onClick = onClick)
-        Spacer(Modifier.width(8.dp))
-        Text(label, style = MaterialTheme.typography.bodyLarge)
     }
 }
 

@@ -24,6 +24,7 @@ fun categoryDisplayName(category: CategoryEntity): String {
         "cat_subscriptions" -> R.string.cat_subscriptions
         "cat_savings" -> R.string.cat_savings
         "cat_other" -> R.string.cat_other
+        "cat_debt_payments" -> R.string.cat_debt_payments
         else -> null
     }
     return if (resId != null) stringResource(resId) else (category.customName ?: "")

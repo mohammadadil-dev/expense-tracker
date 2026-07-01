@@ -1,17 +1,13 @@
 package com.expensetracker.app.ui.screens
 
 import android.widget.Toast
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,18 +34,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AccountBalanceWallet
-import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -69,8 +61,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -80,31 +74,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.ExpenseEntity
+import com.expensetracker.app.ui.ads.BannerAdView
+import com.expensetracker.app.ui.ads.InterstitialAdManager
 import com.expensetracker.app.data.PendingSmsExpense
 import com.expensetracker.app.ui.components.AddEditExpenseSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.BentoCard
 import com.expensetracker.app.ui.components.BudgetManageSheet
+import com.expensetracker.app.ui.components.BudgetRingCard
 import com.expensetracker.app.ui.components.CategoryManageSheet
-import com.expensetracker.app.ui.components.CategorySlice
-import com.expensetracker.app.ui.components.DonutChart
 import com.expensetracker.app.ui.components.ExpenseGridCard
 import com.expensetracker.app.ui.components.ExpensePrefill
 import com.expensetracker.app.ui.components.ExpenseRowCard
 import com.expensetracker.app.ui.components.ExpenseViewMode
 import com.expensetracker.app.ui.components.ExpenseViewModeToggle
-import com.expensetracker.app.ui.components.FinancialHealthRing
-import com.expensetracker.app.ui.components.HealthSubScore
+import com.expensetracker.app.ui.components.IncomeBudgetTiles
 import com.expensetracker.app.ui.components.InsightFeedCard
 import com.expensetracker.app.ui.components.MonthCalendarView
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.RecentTransactionsSection
+import com.expensetracker.app.ui.components.SalarySetDialog
+import com.expensetracker.app.ui.components.SpendingCategorySection
 import com.expensetracker.app.ui.components.SmsReviewSheet
+import com.expensetracker.app.ui.components.TransactionActionSheet
 import com.expensetracker.app.ui.components.TrendBarChart
 import com.expensetracker.app.ui.components.TrendPoint
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.BorderLight
-import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.NeonCyan
 import com.expensetracker.app.ui.theme.NeonViolet
@@ -113,6 +110,7 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.WarningAmber
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.DateUtils
+import com.expensetracker.app.util.DebtInsights
 import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.FinancialInsights
 import com.expensetracker.app.util.Formatters
@@ -127,16 +125,21 @@ import kotlin.math.abs
 @Composable
 fun DashboardScreen(
     viewModel: ExpenseViewModel,
-    onOpenSettings: () -> Unit
+    onOpenSettings: () -> Unit,
+    onOpenDebts: () -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
     val monthExpenses by viewModel.monthExpenses.collectAsState()
     val allExpenses by viewModel.allExpenses.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val currentMonthKey by viewModel.currentMonthKey.collectAsState()
+    val debts by viewModel.debts.collectAsState()
+    val debtPayments by viewModel.debtPayments.collectAsState()
+    val debtNetPosition = remember(debts, debtPayments) { DebtInsights.computeNetPosition(debts, debtPayments) }
     val pendingSmsExpenses by viewModel.pendingSmsExpenses.collectAsState()
     val budgets by viewModel.budgets.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
+    val monthlySalary by viewModel.monthlySalary.collectAsState()
     val locale: Locale = LocalConfiguration.current.locales[0]
 
     val context = LocalContext.current
@@ -144,17 +147,31 @@ fun DashboardScreen(
     var editingExpense by remember { mutableStateOf<ExpenseEntity?>(null) }
     var showCategorySheet by remember { mutableStateOf(false) }
     var expensePendingDelete by remember { mutableStateOf<ExpenseEntity?>(null) }
+    // Expense tapped — shows action sheet (Edit / Delete)
+    var actionExpense by remember { mutableStateOf<ExpenseEntity?>(null) }
     var showSmsReviewSheet by remember { mutableStateOf(false) }
     var smsItemBeingAccepted by remember { mutableStateOf<PendingSmsExpense?>(null) }
     var showBudgetSheet by remember { mutableStateOf(false) }
+    var showSalaryDialog by remember { mutableStateOf(false) }
     // Tracks which way the user just navigated so the month label slides the right direction.
     var monthSlideDirection by remember { mutableStateOf(1) }
     var viewMode by remember { mutableStateOf(ExpenseViewMode.DAY) }
     var selectedCalendarDay by remember(currentMonthKey) { mutableStateOf<String?>(null) }
-    // Drives the Bento Grid / AI Insights Feed entrance stagger — flips true once, right after
-    // first composition, the same "fade everything in a beat after landing" pattern Settings uses.
+    // Drives entrance stagger — flips true once, right after first composition.
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { contentVisible = true }
+
+    // AdMob: get the host Activity so the interstitial can show full-screen.
+    val activity = context as? android.app.Activity
+    // Pre-load the interstitial in the background so it's ready when the user taps Export PDF.
+    LaunchedEffect(Unit) { activity?.let { InterstitialAdManager.preload(it) } }
+
+    // Cat_debt_payments is auto-managed; hide it from the manual Add Expense picker so
+    // users can't accidentally file an expense there by hand (debt payments create their
+    // linked expense automatically when recorded from the Debts screen).
+    val expensePickerCategories = remember(categories) {
+        categories.filter { it.nameKey != "cat_debt_payments" }
+    }
 
     val categoryById = remember(categories) { categories.associateBy { it.id } }
 
@@ -163,17 +180,15 @@ fun DashboardScreen(
     }
     val totalThisMonth = remember(monthExpenses) { monthExpenses.sumOf { it.amount } }
 
-    // The single overall budget target (categoryId == null) — still needed by BudgetManageSheet
-    // below even though the old standalone BudgetOverviewCard display is gone, folded into the
-    // Budget Remaining bento tile above.
+    // Overall budget target (categoryId == null)
     val overallBudget = remember(budgets) { budgets.find { it.categoryId == null } }
 
     val previousKey = remember(currentMonthKey) { DateUtils.previousMonthKey(currentMonthKey) }
     val previousTotal = remember(allExpenses, previousKey) {
         allExpenses.filter { it.monthKey == previousKey }.sumOf { it.amount }
     }
-    // The Home "Financial Command Center" header's health ring + AI insight feed — one pass of
-    // on-device rules/statistics over the data already loaded above. No network call, no LLM.
+
+    // On-device intelligence — no network call, no LLM.
     val intelligence = remember(monthExpenses, allExpenses, categories, budgets, currentMonthKey, currencySymbol, locale) {
         FinancialInsights.compute(
             monthExpenses = monthExpenses,
@@ -185,8 +200,7 @@ fun DashboardScreen(
             locale = locale
         )
     }
-    // Plain (non-remember) derived value — cheap enough to recompute every recomposition, and
-    // only feeds the Subscription Cost bento tile's subtitle below.
+
     val subscriptionSharePct: String? = if (intelligence.monthlySpend > 0) {
         String.format(Locale.US, "%.0f%%", (intelligence.subscriptionSpend / intelligence.monthlySpend) * 100)
     } else null
@@ -203,24 +217,23 @@ fun DashboardScreen(
         }
     }
 
-    // Groups this month's expenses by exact day (newest day first) so the list can show
-    // "Today" / "Yesterday" / date headers with a per-day subtotal instead of one long flat
-    // list — order within a day follows monthExpenses' own existing order.
     val expensesByDay = remember(monthExpenses) {
         monthExpenses.groupBy { it.date }.toList().sortedByDescending { it.first }
     }
+    // Start by showing the 7 most-recent days; the user can tap "Load more" to see older days.
+    // Reset to 7 whenever the month changes so switching months doesn't carry over a large count.
+    var visibleDayCount by remember(currentMonthKey) { mutableStateOf(7) }
+    val loadMoreLabel = stringResource(R.string.load_more)
     val todayIso = remember { DateUtils.todayIso() }
     val yesterdayIso = remember { DateUtils.yesterdayIso() }
     val todayLabel = stringResource(R.string.today)
     val yesterdayLabel = stringResource(R.string.yesterday)
 
-    // Same expenses, grouped by category instead of by day — backs the "By Category" layout.
     val expensesByCategory = remember(monthExpenses) {
         monthExpenses.groupBy { it.categoryId }
             .toList()
             .sortedByDescending { (_, list) -> list.sumOf { it.amount } }
     }
-    // Backs the Calendar layout: which days have spending, and how much.
     val dailyTotals = remember(monthExpenses) {
         monthExpenses.groupBy { it.date }.mapValues { (_, list) -> list.sumOf { it.amount } }
     }
@@ -230,13 +243,11 @@ fun DashboardScreen(
     val selectedDayExpenses = remember(selectedCalendarDay, monthExpenses) {
         selectedCalendarDay?.let { day -> monthExpenses.filter { it.date == day } } ?: emptyList()
     }
-    // Backs the Grid layout — two expenses per row, newest first.
     val gridRows = remember(monthExpenses) {
         monthExpenses.sortedByDescending { it.date }.chunked(2)
     }
 
-    // PDF export — every label is resolved here (composable scope) so the actual export
-    // function below stays a plain, non-composable click handler.
+    // PDF export strings resolved in composable scope so the exporter stays non-composable.
     val exportReportTitle = stringResource(R.string.export_report_title)
     val exportTotalLabel = stringResource(R.string.export_total_label)
     val exportColDate = stringResource(R.string.date_label)
@@ -250,9 +261,6 @@ fun DashboardScreen(
     val noExpensesLabel = stringResource(R.string.no_expenses_this_month)
     val exportCustomerIdLabel = stringResource(R.string.export_customer_id_label, viewModel.customerId)
     val monthLabelForExport = DateUtils.monthLabel(currentMonthKey, locale)
-    // categoryDisplayName() is itself @Composable, so it can't be called inside remember{}'s
-    // calculation lambda (Compose disallows composable calls there). Resolve every category's
-    // display name here, in plain composable scope, before exportRows' remember block needs it.
     val categoryNameById = categories.associate { it.id to categoryDisplayName(it) }
     val exportRows = remember(monthExpenses, categoryNameById, locale, currencySymbol) {
         monthExpenses.sortedByDescending { it.date }.map { e ->
@@ -266,7 +274,6 @@ fun DashboardScreen(
     }
 
     fun exportMonthAsPdf() {
-        // Nothing to put in a report — don't generate an empty PDF, just tell the user why.
         if (exportRows.isEmpty()) {
             Toast.makeText(context, noExpensesLabel, Toast.LENGTH_SHORT).show()
             return
@@ -291,64 +298,20 @@ fun DashboardScreen(
         PdfExporter.shareOrSave(context, uri, exportChooserTitle)
     }
 
-    val legendEntries = remember(categoryTotals, categories, totalThisMonth) {
-        categories.mapNotNull { cat ->
-            val amt = categoryTotals[cat.id]
-            if (amt != null && amt > 0.0) Triple(cat, amt, if (totalThisMonth > 0) amt / totalThisMonth * 100 else 0.0) else null
-        }.sortedByDescending { it.second }
-    }
-    val slices = legendEntries.map { (cat, amt, _) -> CategorySlice(colorFromHex(cat.colorHex), amt) }
-
-    // "vs last month" comparison — computed directly in the composable body (not inside
-    // remember) since it needs to call stringResource().
-    val deltaSubLabel: String
-    val deltaColor: Color
-    when {
-        previousTotal <= 0.0 && totalThisMonth <= 0.0 -> {
-            deltaSubLabel = stringResource(R.string.stat_no_prior_data)
-            deltaColor = TextMuted
-        }
-        previousTotal <= 0.0 -> {
-            // Unicode triangles (not directional arrow icons) on purpose — they read the same
-            // in both LTR and RTL layouts, so no mirroring logic is needed for Arabic.
-            deltaSubLabel = "▲ " + stringResource(R.string.stat_up_from_zero, Formatters.money(totalThisMonth, currencySymbol))
-            deltaColor = DangerRed
-        }
-        else -> {
-            val percent = ((totalThisMonth - previousTotal) / previousTotal) * 100
-            if (abs(percent) < 0.05) {
-                deltaSubLabel = stringResource(R.string.stat_same_as_last_month)
-                deltaColor = TextMuted
-            } else {
-                val sign = if (percent > 0) "+" else ""
-                val arrow = if (percent > 0) "▲" else "▼"
-                deltaSubLabel = "$arrow $sign${String.format(Locale.US, "%.1f", percent)}% " + stringResource(R.string.stat_vs_last_month)
-                deltaColor = if (percent > 0) DangerRed else SuccessGreen
-            }
-        }
-    }
-
-    // The Monthly Spending bento tile counts up/down toward the new month's number instead of
-    // snapping instantly — a cheap, reliable way to make swiping between months feel alive.
-    val animatedTotal by animateFloatAsState(
-        targetValue = totalThisMonth.toFloat(),
-        animationSpec = tween(450),
-        label = "totalSpentCountUp"
-    )
-
-    // Lets tapping a bento tile smooth-scroll down to the category breakdown card. Index 3 is
-    // positional (header=0, month selector=1, bento grid=2, breakdown=3) — if an item{} block is
-    // added/removed above the breakdown card in the LazyColumn below, update this constant to match.
+    // Scroll anchors for list navigation.
+    // breakdownItemIndex = 3: SpendingCategorySection (tapping subscription tile scrolls here)
+    // expenseListItemIndex = 7: "Expenses this month" header
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val breakdownItemIndex = 3
+    val expenseListItemIndex = 7
     fun scrollToBreakdown() {
         coroutineScope.launch { listState.animateScrollToItem(breakdownItemIndex) }
     }
+    fun scrollToExpenseList() {
+        coroutineScope.launch { listState.animateScrollToItem(expenseListItemIndex) }
+    }
 
-    // Feeds the shared animated background a rough "how far scrolled" cue so its blobs drift
-    // in subtle parallax with this list. Doesn't need to be pixel-exact — it's a decorative
-    // background signal, not a layout calculation.
     val dashboardScrollPx by remember {
         derivedStateOf { listState.firstVisibleItemIndex * 800f + listState.firstVisibleItemScrollOffset }
     }
@@ -356,14 +319,10 @@ fun DashboardScreen(
         BackgroundScrollSignal.pixels.floatValue = dashboardScrollPx
     }
 
-    // If the queue empties out (last item accepted or dismissed) while the review sheet is
-    // open, close it automatically instead of leaving an empty sheet on screen.
     LaunchedEffect(pendingSmsExpenses) {
         if (pendingSmsExpenses.isEmpty()) showSmsReviewSheet = false
     }
 
-    // Dashboard gets its own touch-reactive background instance — a distinct violet/indigo/green
-    // trio so it reads as "this place" rather than reusing whatever color another screen has.
     Box(modifier = Modifier.fillMaxSize()) {
     AnimatedBlobBackground(
         blobColors = listOf(AccentIndigo, NeonViolet, SuccessGreen),
@@ -380,9 +339,6 @@ fun DashboardScreen(
             }
         }
     ) { innerPadding ->
-        // The pending-SMS banner lives in this outer Column, above the LazyColumn — not as a
-        // LazyColumn item{} — so it pushes the list down without touching any item index below
-        // (see breakdownItemIndex above, which a banner item{} would have silently broken).
         Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
             AnimatedVisibility(
                 visible = pendingSmsExpenses.isNotEmpty(),
@@ -398,23 +354,18 @@ fun DashboardScreen(
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxWidth().weight(1f),
-                // Scaffold's innerPadding only reserves space for app/bottom bars, not the FAB —
-                // the FAB floats over content by design. Without extra bottom padding here, the
-                // last row's edit/delete icons end up sitting underneath it (the bug reported
-                // against this exact list). 96dp clears the 56dp FAB plus its 16dp margin with
-                // a little breathing room.
                 contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 96.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+
+            // ── item 0 ─────────────────────────────────────────────────────────
+            // Greeting header + dark indigo Budget Ring card (month nav embedded).
             item {
                 Column {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // weight(1f) reserves the badge's 44dp first, then gives the greeting
-                        // only what's left — so a long display name truncates with an ellipsis
-                        // instead of shrinking/squeezing the settings badge off the row.
                         Text(
                             text = greetingText(displayName),
                             style = MaterialTheme.typography.titleLarge,
@@ -422,10 +373,6 @@ fun DashboardScreen(
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.weight(1f).padding(end = 12.dp)
                         )
-                        // Solid, fully-opaque badge (not a pale tint on a pale backdrop) so it
-                        // reads clearly as a tappable button against the app's light lavender
-                        // background regardless of scroll position or blob overlay underneath.
-                        // Fixed size, no weight — it never shrinks regardless of name length.
                         IconButton(onClick = onOpenSettings, modifier = Modifier.size(44.dp)) {
                             Box(
                                 modifier = Modifier
@@ -443,118 +390,69 @@ fun DashboardScreen(
                             }
                         }
                     }
-                    Spacer(Modifier.height(16.dp))
-                    FinancialHealthRing(
-                        score = intelligence.healthScore.total,
-                        bandLabel = healthBandLabel(intelligence.healthScore.total),
-                        subScores = listOf(
-                            HealthSubScore(stringResource(R.string.health_sub_budget), intelligence.healthScore.budgetScore, 40),
-                            HealthSubScore(stringResource(R.string.health_sub_trend), intelligence.healthScore.trendScore, 25),
-                            HealthSubScore(stringResource(R.string.health_sub_consistency), intelligence.healthScore.consistencyScore, 20),
-                            HealthSubScore(stringResource(R.string.health_sub_subscriptions), intelligence.healthScore.subscriptionScore, 15)
-                        )
-                    )
-                    // The first insight is rendered once, below, inside the "AI Insights Feed"
-                    // list — it used to also be duplicated here as a standalone "hero" card,
-                    // showing the same sentence twice on screen.
-                }
-            }
-
-            item {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = CardWhite),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = {
+                    Spacer(Modifier.height(14.dp))
+                    BudgetRingCard(
+                        currentMonthKey = currentMonthKey,
+                        monthSlideDirection = monthSlideDirection,
+                        monthDisplayLabel = DateUtils.monthLabelForDisplay(currentMonthKey, locale),
+                        totalSpent = totalThisMonth,
+                        overallBudget = overallBudget?.amount,
+                        currencySymbol = currencySymbol,
+                        onNavigatePrev = {
                             monthSlideDirection = -1
                             viewModel.navigateMonth(-1)
-                        }) {
-                            Icon(Icons.Filled.ChevronLeft, contentDescription = null)
-                        }
-                        AnimatedContent(
-                            targetState = currentMonthKey,
-                            transitionSpec = {
-                                if (monthSlideDirection >= 0) {
-                                    (slideInHorizontally(tween(220)) { it / 3 } + fadeIn(tween(220))) togetherWith
-                                        (slideOutHorizontally(tween(220)) { -it / 3 } + fadeOut(tween(220)))
-                                } else {
-                                    (slideInHorizontally(tween(220)) { -it / 3 } + fadeIn(tween(220))) togetherWith
-                                        (slideOutHorizontally(tween(220)) { it / 3 } + fadeOut(tween(220)))
-                                }
-                            },
-                            label = "monthLabel"
-                        ) { key ->
-                            Text(
-                                text = DateUtils.monthLabelForDisplay(key, locale),
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
-                        IconButton(onClick = {
+                        },
+                        onNavigateNext = {
                             monthSlideDirection = 1
                             viewModel.navigateMonth(1)
-                        }) {
-                            Icon(Icons.Filled.ChevronRight, contentDescription = null)
-                        }
-                    }
+                        },
+                        onManageBudget = { showBudgetSheet = true },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
 
+            // ── item 1 ─────────────────────────────────────────────────────────
+            // Salary (green) + Budget Cap (amber-orange) tiles side by side.
             item {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                IncomeBudgetTiles(
+                    monthlySalary = monthlySalary,
+                    overallBudget = overallBudget?.amount,
+                    currencySymbol = currencySymbol,
+                    onSetSalary = { showSalaryDialog = true },
+                    onManageBudget = { showBudgetSheet = true },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // ── item 2 ─────────────────────────────────────────────────────────
+            // Compact side-by-side tiles: Debts net position + Subscription spend.
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     BentoCard(
-                        title = stringResource(R.string.bento_monthly_spending),
-                        value = Formatters.money(animatedTotal.toDouble(), currencySymbol),
-                        subtitle = deltaSubLabel,
-                        icon = Icons.Filled.AccountBalanceWallet,
-                        gradientColors = listOf(AccentIndigo, NeonViolet),
-                        onClick = { scrollToBreakdown() },
+                        title = stringResource(R.string.bento_debts_title),
+                        value = Formatters.money(abs(debtNetPosition.net), currencySymbol),
+                        subtitle = stringResource(
+                            when {
+                                debtNetPosition.net > 0.0 -> R.string.debts_net_owed_to_you
+                                debtNetPosition.net < 0.0 -> R.string.debts_net_you_owe
+                                else -> R.string.debts_net_settled
+                            }
+                        ),
+                        icon = Icons.Filled.AccountBalance,
+                        gradientColors = if (debtNetPosition.net < 0.0) {
+                            listOf(DangerRed, WarningAmber)
+                        } else {
+                            listOf(SuccessGreen, NeonCyan)
+                        },
+                        onClick = onOpenDebts,
                         visible = contentVisible,
                         entranceDelayMillis = 0,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 132.dp)
+                        modifier = Modifier.weight(1f).heightIn(min = 110.dp)
                     )
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        BentoCard(
-                            title = stringResource(R.string.bento_budget_remaining),
-                            value = intelligence.budgetRemaining?.let { Formatters.money(it, currencySymbol) }
-                                ?: stringResource(R.string.bento_budget_no_target),
-                            subtitle = intelligence.overallBudget?.let {
-                                stringResource(R.string.bento_budget_remaining_subtitle, Formatters.money(it, currencySymbol))
-                            },
-                            icon = Icons.Filled.Tune,
-                            gradientColors = listOf(NeonCyan, AccentIndigo),
-                            progress = intelligence.overallBudget?.let { budget ->
-                                if (budget > 0) (intelligence.monthlySpend / budget).toFloat().coerceIn(0f, 1f) else null
-                            },
-                            onClick = { showBudgetSheet = true },
-                            visible = contentVisible,
-                            entranceDelayMillis = 60,
-                            modifier = Modifier.weight(1f).heightIn(min = 132.dp)
-                        )
-                        BentoCard(
-                            title = stringResource(R.string.bento_savings_goal),
-                            value = Formatters.money(intelligence.savingsGoal.projectedSavings, currencySymbol),
-                            subtitle = if (intelligence.savingsGoal.hasEnoughData) {
-                                stringResource(
-                                    R.string.bento_savings_goal_subtitle,
-                                    Formatters.money(intelligence.savingsGoal.targetAmount, currencySymbol)
-                                )
-                            } else {
-                                stringResource(R.string.bento_savings_goal_no_data)
-                            },
-                            icon = Icons.Filled.EmojiEvents,
-                            gradientColors = listOf(SuccessGreen, NeonCyan),
-                            progress = if (intelligence.savingsGoal.hasEnoughData) intelligence.savingsGoal.progress else null,
-                            onClick = { showBudgetSheet = true },
-                            visible = contentVisible,
-                            entranceDelayMillis = 90,
-                            modifier = Modifier.weight(1f).heightIn(min = 132.dp)
-                        )
-                    }
                     BentoCard(
                         title = stringResource(R.string.bento_subscription_cost),
                         value = Formatters.money(intelligence.subscriptionSpend, currencySymbol),
@@ -563,108 +461,40 @@ fun DashboardScreen(
                         gradientColors = listOf(WarningAmber, NeonViolet),
                         onClick = { scrollToBreakdown() },
                         visible = contentVisible,
-                        entranceDelayMillis = 120,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 110.dp)
+                        entranceDelayMillis = 60,
+                        modifier = Modifier.weight(1f).heightIn(min = 110.dp)
                     )
                 }
             }
 
+            // ── item 3 ─────────────────────────────────────────────────────────
+            // Spending by Category — emoji squircle icons + coloured progress bars.
+            // Index 3 is intentional: breakdownItemIndex = 3 and scrollToBreakdown() rely on it.
             item {
-                // A soft pastel-violet tile (not a flat white card) — same rounded "glass" shape
-                // and shadow language as the Bento tiles above, but diluted to a pale gradient so
-                // the donut chart and legend text underneath stay easy to read. The hue echoes the
-                // Monthly Spending tile's indigo/violet pair, since tapping that tile scrolls down
-                // to this card.
-                val breakdownShape = RoundedCornerShape(22.dp)
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(
-                            elevation = 6.dp,
-                            shape = breakdownShape,
-                            ambientColor = AccentIndigo.copy(alpha = 0.18f),
-                            spotColor = NeonViolet.copy(alpha = 0.18f)
-                        )
-                        .clip(breakdownShape)
-                        .background(Brush.linearGradient(listOf(Color(0xFFF3EFFF), Color(0xFFE8E0FF))))
-                        .border(width = 1.dp, color = BorderLight, shape = breakdownShape)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                stringResource(R.string.breakdown_title),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.weight(1f),
-                                maxLines = 1,
-                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                            )
-                            Spacer(Modifier.width(8.dp))
-                            ManageCategoriesButton(onClick = { showCategorySheet = true })
-                        }
-                        Spacer(Modifier.height(12.dp))
-                        if (slices.isEmpty()) {
-                            Text(
-                                stringResource(R.string.no_expenses_breakdown),
-                                color = TextSecondary,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        } else {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                DonutChart(slices = slices, modifier = Modifier.size(120.dp))
-                                Spacer(Modifier.width(16.dp))
-                                Column(modifier = Modifier.weight(1f)) {
-                                    legendEntries.forEach { (cat, amt, pct) ->
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Box(
-                                                modifier = Modifier
-                                                    .size(10.dp)
-                                                    .background(colorFromHex(cat.colorHex), shape = CircleShape)
-                                            )
-                                            Spacer(Modifier.width(8.dp))
-                                            // Category name gets its own full-width line and is
-                                            // capped at one line with an ellipsis fallback — this
-                                            // is what stops long translated names (e.g. Arabic
-                                            // category phrases) from being squeezed into a
-                                            // character-per-line vertical wrap.
-                                            Column(modifier = Modifier.weight(1f)) {
-                                                Text(
-                                                    text = categoryDisplayName(cat),
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                    maxLines = 1,
-                                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                                                )
-                                                Text(
-                                                    text = "${pct.toInt()}%",
-                                                    style = MaterialTheme.typography.labelSmall,
-                                                    color = TextMuted
-                                                )
-                                            }
-                                            Spacer(Modifier.width(8.dp))
-                                            MoneyText(
-                                                formatted = Formatters.money(amt, currencySymbol),
-                                                style = MaterialTheme.typography.labelMedium,
-                                                maxLines = 1,
-                                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                SpendingCategorySection(
+                    categoryTotals = categoryTotals,
+                    categories = categories,
+                    totalThisMonth = totalThisMonth,
+                    currencySymbol = currencySymbol,
+                    onManageCategories = { showCategorySheet = true },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
 
-            // The AI Insights Feed — social-media-style cards, one per on-device insight computed
-            // above. Inserted right after the breakdown card (which stays at breakdownItemIndex =
-            // 3 above); appending here instead of before it means that index doesn't shift.
+            // ── item 4 ─────────────────────────────────────────────────────────
+            // Recent Transactions — last 5 expenses from this month.
+            item {
+                RecentTransactionsSection(
+                    expenses = monthExpenses,
+                    categoryById = categoryById,
+                    currencySymbol = currencySymbol,
+                    onViewAll = { scrollToExpenseList() },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // ── item 5 ─────────────────────────────────────────────────────────
+            // AI Insights Feed — on-device rule-based intelligence cards.
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(
@@ -683,10 +513,9 @@ fun DashboardScreen(
                 }
             }
 
+            // ── item 6 ─────────────────────────────────────────────────────────
+            // Monthly Trend bar chart — 12-month rolling view.
             item {
-                // Same soft-tile treatment as the breakdown card above, tuned to a teal/sky pastel
-                // — a "movement/trend" hue family — so the two content tiles read as siblings
-                // without being identical.
                 val trendShape = RoundedCornerShape(22.dp)
                 Box(
                     modifier = Modifier
@@ -698,7 +527,19 @@ fun DashboardScreen(
                             spotColor = NeonCyan.copy(alpha = 0.18f)
                         )
                         .clip(trendShape)
-                        .background(Brush.linearGradient(listOf(Color(0xFFE9FBF3), Color(0xFFE2F5FF))))
+                        .drawBehind {
+                            // Guard against zero-size: Android's native LinearGradient crashes
+                            // when start == end (both collapse to 0,0 at zero measured size).
+                            if (size.width > 0f && size.height > 0f) {
+                                drawRect(
+                                    brush = Brush.linearGradient(
+                                        listOf(Color(0xFFE9FBF3), Color(0xFFE2F5FF)),
+                                        start = Offset.Zero,
+                                        end = Offset(size.width, size.height)
+                                    )
+                                )
+                            }
+                        }
                         .border(width = 1.dp, color = BorderLight, shape = trendShape)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -709,23 +550,44 @@ fun DashboardScreen(
                 }
             }
 
+            // ── item 7 ─────────────────────────────────────────────────────────
+            // Full expense list header (title + PDF export chip).
+            // expenseListItemIndex = 7 — "View All" in RecentTransactionsSection scrolls here.
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(stringResource(R.string.expenses_this_month), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        stringResource(R.string.expenses_this_month),
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    )
                     ExportPdfChip(
                         enabled = monthExpenses.isNotEmpty(),
-                        onClick = { exportMonthAsPdf() }
+                        onClick = {
+                            // Show an interstitial before export (high CPM, natural break
+                            // point). If no ad is ready yet, exportMonthAsPdf() fires
+                            // immediately so the user is never kept waiting.
+                            if (activity != null) {
+                                InterstitialAdManager.showThen(activity) { exportMonthAsPdf() }
+                            } else {
+                                exportMonthAsPdf()
+                            }
+                        }
                     )
                 }
             }
+            // ── item 8 ─────────────────────────────────────────────────────────
             item {
                 ExpenseViewModeToggle(current = viewMode, onSelect = { viewMode = it })
             }
 
+            // ── items 9+ ───────────────────────────────────────────────────────
+            // Expense rows for the selected view mode.
             when (viewMode) {
                 ExpenseViewMode.DAY -> {
                     if (expensesByDay.isEmpty()) {
@@ -737,7 +599,7 @@ fun DashboardScreen(
                             )
                         }
                     } else {
-                        expensesByDay.forEach { (dayIso, dayExpenses) ->
+                        expensesByDay.take(visibleDayCount).forEach { (dayIso, dayExpenses) ->
                             item(key = "day_header_$dayIso") {
                                 val headerLabel = when (dayIso) {
                                     todayIso -> todayLabel
@@ -764,11 +626,26 @@ fun DashboardScreen(
                                     category = categoryById[expense.categoryId],
                                     currencySymbol = currencySymbol,
                                     dateText = DateUtils.formatExpenseDate(expense.date, locale),
-                                    onClick = { editingExpense = expense; showAddSheet = true },
-                                    onEdit = { editingExpense = expense; showAddSheet = true },
-                                    onDelete = { expensePendingDelete = expense },
+                                    onClick = { actionExpense = expense },
                                     colorFromHex = ::colorFromHex
                                 )
+                            }
+                        }
+                        // "Load more" button — only shown when there are older day-groups not yet visible
+                        if (expensesByDay.size > visibleDayCount) {
+                            item(key = "day_load_more") {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    TextButton(onClick = { visibleDayCount += 7 }) {
+                                        Text(
+                                            loadMoreLabel,
+                                            style = MaterialTheme.typography.labelLarge,
+                                            color = AccentIndigo
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -822,9 +699,7 @@ fun DashboardScreen(
                                     category = category,
                                     currencySymbol = currencySymbol,
                                     dateText = DateUtils.formatExpenseDate(expense.date, locale),
-                                    onClick = { editingExpense = expense; showAddSheet = true },
-                                    onEdit = { editingExpense = expense; showAddSheet = true },
-                                    onDelete = { expensePendingDelete = expense },
+                                    onClick = { actionExpense = expense },
                                     colorFromHex = ::colorFromHex
                                 )
                             }
@@ -853,7 +728,7 @@ fun DashboardScreen(
                                         category = categoryById[expense.categoryId],
                                         currencySymbol = currencySymbol,
                                         dateText = DateUtils.formatExpenseDate(expense.date, locale),
-                                        onClick = { editingExpense = expense; showAddSheet = true },
+                                        onClick = { actionExpense = expense },
                                         modifier = Modifier.weight(1f),
                                         colorFromHex = ::colorFromHex
                                     )
@@ -904,9 +779,7 @@ fun DashboardScreen(
                                 category = categoryById[expense.categoryId],
                                 currencySymbol = currencySymbol,
                                 dateText = DateUtils.formatExpenseDate(expense.date, locale),
-                                onClick = { editingExpense = expense; showAddSheet = true },
-                                onEdit = { editingExpense = expense; showAddSheet = true },
-                                onDelete = { expensePendingDelete = expense },
+                                onClick = { actionExpense = expense },
                                 colorFromHex = ::colorFromHex
                             )
                         }
@@ -914,13 +787,35 @@ fun DashboardScreen(
                 }
             }
             } // close LazyColumn
-        } // close outer Column wrapping the SMS banner + LazyColumn
+
+            // Anchored banner ad pinned below the list.
+            BannerAdView()
+        } // close Column
     }
-    } // close Box wrapping AnimatedBlobBackground + Scaffold
+    } // close Box
+
+    // ── Modal sheets ──────────────────────────────────────────────────────────
+
+    // Transaction action sheet — shown when the user taps any expense row/grid card
+    actionExpense?.let { expense ->
+        TransactionActionSheet(
+            expense = expense,
+            category = categoryById[expense.categoryId],
+            currencySymbol = currencySymbol,
+            onEdit = {
+                editingExpense = expense
+                showAddSheet = true
+            },
+            onDelete = { expensePendingDelete = expense },
+            onDismiss = { actionExpense = null }
+        )
+    }
 
     if (showAddSheet) {
         AddEditExpenseSheet(
-            categories = categories,
+            // Deliberately excludes cat_debt_payments — that category is auto-managed by the
+            // Debts screen and should never be used for hand-entered expenses.
+            categories = expensePickerCategories,
             existing = editingExpense,
             defaultDate = DateUtils.todayIso(),
             onDismiss = { showAddSheet = false },
@@ -947,6 +842,18 @@ fun DashboardScreen(
             currencySymbol = currencySymbol,
             onDismiss = { showBudgetSheet = false },
             onSave = { amount -> viewModel.setBudget(null, amount) }
+        )
+    }
+
+    if (showSalaryDialog) {
+        SalarySetDialog(
+            currentSalary = monthlySalary,
+            currencySymbol = currencySymbol,
+            onConfirm = { amount ->
+                viewModel.setMonthlySalary(amount)
+                showSalaryDialog = false
+            },
+            onDismiss = { showSalaryDialog = false }
         )
     }
 
@@ -981,12 +888,10 @@ fun DashboardScreen(
         )
     }
 
-    // Accepting a queued SMS opens the normal add/edit sheet pre-filled with the parser's
-    // guess (existing = null, so it always inserts a new expense) instead of saving silently —
-    // the user gets one last chance to fix the amount/category/description before it's real.
+    // Accepting a queued SMS pre-fills the standard expense sheet for a final review.
     smsItemBeingAccepted?.let { item ->
         AddEditExpenseSheet(
-            categories = categories,
+            categories = expensePickerCategories,
             existing = null,
             defaultDate = item.date,
             prefill = ExpensePrefill(
@@ -1005,12 +910,8 @@ fun DashboardScreen(
     }
 }
 
-/**
- * Tappable "Export PDF" pill next to the expenses list header. Replaces the old bare icon
- * button with something more interactive: a labeled chip that dips on press, and visibly
- * dims (and won't try to generate an empty report) when there's nothing for the current
- * month to export.
- */
+// ── Private helper composables ────────────────────────────────────────────────
+
 @Composable
 private fun ExportPdfChip(enabled: Boolean, onClick: () -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -1023,7 +924,11 @@ private fun ExportPdfChip(enabled: Boolean, onClick: () -> Unit) {
     val tint = if (enabled) AccentIndigo else TextMuted
     val bg = if (enabled) AccentIndigo.copy(alpha = 0.1f) else TextMuted.copy(alpha = 0.1f)
 
-    Row(
+    // Icon-only chip — no text label — so it never overflows the row regardless of how long
+    // the section title is in any language (e.g. Tagalog "Mga Gastos Ngayong Buwan" already
+    // fills most of the available width; adding a translated text label would push this chip
+    // off-screen). The PDF icon is universally recognised.
+    Box(
         modifier = Modifier
             .scale(pressScale)
             .clip(RoundedCornerShape(20.dp))
@@ -1033,64 +938,18 @@ private fun ExportPdfChip(enabled: Boolean, onClick: () -> Unit) {
                 indication = LocalIndication.current,
                 onClick = onClick
             )
-            .padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Icon(Icons.Filled.PictureAsPdf, contentDescription = null, tint = tint, modifier = Modifier.size(16.dp))
-        Spacer(Modifier.width(6.dp))
-        Text(
-            text = stringResource(R.string.export_pdf),
-            style = MaterialTheme.typography.labelMedium,
-            color = tint
+        Icon(
+            Icons.Filled.PictureAsPdf,
+            contentDescription = stringResource(R.string.export_pdf),
+            tint = tint,
+            modifier = Modifier.size(20.dp)
         )
     }
 }
 
-/**
- * "Manage Categories" link next to the breakdown header. Pulled out into its own composable
- * (was inline) so it can carry a press-scale animation, and given maxLines/ellipsis so a long
- * translated label shrinks instead of wrapping character-by-character when the sibling title
- * Text claims most of the row's width.
- */
-@Composable
-private fun ManageCategoriesButton(onClick: () -> Unit) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val pressScale by animateFloatAsState(
-        targetValue = if (isPressed) 0.95f else 1f,
-        animationSpec = tween(120),
-        label = "manageCategoriesPress"
-    )
-
-    Row(
-        modifier = Modifier
-            .scale(pressScale)
-            .clip(RoundedCornerShape(8.dp))
-            .clickable(
-                interactionSource = interactionSource,
-                indication = LocalIndication.current,
-                onClick = onClick
-            )
-            .padding(horizontal = 8.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(Icons.Filled.Tune, contentDescription = null, modifier = Modifier.size(16.dp), tint = AccentIndigo)
-        Spacer(Modifier.width(4.dp))
-        Text(
-            text = stringResource(R.string.manage_categories),
-            style = MaterialTheme.typography.labelMedium,
-            color = AccentIndigo,
-            maxLines = 1,
-            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-        )
-    }
-}
-
-/**
- * Banner shown above the expenses list whenever the SMS parser has queued one or more
- * transactions for review. Tapping it opens [SmsReviewSheet] — nothing here has been saved
- * as a real expense yet.
- */
 @Composable
 private fun PendingSmsBanner(count: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -1122,7 +981,7 @@ private fun PendingSmsBanner(count: Int, onClick: () -> Unit, modifier: Modifier
             color = AccentIndigo,
             modifier = Modifier.weight(1f),
             maxLines = 2,
-            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis
         )
         Spacer(Modifier.width(8.dp))
         Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = AccentIndigo, modifier = Modifier.size(18.dp))
@@ -1132,11 +991,6 @@ private fun PendingSmsBanner(count: Int, onClick: () -> Unit, modifier: Modifier
 private fun colorFromHex(hex: String): Color =
     runCatching { Color(android.graphics.Color.parseColor(hex)) }.getOrDefault(TextMuted)
 
-/**
- * Time-of-day greeting for the Command Center header — "Good morning" / "Good afternoon" /
- * "Good evening", personalized with [name] when the user has set one in Settings, falling back
- * to a name-less phrasing when they haven't.
- */
 @Composable
 private fun greetingText(name: String): String {
     val hour = remember { LocalTime.now().hour }
@@ -1155,27 +1009,12 @@ private fun greetingText(name: String): String {
     }
 }
 
-/** Localized band label shown next to the Financial Health ring. */
-@Composable
-private fun healthBandLabel(score: Int): String = when {
-    score >= 80 -> stringResource(R.string.health_band_excellent)
-    score >= 60 -> stringResource(R.string.health_band_good)
-    score >= 40 -> stringResource(R.string.health_band_fair)
-    else -> stringResource(R.string.health_band_needs_attention)
-}
-
-/** Maps an insight's positive/warning/neutral kind to the accent color its feed card is drawn in. */
 private fun insightAccentColor(kind: FinancialInsights.InsightKind): Color = when (kind) {
     FinancialInsights.InsightKind.POSITIVE -> SuccessGreen
     FinancialInsights.InsightKind.WARNING -> WarningAmber
     FinancialInsights.InsightKind.NEUTRAL -> NeonCyan
 }
 
-/**
- * Resolves one [FinancialInsights.Insight] to its localized sentence. [categoryNameById] resolves
- * [FinancialInsights.Insight.categoryId] to a display name, which (when present) is always the
- * first format argument, followed by the engine's own already-formatted [FinancialInsights.Insight.args].
- */
 @Composable
 private fun insightText(insight: FinancialInsights.Insight, categoryNameById: Map<Long, String>): String {
     val resId = when (insight.template) {

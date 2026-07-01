@@ -13,10 +13,20 @@ sealed class DeleteCategoryResult {
  */
 class ExpenseRepository(private val db: AppDatabase) {
 
+    companion object {
+        /** Built-in category every auto-generated debt/EMI repayment expense files under —
+         * kept as constants so [defaultCategorySeed], [ensureDebtPaymentCategory], and
+         * `MIGRATION_4_5`'s backfill all agree on the exact same key/color. */
+        private const val DEBT_PAYMENT_CATEGORY_KEY = "cat_debt_payments"
+        private const val DEBT_PAYMENT_CATEGORY_COLOR = "#F97316"
+    }
+
     val categories: Flow<List<CategoryEntity>> = db.categoryDao().observeAll()
     val allExpenses: Flow<List<ExpenseEntity>> = db.expenseDao().observeAll()
     val pendingSmsExpenses: Flow<List<PendingSmsExpense>> = db.pendingSmsExpenseDao().observeAll()
     val budgets: Flow<List<BudgetEntity>> = db.budgetDao().observeAll()
+    val debts: Flow<List<DebtEntity>> = db.debtDao().observeAll()
+    val debtPayments: Flow<List<DebtPaymentEntity>> = db.debtPaymentDao().observeAll()
 
     fun expensesForMonth(monthKey: String): Flow<List<ExpenseEntity>> =
         db.expenseDao().observeByMonth(monthKey)
@@ -37,7 +47,8 @@ class ExpenseRepository(private val db: AppDatabase) {
         CategoryEntity(nameKey = "cat_shopping", colorHex = "#8B5CF6", sortOrder = 6),
         CategoryEntity(nameKey = "cat_subscriptions", colorHex = "#14B8A6", sortOrder = 7),
         CategoryEntity(nameKey = "cat_savings", colorHex = "#84CC16", sortOrder = 8),
-        CategoryEntity(nameKey = "cat_other", colorHex = "#94A3B8", sortOrder = 9)
+        CategoryEntity(nameKey = "cat_other", colorHex = "#94A3B8", sortOrder = 9),
+        CategoryEntity(nameKey = DEBT_PAYMENT_CATEGORY_KEY, colorHex = DEBT_PAYMENT_CATEGORY_COLOR, sortOrder = 10)
     )
 
     suspend fun addOrUpdateExpense(
@@ -125,6 +136,121 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.categoryDao().deleteAll()
         db.pendingSmsExpenseDao().deleteAll()
         db.budgetDao().deleteAll()
+        db.debtDao().deleteAll()
+        db.debtPaymentDao().deleteAll()
         seedDefaultCategoriesIfNeeded()
+    }
+
+    suspend fun addOrUpdateDebt(
+        id: Long?,
+        name: String,
+        direction: String,
+        principal: Double,
+        interestRatePercent: Double,
+        minimumPayment: Double,
+        startDate: String,
+        notes: String?
+    ) {
+        if (id == null) {
+            val entity = DebtEntity(
+                name = name,
+                direction = direction,
+                principal = principal,
+                interestRatePercent = interestRatePercent,
+                minimumPayment = minimumPayment,
+                startDate = startDate,
+                notes = notes
+            )
+            val newId = db.debtDao().insert(entity)
+            // When the user adds a new "I owe" loan/EMI, automatically record the first
+            // payment as an expense so it immediately shows up in Monthly Expenses and the
+            // budget ring. (Each subsequent EMI still needs to be recorded manually via the
+            // Debts screen — this seeds the current month without the user having to tap twice.)
+            if (direction == DebtEntity.DIRECTION_OWE && minimumPayment > 0) {
+                recordDebtPayment(entity.copy(id = newId), minimumPayment, startDate, null)
+            }
+        } else {
+            val existing = db.debtDao().getAllOnce().find { it.id == id } ?: return
+            db.debtDao().update(
+                existing.copy(
+                    name = name,
+                    direction = direction,
+                    principal = principal,
+                    interestRatePercent = interestRatePercent,
+                    minimumPayment = minimumPayment,
+                    startDate = startDate,
+                    notes = notes
+                )
+            )
+        }
+    }
+
+    suspend fun deleteDebt(debt: DebtEntity) {
+        // Clean up any expenses this debt's payments auto-generated *before* deleting the
+        // payment rows themselves, or the linkedExpenseId references would be lost.
+        db.debtPaymentDao().getForDebt(debt.id).forEach { payment ->
+            payment.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
+        }
+        db.debtDao().delete(debt)
+        // No FK/cascade on this table — clean up this debt's payment history explicitly,
+        // same orphan-cleanup pattern as deleteCategory() above.
+        db.debtPaymentDao().deleteForDebt(debt.id)
+    }
+
+    /** Manual close/reopen — for forgiving a debt, or settling it for less than full principal. */
+    suspend fun setDebtClosed(debt: DebtEntity, isClosed: Boolean) {
+        db.debtDao().update(debt.copy(isClosed = isClosed))
+    }
+
+    /**
+     * Finds the built-in "Debt & Loan Payments" category, recreating it if the user has since
+     * deleted it (categories can always be deleted, see [deleteCategory]) — so a repayment can
+     * never be left with nowhere to file its auto-generated expense.
+     */
+    private suspend fun ensureDebtPaymentCategory(): Long {
+        val existing = db.categoryDao().getAllOnce().find { it.nameKey == DEBT_PAYMENT_CATEGORY_KEY }
+        if (existing != null) return existing.id
+        val sortOrder = db.categoryDao().count()
+        return db.categoryDao().insert(
+            CategoryEntity(nameKey = DEBT_PAYMENT_CATEGORY_KEY, colorHex = DEBT_PAYMENT_CATEGORY_COLOR, sortOrder = sortOrder)
+        )
+    }
+
+    /**
+     * Records a payment against [debt] and auto-closes it once cumulative payments reach the
+     * principal, so most users never have to remember to manually mark a debt settled. Manual
+     * close/reopen (e.g. forgiving a debt, or settling for less than the full principal) stays
+     * available separately via [setDebtClosed].
+     *
+     * EMI/debt repayments are real money leaving the user, so they impact the monthly budget
+     * exactly like any other expense: when [debt] is [DebtEntity.DIRECTION_OWE] (money owed
+     * *by* the user), this also creates a linked [ExpenseEntity] under the dedicated debt
+     * category, which is what makes the payment show up in Total Spent, Budget Remaining, and
+     * the Breakdown-by-Category chart. Collections on [DebtEntity.DIRECTION_OWED] debts are
+     * money coming *in*, not spend, so no expense is created for those.
+     */
+    suspend fun recordDebtPayment(debt: DebtEntity, amount: Double, date: String, note: String?) {
+        var linkedExpenseId: Long? = null
+        if (debt.direction == DebtEntity.DIRECTION_OWE) {
+            val categoryId = ensureDebtPaymentCategory()
+            val monthKey = date.substring(0, 7)
+            linkedExpenseId = db.expenseDao().insert(
+                ExpenseEntity(categoryId = categoryId, description = debt.name, amount = amount, date = date, monthKey = monthKey)
+            )
+        }
+        db.debtPaymentDao().insert(
+            DebtPaymentEntity(debtId = debt.id, amount = amount, date = date, note = note, linkedExpenseId = linkedExpenseId)
+        )
+        val totalPaid = db.debtPaymentDao().totalPaidFor(debt.id)
+        if (!debt.isClosed && totalPaid >= debt.principal) {
+            db.debtDao().update(debt.copy(isClosed = true))
+        }
+    }
+
+    suspend fun deleteDebtPayment(payment: DebtPaymentEntity) {
+        db.debtPaymentDao().delete(payment)
+        // Keep the linked expense from outliving the payment it came from — otherwise deleting
+        // a repayment here would leave a phantom expense still counted in the monthly budget.
+        payment.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
     }
 }

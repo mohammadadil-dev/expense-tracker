@@ -216,6 +216,19 @@ object PdfExporter {
         canvas = page.canvas
         y = first.second
 
+        // Clips [text] to [maxWidth] PDF-points using the given [paint]'s font metrics so each
+        // column never overflows into the next — more reliable than character-count limits
+        // because character widths vary by locale (e.g. Filipino month names are wider than
+        // their English abbreviations, causing the date/category columns to collide).
+        fun clipToWidth(text: String, maxWidth: Float, p: Paint): String {
+            if (p.measureText(text) <= maxWidth) return text
+            var result = text
+            while (result.isNotEmpty() && p.measureText("$result…") > maxWidth) {
+                result = result.dropLast(1)
+            }
+            return if (result.isEmpty()) text.take(1) else "$result…"
+        }
+
         if (rows.isEmpty()) {
             canvas.drawText(emptyLabel, MARGIN, y, rowPaint)
             y += ROW_HEIGHT
@@ -228,9 +241,18 @@ object PdfExporter {
                     canvas = page.canvas
                     y = next.second
                 }
-                canvas.drawText(row.dateLabel.take(12), COL_DATE_X, y, rowPaint)
-                canvas.drawText(row.categoryLabel.take(16), COL_CATEGORY_X, y, rowPaint)
-                canvas.drawText(row.description.ifBlank { "—" }.take(26), COL_DESCRIPTION_X, y, rowPaint)
+                canvas.drawText(
+                    clipToWidth(row.dateLabel, COL_CATEGORY_X - COL_DATE_X - 4f, rowPaint),
+                    COL_DATE_X, y, rowPaint
+                )
+                canvas.drawText(
+                    clipToWidth(row.categoryLabel, COL_DESCRIPTION_X - COL_CATEGORY_X - 4f, rowPaint),
+                    COL_CATEGORY_X, y, rowPaint
+                )
+                canvas.drawText(
+                    clipToWidth(row.description.ifBlank { "—" }, COL_AMOUNT_RIGHT_X - COL_DESCRIPTION_X - 80f, rowPaint),
+                    COL_DESCRIPTION_X, y, rowPaint
+                )
                 drawAmountRightAligned(canvas, row.amountLabel, COL_AMOUNT_RIGHT_X, y, rowPaint)
                 y += ROW_HEIGHT
             }

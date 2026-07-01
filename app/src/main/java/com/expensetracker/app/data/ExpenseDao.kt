@@ -25,6 +25,11 @@ interface ExpenseDao {
     @Delete
     suspend fun delete(expense: ExpenseEntity)
 
+    /** Deletes by id directly — used to clean up an auto-generated expense linked to a debt
+     * payment without needing to load the full row first. */
+    @Query("DELETE FROM expenses WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("SELECT EXISTS(SELECT 1 FROM expenses WHERE categoryId = :categoryId)")
     suspend fun categoryInUse(categoryId: Long): Boolean
 

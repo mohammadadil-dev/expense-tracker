@@ -20,18 +20,29 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile     = file("/Users/mdadil/Documents/android-release-key/expense-tracker/Untitled")
+            storePassword = "Adil@1234"
+            keyAlias      = "key0"
+            keyPassword   = "Adil@1234"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -81,6 +92,11 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
+
+    // Google Mobile Ads (AdMob) — banner + interstitial
+    // Replace test ad-unit IDs in AdComponents.kt with production IDs before publishing.
+    // Verify the latest version at: https://developers.google.com/admob/android/rel-notes
+    implementation("com.google.android.gms:play-services-ads:22.6.0")
 
     // SMS User Consent API (SmsRetrieverClient) — lets the app read the text of one incoming
     // SMS at a time, only after the user taps "Allow" on a system-drawn prompt. Needs no

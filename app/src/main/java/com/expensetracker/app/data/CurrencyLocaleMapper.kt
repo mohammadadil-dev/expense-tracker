@@ -1,5 +1,7 @@
 package com.expensetracker.app.data
 
+import android.content.Context
+import android.telephony.TelephonyManager
 import java.util.Locale
 
 /**
@@ -19,9 +21,10 @@ object CurrencyLocaleMapper {
         "LY" to "د.ل", "SD" to "ج.س", "PS" to "₪",
         // Other common regions
         "US" to "$", "CA" to "$", "AU" to "$", "NZ" to "$", "SG" to "$", "HK" to "$",
-        "GB" to "£", "IN" to "₹", "PK" to "₨", "JP" to "¥", "CN" to "¥",
+        "GB" to "£", "IN" to "₹", "PK" to "₨", "BD" to "৳", "JP" to "¥", "CN" to "¥",
         "BR" to "R$", "ZA" to "R", "RU" to "₽", "TR" to "₺", "KR" to "₩",
-        "ID" to "Rp", "MY" to "RM", "PH" to "₱", "TH" to "฿", "VN" to "₫"
+        "ID" to "Rp", "MY" to "RM", "PH" to "₱", "TH" to "฿", "VN" to "₫",
+        "NG" to "₦", "GH" to "₵", "KE" to "KSh", "ET" to "Br"
     )
 
     private val eurozoneCountries = setOf(
@@ -44,10 +47,30 @@ object CurrencyLocaleMapper {
     fun isArabicSpeakingCountry(countryCode: String): Boolean =
         arabicSpeakingCountries.contains(countryCode.uppercase(Locale.ROOT))
 
-    /** Reads the phone's current region setting and returns a default currency symbol. */
-    fun detectFromDevice(): String {
-        val country = Locale.getDefault().country
-        return currencyForCountry(country)
+    /**
+     * Detects the user's physical country and returns a default currency symbol.
+     *
+     * Priority order:
+     * 1. SIM country ISO  — where the SIM is registered (most reliable for expats)
+     * 2. Network country ISO — the cellular network the device is currently on
+     * 3. Device locale country — fallback if no SIM (Wi-Fi only / emulator)
+     *
+     * This means an Indian user living in Saudi Arabia with a Saudi SIM will correctly
+     * get SAR (ر.س) instead of the locale-language country (e.g. GBP from "English UK").
+     */
+    fun detectFromDevice(context: Context? = null): String {
+        if (context != null) {
+            val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
+            // SIM country — most reliable; tells us where the SIM plan is registered
+            val simCountry = tm?.simCountryIso?.uppercase(Locale.ROOT)?.takeIf { it.length == 2 }
+            if (simCountry != null) return currencyForCountry(simCountry)
+            // Network country — the tower the device is connected to right now
+            val networkCountry = tm?.networkCountryIso?.uppercase(Locale.ROOT)?.takeIf { it.length == 2 }
+            if (networkCountry != null) return currencyForCountry(networkCountry)
+        }
+        // Final fallback: device language region (least reliable for expats)
+        val localeCountry = Locale.getDefault().country.takeIf { it.isNotEmpty() }
+        return if (localeCountry != null) currencyForCountry(localeCountry) else "$"
     }
 
     /**

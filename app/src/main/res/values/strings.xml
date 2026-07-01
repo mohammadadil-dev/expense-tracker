@@ -110,6 +110,8 @@
     <string name="language_english">English</string>
     <string name="language_arabic">Arabic (العربية)</string>
     <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
     <string name="currency_label">Currency</string>
     <string name="currency_custom_hint">Custom symbol</string>
     <string name="convert_currency_title">Convert Currency</string>
@@ -166,6 +168,7 @@
     <string name="cat_subscriptions">Subscriptions</string>
     <string name="cat_savings">Savings &amp; Investments</string>
     <string name="cat_other">Other</string>
+    <string name="cat_debt_payments">Debt or Loan Payments</string>
 
     <!-- Budget tracking (Phase 1): standing monthly targets, overall + per-category -->
     <string name="budget_title">Budget</string>
@@ -180,4 +183,66 @@
     <string name="budget_overall_label">Overall Monthly Budget</string>
     <string name="budget_overall_hint">e.g. 30000</string>
     <string name="error_invalid_budget_amount">Enter a valid amount, or leave it blank to clear.</string>
+
+    <!-- Debts & Loans (Phase 2): both directions, full payoff planning, AI-style insights -->
+    <string name="debts_title">Debts &amp; Loans</string>
+    <string name="bento_debts_title">Debts &amp; Loans</string>
+    <string name="debts_net_title">Net Position</string>
+    <string name="debts_net_owed_to_you">Owed to you, overall</string>
+    <string name="debts_net_you_owe">You owe, overall</string>
+    <string name="debts_net_settled">Everything is settled</string>
+    <string name="debts_section_you_owe">You Owe</string>
+    <string name="debts_section_owed_to_you">Owed to You</string>
+    <string name="debts_section_settled">Settled</string>
+    <string name="debts_empty_title">No debts or loans yet</string>
+    <string name="debts_empty_subtitle">Track money you owe or money owed to you, with a payoff plan for each.</string>
+    <string name="delete_debt_confirm">Delete this debt and its full payment history? This can\'t be undone.</string>
+
+    <string name="debt_add_title">Add Debt or Loan</string>
+    <string name="debt_edit_title">Edit Debt or Loan</string>
+    <string name="debt_direction_label">Direction</string>
+    <string name="debt_direction_owe">I Owe</string>
+    <string name="debt_direction_owed">Owed to Me</string>
+    <string name="debt_name_label">Name</string>
+    <string name="debt_name_hint">e.g. Car Loan, Personal Loan to Friend</string>
+    <string name="error_debt_name_required">Enter a name for this debt.</string>
+    <string name="debt_principal_label">Principal Amount</string>
+    <string name="debt_principal_hint">Total amount borrowed or lent</string>
+    <string name="debt_rate_label">Interest Rate (% per year)</string>
+    <string name="debt_rate_hint">e.g. 12 (enter 0 if interest-free)</string>
+    <string name="error_debt_rate_invalid">Enter a valid rate, 0 or higher.</string>
+    <string name="debt_payment_label">Monthly Payment (EMI)</string>
+    <string name="debt_payment_hint">e.g. 5000 (leave 0 if no fixed schedule)</string>
+    <string name="error_debt_payment_invalid">Enter a valid amount, 0 or higher.</string>
+    <string name="debt_start_date_label">Start Date</string>
+    <string name="debt_notes_label">Notes (optional)</string>
+    <string name="debt_notes_hint">e.g. lender name, purpose</string>
+
+    <string name="debt_paid_of_principal">%1$s paid of %2$s</string>
+    <string name="debt_settled_badge">Settled</string>
+    <string name="debt_payoff_projection">Payoff by %1$s (%2$d mo)</string>
+    <string name="debt_insight_accelerate">Pay off %1$d month(s) sooner by adding %2$s/month.</string>
+    <string name="debt_no_emi_hint">Add a monthly payment to see a payoff projection.</string>
+    <string name="debt_reopen">Reopen</string>
+    <string name="debt_mark_settled">Mark Settled</string>
+    <string name="debt_history_title">Payment History</string>
+    <string name="debt_no_payments">No payments recorded yet.</string>
+    <string name="debt_record_payment">Record Payment</string>
+
+    <string name="payment_note_label">Note (optional)</string>
+    <string name="payment_note_hint">e.g. partial payment, paid in cash</string>
+
+    <!-- Dashboard redesign — home cards -->
+    <string name="salary_label">Salary</string>
+    <string name="budget_cap_label">Budget Cap</string>
+    <string name="spending_by_category">Spending by Category</string>
+    <string name="recent_transactions_label">Recent Transactions</string>
+    <string name="view_all_label">View All</string>
+    <string name="load_more">Load more</string>
+    <string name="salary_set_title">Set Monthly Income</string>
+    <string name="salary_set_label">Monthly Take-Home</string>
+    <string name="salary_set_hint">e.g. 50000</string>
+    <string name="stat_spent_label">Spent</string>
+    <string name="stat_remaining_label">Remaining</string>
+    <string name="months_budget_label">%1$s Budget</string>
 </resources>

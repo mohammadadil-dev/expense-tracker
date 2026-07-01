@@ -5,10 +5,10 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val AppColors = lightColorScheme(
-    primary = AccentIndigo,
+    primary = AccentGreen,
     onPrimary = OnAccent,
-    primaryContainer = AccentIndigoLight,
-    onPrimaryContainer = AccentIndigo,
+    primaryContainer = AccentGreenLight,
+    onPrimaryContainer = AccentGreenDark,
     background = BgApp,
     onBackground = TextPrimary,
     surface = CardWhite,

@@ -21,7 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
@@ -73,7 +75,17 @@ fun ExpenseGridCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Brush.verticalGradient(tileGradient))
+                .drawBehind {
+                    if (size.width > 0f && size.height > 0f) {
+                        drawRect(
+                            brush = Brush.linearGradient(
+                                colors = tileGradient,
+                                start = Offset.Zero,
+                                end = Offset(0f, size.height)
+                            )
+                        )
+                    }
+                }
                 .padding(12.dp)
         ) {
             androidx.compose.foundation.layout.Box(

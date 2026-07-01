@@ -43,6 +43,24 @@ Your currency and language are detected automatically from your phone, and can b
 ```
 (1,721 characters — well under the 4,000 limit)
 
+## Release notes — v1.0 (max 500 characters)
+
+Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+
+```
+Introducing Expense Tracker — a simple, private way to track your spending.
+
+• Log expenses and see monthly breakdowns at a glance
+• Set a monthly budget and track what's left
+• Get plain-language spending insights and a financial health score
+• Auto-detect expenses from SMS (optional, one-tap approval each time)
+• Export polished PDF reports
+• Available in English, Arabic, and Hindi
+
+No ads, no account, no cloud — everything stays on your device.
+```
+(451 characters)
+
 ## Notes
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
