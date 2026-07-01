@@ -21,6 +21,7 @@ object LocaleHelper {
             // when resolving resources — so the locale tag must be "fil" or Android falls back
             // to English because it looks for values-fil/, not values-tl/.
             "tl" -> LocaleListCompat.forLanguageTags("fil")
+            "bn" -> LocaleListCompat.forLanguageTags("bn")
             else -> LocaleListCompat.forLanguageTags("en")
         }
         AppCompatDelegate.setApplicationLocales(locales)

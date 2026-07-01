@@ -1,11 +1,16 @@
 package com.expensetracker.app
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import com.expensetracker.app.data.AppDatabase
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ExpenseRepository
 import com.expensetracker.app.data.SettingsRepository
 import com.expensetracker.app.util.LocaleHelper
+import com.expensetracker.app.util.ReminderScheduler
+import com.expensetracker.app.util.ReminderWorker
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +49,25 @@ class ExpenseApp : Application() {
 
         // Re-apply the stored language preference on every cold start.
         LocaleHelper.applyLanguagePreference(settings.languagePref)
+
+        // Create the notification channel for daily reminders.
+        // NotificationChannel is a no-op below API 26 but required on 26+.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                ReminderWorker.CHANNEL_ID,
+                "Daily Reminder",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "Daily nudge to log your expenses"
+            }
+            getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel)
+        }
+
+        // Reschedule the daily reminder on every cold start so WorkManager always
+        // has a live chain — handles reboots and app updates automatically.
+        if (settings.reminderEnabled) {
+            ReminderScheduler.schedule(this, settings.reminderHour)
+        }
 
         // Initialize AdMob SDK. This must be called once before any AdView or InterstitialAd
         // is created. The callback fires when initialization is complete, but ads can often

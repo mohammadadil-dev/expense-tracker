@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">খরচ ট্র্যাকার</string>
+    <string name="dashboard_subtitle">খরচ লিখুন, বিভাগ ট্র্যাক করুন এবং সময়ের সাথে প্রবণতা দেখুন।</string>
+    <string name="manage_categories">বিভাগ পরিচালনা করুন</string>
+    <string name="reset_data">ডেটা রিসেট করুন</string>
+
+    <string name="your_name_label">আপনার নাম</string>
+    <string name="your_name_hint">যেমন: মোহাম্মদ</string>
+    <string name="your_name_note">শুধুমাত্র ড্যাশবোর্ড অভিবাদন ব্যক্তিগত করতে ব্যবহৃত। কোথাও পাঠানো হয় না।</string>
+
+    <string name="nav_dashboard">ড্যাশবোর্ড</string>
+    <string name="nav_categories">বিভাগ</string>
+    <string name="nav_settings">সেটিংস</string>
+
+    <string name="stat_total_spent">মোট খরচ</string>
+    <string name="stat_transactions">লেনদেন</string>
+    <string name="stat_top_category">শীর্ষ বিভাগ</string>
+    <string name="stat_daily_average">দৈনিক গড়</string>
+    <string name="stat_this_month">এই মাসে</string>
+    <string name="stat_per_day">এই মাসে প্রতিদিন</string>
+    <string name="stat_no_prior_data">আগের মাসের ডেটা নেই</string>
+    <string name="stat_vs_last_month">গত মাসের তুলনায়</string>
+    <string name="stat_same_as_last_month">গত মাসের মতোই</string>
+    <string name="stat_up_from_zero">গত মাসে %1$s থেকে বেশি</string>
+
+    <string name="greeting_morning">শুভ সকাল</string>
+    <string name="greeting_afternoon">শুভ বিকেল</string>
+    <string name="greeting_evening">শুভ সন্ধ্যা</string>
+    <string name="greeting_morning_named">শুভ সকাল, %1$s</string>
+    <string name="greeting_afternoon_named">শুভ বিকেল, %1$s</string>
+    <string name="greeting_evening_named">শুভ সন্ধ্যা, %1$s</string>
+    <string name="greeting_hello">হ্যালো 👋</string>
+    <string name="greeting_hello_named">হ্যালো, %1$s 👋</string>
+
+    <string name="health_band_excellent">চমৎকার</string>
+    <string name="health_band_good">ভালো</string>
+    <string name="health_band_fair">ঠিকঠাক</string>
+    <string name="health_band_needs_attention">মনোযোগ প্রয়োজন</string>
+    <string name="health_sub_budget">বাজেট</string>
+    <string name="health_sub_trend">প্রবণতা</string>
+    <string name="health_sub_consistency">নিয়মিততা</string>
+    <string name="health_sub_subscriptions">সাবস্ক্রিপশন</string>
+
+    <string name="bento_monthly_spending">মাসিক খরচ</string>
+    <string name="bento_budget_remaining">বাজেট অবশিষ্ট</string>
+    <string name="bento_budget_no_target">কোনো বাজেট নির্ধারিত নেই</string>
+    <string name="bento_budget_remaining_subtitle">%1$s বাজেটের মধ্যে</string>
+    <string name="bento_savings_goal">সঞ্চয় লক্ষ্য</string>
+    <string name="bento_savings_goal_subtitle">%1$s লক্ষ্যের দিকে</string>
+    <string name="bento_savings_goal_no_data">কয়েক সপ্তাহ ট্র্যাক করুন</string>
+    <string name="bento_subscription_cost">সাবস্ক্রিপশন খরচ</string>
+    <string name="bento_subscription_subtitle">এই মাসের খরচের %1$s</string>
+
+    <string name="ai_insights_feed_title">AI অন্তর্দৃষ্টি</string>
+    <string name="insight_trend_down">আপনার খরচ গত সপ্তাহের চেয়ে %1$s কম।</string>
+    <string name="insight_trend_up">আপনার খরচ গত সপ্তাহের চেয়ে %1$s বেশি।</string>
+    <string name="insight_trend_flat">আপনার খরচ গত সপ্তাহের মতোই।</string>
+    <string name="insight_category_increase">%1$s-এ খরচ এই মাসে %2$s বেড়েছে।</string>
+    <string name="insight_category_decrease">%1$s-এ খরচ এই মাসে %2$s কমেছে।</string>
+    <string name="insight_projected_savings">এই গতিতে আপনি গত মাসের তুলনায় %1$s সাশ্রয় করতে পারেন।</string>
+    <string name="insight_projected_overspend">এই গতিতে আপনি গত মাসের চেয়ে %1$s বেশি খরচ করতে পারেন।</string>
+    <string name="insight_strongest_day">আপনি সাধারণত %1$s দিন সবচেয়ে কম খরচ করেন।</string>
+    <string name="insight_subscription_load">সাবস্ক্রিপশন এই মাসের খরচের %1$s।</string>
+    <string name="insight_daily_average">এই মাসে আপনার গড় দৈনিক খরচ %1$s।</string>
+    <string name="insight_not_enough_data">ব্যক্তিগত অন্তর্দৃষ্টি দেখতে কিছু খরচ যোগ করুন।</string>
+
+    <string name="breakdown_title">বিভাগ অনুযায়ী বিশ্লেষণ</string>
+    <string name="no_expenses_breakdown">এখনো বিশ্লেষণের জন্য কোনো খরচ নেই।</string>
+    <string name="trend_title">মাসিক প্রবণতা (গত ১২ মাস)</string>
+
+    <string name="add_expense">খরচ যোগ করুন</string>
+    <string name="edit_expense">খরচ সম্পাদনা করুন</string>
+    <string name="category_label">বিভাগ</string>
+    <string name="description_label">বিবরণ</string>
+    <string name="description_hint">যেমন: সুপারমার্কেট থেকে বাজার</string>
+    <string name="amount_label">পরিমাণ</string>
+    <string name="date_label">তারিখ</string>
+    <string name="add">যোগ করুন</string>
+    <string name="update">আপডেট করুন</string>
+    <string name="cancel">বাতিল করুন</string>
+    <string name="save">সংরক্ষণ করুন</string>
+
+    <string name="expenses_this_month">এই মাসের খরচ</string>
+    <string name="no_expenses_this_month">এই মাসে এখনো কোনো খরচ লেখা হয়নি।</string>
+    <string name="edit">সম্পাদনা করুন</string>
+    <string name="delete">মুছুন</string>
+    <string name="delete_expense_confirm">এই খরচটি মুছবেন?</string>
+    <string name="today">আজ</string>
+    <string name="yesterday">গতকাল</string>
+    <string name="view_mode_day">দিন অনুযায়ী</string>
+    <string name="view_mode_category">বিভাগ অনুযায়ী</string>
+    <string name="view_mode_grid">গ্রিড</string>
+    <string name="view_mode_calendar">ক্যালেন্ডার</string>
+    <string name="calendar_tap_hint">খরচ দেখতে কোনো দিনে ট্যাপ করুন</string>
+    <string name="no_expenses_this_day">এই দিনে কোনো খরচ নেই।</string>
+    <string name="export_pdf">PDF রপ্তানি করুন</string>
+    <string name="export_pdf_chooser_title">আপনার রিপোর্ট সংরক্ষণ বা শেয়ার করুন</string>
+    <string name="export_report_title">মাসিক খরচ রিপোর্ট</string>
+    <string name="export_total_label">মোট</string>
+    <string name="export_customer_id_label">কাস্টমার আইডি: %1$s</string>
+    <string name="export_started">আপনার PDF রিপোর্ট তৈরি হচ্ছে…</string>
+
+    <string name="add_category">বিভাগ যোগ করুন</string>
+    <string name="new_category_hint">নতুন বিভাগের নাম</string>
+    <string name="delete_category_confirm">এই বিভাগ ব্যবহারকারী খরচগুলো প্রথম অবশিষ্ট বিভাগে স্থানান্তরিত হবে। চালিয়ে যাবেন?</string>
+    <string name="keep_one_category_warning">কমপক্ষে একটি বিভাগ রাখতে হবে।</string>
+    <string name="enter_category_name">একটি বিভাগের নাম লিখুন।</string>
+
+    <string name="settings_title">সেটিংস</string>
+    <string name="language_label">ভাষা</string>
+    <string name="language_english">ইংরেজি</string>
+    <string name="language_arabic">আরবি (العربية)</string>
+    <string name="language_hindi">হিন্দি (हिन्दी)</string>
+    <string name="language_urdu">উর্দু (اردو)</string>
+    <string name="language_tagalog">তাগালগ (Filipino)</string>
+    <string name="language_bengali">বাংলা</string>
+    <string name="currency_label">মুদ্রা</string>
+    <string name="currency_custom_hint">কাস্টম প্রতীক</string>
+    <string name="convert_currency_title">মুদ্রা রূপান্তর করুন</string>
+    <string name="convert_currency_message">বিদ্যমান খরচ %1$s থেকে %2$s-এ রূপান্তর করতে বিনিময় হার লিখুন (১ %1$s = ? %2$s)। আপনার সব সংরক্ষিত পরিমাণ এই হারে গুণ করা হবে।</string>
+    <string name="convert_currency_rate_hint">বিনিময় হার</string>
+    <string name="convert">রূপান্তর করুন</string>
+    <string name="error_invalid_rate">০-এর বেশি একটি বৈধ হার লিখুন।</string>
+    <string name="reset_all_data">সব ডেটা রিসেট করুন</string>
+    <string name="reset_confirm_1">এটি এই ডিভাইস থেকে সব খরচ ও কাস্টম বিভাগ স্থায়ীভাবে মুছে দেবে। চালিয়ে যাবেন?</string>
+    <string name="reset_confirm_2">আপনি কি সত্যিই নিশ্চিত? এটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+    <string name="data_local_note">আপনার সব ডেটা এই ডিভাইসেই থাকে। কোনো সার্ভারে আপলোড হয় না।</string>
+    <string name="detected_region_note">আপনার ডিভাইস থেকে শনাক্ত: %1$s</string>
+    <string name="more_section_title">আরো</string>
+    <string name="share_app">এই অ্যাপ শেয়ার করুন</string>
+    <string name="share_app_message">%1$s দেখুন — আমি এই অ্যাপ দিয়ে খরচ ট্র্যাক করি: %2$s</string>
+    <string name="rate_us">আমাদের রেটিং দিন</string>
+    <string name="about_section_title">সম্পর্কে</string>
+    <string name="customer_id_label">কাস্টমার আইডি</string>
+    <string name="customer_id_copied">কাস্টমার আইডি কপি হয়েছে</string>
+    <string name="powered_by_footer">AG Tech দ্বারা চালিত</string>
+    <string name="app_version_label">সংস্করণ ১.০</string>
+
+    <string name="sms_detection_title">SMS শনাক্তকরণ</string>
+    <string name="sms_detection_toggle_label">SMS থেকে লেনদেন শনাক্ত করুন</string>
+    <string name="sms_detection_description">ব্যাংক, UPI বা কার্ড SMS পেলে অ্যাপ শুধু সেই একটি মেসেজ পড়ার অনুমতি চায়, তারপর নিচের পর্যালোচনা তালিকায় যোগ করে — আপনি নিশ্চিত না করা পর্যন্ত কিছুই সংরক্ষণ হয় না। শনাক্তকরণ শুধু অ্যাপ খোলা থাকলেই কাজ করে।</string>
+    <string name="sms_pending_banner">SMS থেকে %1$d টি লেনদেন পাওয়া গেছে — পর্যালোচনা করতে ট্যাপ করুন</string>
+    <string name="sms_review_title">%1$d টি লেনদেন পর্যালোচনা করুন</string>
+    <string name="sms_review_subtitle">খরচ হিসেবে সংরক্ষণের আগে প্রতিটি নিশ্চিত বা সম্পাদনা করুন।</string>
+    <string name="sms_accept">গ্রহণ করুন</string>
+    <string name="sms_dismiss">বাতিল করুন</string>
+
+    <string name="toast_expense_added">খরচ যোগ হয়েছে।</string>
+    <string name="toast_expense_updated">খরচ আপডেট হয়েছে।</string>
+    <string name="toast_expense_deleted">খরচ মুছে গেছে।</string>
+    <string name="toast_all_reset">সব ডেটা রিসেট হয়েছে।</string>
+    <string name="error_invalid_amount">০-এর বেশি একটি বৈধ পরিমাণ লিখুন।</string>
+    <string name="error_select_date">একটি তারিখ বেছে নিন।</string>
+
+    <string name="done">সম্পন্ন</string>
+    <string name="close">বন্ধ করুন</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="select_date">তারিখ বেছে নিন</string>
+    <string name="splash_tagline">প্রতিটি খরচ সহজে ট্র্যাক করুন</string>
+    <string name="calendar_picker_title">ক্যালেন্ডার</string>
+
+    <!-- Default category names -->
+    <string name="cat_housing">আবাসন</string>
+    <string name="cat_food">খাবার ও মুদিখানা</string>
+    <string name="cat_transport">পরিবহন</string>
+    <string name="cat_utilities">ইউটিলিটি বিল</string>
+    <string name="cat_entertainment">বিনোদন</string>
+    <string name="cat_healthcare">স্বাস্থ্যসেবা</string>
+    <string name="cat_shopping">কেনাকাটা</string>
+    <string name="cat_subscriptions">সাবস্ক্রিপশন</string>
+    <string name="cat_savings">সঞ্চয় ও বিনিয়োগ</string>
+    <string name="cat_other">অন্যান্য</string>
+    <string name="cat_debt_payments">ঋণ বা লোনের কিস্তি</string>
+
+    <!-- Budget tracking -->
+    <string name="budget_title">বাজেট</string>
+    <string name="manage_budget">বাজেট পরিচালনা করুন</string>
+    <string name="budget_set_prompt">আপনার খরচ মেপে দেখতে একটি মাসিক বাজেট নির্ধারণ করুন।</string>
+    <string name="budget_set_cta">বাজেট নির্ধারণ করুন</string>
+    <string name="budget_spent_of">%2$s-এর মধ্যে %1$s</string>
+    <string name="budget_left">%1$s বাকি</string>
+    <string name="budget_over_by">বাজেটের চেয়ে %1$s বেশি</string>
+    <string name="budget_pacing_hint">%2$d দিনের জন্য %1$s/দিন</string>
+    <string name="budget_manage_sheet_title">বাজেট পরিচালনা করুন</string>
+    <string name="budget_overall_label">মোট মাসিক বাজেট</string>
+    <string name="budget_overall_hint">যেমন: ৩০০০০</string>
+    <string name="error_invalid_budget_amount">একটি বৈধ পরিমাণ লিখুন, বা বাজেট মুছতে খালি রাখুন।</string>
+
+    <!-- Debts & Loans -->
+    <string name="debts_title">ঋণ ও লোন</string>
+    <string name="bento_debts_title">ঋণ ও লোন</string>
+    <string name="debts_net_title">নিট অবস্থান</string>
+    <string name="debts_net_owed_to_you">সামগ্রিকভাবে আপনার পাওনা</string>
+    <string name="debts_net_you_owe">সামগ্রিকভাবে আপনার দেনা</string>
+    <string name="debts_net_settled">সব পরিশোধ হয়েছে</string>
+    <string name="debts_section_you_owe">আপনার দেনা</string>
+    <string name="debts_section_owed_to_you">আপনার পাওনা</string>
+    <string name="debts_section_settled">পরিশোধিত</string>
+    <string name="debts_empty_title">এখনো কোনো ঋণ বা লোন নেই</string>
+    <string name="debts_empty_subtitle">আপনার দেনা বা পাওনা ট্র্যাক করুন, প্রতিটির জন্য পরিশোধ পরিকল্পনাসহ।</string>
+    <string name="delete_debt_confirm">এই ঋণ ও সম্পূর্ণ পরিশোধ ইতিহাস মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+
+    <string name="debt_add_title">ঋণ বা লোন যোগ করুন</string>
+    <string name="debt_edit_title">ঋণ বা লোন সম্পাদনা করুন</string>
+    <string name="debt_direction_label">দিক</string>
+    <string name="debt_direction_owe">আমার দেনা</string>
+    <string name="debt_direction_owed">আমার পাওনা</string>
+    <string name="debt_name_label">নাম</string>
+    <string name="debt_name_hint">যেমন: গাড়ির লোন, বন্ধুকে ব্যক্তিগত লোন</string>
+    <string name="error_debt_name_required">এই ঋণের জন্য একটি নাম লিখুন।</string>
+    <string name="debt_principal_label">মূল পরিমাণ</string>
+    <string name="debt_principal_hint">মোট ধার নেওয়া বা দেওয়া পরিমাণ</string>
+    <string name="debt_rate_label">সুদের হার (% বার্ষিক)</string>
+    <string name="debt_rate_hint">যেমন: ১২ (সুদমুক্ত হলে ০ লিখুন)</string>
+    <string name="error_debt_rate_invalid">০ বা তার বেশি একটি বৈধ হার লিখুন।</string>
+    <string name="debt_payment_label">মাসিক কিস্তি (EMI)</string>
+    <string name="debt_payment_hint">যেমন: ৫০০০ (নির্দিষ্ট সময়সূচি না থাকলে ০ রাখুন)</string>
+    <string name="error_debt_payment_invalid">০ বা তার বেশি একটি বৈধ পরিমাণ লিখুন।</string>
+    <string name="debt_start_date_label">শুরুর তারিখ</string>
+    <string name="debt_notes_label">নোট (ঐচ্ছিক)</string>
+    <string name="debt_notes_hint">যেমন: ঋণদাতার নাম, উদ্দেশ্য</string>
+
+    <string name="debt_paid_of_principal">%2$s-এর মধ্যে %1$s পরিশোধ</string>
+    <string name="debt_settled_badge">পরিশোধিত</string>
+    <string name="debt_payoff_projection">%1$s-এর মধ্যে পরিশোধ (%2$d মাস)</string>
+    <string name="debt_insight_accelerate">%2$s/মাস বাড়িয়ে %1$d মাস আগে পরিশোধ করুন।</string>
+    <string name="debt_no_emi_hint">পরিশোধের পূর্বাভাস দেখতে মাসিক কিস্তি যোগ করুন।</string>
+    <string name="debt_reopen">পুনরায় খুলুন</string>
+    <string name="debt_mark_settled">পরিশোধিত হিসেবে চিহ্নিত করুন</string>
+    <string name="debt_history_title">পরিশোধের ইতিহাস</string>
+    <string name="debt_no_payments">এখনো কোনো পরিশোধ লেখা হয়নি।</string>
+    <string name="debt_record_payment">পরিশোধ লিখুন</string>
+
+    <string name="payment_note_label">নোট (ঐচ্ছিক)</string>
+    <string name="payment_note_hint">যেমন: আংশিক পরিশোধ, নগদে পরিশোধ</string>
+
+    <!-- Dashboard redesign — home cards -->
+    <string name="salary_label">বেতন</string>
+    <string name="budget_cap_label">বাজেট সীমা</string>
+    <string name="spending_by_category">বিভাগ অনুযায়ী খরচ</string>
+    <string name="recent_transactions_label">সাম্প্রতিক লেনদেন</string>
+    <string name="view_all_label">সব দেখুন</string>
+    <string name="load_more">আরো লোড করুন</string>
+    <string name="salary_set_title">মাসিক আয় নির্ধারণ করুন</string>
+    <string name="salary_set_label">মাসিক টেক-হোম বেতন</string>
+    <string name="salary_set_hint">যেমন: ৫০০০০</string>
+    <string name="stat_spent_label">খরচ</string>
+    <string name="stat_remaining_label">অবশিষ্ট</string>
+    <string name="months_budget_label">%1$s বাজেট</string>
+
+    <!-- Daily reminder notification -->
+    <string name="reminder_section_title">দৈনিক স্মরণিকা</string>
+    <string name="reminder_toggle_label">সন্ধ্যার খরচ স্মরণিকা</string>
+    <string name="reminder_toggle_desc">প্রতিদিন খরচ লেখার জন্য একটি স্মরণিকা পান</string>
+    <string name="reminder_time_label">স্মরণিকার সময়</string>
+    <string name="reminder_notification_title">আজকের খরচ কি লিখেছেন? 💸</string>
+    <string name="reminder_notification_body">আজ মিস হওয়া খরচ দ্রুত যোগ করতে ট্যাপ করুন।</string>
+</resources>

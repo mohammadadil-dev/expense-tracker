@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5976598919945601918" name="abc_action_bar_home_description">"Mag-navigate sa home"</string>
+    <string msgid="8388173803310557296" name="abc_action_bar_up_description">"Mag-navigate pataas"</string>
+    <string msgid="3937310113216875497" name="abc_action_menu_overflow_description">"Higit pang opsyon"</string>
+    <string msgid="4692188335987374352" name="abc_action_mode_done">"Tapos na"</string>
+    <string msgid="1189761859438369441" name="abc_activity_chooser_view_see_all">"Tingnan lahat"</string>
+    <string msgid="2165779757652331008" name="abc_activitychooserview_choose_application">"Pumili ng app"</string>
+    <string msgid="4215997306490295099" name="abc_capital_off">"I-OFF"</string>
+    <string msgid="884982626291842264" name="abc_capital_on">"I-ON"</string>
+    <string msgid="8833365367933412986" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="2223301931652355242" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="838001238306846836" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="7986526966204849475" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="375214403600139847" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="4192209724446364286" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="4741552369836443843" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="5473865519181928982" name="abc_menu_space_shortcut_label">"space"</string>
+    <string msgid="6180552449598693998" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="5520303668377388990" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7208076849092622260" name="abc_search_hint">"Maghanap…"</string>
+    <string msgid="3741173234950517107" name="abc_searchview_description_clear">"I-clear ang query"</string>
+    <string msgid="693312494995508443" name="abc_searchview_description_query">"Query sa paghahanap"</string>
+    <string msgid="3417662926640357176" name="abc_searchview_description_search">"Maghanap"</string>
+    <string msgid="1486535517437947103" name="abc_searchview_description_submit">"Isumite ang query"</string>
+    <string msgid="2293578557972875415" name="abc_searchview_description_voice">"Paghahanap gamit ang boses"</string>
+    <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Ibahagi sa/kay"</string>
+    <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Ibahagi gamit ang <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"I-collapse"</string>
+    <string name="about_section_title">Tungkol sa App</string>
+    <string name="add">Idagdag</string>
+    <string name="add_category">Magdagdag ng Kategorya</string>
+    <string name="add_expense">Magdagdag ng Gastos</string>
+    <string name="ai_insights_feed_title">Mga AI Insight</string>
+    <string name="amount_label">Halaga</string>
+    <string name="app_name">Expense Tracker</string>
+    <string name="app_version_label">Bersyon 1.0</string>
+    <string name="bento_budget_no_target">Walang nakatakdang badyet</string>
+    <string name="bento_budget_remaining">Natitirang Badyet</string>
+    <string name="bento_budget_remaining_subtitle">ng badyet na %1$s</string>
+    <string name="bento_debts_title">Mga Utang at Loan</string>
+    <string name="bento_monthly_spending">Buwanang Paggastos</string>
+    <string name="bento_savings_goal">Layunin sa Ipon</string>
+    <string name="bento_savings_goal_no_data">Subaybayan ng ilang linggo upang ma-unlock</string>
+    <string name="bento_savings_goal_subtitle">patungo sa layuning %1$s</string>
+    <string name="bento_subscription_cost">Gastos sa Subscription</string>
+    <string name="bento_subscription_subtitle">%1$s ng buwanang paggastos</string>
+    <string name="breakdown_title">Pagkakahati-hati ayon sa Kategorya</string>
+    <string name="budget_cap_label">Limitasyon ng Badyet</string>
+    <string name="budget_left">%1$s natitira</string>
+    <string name="budget_manage_sheet_title">Pamahalaan ang Badyet</string>
+    <string name="budget_over_by">%1$s na hihigit sa badyet</string>
+    <string name="budget_overall_hint">hal. 30000</string>
+    <string name="budget_overall_label">Kabuuang Buwanang Badyet</string>
+    <string name="budget_pacing_hint">%1$s/araw para sa %2$d pang araw</string>
+    <string name="budget_set_cta">Magtakda ng Badyet</string>
+    <string name="budget_set_prompt">Magtakda ng buwanang badyet upang makita kung paano ang iyong paggastos.</string>
+    <string name="budget_spent_of">%1$s ng %2$s</string>
+    <string name="budget_title">Badyet</string>
+    <string name="calendar_picker_title">Kalendaryo</string>
+    <string name="calendar_tap_hint">I-tap ang isang araw upang makita ang mga gastos nito</string>
+    <string msgid="881409763997275156" name="call_notification_answer_action">"Sagutin"</string>
+    <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Video"</string>
+    <string msgid="3229508546291798546" name="call_notification_decline_action">"Tanggihan"</string>
+    <string msgid="2659457946726154263" name="call_notification_hang_up_action">"Ibaba"</string>
+    <string msgid="6107532579223922871" name="call_notification_incoming_text">"Papasok na tawag"</string>
+    <string msgid="8623827134497363134" name="call_notification_ongoing_text">"Kasalukuyang tawag"</string>
+    <string msgid="59049573811482460" name="call_notification_screening_text">"Nagsi-screen ng papasok na tawag"</string>
+    <string name="cancel">Kanselahin</string>
+    <string name="cat_debt_payments">Bayad ng Utang o Loan</string>
+    <string name="cat_entertainment">Libangan</string>
+    <string name="cat_food">Pagkain at Grocery</string>
+    <string name="cat_healthcare">Pangangalagang Pangkalusugan</string>
+    <string name="cat_housing">Tirahan</string>
+    <string name="cat_other">Iba pa</string>
+    <string name="cat_savings">Ipon at Pamumuhunan</string>
+    <string name="cat_shopping">Pamimili</string>
+    <string name="cat_subscriptions">Mga Subscription</string>
+    <string name="cat_transport">Transportasyon</string>
+    <string name="cat_utilities">Mga Utility</string>
+    <string name="category_label">Kategorya</string>
+    <string name="close">Isara</string>
+    <string msgid="406453423630273620" name="close_drawer">"Isara ang menu ng navigation"</string>
+    <string msgid="7573152094250666567" name="close_sheet">"Isara ang sheet"</string>
+    <string msgid="2523291102206661146" name="common_google_play_services_enable_button">I-enable</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text">Hindi gagana ang %1$s maliban kung ie-enable mo ang mga serbisyo ng Google Play.</string>
+    <string msgid="5122002158466380389" name="common_google_play_services_enable_title">I-enable ang mga serbisyo ng Google Play</string>
+    <string msgid="7153882981874058840" name="common_google_play_services_install_button">I-install</string>
+    <string name="common_google_play_services_install_text">Hindi gagana ang %1$s nang wala ang mga serbisyo ng Google Play na wala sa iyong device.</string>
+    <string msgid="7215213145546190223" name="common_google_play_services_install_title">Kunin ang mga serbisyo ng Google Play</string>
+    <string name="common_google_play_services_notification_channel_name">Availability ng serbisyo ng Google Play</string>
+    <string name="common_google_play_services_notification_ticker">Error sa Mga Serbisyo ng Google Play</string>
+    <string name="common_google_play_services_unknown_issue">Nagkakaproblema ang %1$s sa mga serbisyo ng Google Play. Pakisubukan ulit.</string>
+    <string name="common_google_play_services_unsupported_text">Hindi gagana ang %1$s nang wala ang mga serbisyo ng Google Play, na hindi nasusuportahan ng iyong device.</string>
+    <string msgid="6556509956452265614" name="common_google_play_services_update_button">I-update</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text">Hindi gagana ang %1$s maliban kung i-a-update mo ang mga serbisyo ng Google Play.</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">I-update ang mga serbisyo ng Google Play</string>
+    <string name="common_google_play_services_updating_text">Hindi gagana ang %1$s nang wala ang mga serbisyo ng Google Play na kasalukuyang ina-update.</string>
+    <string name="common_google_play_services_wear_update_text">Kailangan ang bagong bersyon ng mga serbisyo ng Google Play. Mag-a-update itong mag-isa sa ilang sandali.</string>
+    <string name="common_open_on_phone">Buksan sa telepono</string>
+    <string name="common_signin_button_text">Mag-sign in</string>
+    <string name="common_signin_button_text_long">Mag-sign in sa Google</string>
+    <string name="convert">I-convert</string>
+    <string name="convert_currency_message">Ilagay ang halaga ng palitan upang i-convert ang iyong mga umiiral na gastos mula sa %1$s patungong %2$s (1 %1$s = ? %2$s).</string>
+    <string name="convert_currency_rate_hint">Halaga ng palitan</string>
+    <string name="convert_currency_title">I-convert ang Pera</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Nakopya sa clipboard ang link"</string>
+    <string name="currency_custom_hint">Custom na simbolo</string>
+    <string name="currency_label">Pera</string>
+    <string name="customer_id_copied">Nakopya ang Customer ID</string>
+    <string name="customer_id_label">Customer ID</string>
+    <string name="dashboard_subtitle">Itala ang mga gastusin, subaybayan ang mga kategorya, at tingnan ang mga trend sa paglipas ng panahon.</string>
+    <string name="data_local_note">Ang lahat ng iyong data ay nananatili sa device na ito. Walang ini-upload sa anumang server.</string>
+    <string name="date_label">Petsa</string>
+    <string name="debt_add_title">Magdagdag ng Utang o Loan</string>
+    <string name="debt_direction_label">Direksyon</string>
+    <string name="debt_direction_owe">May Utang Ako</string>
+    <string name="debt_direction_owed">May Utang sa Akin</string>
+    <string name="debt_edit_title">I-edit ang Utang o Loan</string>
+    <string name="debt_history_title">Kasaysayan ng Bayad</string>
+    <string name="debt_insight_accelerate">Mababayaran nang %1$d buwan nang mas maaga sa pamamagitan ng pagdagdag ng %2$s/buwan.</string>
+    <string name="debt_mark_settled">Markahan bilang Naaayos</string>
+    <string name="debt_name_hint">hal. Car Loan, Personal na Utang sa Kaibigan</string>
+    <string name="debt_name_label">Pangalan</string>
+    <string name="debt_no_emi_hint">Magdagdag ng buwanang bayad upang makita ang pagtataya ng pagbabayad.</string>
+    <string name="debt_no_payments">Wala pang naitaang mga bayad.</string>
+    <string name="debt_notes_hint">hal. pangalan ng nagpapautang, layunin</string>
+    <string name="debt_notes_label">Mga Tala (opsyonal)</string>
+    <string name="debt_paid_of_principal">%1$s na nabayad sa %2$s</string>
+    <string name="debt_payment_hint">hal. 5000 (ilagay ang 0 kung walang nakatakdang iskedyul)</string>
+    <string name="debt_payment_label">Buwanang Bayad (EMI)</string>
+    <string name="debt_payoff_projection">Mababayaran sa %1$s (%2$d buwan)</string>
+    <string name="debt_principal_hint">Kabuuang halagang hiniram o ipinagpautang</string>
+    <string name="debt_principal_label">Pangunahing Halaga</string>
+    <string name="debt_rate_hint">hal. 12 (ilagay ang 0 kung walang interes)</string>
+    <string name="debt_rate_label">Rate ng Interes (% bawat taon)</string>
+    <string name="debt_record_payment">Itala ang Bayad</string>
+    <string name="debt_reopen">Buksan muli</string>
+    <string name="debt_settled_badge">Naaayos</string>
+    <string name="debt_start_date_label">Petsa ng Pagsisimula</string>
+    <string name="debts_empty_subtitle">Subaybayan ang perang utang mo o utang sa iyo, na may plano sa pagbabayad para sa bawat isa.</string>
+    <string name="debts_empty_title">Wala pang mga utang o loan</string>
+    <string name="debts_net_owed_to_you">Kabuuang utang sa iyo</string>
+    <string name="debts_net_settled">Naaayos na ang lahat</string>
+    <string name="debts_net_title">Net na Posisyon</string>
+    <string name="debts_net_you_owe">Kabuuang utang mo</string>
+    <string name="debts_section_owed_to_you">Utang sa Iyo</string>
+    <string name="debts_section_settled">Naaayos</string>
+    <string name="debts_section_you_owe">Utang Mo</string>
+    <string name="debts_title">Mga Utang at Loan</string>
+    <string msgid="8038256446254964252" name="default_error_message">"Invalid na input"</string>
+    <string msgid="6312721426453364202" name="default_popup_window_title">"Window ng Pop-Up"</string>
+    <string name="delete">Tanggalin</string>
+    <string name="delete_category_confirm">Ang mga gastos na gumagamit ng kategoryang ito ay itatakda sa unang natitirang kategorya. Magpatuloy?</string>
+    <string name="delete_debt_confirm">Tanggalin ang utang na ito at ang buong kasaysayan ng bayad nito? Hindi ito maaaring bawiin.</string>
+    <string name="delete_expense_confirm">Tanggalin ang gastos na ito?</string>
+    <string name="description_hint">hal. Pagkain sa supermarket</string>
+    <string name="description_label">Paglalarawan</string>
+    <string name="detected_region_note">Natukoy mula sa iyong device: %1$s</string>
+    <string name="done">Tapos na</string>
+    <string msgid="1890207353314751437" name="dropdown_menu">"Drop-down na menu"</string>
+    <string name="edit">I-edit</string>
+    <string name="edit_expense">I-edit ang Gastos</string>
+    <string name="enter_category_name">Maglagay ng pangalan ng kategorya.</string>
+    <string name="error_debt_name_required">Maglagay ng pangalan para sa utang na ito.</string>
+    <string name="error_debt_payment_invalid">Maglagay ng wastong halaga, 0 pataas.</string>
+    <string name="error_debt_rate_invalid">Maglagay ng wastong rate, 0 pataas.</string>
+    <string name="error_invalid_amount">Maglagay ng wastong halaga na mas malaki sa 0.</string>
+    <string name="error_invalid_budget_amount">Maglagay ng wastong halaga, o iwanang blangko upang i-clear.</string>
+    <string name="error_invalid_rate">Maglagay ng wastong halaga na mas malaki sa 0.</string>
+    <string name="error_select_date">Pumili ng petsa.</string>
+    <string name="expenses_this_month">Mga Gastos Ngayong Buwan</string>
+    <string name="export_customer_id_label">Customer ID: %1$s</string>
+    <string name="export_pdf">I-export ang PDF</string>
+    <string name="export_pdf_chooser_title">I-save o ibahagi ang iyong ulat</string>
+    <string name="export_report_title">Buwanang Ulat ng Gastos</string>
+    <string name="export_started">Inihahanda ang iyong PDF na ulat…</string>
+    <string name="export_total_label">Kabuuan</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Kopyahin ang link"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Buksan sa browser"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Ibahagi ang link"</string>
+    <string name="greeting_afternoon">Magandang hapon</string>
+    <string name="greeting_afternoon_named">Magandang hapon, %1$s</string>
+    <string name="greeting_evening">Magandang gabi</string>
+    <string name="greeting_evening_named">Magandang gabi, %1$s</string>
+    <string name="greeting_hello">Kamusta 👋</string>
+    <string name="greeting_hello_named">Kamusta, %1$s 👋</string>
+    <string name="greeting_morning">Magandang umaga</string>
+    <string name="greeting_morning_named">Magandang umaga, %1$s</string>
+    <string name="health_band_excellent">Mahusay</string>
+    <string name="health_band_fair">Katamtaman</string>
+    <string name="health_band_good">Mabuti</string>
+    <string name="health_band_needs_attention">Kailangan ng Atensyon</string>
+    <string name="health_sub_budget">Badyet</string>
+    <string name="health_sub_consistency">Konsistensya</string>
+    <string name="health_sub_subscriptions">Mga Subscription</string>
+    <string name="health_sub_trend">Trend</string>
+    <string msgid="6827826412747255547" name="in_progress">"Isinasagawa"</string>
+    <string msgid="7933458017204019916" name="indeterminate">"Bahagyang may check"</string>
+    <string name="insight_category_decrease">Bumaba ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
+    <string name="insight_category_increase">Tumaas ng %2$s ang paggastos sa %1$s ngayong buwan.</string>
+    <string name="insight_daily_average">Nagagastos ka ng average na %1$s bawat araw ngayong buwan.</string>
+    <string name="insight_not_enough_data">Magdagdag ng ilang gastusin upang ma-unlock ang mga personalisadong insight.</string>
+    <string name="insight_projected_overspend">Sa ganitong bilis, maaari kang gumastos ng %1$s higit sa nakaraang buwan.</string>
+    <string name="insight_projected_savings">Sa ganitong bilis, maaari kang makatipid ng %1$s kumpara sa nakaraang buwan.</string>
+    <string name="insight_strongest_day">Kadalasan, pinakamababa ang iyong gastos tuwing %1$s.</string>
+    <string name="insight_subscription_load">Ang mga subscription ay bumubuo ng %1$s ng paggastos ngayong buwan.</string>
+    <string name="insight_trend_down">Ang iyong paggastos ay %1$s na mas mababa kaysa noong nakaraang linggo.</string>
+    <string name="insight_trend_flat">Ang iyong paggastos ay katulad ng nakaraang linggo.</string>
+    <string name="insight_trend_up">Ang iyong paggastos ay %1$s na mas mataas kaysa noong nakaraang linggo.</string>
+    <string name="keep_one_category_warning">Kailangan mong panatilihin ang kahit isang kategorya.</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_label">Wika</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"I-collapse ang bottom sheet"</string>
+    <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"I-dismiss ang bottom sheet"</string>
+    <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"Handle sa pag-drag"</string>
+    <string msgid="6670819569745899763" name="m3c_bottom_sheet_expand_description">"Palawakin ang bottom sheet"</string>
+    <string msgid="3010635850035863127" name="m3c_bottom_sheet_pane_title">"Bottom Sheet"</string>
+    <string msgid="8166741421776570875" name="m3c_date_input_headline">"Inilagay na petsa"</string>
+    <string msgid="229313757840775812" name="m3c_date_input_headline_description">"Inilagay na petsa: %1$s"</string>
+    <string msgid="6116910750161463197" name="m3c_date_input_invalid_for_pattern">"Hindi tumutugma ang petsa sa inaasahang pattern: %1$s"</string>
+    <string msgid="2521768508935305279" name="m3c_date_input_invalid_not_allowed">"Hindi pinapayagan ang petsa: %1$s"</string>
+    <string msgid="7052898923934555305" name="m3c_date_input_invalid_year_range">"Wala ang petsa sa inaasahang hanay ng taon na %1$s - %2$s"</string>
+    <string msgid="2895559812010326913" name="m3c_date_input_label">"Petsa"</string>
+    <string msgid="1237013946323089826" name="m3c_date_input_no_input_description">"Wala"</string>
+    <string msgid="7306227249789210568" name="m3c_date_input_title">"Pumili ng petsa"</string>
+    <string msgid="7605002211875882969" name="m3c_date_picker_headline">"Piniling petsa"</string>
+    <string msgid="3664277305226978227" name="m3c_date_picker_headline_description">"Kasalukuyang napili: %1$s"</string>
+    <string msgid="8436650776581492840" name="m3c_date_picker_navigate_to_year_description">"Mag-navigate papunta sa taong %1$s"</string>
+    <string msgid="5811000998184572395" name="m3c_date_picker_no_selection_description">"Wala"</string>
+    <string msgid="7813882352367152251" name="m3c_date_picker_scroll_to_earlier_years">"Mag-scroll para ipakita ang mga mas naunang taon"</string>
+    <string msgid="5727367015496556177" name="m3c_date_picker_scroll_to_later_years">"Mag-scroll para makita ang mga mas kamakailang taon"</string>
+    <string msgid="1804346892470238807" name="m3c_date_picker_switch_to_calendar_mode">"Lumipat sa pamamaraan ng pag-input ng kalendaryo"</string>
+    <string msgid="395627960681594326" name="m3c_date_picker_switch_to_day_selection">"Mag-swipe para pumili ng taon, o mag-tap para bumalik sa pagpili ng araw"</string>
+    <string msgid="2219746470065162704" name="m3c_date_picker_switch_to_input_mode">"Lumipat sa pamamaraan ng pag-input ng text"</string>
+    <string msgid="7142101321095356500" name="m3c_date_picker_switch_to_next_month">"Lumipat sa susunod na buwan"</string>
+    <string msgid="228438865139394590" name="m3c_date_picker_switch_to_previous_month">"Lumipat sa nakaraang buwan"</string>
+    <string msgid="791651718641787594" name="m3c_date_picker_switch_to_year_selection">"Lumipat sa pagpili ng taon"</string>
+    <string msgid="7430790972741451689" name="m3c_date_picker_title">"Pumili ng petsa"</string>
+    <string msgid="3199387177749801575" name="m3c_date_picker_today_description">"Ngayon"</string>
+    <string msgid="2068382232816991922" name="m3c_date_picker_year_picker_pane_title">"Nakikita ang picker ng taon"</string>
+    <string msgid="3190049423327661366" name="m3c_date_range_input_invalid_range_input">"Invalid ang input na hanay ng petsa"</string>
+    <string msgid="3148384720560189467" name="m3c_date_range_input_title">"Maglagay ng mga petsa"</string>
+    <string msgid="2138321128465719402" name="m3c_date_range_picker_day_in_range">"May signal"</string>
+    <string msgid="4947636797751277713" name="m3c_date_range_picker_end_headline">"Petsa ng pagtatapos"</string>
+    <string msgid="602077859540990149" name="m3c_date_range_picker_scroll_to_next_month">"Mag-scroll para ipakita ang susunod na buwan"</string>
+    <string msgid="4592174524846109496" name="m3c_date_range_picker_scroll_to_previous_month">"Mag-scroll para ipakita ang nakaraang buwan"</string>
+    <string msgid="4665981448952749820" name="m3c_date_range_picker_start_headline">"Petsa ng pagsisimula"</string>
+    <string msgid="3134165431120340385" name="m3c_date_range_picker_title">"Pumili ng mga petsa"</string>
+    <string msgid="7617233117134790350" name="m3c_dialog">"Dialog"</string>
+    <string msgid="3177828188723359358" name="m3c_dropdown_menu_collapsed">"Naka-collapse"</string>
+    <string msgid="2360841780724299882" name="m3c_dropdown_menu_expanded">"Naka-expand"</string>
+    <string msgid="8687821690726149911" name="m3c_dropdown_menu_toggle">"I-toggle ang dropdown menu"</string>
+    <string msgid="6152806324422087846" name="m3c_search_bar_search">"Maghanap"</string>
+    <string msgid="6152755701819882931" name="m3c_snackbar_dismiss">"I-dismiss"</string>
+    <string msgid="7655536806087401899" name="m3c_suggestions_available">"Mga suhestyon sa ibaba"</string>
+    <string msgid="2786685010796619560" name="m3c_time_picker_am">"AM"</string>
+    <string msgid="2349193472625211372" name="m3c_time_picker_hour">"Oras"</string>
+    <string msgid="9179527532316922345" name="m3c_time_picker_hour_24h_suffix">"%1$d oras"</string>
+    <string msgid="8876759303332837035" name="m3c_time_picker_hour_selection">"Pumili ng oras"</string>
+    <string msgid="3458167507790628988" name="m3c_time_picker_hour_suffix">"%1$d o\'clock"</string>
+    <string msgid="6973808109666874069" name="m3c_time_picker_hour_text_field">"nang ilang oras"</string>
+    <string msgid="4313071914266462005" name="m3c_time_picker_minute">"Minuto"</string>
+    <string msgid="4699133535056739733" name="m3c_time_picker_minute_selection">"Pumili ng mga minuto"</string>
+    <string msgid="5064177921781937179" name="m3c_time_picker_minute_suffix">"%1$d (na) minuto"</string>
+    <string msgid="7661234488295443182" name="m3c_time_picker_minute_text_field">"nang ilang minuto"</string>
+    <string msgid="5865171949528594571" name="m3c_time_picker_period_toggle_description">"Piliin ang AM o PM"</string>
+    <string msgid="6616362054113087709" name="m3c_time_picker_pm">"PM"</string>
+    <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"Ipakita ang tooltip"</string>
+    <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"Tooltip"</string>
+    <string name="manage_budget">Pamahalaan ang Badyet</string>
+    <string name="manage_categories">Pamahalaan ang mga Kategorya</string>
+    <string name="months_budget_label">Badyet ng %1$s</string>
+    <string name="more_section_title">Higit pa</string>
+    <string name="native_body">Nilalaman</string>
+    <string name="native_headline">Headline</string>
+    <string name="native_media_view">View ng Media</string>
+    <string name="nav_categories">Mga Kategorya</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_settings">Mga Setting</string>
+    <string msgid="542007171693138492" name="navigation_menu">"Menu ng navigation"</string>
+    <string name="new_category_hint">Pangalan ng bagong kategorya</string>
+    <string name="no_expenses_breakdown">Wala pang mga gastusin na ipapakita.</string>
+    <string name="no_expenses_this_day">Walang gastos sa araw na ito.</string>
+    <string name="no_expenses_this_month">Wala pang naitaang gastos ngayong buwan.</string>
+    <string msgid="6610465462668679431" name="not_selected">"Hindi napili"</string>
+    <string name="notifications_permission_confirm">Payagan</string>
+    <string name="notifications_permission_decline">Huwag payagan</string>
+    <string name="notifications_permission_title">Payagan ang app na magpadala sa iyo ng mga notification?</string>
+    <string name="offline_notification_text">I-tap para buksan ang ad</string>
+    <string name="offline_notification_title">Tingnan ang ad na na-save mo noong offline ka</string>
+    <string name="offline_opt_in_confirm">OK</string>
+    <string name="offline_opt_in_confirmation">Makakatanggap ka ng notification na may link kapag online ka na ulit</string>
+    <string name="offline_opt_in_decline">Huwag na lang</string>
+    <string name="offline_opt_in_message">Papadalhan ka namin ng notification na may link sa site ng advertiser.</string>
+    <string name="offline_opt_in_title">Buksan ang ad kapag online ka na ulit.</string>
+    <string name="ok">OK</string>
+    <string name="payment_note_hint">hal. bahagyang bayad, binayad sa cash</string>
+    <string name="payment_note_label">Tala (opsyonal)</string>
+    <string name="powered_by_footer">Pinapagana ng AG Tech</string>
+    <string msgid="5941395253238309765" name="range_end">"Katapusan ng range"</string>
+    <string msgid="7097486360902471446" name="range_start">"Simula ng range"</string>
+    <string name="rate_us">I-rate kami</string>
+    <string name="recent_transactions_label">Mga Kamakailan na Transaksyon</string>
+    <string name="reminder_notification_body">I-tap para mabilis na idagdag ang mga napalampas mong gastos ngayon.</string>
+    <string name="reminder_notification_title">Naitala mo na ba ang iyong mga gastos ngayon? 💸</string>
+    <string name="reminder_section_title">Paalala sa Araw-araw</string>
+    <string name="reminder_time_label">Oras ng paalala</string>
+    <string name="reminder_toggle_desc">Makatanggap ng paalala araw-araw para itala ang iyong mga gastos</string>
+    <string name="reminder_toggle_label">Paalala sa gastos tuwing gabi</string>
+    <string name="reset_all_data">I-reset ang Lahat ng Data</string>
+    <string name="reset_confirm_1">Permanenteng mabubura ang lahat ng gastos at custom na kategorya sa device na ito. Magpatuloy?</string>
+    <string name="reset_confirm_2">Sigurado ka ba? Hindi ito maaaring bawiin.</string>
+    <string name="reset_data">I-reset ang Data</string>
+    <string name="s1">I-save ang larawan</string>
+    <string name="s2">Pahintulutan ang Ad na iimbak ang larawan sa Gallery ng larawan?</string>
+    <string name="s3">Tanggapin</string>
+    <string name="s4">Tanggihan</string>
+    <string name="s5">Gumawa ng event sa kalendaryo</string>
+    <string name="s6">Pahintulutan ang Ad na gumawa ng event sa kalendaryo?</string>
+    <string name="s7">Pansubok na Ad</string>
+    <string name="salary_label">Sahod</string>
+    <string name="salary_set_hint">hal. 50000</string>
+    <string name="salary_set_label">Buwanang Take-Home</string>
+    <string name="salary_set_title">Itakda ang Buwanang Kita</string>
+    <string name="save">I-save</string>
+    <string msgid="6264217191555673260" name="search_menu_title">"Maghanap"</string>
+    <string name="select_date">Pumili ng petsa</string>
+    <string msgid="6043586758067023" name="selected">"Napili"</string>
+    <string name="settings_title">Mga Setting</string>
+    <string name="share_app">Ibahagi ang app na ito</string>
+    <string name="share_app_message">Tingnan ang %1$s — ang app na ginagamit ko para subaybayan ang aking mga gastos: %2$s</string>
+    <string name="sms_accept">Tanggapin</string>
+    <string name="sms_detection_description">Kapag nakatanggap ka ng bank, UPI, o card SMS, hihingi ang app ng pahintulot na basahin lamang ang isang mensaheng iyon, pagkatapos ay idaragdag ito sa review queue — walang nai-save hanggang hindi mo ito kinukumpirma.</string>
+    <string name="sms_detection_title">Pagtuklas ng SMS</string>
+    <string name="sms_detection_toggle_label">Tuklasin ang mga transaksyon mula sa SMS</string>
+    <string name="sms_dismiss">Tanggihan</string>
+    <string name="sms_pending_banner">%1$d transaksyon na natukoy mula sa SMS — i-tap upang suriin</string>
+    <string name="sms_review_subtitle">Kumpirmahin o i-edit ang bawat isa bago ito mai-save bilang gastos.</string>
+    <string name="sms_review_title">Suriin ang %1$d Transaksyon</string>
+    <string name="spending_by_category">Paggastos ayon sa Kategorya</string>
+    <string name="splash_tagline">Subaybayan ang bawat gastos nang walang kahirap-hirap</string>
+    <string name="stat_daily_average">Araw-araw na Average</string>
+    <string name="stat_no_prior_data">Walang data sa nakaraang buwan</string>
+    <string name="stat_per_day">bawat araw ngayong buwan</string>
+    <string name="stat_remaining_label">Natitira</string>
+    <string name="stat_same_as_last_month">Katulad ng nakaraang buwan</string>
+    <string name="stat_spent_label">Ginastos</string>
+    <string name="stat_this_month">ngayong buwan</string>
+    <string name="stat_top_category">Nangungunang Kategorya</string>
+    <string name="stat_total_spent">Kabuuang Ginastos</string>
+    <string name="stat_transactions">Mga Transaksyon</string>
+    <string name="stat_up_from_zero">Tumaas mula %1$s noong nakaraang buwan</string>
+    <string name="stat_vs_last_month">kumpara sa nakaraang buwan</string>
+    <string msgid="4139871816613051306" name="state_empty">"Walang laman"</string>
+    <string msgid="5834637030682409883" name="state_off">"Naka-off"</string>
+    <string msgid="1490883874751719580" name="state_on">"Naka-on"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="2561197295334830845" name="switch_role">"Lumipat"</string>
+    <string msgid="1672349317127674378" name="tab">"Tab"</string>
+    <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> (na) porsyento."</string>
+    <string name="toast_all_reset">Na-reset ang lahat ng data.</string>
+    <string name="toast_expense_added">Naidagdag ang gastos.</string>
+    <string name="toast_expense_deleted">Natanggal ang gastos.</string>
+    <string name="toast_expense_updated">Na-update ang gastos.</string>
+    <string name="today">Ngayon</string>
+    <string msgid="3765533235322692011" name="tooltip_description">"tooltip"</string>
+    <string msgid="3124740595719787496" name="tooltip_label">"ipakita ang tooltip"</string>
+    <string name="trend_title">Buwanang Trend (Nakaraang 12 Buwan)</string>
+    <string name="update">I-update</string>
+    <string name="view_all_label">Tingnan Lahat</string>
+    <string name="view_mode_calendar">Kalendaryo</string>
+    <string name="view_mode_category">Ayon sa Kategorya</string>
+    <string name="view_mode_day">Araw-araw</string>
+    <string name="view_mode_grid">Grid</string>
+    <string name="watermark_label_prefix">AdMob - </string>
+    <string name="yesterday">Kahapon</string>
+    <string name="your_name_hint">hal. Mohammad</string>
+    <string name="your_name_label">Iyong Pangalan</string>
+    <string name="your_name_note">Ginagamit lamang para i-personalize ang pagbati sa dashboard. Hindi ipinapadala kahit saan.</string>
+</resources>

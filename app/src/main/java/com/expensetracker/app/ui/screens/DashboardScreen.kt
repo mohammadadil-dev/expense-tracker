@@ -118,7 +118,6 @@ import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 import java.util.Locale
 import kotlin.math.abs
 
@@ -992,22 +991,9 @@ private fun colorFromHex(hex: String): Color =
     runCatching { Color(android.graphics.Color.parseColor(hex)) }.getOrDefault(TextMuted)
 
 @Composable
-private fun greetingText(name: String): String {
-    val hour = remember { LocalTime.now().hour }
-    return if (name.isBlank()) {
-        when {
-            hour < 12 -> stringResource(R.string.greeting_morning)
-            hour < 17 -> stringResource(R.string.greeting_afternoon)
-            else -> stringResource(R.string.greeting_evening)
-        }
-    } else {
-        when {
-            hour < 12 -> stringResource(R.string.greeting_morning_named, name)
-            hour < 17 -> stringResource(R.string.greeting_afternoon_named, name)
-            else -> stringResource(R.string.greeting_evening_named, name)
-        }
-    }
-}
+private fun greetingText(name: String): String =
+    if (name.isBlank()) stringResource(R.string.greeting_hello)
+    else stringResource(R.string.greeting_hello_named, name)
 
 private fun insightAccentColor(kind: FinancialInsights.InsightKind): Color = when (kind) {
     FinancialInsights.InsightKind.POSITIVE -> SuccessGreen

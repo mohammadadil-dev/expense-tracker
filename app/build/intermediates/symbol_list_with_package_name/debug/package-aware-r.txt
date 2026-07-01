@@ -829,6 +829,7 @@ id expanded_menu
 id forever
 id fragment_container_view_tag
 id group_divider
+id hide_graphics_layer_in_inspector_tag
 id hide_ime_id
 id hide_in_inspector_tag
 id home
@@ -938,6 +939,7 @@ integer abc_config_activityShortDur
 integer cancel_button_image_alpha
 integer config_tooltipAnimTime
 integer google_play_services_version
+integer m3c_window_layout_in_display_cutout_mode
 integer status_bar_notification_info_maxnum
 interpolator btn_checkbox_checked_mtrl_animation_interpolator_0
 interpolator btn_checkbox_checked_mtrl_animation_interpolator_1
@@ -1176,6 +1178,8 @@ string greeting_afternoon
 string greeting_afternoon_named
 string greeting_evening
 string greeting_evening_named
+string greeting_hello
+string greeting_hello_named
 string greeting_morning
 string greeting_morning_named
 string health_band_excellent
@@ -1201,6 +1205,7 @@ string insight_trend_flat
 string insight_trend_up
 string keep_one_category_warning
 string language_arabic
+string language_bengali
 string language_english
 string language_hindi
 string language_label
@@ -1246,6 +1251,7 @@ string m3c_date_range_picker_title
 string m3c_dialog
 string m3c_dropdown_menu_collapsed
 string m3c_dropdown_menu_expanded
+string m3c_dropdown_menu_toggle
 string m3c_search_bar_search
 string m3c_snackbar_dismiss
 string m3c_suggestions_available
@@ -1282,7 +1288,6 @@ string not_selected
 string notifications_permission_confirm
 string notifications_permission_decline
 string notifications_permission_title
-string off
 string offline_notification_text
 string offline_notification_title
 string offline_opt_in_confirm
@@ -1291,7 +1296,6 @@ string offline_opt_in_decline
 string offline_opt_in_message
 string offline_opt_in_title
 string ok
-string on
 string payment_note_hint
 string payment_note_label
 string powered_by_footer
@@ -1299,6 +1303,12 @@ string range_end
 string range_start
 string rate_us
 string recent_transactions_label
+string reminder_notification_body
+string reminder_notification_title
+string reminder_section_title
+string reminder_time_label
+string reminder_toggle_desc
+string reminder_toggle_label
 string reset_all_data
 string reset_confirm_1
 string reset_confirm_2
@@ -1343,6 +1353,9 @@ string stat_total_spent
 string stat_transactions
 string stat_up_from_zero
 string stat_vs_last_month
+string state_empty
+string state_off
+string state_on
 string status_bar_notification_info_overflow
 string switch_role
 string tab
@@ -1528,6 +1541,8 @@ style Base_Widget_AppCompat_TextView_SpinnerItem
 style Base_Widget_AppCompat_Toolbar
 style Base_Widget_AppCompat_Toolbar_Button_Navigation
 style DialogWindowTheme
+style EdgeToEdgeFloatingDialogTheme
+style EdgeToEdgeFloatingDialogWindowTheme
 style FloatingDialogTheme
 style FloatingDialogWindowTheme
 style Platform_AppCompat

@@ -138,6 +138,8 @@ string greeting_afternoon
 string greeting_afternoon_named
 string greeting_evening
 string greeting_evening_named
+string greeting_hello
+string greeting_hello_named
 string greeting_morning
 string greeting_morning_named
 string health_band_excellent
@@ -161,6 +163,7 @@ string insight_trend_flat
 string insight_trend_up
 string keep_one_category_warning
 string language_arabic
+string language_bengali
 string language_english
 string language_hindi
 string language_label
@@ -184,6 +187,12 @@ string payment_note_label
 string powered_by_footer
 string rate_us
 string recent_transactions_label
+string reminder_notification_body
+string reminder_notification_title
+string reminder_section_title
+string reminder_time_label
+string reminder_toggle_desc
+string reminder_toggle_label
 string reset_all_data
 string reset_confirm_1
 string reset_confirm_2

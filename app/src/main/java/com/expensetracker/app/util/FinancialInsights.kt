@@ -172,8 +172,10 @@ object FinancialInsights {
         }
 
         // 3. Forward-looking savings projection vs an auto-suggested target.
+        // Requires at least 7 days of data — projecting from 1–6 days amplifies noise badly
+        // (e.g. one big purchase on day 1 inflates the whole-month projection wildly).
         val savingsGoal = computeSavingsGoal(overallBudget, lastMonthSpend, projectedTotal)
-        if (savingsGoal.hasEnoughData) {
+        if (savingsGoal.hasEnoughData && daysElapsed >= 7) {
             insights += if (savingsGoal.projectedSavings > 1.0) {
                 Insight(
                     InsightTemplate.PROJECTED_SAVINGS, InsightKind.POSITIVE, "💰",
@@ -192,6 +194,12 @@ object FinancialInsights {
                         args = listOf(Formatters.money(dailyAverage, currencySymbol)))
                 }
             }
+        } else if (monthExpenses.isNotEmpty()) {
+            // Too early in the month to project reliably — just show the daily average.
+            insights += Insight(
+                InsightTemplate.DAILY_AVERAGE, InsightKind.NEUTRAL, "📊",
+                args = listOf(Formatters.money(dailyAverage, currencySymbol))
+            )
         }
 
         // 4. Strongest (lowest-average-spend) day of week, over the last 4 weeks of history.

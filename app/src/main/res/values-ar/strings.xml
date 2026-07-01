@@ -30,6 +30,8 @@
     <string name="greeting_morning_named">صباح الخير، %1$s</string>
     <string name="greeting_afternoon_named">نهارك سعيد، %1$s</string>
     <string name="greeting_evening_named">مساء الخير، %1$s</string>
+    <string name="greeting_hello">أهلاً 👋</string>
+    <string name="greeting_hello_named">أهلاً، %1$s 👋</string>
 
     <string name="health_band_excellent">ممتاز</string>
     <string name="health_band_good">جيد</string>
@@ -56,9 +58,9 @@
     <string name="insight_trend_flat">إنفاقك مطابق للأسبوع الماضي.</string>
     <string name="insight_category_increase">ارتفع إنفاق %1$s بنسبة %2$s هذا الشهر.</string>
     <string name="insight_category_decrease">انخفض إنفاق %1$s بنسبة %2$s هذا الشهر.</string>
-    <string name="insight_projected_savings">أنت في طريقك لتوفير %1$s هذا الشهر.</string>
-    <string name="insight_projected_overspend">من المتوقع أن تتجاوز الميزانية بمقدار %1$s هذا الشهر.</string>
-    <string name="insight_strongest_day">أفضل يوم توفير لك هو %1$s.</string>
+    <string name="insight_projected_savings">بهذه الوتيرة قد توفر %1$s مقارنةً بالشهر الماضي.</string>
+    <string name="insight_projected_overspend">بهذه الوتيرة قد تنفق %1$s أكثر من الشهر الماضي.</string>
+    <string name="insight_strongest_day">عادةً ما تكون نفقاتك أقل في يوم %1$s.</string>
     <string name="insight_subscription_load">تمثل الاشتراكات %1$s من إنفاق هذا الشهر.</string>
     <string name="insight_daily_average">متوسط إنفاقك %1$s في اليوم هذا الشهر.</string>
     <string name="insight_not_enough_data">أضف بعض المصروفات لإظهار رؤى مخصصة لك.</string>
@@ -111,6 +113,7 @@
     <string name="language_arabic">العربية</string>
     <string name="language_hindi">الهندية</string>
     <string name="language_urdu">الأردية (اردو)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">التاغالوغية (Filipino)</string>
     <string name="currency_label">العملة</string>
     <string name="currency_custom_hint">رمز مخصص</string>
@@ -245,4 +248,12 @@
     <string name="stat_spent_label">المُنفق</string>
     <string name="stat_remaining_label">المتبقي</string>
     <string name="months_budget_label">ميزانية %1$s</string>
+
+    <!-- Daily reminder notification -->
+    <string name="reminder_section_title">تذكير يومي</string>
+    <string name="reminder_toggle_label">تذكير مسائي بالإنفاق</string>
+    <string name="reminder_toggle_desc">احصل على تذكير يومي لتسجيل نفقاتك</string>
+    <string name="reminder_time_label">وقت التذكير</string>
+    <string name="reminder_notification_title">هل سجّلت نفقات اليوم؟ 💸</string>
+    <string name="reminder_notification_body">اضغط لإضافة أي نفقات قد فاتتك اليوم.</string>
 </resources>

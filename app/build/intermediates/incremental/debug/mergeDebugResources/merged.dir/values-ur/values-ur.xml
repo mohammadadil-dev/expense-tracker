@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5976598919945601918" name="abc_action_bar_home_description">"گھر کی طرف نیویگیٹ کریں"</string>
+    <string msgid="8388173803310557296" name="abc_action_bar_up_description">"اوپر نیویگیٹ کریں"</string>
+    <string msgid="3937310113216875497" name="abc_action_menu_overflow_description">"مزید اختیارات"</string>
+    <string msgid="4692188335987374352" name="abc_action_mode_done">"ہو گیا"</string>
+    <string msgid="1189761859438369441" name="abc_activity_chooser_view_see_all">"سبھی دیکھیں"</string>
+    <string msgid="2165779757652331008" name="abc_activitychooserview_choose_application">"ایک ایپ منتخب کریں"</string>
+    <string msgid="4215997306490295099" name="abc_capital_off">"آف"</string>
+    <string msgid="884982626291842264" name="abc_capital_on">"آن"</string>
+    <string msgid="8833365367933412986" name="abc_menu_alt_shortcut_label">"Alt+‎"</string>
+    <string msgid="2223301931652355242" name="abc_menu_ctrl_shortcut_label">"Ctrl+‎"</string>
+    <string msgid="838001238306846836" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="7986526966204849475" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="375214403600139847" name="abc_menu_function_shortcut_label">"Function+‎"</string>
+    <string msgid="4192209724446364286" name="abc_menu_meta_shortcut_label">"Meta+‎"</string>
+    <string msgid="4741552369836443843" name="abc_menu_shift_shortcut_label">"Shift+‎"</string>
+    <string msgid="5473865519181928982" name="abc_menu_space_shortcut_label">"space"</string>
+    <string msgid="6180552449598693998" name="abc_menu_sym_shortcut_label">"Sym+‎"</string>
+    <string msgid="5520303668377388990" name="abc_prepend_shortcut_label">"Menu+‎"</string>
+    <string msgid="7208076849092622260" name="abc_search_hint">"تلاش کریں…"</string>
+    <string msgid="3741173234950517107" name="abc_searchview_description_clear">"استفسار صاف کریں"</string>
+    <string msgid="693312494995508443" name="abc_searchview_description_query">"تلاش کا استفسار"</string>
+    <string msgid="3417662926640357176" name="abc_searchview_description_search">"تلاش کریں"</string>
+    <string msgid="1486535517437947103" name="abc_searchview_description_submit">"استفسار جمع کرائیں"</string>
+    <string msgid="2293578557972875415" name="abc_searchview_description_voice">"صوتی تلاش"</string>
+    <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"اس کے ساتھ اشتراک کریں"</string>
+    <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g> کے ساتھ اشتراک کریں"</string>
+    <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"سکیڑیں"</string>
+    <string name="about_section_title">کے بارے میں</string>
+    <string name="add">شامل کریں</string>
+    <string name="add_category">زمرہ شامل کریں</string>
+    <string name="add_expense">خرچ شامل کریں</string>
+    <string name="ai_insights_feed_title">AI بصیرتیں</string>
+    <string name="amount_label">رقم</string>
+    <string name="app_name">اخراجات ٹریکر</string>
+    <string name="app_version_label">ورژن 1.0</string>
+    <string name="bento_budget_no_target">کوئی بجٹ طے نہیں</string>
+    <string name="bento_budget_remaining">باقی بجٹ</string>
+    <string name="bento_budget_remaining_subtitle">%1$s بجٹ میں سے</string>
+    <string name="bento_debts_title">قرض اور لون</string>
+    <string name="bento_monthly_spending">ماہانہ اخراجات</string>
+    <string name="bento_savings_goal">بچت کا ہدف</string>
+    <string name="bento_savings_goal_no_data">چند ہفتے ٹریک کریں تاکہ آن لاک ہو</string>
+    <string name="bento_savings_goal_subtitle">%1$s ہدف کی طرف</string>
+    <string name="bento_subscription_cost">سبسکرپشن لاگت</string>
+    <string name="bento_subscription_subtitle">ماہانہ خرچ کا %1$s</string>
+    <string name="breakdown_title">زمرے کے مطابق تقسیم</string>
+    <string name="budget_cap_label">بجٹ کی حد</string>
+    <string name="budget_left">%1$s باقی</string>
+    <string name="budget_manage_sheet_title">بجٹ منظم کریں</string>
+    <string name="budget_over_by">بجٹ سے %1$s زیادہ</string>
+    <string name="budget_overall_hint">مثال: 30000</string>
+    <string name="budget_overall_label">مجموعی ماہانہ بجٹ</string>
+    <string name="budget_pacing_hint">%2$d مزید دن(وں) کے لیے %1$s/دن</string>
+    <string name="budget_set_cta">بجٹ طے کریں</string>
+    <string name="budget_set_prompt">ماہانہ بجٹ طے کریں تاکہ دیکھ سکیں آپ کا خرچ کہاں ہے۔</string>
+    <string name="budget_spent_of">%2$s میں سے %1$s</string>
+    <string name="budget_title">بجٹ</string>
+    <string name="calendar_picker_title">کیلنڈر</string>
+    <string name="calendar_tap_hint">اخراجات دیکھنے کے لیے دن پر ٹیپ کریں</string>
+    <string msgid="881409763997275156" name="call_notification_answer_action">"جواب دیں"</string>
+    <string msgid="8793775615905189152" name="call_notification_answer_video_action">"ویڈیو"</string>
+    <string msgid="3229508546291798546" name="call_notification_decline_action">"مسترد کریں"</string>
+    <string msgid="2659457946726154263" name="call_notification_hang_up_action">"منقطع کر دیں"</string>
+    <string msgid="6107532579223922871" name="call_notification_incoming_text">"اِن کمنگ کال"</string>
+    <string msgid="8623827134497363134" name="call_notification_ongoing_text">"جاری کال"</string>
+    <string msgid="59049573811482460" name="call_notification_screening_text">"اِن کمنگ کال کی اسکریننگ"</string>
+    <string name="cancel">منسوخ</string>
+    <string name="cat_debt_payments">قرض یا لون کی ادائیگی</string>
+    <string name="cat_entertainment">تفریح</string>
+    <string name="cat_food">کھانا اور گروسری</string>
+    <string name="cat_healthcare">صحت کی دیکھ بھال</string>
+    <string name="cat_housing">رہائش</string>
+    <string name="cat_other">دیگر</string>
+    <string name="cat_savings">بچت اور سرمایہ کاری</string>
+    <string name="cat_shopping">شاپنگ</string>
+    <string name="cat_subscriptions">سبسکرپشنز</string>
+    <string name="cat_transport">نقل و حمل</string>
+    <string name="cat_utilities">یوٹیلیٹیز</string>
+    <string name="category_label">زمرہ</string>
+    <string name="close">بند کریں</string>
+    <string msgid="406453423630273620" name="close_drawer">"نیویگیشن مینیو بند کریں"</string>
+    <string msgid="7573152094250666567" name="close_sheet">"شیٹ بند کریں"</string>
+    <string msgid="2523291102206661146" name="common_google_play_services_enable_button">فعال کریں</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text">‏جب تک آپ Google Play سروسز فعال نہیں کر لیتے، %1$s کام نہیں کرے گی۔</string>
+    <string msgid="5122002158466380389" name="common_google_play_services_enable_title">‏Google Play سروسز فعال کریں</string>
+    <string msgid="7153882981874058840" name="common_google_play_services_install_button">انسٹال کریں</string>
+    <string name="common_google_play_services_install_text">‏%1$s Google Play سروسز کے بغیر نہیں چلے گی، جو آپ کے آلہ سے غائب ہیں۔</string>
+    <string msgid="7215213145546190223" name="common_google_play_services_install_title">‏Google Play سروسز حاصل کریں</string>
+    <string name="common_google_play_services_notification_channel_name">‏Google Play سروسز کی دستیابی</string>
+    <string name="common_google_play_services_notification_ticker">‏Google Play سروسز کی خرابی</string>
+    <string name="common_google_play_services_unknown_issue">‏%1$s کو Google Play سروسز کے ساتھ مسئلہ پیش آ رہا ہے۔ براہ کرم دوبارہ کوشش کریں۔</string>
+    <string name="common_google_play_services_unsupported_text">‏%1$s Google Play سروسز کے بغیر نہیں چلے گی، جن کی آپ کا آلہ معاونت نہیں کرتا۔</string>
+    <string msgid="6556509956452265614" name="common_google_play_services_update_button">اپ ڈیٹ کریں</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text">‏جب تک آپ Google Play سروسز اپ ڈیٹ نہیں کر لیتے ہیں %1$s تب تک نہیں چلے گی۔</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">‏Google Play سروسز اپ ڈیٹ کریں</string>
+    <string name="common_google_play_services_updating_text">‏%1$s Google Play سروسز کے بغیر نہیں چلے گی، جو فی الحال اپ ڈیٹ ہو رہی ہیں۔</string>
+    <string name="common_google_play_services_wear_update_text">‏Google Play سروسز کے نئے ورژن کی ضرورت ہے۔ یہ تھوڑی دیر میں خود ہی اپنے آپ کو اپ ڈیٹ کر لے گا۔</string>
+    <string name="common_open_on_phone">فون پر کھولیں</string>
+    <string name="common_signin_button_text">سائن ان کریں</string>
+    <string name="common_signin_button_text_long">‏Google کے ساتھ سائن ان کریں</string>
+    <string name="convert">تبدیل کریں</string>
+    <string name="convert_currency_message">اپنے موجودہ اخراجات کو %1$s سے %2$s میں تبدیل کرنے کے لیے شرح تبادلہ درج کریں (1 %1$s = ? %2$s)۔</string>
+    <string name="convert_currency_rate_hint">شرح تبادلہ</string>
+    <string name="convert_currency_title">کرنسی تبدیل کریں</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"لنک کلپ بورڈ پر کاپی ہو گیا"</string>
+    <string name="currency_custom_hint">کسٹم علامت</string>
+    <string name="currency_label">کرنسی</string>
+    <string name="customer_id_copied">کسٹمر ID کاپی ہو گئی</string>
+    <string name="customer_id_label">کسٹمر ID</string>
+    <string name="dashboard_subtitle">اخراجات درج کریں، زمرے ٹریک کریں، اور وقت کے ساتھ رجحانات دیکھیں۔</string>
+    <string name="data_local_note">آپ کا تمام ڈیٹا اس آلے پر رہتا ہے۔ کسی سرور پر کچھ اپ لوڈ نہیں ہوتا۔</string>
+    <string name="date_label">تاریخ</string>
+    <string name="debt_add_title">قرض یا لون شامل کریں</string>
+    <string name="debt_direction_label">سمت</string>
+    <string name="debt_direction_owe">میں واجب ہوں</string>
+    <string name="debt_direction_owed">مجھے ملنی ہے</string>
+    <string name="debt_edit_title">قرض یا لون ترمیم کریں</string>
+    <string name="debt_history_title">ادائیگی کی تاریخ</string>
+    <string name="debt_insight_accelerate">%2$s/ماہ اضافہ کر کے %1$d ماہ پہلے ادا کریں۔</string>
+    <string name="debt_mark_settled">چکتا نشان کریں</string>
+    <string name="debt_name_hint">مثال: کار لون، دوست کو ذاتی قرض</string>
+    <string name="debt_name_label">نام</string>
+    <string name="debt_no_emi_hint">ادائیگی کی پیش گوئی دیکھنے کے لیے ماہانہ قسط شامل کریں۔</string>
+    <string name="debt_no_payments">ابھی تک کوئی ادائیگی درج نہیں۔</string>
+    <string name="debt_notes_hint">مثال: قرض دہندہ کا نام، مقصد</string>
+    <string name="debt_notes_label">نوٹس (اختیاری)</string>
+    <string name="debt_paid_of_principal">%2$s میں سے %1$s ادا کیا</string>
+    <string name="debt_payment_hint">مثال: 5000 (کوئی طے شدہ شیڈول نہ ہو تو 0)</string>
+    <string name="debt_payment_label">ماہانہ قسط (EMI)</string>
+    <string name="debt_payoff_projection">%1$s تک ادائیگی (%2$d ماہ)</string>
+    <string name="debt_principal_hint">قرض لی یا دی گئی کل رقم</string>
+    <string name="debt_principal_label">اصل رقم</string>
+    <string name="debt_rate_hint">مثال: 12 (بغیر سود کے 0 درج کریں)</string>
+    <string name="debt_rate_label">سود کی شرح (% فی سال)</string>
+    <string name="debt_record_payment">ادائیگی درج کریں</string>
+    <string name="debt_reopen">دوبارہ کھولیں</string>
+    <string name="debt_settled_badge">چکتا</string>
+    <string name="debt_start_date_label">شروع کی تاریخ</string>
+    <string name="debts_empty_subtitle">وہ رقم ٹریک کریں جو آپ واجب ہیں یا جو آپ کو ملنی ہے، ہر ایک کے لیے ادائیگی کے منصوبے کے ساتھ۔</string>
+    <string name="debts_empty_title">ابھی تک کوئی قرض یا لون نہیں</string>
+    <string name="debts_net_owed_to_you">مجموعی طور پر آپ کو ادا کرنی ہے</string>
+    <string name="debts_net_settled">سب چکتا ہو گیا</string>
+    <string name="debts_net_title">خالص پوزیشن</string>
+    <string name="debts_net_you_owe">مجموعی طور پر آپ واجب ہیں</string>
+    <string name="debts_section_owed_to_you">آپ کو ادا کرنی ہے</string>
+    <string name="debts_section_settled">چکتا</string>
+    <string name="debts_section_you_owe">آپ واجب ہیں</string>
+    <string name="debts_title">قرض اور لون</string>
+    <string msgid="8038256446254964252" name="default_error_message">"غلط ان پٹ"</string>
+    <string msgid="6312721426453364202" name="default_popup_window_title">"پاپ اپ ونڈو"</string>
+    <string name="delete">حذف کریں</string>
+    <string name="delete_category_confirm">اس زمرے کے اخراجات پہلے موجود زمرے کو تفویض ہو جائیں گے۔ جاری رکھیں؟</string>
+    <string name="delete_debt_confirm">یہ قرض اور اس کی مکمل ادائیگی کی تاریخ حذف کریں؟ یہ واپس نہیں ہو سکتا۔</string>
+    <string name="delete_expense_confirm">یہ خرچ حذف کریں؟</string>
+    <string name="description_hint">مثال: سپر مارکیٹ میں گروسری</string>
+    <string name="description_label">تفصیل</string>
+    <string name="detected_region_note">آپ کے آلے سے شناخت شدہ: %1$s</string>
+    <string name="done">ہو گیا</string>
+    <string msgid="1890207353314751437" name="dropdown_menu">"ڈراپ ڈاؤن مینیو"</string>
+    <string name="edit">ترمیم</string>
+    <string name="edit_expense">خرچ ترمیم کریں</string>
+    <string name="enter_category_name">زمرے کا نام درج کریں۔</string>
+    <string name="error_debt_name_required">اس قرض کے لیے نام درج کریں۔</string>
+    <string name="error_debt_payment_invalid">0 یا اس سے زیادہ درست رقم درج کریں۔</string>
+    <string name="error_debt_rate_invalid">0 یا اس سے زیادہ درست شرح درج کریں۔</string>
+    <string name="error_invalid_amount">0 سے زیادہ درست رقم درج کریں۔</string>
+    <string name="error_invalid_budget_amount">درست رقم درج کریں، یا صاف کرنے کے لیے خالی چھوڑیں۔</string>
+    <string name="error_invalid_rate">0 سے زیادہ درست شرح درج کریں۔</string>
+    <string name="error_select_date">براہ کرم تاریخ منتخب کریں۔</string>
+    <string name="expenses_this_month">اس مہینے کے اخراجات</string>
+    <string name="export_customer_id_label">کسٹمر ID: %1$s</string>
+    <string name="export_pdf">PDF برآمد کریں</string>
+    <string name="export_pdf_chooser_title">اپنی رپورٹ محفوظ یا شیئر کریں</string>
+    <string name="export_report_title">ماہانہ اخراجات رپورٹ</string>
+    <string name="export_started">آپ کی PDF رپورٹ تیار ہو رہی ہے…</string>
+    <string name="export_total_label">کل</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"لنک کاپی کریں"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"براؤزر میں کھولیں"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"لنک کا اشتراک کریں"</string>
+    <string name="greeting_afternoon">دوپہر بخیر</string>
+    <string name="greeting_afternoon_named">دوپہر بخیر، %1$s</string>
+    <string name="greeting_evening">شام بخیر</string>
+    <string name="greeting_evening_named">شام بخیر، %1$s</string>
+    <string name="greeting_hello">ہیلو 👋</string>
+    <string name="greeting_hello_named">ہیلو، %1$s 👋</string>
+    <string name="greeting_morning">صبح بخیر</string>
+    <string name="greeting_morning_named">صبح بخیر، %1$s</string>
+    <string name="health_band_excellent">بہترین</string>
+    <string name="health_band_fair">معقول</string>
+    <string name="health_band_good">اچھا</string>
+    <string name="health_band_needs_attention">توجہ درکار</string>
+    <string name="health_sub_budget">بجٹ</string>
+    <string name="health_sub_consistency">مستقل مزاجی</string>
+    <string name="health_sub_subscriptions">سبسکرپشنز</string>
+    <string name="health_sub_trend">رجحان</string>
+    <string msgid="6827826412747255547" name="in_progress">"پیشرفت میں"</string>
+    <string msgid="7933458017204019916" name="indeterminate">"جزوی طور پر چیک کردہ"</string>
+    <string name="insight_category_decrease">%1$s اخراجات اس مہینے %2$s کم ہو گئے۔</string>
+    <string name="insight_category_increase">%1$s اخراجات اس مہینے %2$s بڑھ گئے۔</string>
+    <string name="insight_daily_average">آپ اس مہینے روزانہ اوسطاً %1$s خرچ کر رہے ہیں۔</string>
+    <string name="insight_not_enough_data">ذاتی بصیرتیں آن لاک کرنے کے لیے چند اخراجات شامل کریں۔</string>
+    <string name="insight_projected_overspend">اس رفتار سے آپ پچھلے مہینے سے %1$s زیادہ خرچ کر سکتے ہیں۔</string>
+    <string name="insight_projected_savings">اس رفتار سے آپ پچھلے مہینے کے مقابلے %1$s بچا سکتے ہیں۔</string>
+    <string name="insight_strongest_day">آپ عموماً %1$s کو سب سے کم خرچ کرتے ہیں۔</string>
+    <string name="insight_subscription_load">سبسکرپشنز اس مہینے کے اخراجات کا %1$s ہیں۔</string>
+    <string name="insight_trend_down">آپ کے اخراجات پچھلے ہفتے سے %1$s کم ہیں۔</string>
+    <string name="insight_trend_flat">آپ کے اخراجات پچھلے ہفتے جتنے رہے۔</string>
+    <string name="insight_trend_up">آپ کے اخراجات پچھلے ہفتے سے %1$s زیادہ ہیں۔</string>
+    <string name="keep_one_category_warning">کم از کم ایک زمرہ رکھنا ضروری ہے۔</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="language_english">English</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_label">زبان</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_urdu">اردو</string>
+    <string name="load_more">مزید لوڈ کریں</string>
+    <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"نیچے کی شیٹ کو سکیڑیں"</string>
+    <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"نیچے کی شیٹ کو برخاست کریں"</string>
+    <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"گھسیٹنے کا ہینڈل"</string>
+    <string msgid="6670819569745899763" name="m3c_bottom_sheet_expand_description">"نیچے کی شیٹ کو پھیلائیں"</string>
+    <string msgid="3010635850035863127" name="m3c_bottom_sheet_pane_title">"نیچے کی شیٹ"</string>
+    <string msgid="8166741421776570875" name="m3c_date_input_headline">"درج کردہ تاریخ"</string>
+    <string msgid="229313757840775812" name="m3c_date_input_headline_description">"‏درج کردہ تاریخ: %1$s"</string>
+    <string msgid="6116910750161463197" name="m3c_date_input_invalid_for_pattern">"‏تاریخ متوقع پیٹرن سے مماثل نہیں ہے: %1$s"</string>
+    <string msgid="2521768508935305279" name="m3c_date_input_invalid_not_allowed">"‏تاریخ کی اجازت نہیں ہے: ‎%1$s"</string>
+    <string msgid="7052898923934555305" name="m3c_date_input_invalid_year_range">"‏متوقع سال کی حد ‎%1$s‏ - %2$s سے باہر کی تاریخ"</string>
+    <string msgid="2895559812010326913" name="m3c_date_input_label">"تاریخ"</string>
+    <string msgid="1237013946323089826" name="m3c_date_input_no_input_description">"کوئی نہیں"</string>
+    <string msgid="7306227249789210568" name="m3c_date_input_title">"تاریخ منتخب کریں"</string>
+    <string msgid="7605002211875882969" name="m3c_date_picker_headline">"منتخب کردہ تاریخ"</string>
+    <string msgid="3664277305226978227" name="m3c_date_picker_headline_description">"‏موجودہ انتخاب: ‎%1$s"</string>
+    <string msgid="8436650776581492840" name="m3c_date_picker_navigate_to_year_description">"‏سال ‎%1$s پر نیویگیٹ کریں"</string>
+    <string msgid="5811000998184572395" name="m3c_date_picker_no_selection_description">"کوئی نہیں"</string>
+    <string msgid="7813882352367152251" name="m3c_date_picker_scroll_to_earlier_years">"پچھلے سالوں کا ڈیٹا دکھانے کے لیے اسکرول کریں"</string>
+    <string msgid="5727367015496556177" name="m3c_date_picker_scroll_to_later_years">"بعد کے سالوں کا ڈیٹا دکھانے کے لیے اسکرول کریں"</string>
+    <string msgid="1804346892470238807" name="m3c_date_picker_switch_to_calendar_mode">"کیلنڈر اِن پٹ موڈ پر سوئچ کریں"</string>
+    <string msgid="395627960681594326" name="m3c_date_picker_switch_to_day_selection">"ایک سال منتخب کرنے کے لیے سوائپ کریں یا ایک دن منتخب کرنے کی خاطر دوبارہ سوئچ کرنے کے لیے تھپتھپائیں"</string>
+    <string msgid="2219746470065162704" name="m3c_date_picker_switch_to_input_mode">"ٹیکسٹ اِن پٹ موڈ پر سوئچ کریں"</string>
+    <string msgid="7142101321095356500" name="m3c_date_picker_switch_to_next_month">"اگلے ماہ میں تبدیل کریں"</string>
+    <string msgid="228438865139394590" name="m3c_date_picker_switch_to_previous_month">"گزشتہ ماہ میں تبدیل کریں"</string>
+    <string msgid="791651718641787594" name="m3c_date_picker_switch_to_year_selection">"ایک سال کا انتخاب کرنے کے لیے سوئچ کریں"</string>
+    <string msgid="7430790972741451689" name="m3c_date_picker_title">"تاریخ منتخب کریں"</string>
+    <string msgid="3199387177749801575" name="m3c_date_picker_today_description">"آج"</string>
+    <string msgid="2068382232816991922" name="m3c_date_picker_year_picker_pane_title">"سال کا منتخب کنندہ مرئی ہے"</string>
+    <string msgid="3190049423327661366" name="m3c_date_range_input_invalid_range_input">"تاریخ کی حد کا غلط ان پٹ"</string>
+    <string msgid="3148384720560189467" name="m3c_date_range_input_title">"تواریخ درج کریں"</string>
+    <string msgid="2138321128465719402" name="m3c_date_range_picker_day_in_range">"رینج میں ہے"</string>
+    <string msgid="4947636797751277713" name="m3c_date_range_picker_end_headline">"تاریخ اختتام"</string>
+    <string msgid="602077859540990149" name="m3c_date_range_picker_scroll_to_next_month">"اگلے ماہ کا ڈیٹا دکھانے کے لیے اسکرول کریں"</string>
+    <string msgid="4592174524846109496" name="m3c_date_range_picker_scroll_to_previous_month">"پچھلے ماہ کا ڈیٹا دکھانے کے لیے اسکرول کریں"</string>
+    <string msgid="4665981448952749820" name="m3c_date_range_picker_start_headline">"تاریخ آغاز"</string>
+    <string msgid="3134165431120340385" name="m3c_date_range_picker_title">"تواریخ منتخب کریں"</string>
+    <string msgid="7617233117134790350" name="m3c_dialog">"ڈائلاگ"</string>
+    <string msgid="3177828188723359358" name="m3c_dropdown_menu_collapsed">"سکیڑا گیا"</string>
+    <string msgid="2360841780724299882" name="m3c_dropdown_menu_expanded">"پھیلایا گیا"</string>
+    <string msgid="8687821690726149911" name="m3c_dropdown_menu_toggle">"ڈراپ ڈاؤن مینیو کو ٹوگل کریں"</string>
+    <string msgid="6152806324422087846" name="m3c_search_bar_search">"تلاش کریں"</string>
+    <string msgid="6152755701819882931" name="m3c_snackbar_dismiss">"برخاست کریں"</string>
+    <string msgid="7655536806087401899" name="m3c_suggestions_available">"تلاش کی تجاویز نیچے دستیاب ہیں"</string>
+    <string msgid="2786685010796619560" name="m3c_time_picker_am">"AM"</string>
+    <string msgid="2349193472625211372" name="m3c_time_picker_hour">"گھنٹہ"</string>
+    <string msgid="9179527532316922345" name="m3c_time_picker_hour_24h_suffix">"‏‎%1$d گھنٹے"</string>
+    <string msgid="8876759303332837035" name="m3c_time_picker_hour_selection">"گھنٹہ منتخب کریں"</string>
+    <string msgid="3458167507790628988" name="m3c_time_picker_hour_suffix">"‏‎%1$d بجے"</string>
+    <string msgid="6973808109666874069" name="m3c_time_picker_hour_text_field">"گھنٹے کے لیے"</string>
+    <string msgid="4313071914266462005" name="m3c_time_picker_minute">"منٹ"</string>
+    <string msgid="4699133535056739733" name="m3c_time_picker_minute_selection">"منٹ منتخب کریں"</string>
+    <string msgid="5064177921781937179" name="m3c_time_picker_minute_suffix">"‏%1$d منٹس"</string>
+    <string msgid="7661234488295443182" name="m3c_time_picker_minute_text_field">"منٹ کے لیے"</string>
+    <string msgid="5865171949528594571" name="m3c_time_picker_period_toggle_description">"‏AM یا PM منتخب کریں"</string>
+    <string msgid="6616362054113087709" name="m3c_time_picker_pm">"PM"</string>
+    <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"ٹول ٹپ دکھائیں"</string>
+    <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"ٹول ٹپ"</string>
+    <string name="manage_budget">بجٹ منظم کریں</string>
+    <string name="manage_categories">زمرے منظم کریں</string>
+    <string name="months_budget_label">%1$s بجٹ</string>
+    <string name="more_section_title">مزید</string>
+    <string name="native_body">نفسِ مضمون</string>
+    <string name="native_headline">ہیڈ لائن</string>
+    <string name="native_media_view">میڈیا منظر</string>
+    <string name="nav_categories">زمرے</string>
+    <string name="nav_dashboard">ڈیش بورڈ</string>
+    <string name="nav_settings">ترتیبات</string>
+    <string msgid="542007171693138492" name="navigation_menu">"نیویگیشن مینیو"</string>
+    <string name="new_category_hint">نئے زمرے کا نام</string>
+    <string name="no_expenses_breakdown">ابھی تک کوئی اخراجات نہیں۔</string>
+    <string name="no_expenses_this_day">اس دن کوئی خرچ نہیں۔</string>
+    <string name="no_expenses_this_month">اس مہینے ابھی تک کوئی خرچ درج نہیں۔</string>
+    <string msgid="6610465462668679431" name="not_selected">"غیر منتخب کردہ"</string>
+    <string name="notifications_permission_confirm">اجازت دیں</string>
+    <string name="notifications_permission_decline">اجازت نہ دیں</string>
+    <string name="notifications_permission_title">آپ کو اطلاعات بھیجنے کیلئے ایپ کو اجازت دیں؟</string>
+    <string name="offline_notification_text">اشتہار کھولنے کیلئے تھپتھپائیں</string>
+    <string name="offline_notification_title">جب آپ آف لائن تھے تب آپ نے جس اشتہار کو محفوظ کیا تھا اس کا ملاحظہ کریں</string>
+    <string name="offline_opt_in_confirm">ٹھیک ہے</string>
+    <string name="offline_opt_in_confirmation">جب آپ آن لائن واپس آئیں گے تو آپ کو لنک کے ساتھ اطلاع حاصل ہوگی</string>
+    <string name="offline_opt_in_decline">نہیں شکریہ</string>
+    <string name="offline_opt_in_message">ہم آپ کو مشتہر کی سائٹ کے لنک کے ساتھ اطلاع بھیجیں گے۔</string>
+    <string name="offline_opt_in_title">آن لائن واپس آنے پر اشتہار کھولیں۔</string>
+    <string name="ok">ٹھیک ہے</string>
+    <string name="payment_note_hint">مثال: جزوی ادائیگی، نقد ادائیگی</string>
+    <string name="payment_note_label">نوٹ (اختیاری)</string>
+    <string name="powered_by_footer">AG Tech کی طرف سے</string>
+    <string msgid="5941395253238309765" name="range_end">"رینج کا اختتام"</string>
+    <string msgid="7097486360902471446" name="range_start">"رینج کی شروعات"</string>
+    <string name="rate_us">ہمیں ریٹ کریں</string>
+    <string name="recent_transactions_label">حالیہ لین دین</string>
+    <string name="reminder_notification_body">آج کے چھوٹے ہوئے اخراجات جلدی شامل کرنے کے لیے ٹیپ کریں۔</string>
+    <string name="reminder_notification_title">کیا آپ نے آج کے اخراجات درج کیے؟ 💸</string>
+    <string name="reminder_section_title">روزانہ یاددہانی</string>
+    <string name="reminder_time_label">یاددہانی کا وقت</string>
+    <string name="reminder_toggle_desc">اپنے اخراجات درج کرنے کے لیے روزانہ یاددہانی حاصل کریں</string>
+    <string name="reminder_toggle_label">شام کی اخراجات یاددہانی</string>
+    <string name="reset_all_data">تمام ڈیٹا ری سیٹ کریں</string>
+    <string name="reset_confirm_1">یہ اس آلے پر تمام اخراجات اور کسٹم زمرے مستقل طور پر حذف کر دے گا۔ جاری رکھیں؟</string>
+    <string name="reset_confirm_2">کیا آپ واقعی یقین رکھتے ہیں؟ یہ واپس نہیں ہو سکتا۔</string>
+    <string name="reset_data">ڈیٹا ری سیٹ کریں</string>
+    <string name="s1">تصویر محفوظ کریں</string>
+    <string name="s2">اشتہار کو تصویری گیلری میں تصویر محفوظ کرنے کی اجازت دیں؟</string>
+    <string name="s3">قبول کریں</string>
+    <string name="s4">مسترد کریں</string>
+    <string name="s5">کیلنڈر ایونٹ بنائیں</string>
+    <string name="s6">اشتہار کو ایک کیلنڈر ایونٹ بنانے کی اجازت دیں؟</string>
+    <string name="s7">اشتہار ٹیسٹ کریں</string>
+    <string name="salary_label">تنخواہ</string>
+    <string name="salary_set_hint">مثال: 50000</string>
+    <string name="salary_set_label">ماہانہ خالص آمدنی</string>
+    <string name="salary_set_title">ماہانہ آمدنی طے کریں</string>
+    <string name="save">محفوظ کریں</string>
+    <string msgid="6264217191555673260" name="search_menu_title">"تلاش کریں"</string>
+    <string name="select_date">تاریخ منتخب کریں</string>
+    <string msgid="6043586758067023" name="selected">"منتخب کردہ"</string>
+    <string name="settings_title">ترتیبات</string>
+    <string name="share_app">یہ ایپ شیئر کریں</string>
+    <string name="share_app_message">%1$s دیکھیں — جو ایپ میں اپنے اخراجات ٹریک کرنے کے لیے استعمال کرتا ہوں: %2$s</string>
+    <string name="sms_accept">قبول کریں</string>
+    <string name="sms_detection_description">جب آپ کو بینک، UPI، یا کارڈ SMS ملتا ہے، ایپ صرف وہ ایک پیغام پڑھنے کی اجازت مانگتی ہے، پھر اسے ریویو قطار میں شامل کرتی ہے — جب تک آپ تصدیق نہ کریں کچھ محفوظ نہیں ہوتا۔</string>
+    <string name="sms_detection_title">SMS کا پتہ لگانا</string>
+    <string name="sms_detection_toggle_label">SMS سے لین دین کا پتہ لگائیں</string>
+    <string name="sms_dismiss">مسترد کریں</string>
+    <string name="sms_pending_banner">SMS سے %1$d لین دین ملے — ریویو کے لیے ٹیپ کریں</string>
+    <string name="sms_review_subtitle">محفوظ کرنے سے پہلے ہر ایک کی تصدیق یا ترمیم کریں۔</string>
+    <string name="sms_review_title">%1$d لین دین ریویو کریں</string>
+    <string name="spending_by_category">زمرے کے مطابق خرچ</string>
+    <string name="splash_tagline">ہر خرچ آسانی سے ٹریک کریں</string>
+    <string name="stat_daily_average">یومیہ اوسط</string>
+    <string name="stat_no_prior_data">پچھلے مہینے کا ڈیٹا نہیں</string>
+    <string name="stat_per_day">اس مہینے روزانہ</string>
+    <string name="stat_remaining_label">باقی</string>
+    <string name="stat_same_as_last_month">پچھلے مہینے جیسا</string>
+    <string name="stat_spent_label">خرچ</string>
+    <string name="stat_this_month">اس مہینے</string>
+    <string name="stat_top_category">سرفہرست زمرہ</string>
+    <string name="stat_total_spent">کل خرچ</string>
+    <string name="stat_transactions">لین دین</string>
+    <string name="stat_up_from_zero">پچھلے مہینے %1$s سے اوپر</string>
+    <string name="stat_vs_last_month">پچھلے مہینے کے مقابلے</string>
+    <string msgid="4139871816613051306" name="state_empty">"خالی ہے"</string>
+    <string msgid="5834637030682409883" name="state_off">"آف ہے"</string>
+    <string msgid="1490883874751719580" name="state_on">"آن ہے"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"+999"</string>
+    <string msgid="2561197295334830845" name="switch_role">"سوئچ"</string>
+    <string msgid="1672349317127674378" name="tab">"ٹیب"</string>
+    <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> فیصد۔"</string>
+    <string name="toast_all_reset">تمام ڈیٹا ری سیٹ ہو گیا۔</string>
+    <string name="toast_expense_added">خرچ شامل ہو گیا۔</string>
+    <string name="toast_expense_deleted">خرچ حذف ہو گیا۔</string>
+    <string name="toast_expense_updated">خرچ اپ ڈیٹ ہو گیا۔</string>
+    <string name="today">آج</string>
+    <string msgid="3765533235322692011" name="tooltip_description">"ٹول ٹپ"</string>
+    <string msgid="3124740595719787496" name="tooltip_label">"ٹول ٹپ دکھائیں"</string>
+    <string name="trend_title">ماہانہ رجحان (آخری 12 مہینے)</string>
+    <string name="update">اپ ڈیٹ کریں</string>
+    <string name="view_all_label">سب دیکھیں</string>
+    <string name="view_mode_calendar">کیلنڈر</string>
+    <string name="view_mode_category">زمرے کے مطابق</string>
+    <string name="view_mode_day">دن کے مطابق</string>
+    <string name="view_mode_grid">گرڈ</string>
+    <string name="watermark_label_prefix">AdMob - ‎ </string>
+    <string name="yesterday">کل</string>
+    <string name="your_name_hint">مثال: محمد</string>
+    <string name="your_name_label">آپ کا نام</string>
+    <string name="your_name_note">صرف ڈیش بورڈ سلام کو ذاتی بنانے کے لیے۔ کہیں نہیں بھیجا جاتا۔</string>
+</resources>

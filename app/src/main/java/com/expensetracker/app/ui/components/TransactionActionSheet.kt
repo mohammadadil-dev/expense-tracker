@@ -35,6 +35,7 @@ import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.categoryDisplayName
+import com.expensetracker.app.ui.theme.TextMuted
 
 /**
  * Bottom sheet shown when the user taps any expense row/grid card.
@@ -76,16 +77,26 @@ fun TransactionActionSheet(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    text = Formatters.money(expense.amount, currencySymbol) +
-                        (category?.let { "  ·  ${categoryDisplayName(it)}" } ?: "") +
-                        "  ·  ${expense.date}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Spacer(Modifier.height(4.dp))
+                // Use MoneyText so Saudi Riyal renders as icon, not raw text
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    MoneyText(
+                        formatted = Formatters.money(expense.amount, currencySymbol),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextMuted
+                    )
+                    val meta = buildString {
+                        category?.let { append("  ·  ${categoryDisplayName(it)}") }
+                        append("  ·  ${expense.date}")
+                    }
+                    Text(
+                        text = meta,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextMuted,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
 
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))

@@ -46,6 +46,16 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getBoolean(KEY_SMS_DETECTION_ENABLED, false)
         set(value) = prefs.edit().putBoolean(KEY_SMS_DETECTION_ENABLED, value).apply()
 
+    /** Whether the daily evening reminder notification is enabled. On by default. */
+    var reminderEnabled: Boolean
+        get() = prefs.getBoolean(KEY_REMINDER_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(KEY_REMINDER_ENABLED, value).apply()
+
+    /** Hour of day (0–23) at which the daily reminder fires. Default 21 = 9 PM. */
+    var reminderHour: Int
+        get() = prefs.getInt(KEY_REMINDER_HOUR, 21)
+        set(value) = prefs.edit().putInt(KEY_REMINDER_HOUR, value).apply()
+
     /** Monthly take-home income / salary — shown on the Home dashboard alongside the budget cap
      * so the user can see both what they earn and what they intend to spend. 0 means "not set". */
     var monthlySalary: Double
@@ -80,5 +90,7 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_CUSTOMER_ID = "customer_id"
         private const val KEY_SMS_DETECTION_ENABLED = "sms_detection_enabled"
         private const val KEY_MONTHLY_SALARY = "monthly_salary"
+        private const val KEY_REMINDER_ENABLED = "reminder_enabled"
+        private const val KEY_REMINDER_HOUR = "reminder_hour"
     }
 }
