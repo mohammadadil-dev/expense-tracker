@@ -7,6 +7,7 @@ import android.os.Build
 import com.expensetracker.app.data.AppDatabase
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ExpenseRepository
+import com.expensetracker.app.data.KhataRepository
 import com.expensetracker.app.data.SettingsRepository
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.util.ReminderScheduler
@@ -21,6 +22,7 @@ class ExpenseApp : Application() {
 
     lateinit var database: AppDatabase
     lateinit var repository: ExpenseRepository
+    lateinit var khataRepository: KhataRepository
     lateinit var settings: SettingsRepository
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -30,6 +32,7 @@ class ExpenseApp : Application() {
 
         database = AppDatabase.getInstance(this)
         repository = ExpenseRepository(database)
+        khataRepository = KhataRepository(database)
         settings = SettingsRepository(this)
 
         // Detect the default currency from the phone's region on every launch,
@@ -63,8 +66,8 @@ class ExpenseApp : Application() {
             getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel)
         }
 
-        // Reschedule the daily reminder on every cold start so WorkManager always
-        // has a live chain — handles reboots and app updates automatically.
+        // Ensure the daily reminder WorkManager job exists if the user has it enabled.
+        // Uses KEEP policy so existing schedules are not disrupted on every app open.
         if (settings.reminderEnabled) {
             ReminderScheduler.schedule(this, settings.reminderHour)
         }
@@ -76,6 +79,14 @@ class ExpenseApp : Application() {
 
         appScope.launch {
             repository.seedDefaultCategoriesIfNeeded()
+            repository.ensureNewBuiltinCategories()
+            // Auto-create this month's entries for any recurring expense templates.
+            // Runs every startup; idempotent — won't duplicate entries already created.
+            repository.createRecurringExpensesForCurrentMonth()
+            // Same for recurring income templates.
+            repository.createRecurringIncomeForCurrentMonth()
+            // Push fresh data to any pinned home-screen widgets.
+            com.expensetracker.app.widget.ExpenseWidget.refresh(this@ExpenseApp)
         }
     }
 }

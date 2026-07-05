@@ -13,8 +13,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  * which is what keeps this app at zero ongoing infrastructure cost.
  */
 @Database(
-    entities = [CategoryEntity::class, ExpenseEntity::class, PendingSmsExpense::class, BudgetEntity::class, DebtEntity::class, DebtPaymentEntity::class],
-    version = 5,
+    entities = [
+        CategoryEntity::class, ExpenseEntity::class, PendingSmsExpense::class,
+        BudgetEntity::class, DebtEntity::class, DebtPaymentEntity::class,
+        KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class
+    ],
+    version = 11,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -25,6 +29,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun budgetDao(): BudgetDao
     abstract fun debtDao(): DebtDao
     abstract fun debtPaymentDao(): DebtPaymentDao
+    abstract fun khataDao(): KhataDao
+    abstract fun incomeDao(): IncomeDao
 
     companion object {
         @Volatile
@@ -187,13 +193,161 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v5 -> v6: adds the Khata (local shop credit ledger) feature — two new tables:
+        //   khata_parties  — shops or customers with a running credit tab.
+        //   khata_entries  — individual credit / payment lines per party.
+        // ForeignKey CASCADE on khata_entries.partyId means deleting a party automatically
+        // wipes its full history, same behaviour as debt_payments → debts. Written by hand so
+        // upgrading never wipes existing expense/debt data.
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `khata_parties` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `phone` TEXT NOT NULL DEFAULT '',
+                        `direction` TEXT NOT NULL,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `khata_entries` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `partyId` INTEGER NOT NULL,
+                        `amount` REAL NOT NULL,
+                        `note` TEXT NOT NULL DEFAULT '',
+                        `date` TEXT NOT NULL,
+                        `type` TEXT NOT NULL,
+                        FOREIGN KEY(`partyId`) REFERENCES `khata_parties`(`id`) ON DELETE CASCADE
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_khata_entries_partyId` ON `khata_entries` (`partyId`)")
+            }
+        }
+
+        // v6 -> v7: adds optional loanType column to debts so users can tag each debt/loan
+        // with a category (personal, home, car, education, gold, business, informal, other).
+        // NULL = unclassified (backwards-compatible — existing rows just have no type badge).
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE debts ADD COLUMN loanType TEXT")
+            }
+        }
+
+        // v7 -> v8: Khata I-OWE credit entries now auto-generate a linked ExpenseEntity row so
+        // they appear in the dashboard's monthly totals and budget tracker — the same pattern
+        // debt/EMI payments have used since v4→v5. Adds a nullable linkedExpenseId column to
+        // khata_entries, seeds the "Khata" expense category, and backfills linked expenses for
+        // every existing I-OWE CREDIT entry so historical figures are correct after upgrade.
+        private val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // 1. Add the new column (NULL = no linked expense, i.e. PAYMENT / THEY-OWE entries).
+                db.execSQL("ALTER TABLE khata_entries ADD COLUMN linkedExpenseId INTEGER")
+
+                // 2. Seed the Khata category — find the next sortOrder from existing categories.
+                var nextSortOrder = 0
+                db.query("SELECT COUNT(*) FROM categories").use { c ->
+                    if (c.moveToFirst()) nextSortOrder = c.getInt(0)
+                }
+                db.execSQL(
+                    "INSERT INTO categories (nameKey, customName, colorHex, sortOrder) VALUES (?, NULL, ?, ?)",
+                    arrayOf<Any?>("cat_khata", "#7C3AED", nextSortOrder)
+                )
+                var khataCategoryId = -1L
+                db.query("SELECT id FROM categories WHERE nameKey = 'cat_khata' ORDER BY id DESC LIMIT 1").use { c ->
+                    if (c.moveToFirst()) khataCategoryId = c.getLong(0)
+                }
+
+                // 3. Backfill: for every I-OWE CREDIT entry that existed before this migration,
+                //    create a matching expense and update the entry's linkedExpenseId.
+                if (khataCategoryId == -1L) return  // shouldn't happen, but guard anyway
+
+                data class PendingBackfill(val entryId: Long, val amount: Double, val date: String, val partyName: String)
+                val toBackfill = mutableListOf<PendingBackfill>()
+                db.query(
+                    """
+                    SELECT ke.id, ke.amount, ke.date, kp.name
+                    FROM khata_entries ke
+                    INNER JOIN khata_parties kp ON ke.partyId = kp.id
+                    WHERE kp.direction = 'I_OWE' AND ke.type = 'CREDIT'
+                    """.trimIndent()
+                ).use { c ->
+                    while (c.moveToNext()) {
+                        toBackfill.add(PendingBackfill(c.getLong(0), c.getDouble(1), c.getString(2), c.getString(3)))
+                    }
+                }
+
+                for (row in toBackfill) {
+                    val monthKey = if (row.date.length >= 7) row.date.substring(0, 7) else row.date
+                    db.execSQL(
+                        "INSERT INTO expenses (categoryId, description, amount, date, monthKey) VALUES (?, ?, ?, ?, ?)",
+                        arrayOf<Any?>(khataCategoryId, row.partyName, row.amount, row.date, monthKey)
+                    )
+                    var newExpenseId = -1L
+                    db.query("SELECT last_insert_rowid()").use { c ->
+                        if (c.moveToFirst()) newExpenseId = c.getLong(0)
+                    }
+                    if (newExpenseId != -1L) {
+                        db.execSQL(
+                            "UPDATE khata_entries SET linkedExpenseId = ? WHERE id = ?",
+                            arrayOf<Any?>(newExpenseId, row.entryId)
+                        )
+                    }
+                }
+            }
+        }
+
+        // v8 -> v9: adds recurring-expense support to the expenses table.
+        //   isRecurring       — 1 if this row is a monthly template, 0 for normal / auto-copy.
+        //   recurringPeriod   — "MONTHLY" on templates; NULL everywhere else.
+        //   recurringSourceId — ID of the template that spawned this copy; NULL on templates
+        //                       and normal expenses.
+        // Written by hand (same as every prior migration) so upgrading never wipes existing data.
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE expenses ADD COLUMN isRecurring INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE expenses ADD COLUMN recurringPeriod TEXT")
+                db.execSQL("ALTER TABLE expenses ADD COLUMN recurringSourceId INTEGER")
+            }
+        }
+
+        // v9 -> v10: adds income_entries table for manual income logging.
+        private val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `income_entries` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `amount` REAL NOT NULL,
+                        `source` TEXT NOT NULL DEFAULT '',
+                        `note` TEXT NOT NULL DEFAULT '',
+                        `date` TEXT NOT NULL,
+                        `monthKey` TEXT NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_income_entries_monthKey` ON `income_entries` (`monthKey`)")
+            }
+        }
+
+        // v10 -> v11: adds isRecurring column to income_entries for monthly auto-generation.
+        private val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE income_entries ADD COLUMN isRecurring INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "expense_tracker.db"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5).build().also { INSTANCE = it }
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11).build().also { INSTANCE = it }
             }
         }
     }

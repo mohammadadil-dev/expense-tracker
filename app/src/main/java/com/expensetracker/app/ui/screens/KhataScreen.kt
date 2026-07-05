@@ -1,0 +1,515 @@
+package com.expensetracker.app.ui.screens
+
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Store
+import androidx.compose.material.icons.filled.TrendingDown
+import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.expensetracker.app.R
+import com.expensetracker.app.data.KhataPartyEntity
+import com.expensetracker.app.ui.components.AddEditKhataPartySheet
+import com.expensetracker.app.ui.components.AnimatedBlobBackground
+import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.theme.AccentIndigo
+import com.expensetracker.app.ui.theme.CardWhite
+import com.expensetracker.app.ui.theme.DangerRed
+import com.expensetracker.app.ui.theme.NeonCyan
+import com.expensetracker.app.ui.theme.NeonPink
+import com.expensetracker.app.ui.theme.NeonTeal
+import com.expensetracker.app.ui.theme.SuccessGreen
+import com.expensetracker.app.ui.theme.TextMuted
+import com.expensetracker.app.ui.theme.TextPrimary
+import com.expensetracker.app.ui.theme.TextSecondary
+import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.viewmodel.ExpenseViewModel
+import com.expensetracker.app.viewmodel.KhataViewModel
+import kotlin.math.abs
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KhataScreen(
+    khataViewModel: KhataViewModel,
+    expenseViewModel: ExpenseViewModel,
+    onOpenDetail: (Long) -> Unit
+) {
+    val currencySymbol  by expenseViewModel.currencySymbol.collectAsState()
+    val allParties      by khataViewModel.allParties.collectAsState()
+    val iOweParties     by khataViewModel.iOweParties.collectAsState()
+    val theyOweParties  by khataViewModel.theyOweParties.collectAsState()
+    val allEntries      by khataViewModel.allEntries.collectAsState()
+
+    var showIOwe     by remember { mutableStateOf(true) }
+    var showAddParty by remember { mutableStateOf(false) }
+    var editingParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    var pendingDelete by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    var heroVisible  by remember { mutableStateOf(false) }
+
+    val totalIOwe    = khataViewModel.totalIOwe(allParties, allEntries)
+    val totalTheyOwe = khataViewModel.totalTheyOwe(allParties, allEntries)
+
+    LaunchedEffect(Unit) { heroVisible = true }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        AnimatedBlobBackground(
+            blobColors = listOf(NeonCyan, NeonPink, NeonTeal),
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Scaffold(
+            containerColor = Color.Transparent,
+            // ── No TopAppBar — hero header is inline ──
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { editingParty = null; showAddParty = true },
+                    containerColor = AccentIndigo
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.khata_add_party))
+                }
+            }
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                // ── Animated hero header ───────────────────────────────────────
+                AnimatedVisibility(
+                    visible = heroVisible,
+                    enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                            fadeIn(tween(500))
+                ) {
+                    KhataHeroHeader(
+                        totalIOwe    = totalIOwe,
+                        totalTheyOwe = totalTheyOwe,
+                        iOweCount    = iOweParties.size,
+                        theyOweCount = theyOweParties.size,
+                        currencySymbol = currencySymbol
+                    )
+                }
+
+                // ── Direction toggle with badges ───────────────────────────────
+                KhataToggle(
+                    showIOwe      = showIOwe,
+                    iOweCount     = iOweParties.size,
+                    theyOweCount  = theyOweParties.size,
+                    onToggle      = { showIOwe = it },
+                    modifier      = Modifier.padding(horizontal = 16.dp)
+                )
+
+                Spacer(Modifier.height(12.dp))
+
+                // ── Party list ─────────────────────────────────────────────────
+                val displayedParties = if (showIOwe) iOweParties else theyOweParties
+                val emptyMsg = if (showIOwe)
+                    stringResource(R.string.khata_no_parties_i_owe)
+                else
+                    stringResource(R.string.khata_no_parties_they_owe)
+
+                AnimatedContent(
+                    targetState = displayedParties,
+                    transitionSpec = { fadeIn(tween(200)) togetherWith fadeOut(tween(200)) },
+                    label = "khataList"
+                ) { parties ->
+                    if (parties.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = emptyMsg,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = TextMuted,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    } else {
+                        LazyColumn(
+                            contentPadding = PaddingValues(
+                                start = 16.dp, end = 16.dp, bottom = 88.dp
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(parties, key = { it.id }) { party ->
+                                val balance = khataViewModel.balanceForParty(party.id, allEntries)
+                                KhataPartyCard(
+                                    party          = party,
+                                    balance        = balance,
+                                    currencySymbol = currencySymbol,
+                                    onClick        = { onOpenDetail(party.id) },
+                                    onEdit         = { editingParty = party; showAddParty = true },
+                                    onDelete       = { pendingDelete = party }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Add/Edit sheet ──────────────────────────────────────────────────────
+    if (showAddParty) {
+        AddEditKhataPartySheet(
+            initial          = editingParty,
+            defaultDirection = if (showIOwe) KhataPartyEntity.DIRECTION_I_OWE
+                               else KhataPartyEntity.DIRECTION_THEY_OWE,
+            onSave    = { id, name, phone, direction, initialAmount, initialNote ->
+                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote)
+                showAddParty = false; editingParty = null
+            },
+            onDismiss = { showAddParty = false; editingParty = null }
+        )
+    }
+
+    pendingDelete?.let { party ->
+        AlertDialog(
+            onDismissRequest = { pendingDelete = null },
+            title   = { Text(stringResource(R.string.khata_delete_party)) },
+            text    = { Text(stringResource(R.string.khata_delete_party_confirm, party.name)) },
+            confirmButton = {
+                TextButton(onClick = { khataViewModel.deleteParty(party); pendingDelete = null }) {
+                    Text(stringResource(R.string.delete), color = DangerRed)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingDelete = null }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+}
+
+// ── Hero header ────────────────────────────────────────────────────────────────
+
+@Composable
+private fun KhataHeroHeader(
+    totalIOwe: Double,
+    totalTheyOwe: Double,
+    iOweCount: Int,
+    theyOweCount: Int,
+    currencySymbol: String
+) {
+    val netAmount      = abs(totalTheyOwe - totalIOwe)
+    val netIsPositive  = totalTheyOwe >= totalIOwe
+    val allSettled     = totalIOwe == 0.0 && totalTheyOwe == 0.0
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 20.dp, bottom = 12.dp)
+    ) {
+        Text(
+            text  = stringResource(R.string.khata_screen_title),
+            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+            color = TextPrimary
+        )
+        Text(
+            text  = stringResource(R.string.khata_subtitle),
+            style = MaterialTheme.typography.bodySmall,
+            color = TextMuted
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        // Two stat cards side by side
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            KhataStatCard(
+                label          = stringResource(R.string.khata_total_i_owe),
+                amount         = totalIOwe,
+                count          = iOweCount,
+                currencySymbol = currencySymbol,
+                amountColor    = DangerRed,
+                modifier       = Modifier.weight(1f)
+            )
+            KhataStatCard(
+                label          = stringResource(R.string.khata_total_they_owe),
+                amount         = totalTheyOwe,
+                count          = theyOweCount,
+                currencySymbol = currencySymbol,
+                amountColor    = SuccessGreen,
+                modifier       = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(Modifier.height(10.dp))
+
+        // Net position badge
+        Surface(
+            shape = RoundedCornerShape(50),
+            color = when {
+                allSettled    -> SuccessGreen.copy(alpha = 0.10f)
+                netIsPositive -> SuccessGreen.copy(alpha = 0.10f)
+                else          -> DangerRed.copy(alpha = 0.10f)
+            }
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = if (allSettled || netIsPositive) Icons.Filled.TrendingUp
+                                  else Icons.Filled.TrendingDown,
+                    contentDescription = null,
+                    tint     = if (allSettled || netIsPositive) SuccessGreen else DangerRed,
+                    modifier = Modifier.size(16.dp)
+                )
+                Spacer(Modifier.width(6.dp))
+                MoneyText(
+                    formatted = when {
+                        allSettled    -> stringResource(R.string.net_all_settled)
+                        netIsPositive -> stringResource(R.string.net_in_favour, Formatters.money(netAmount, currencySymbol))
+                        else          -> stringResource(R.string.net_you_owe_net, Formatters.money(netAmount, currencySymbol))
+                    },
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = if (allSettled || netIsPositive) SuccessGreen else DangerRed
+                )
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun KhataStatCard(
+    label: String,
+    amount: Double,
+    count: Int,
+    currencySymbol: String,
+    amountColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        colors    = CardDefaults.cardColors(containerColor = CardWhite),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        modifier  = modifier
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 14.dp, horizontal = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(label, style = MaterialTheme.typography.labelSmall, color = TextSecondary)
+            Spacer(Modifier.height(4.dp))
+            MoneyText(
+                formatted = Formatters.money(amount, currencySymbol),
+                style     = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                color     = amountColor
+            )
+            Spacer(Modifier.height(4.dp))
+            // Party count badge
+            Surface(
+                shape = RoundedCornerShape(50),
+                color = amountColor.copy(alpha = 0.10f)
+            ) {
+                Text(
+                    text  = "$count ${if (count == 1) stringResource(R.string.label_party_singular) else stringResource(R.string.label_party_plural)}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = amountColor,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+            }
+        }
+    }
+}
+
+// ── Direction toggle ───────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun KhataToggle(
+    showIOwe: Boolean,
+    iOweCount: Int,
+    theyOweCount: Int,
+    onToggle: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(50))
+            .background(MaterialTheme.colorScheme.surfaceVariant),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        listOf(
+            Triple(true,  R.string.khata_i_owe,    iOweCount),
+            Triple(false, R.string.khata_they_owe, theyOweCount)
+        ).forEach { (isIOwe, labelRes, count) ->
+            val selected = showIOwe == isIOwe
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(RoundedCornerShape(50))
+                    .background(if (selected) AccentIndigo else Color.Transparent)
+                    .clickable { onToggle(isIOwe) }
+                    .padding(vertical = 10.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                BadgedBox(
+                    badge = {
+                        if (count > 0) {
+                            Badge(
+                                containerColor = if (selected) Color.White.copy(alpha = 0.9f)
+                                                else AccentIndigo,
+                                contentColor   = if (selected) AccentIndigo else Color.White
+                            ) {
+                                Text("$count", style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
+                    }
+                ) {
+                    Text(
+                        text  = stringResource(labelRes),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = if (selected) Color.White else TextSecondary
+                    )
+                }
+            }
+        }
+    }
+}
+
+// ── Party card ─────────────────────────────────────────────────────────────────
+
+@Composable
+private fun KhataPartyCard(
+    party: KhataPartyEntity,
+    balance: Double,
+    currencySymbol: String,
+    onClick: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val isSettled = balance <= 0.0
+    Card(
+        colors    = CardDefaults.cardColors(containerColor = CardWhite),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        modifier  = Modifier.fillMaxWidth().clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(
+                        if (isSettled) SuccessGreen.copy(alpha = 0.12f)
+                        else AccentIndigo.copy(alpha = 0.12f),
+                        CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Filled.Store,
+                    contentDescription = null,
+                    tint     = if (isSettled) SuccessGreen else AccentIndigo,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Spacer(Modifier.width(12.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text       = party.name,
+                    style      = MaterialTheme.typography.bodyLarge,
+                    color      = TextPrimary,
+                    fontWeight = FontWeight.Medium
+                )
+                if (party.phone.isNotBlank()) {
+                    Text(
+                        text = party.phone,
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            textDirection = androidx.compose.ui.text.style.TextDirection.Ltr
+                        ),
+                        color = TextMuted
+                    )
+                }
+            }
+
+            Column(horizontalAlignment = Alignment.End) {
+                if (isSettled) {
+                    Text(
+                        text  = stringResource(R.string.khata_settled),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = SuccessGreen
+                    )
+                } else {
+                    MoneyText(
+                        formatted = Formatters.money(balance, currencySymbol),
+                        style     = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+                        color     = if (party.direction == KhataPartyEntity.DIRECTION_I_OWE) DangerRed else SuccessGreen
+                    )
+                    Text(
+                        text  = stringResource(R.string.khata_outstanding),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextMuted
+                    )
+                }
+            }
+            Spacer(Modifier.width(8.dp))
+            Icon(Icons.Filled.ArrowForward, contentDescription = null, tint = TextMuted, modifier = Modifier.size(16.dp))
+        }
+    }
+}

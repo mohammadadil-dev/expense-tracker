@@ -1,5 +1,6 @@
 package com.expensetracker.app.data
 
+import com.expensetracker.app.util.DateUtils
 import kotlinx.coroutines.flow.Flow
 
 sealed class DeleteCategoryResult {
@@ -48,25 +49,100 @@ class ExpenseRepository(private val db: AppDatabase) {
         CategoryEntity(nameKey = "cat_subscriptions", colorHex = "#14B8A6", sortOrder = 7),
         CategoryEntity(nameKey = "cat_savings", colorHex = "#84CC16", sortOrder = 8),
         CategoryEntity(nameKey = "cat_other", colorHex = "#94A3B8", sortOrder = 9),
-        CategoryEntity(nameKey = DEBT_PAYMENT_CATEGORY_KEY, colorHex = DEBT_PAYMENT_CATEGORY_COLOR, sortOrder = 10)
+        CategoryEntity(nameKey = DEBT_PAYMENT_CATEGORY_KEY, colorHex = DEBT_PAYMENT_CATEGORY_COLOR, sortOrder = 10),
+        CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
+        CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
+        CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
+        CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+        CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
+        CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
     )
+
+    /**
+     * Inserts any built-in categories that are missing from the DB — safe to call on every
+     * app launch. New categories added in a later release appear automatically for existing
+     * users without wiping their data.
+     */
+    suspend fun ensureNewBuiltinCategories() {
+        val existing = db.categoryDao().getAllOnce().mapNotNull { it.nameKey }.toSet()
+        val toAdd = listOf(
+            CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
+            CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
+            CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
+            CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+            CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
+            CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
+        )
+        toAdd.forEach { cat ->
+            if (cat.nameKey !in existing) db.categoryDao().insert(cat)
+        }
+    }
 
     suspend fun addOrUpdateExpense(
         id: Long?,
         categoryId: Long,
         description: String,
         amount: Double,
-        date: String
+        date: String,
+        isRecurring: Boolean = false,
+        recurringPeriod: String? = null
     ) {
         val monthKey = date.substring(0, 7)
+        val period = if (isRecurring) (recurringPeriod ?: "MONTHLY") else null
         if (id == null) {
             db.expenseDao().insert(
-                ExpenseEntity(categoryId = categoryId, description = description, amount = amount, date = date, monthKey = monthKey)
+                ExpenseEntity(
+                    categoryId = categoryId, description = description,
+                    amount = amount, date = date, monthKey = monthKey,
+                    isRecurring = isRecurring, recurringPeriod = period
+                )
             )
         } else {
             db.expenseDao().update(
-                ExpenseEntity(id = id, categoryId = categoryId, description = description, amount = amount, date = date, monthKey = monthKey)
+                ExpenseEntity(
+                    id = id, categoryId = categoryId, description = description,
+                    amount = amount, date = date, monthKey = monthKey,
+                    isRecurring = isRecurring, recurringPeriod = period
+                )
             )
+        }
+    }
+
+    /**
+     * Auto-creates expense entries for the current month for every recurring-expense template
+     * that doesn't already have one. Called once per app startup (in a background coroutine) —
+     * idempotent, so running it multiple times is safe.
+     *
+     * Backfills any missed months: if the app hasn't been opened since e.g. March and today is
+     * June, it inserts April, May, and June all in one pass, so the user never silently loses
+     * recurring entries for months they were away.
+     */
+    suspend fun createRecurringExpensesForCurrentMonth() {
+        val currentMonth = DateUtils.currentMonthKey()
+        val templates = db.expenseDao().recurringTemplatesOnce()
+
+        for (template in templates) {
+            // Start from the month after the template was created
+            var month = DateUtils.shiftMonthKey(template.monthKey, 1)
+            while (month <= currentMonth) {
+                val alreadyExists =
+                    db.expenseDao().countRecurringInstance(template.id, month) > 0
+                if (!alreadyExists) {
+                    db.expenseDao().insert(
+                        ExpenseEntity(
+                            categoryId        = template.categoryId,
+                            description       = template.description,
+                            amount            = template.amount,
+                            date              = "$month-01",
+                            monthKey          = month,
+                            isRecurring       = false,
+                            recurringPeriod   = null,
+                            recurringSourceId = template.id
+                        )
+                    )
+                }
+                month = DateUtils.shiftMonthKey(month, 1)
+            }
         }
     }
 
@@ -138,6 +214,7 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.budgetDao().deleteAll()
         db.debtDao().deleteAll()
         db.debtPaymentDao().deleteAll()
+        db.incomeDao().deleteAll()
         seedDefaultCategoriesIfNeeded()
     }
 
@@ -149,7 +226,8 @@ class ExpenseRepository(private val db: AppDatabase) {
         interestRatePercent: Double,
         minimumPayment: Double,
         startDate: String,
-        notes: String?
+        notes: String?,
+        loanType: String?
     ) {
         if (id == null) {
             val entity = DebtEntity(
@@ -159,7 +237,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                 interestRatePercent = interestRatePercent,
                 minimumPayment = minimumPayment,
                 startDate = startDate,
-                notes = notes
+                notes = notes,
+                loanType = loanType
             )
             val newId = db.debtDao().insert(entity)
             // When the user adds a new "I owe" loan/EMI, automatically record the first
@@ -179,7 +258,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                     interestRatePercent = interestRatePercent,
                     minimumPayment = minimumPayment,
                     startDate = startDate,
-                    notes = notes
+                    notes = notes,
+                    loanType = loanType
                 )
             )
         }
@@ -252,5 +332,68 @@ class ExpenseRepository(private val db: AppDatabase) {
         // Keep the linked expense from outliving the payment it came from — otherwise deleting
         // a repayment here would leave a phantom expense still counted in the monthly budget.
         payment.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
+    }
+
+    // ── Income ────────────────────────────────────────────────────────────────
+
+    fun incomeForMonth(monthKey: String) = db.incomeDao().observeForMonth(monthKey)
+
+    fun monthlyIncomeTotal(monthKey: String) = db.incomeDao().totalForMonth(monthKey)
+
+    suspend fun addIncome(
+        amount: Double,
+        source: String,
+        note: String,
+        date: String,
+        isRecurring: Boolean = false
+    ) {
+        val monthKey = date.substring(0, 7)
+        db.incomeDao().insert(
+            IncomeEntity(
+                amount      = amount,
+                source      = source,
+                note        = note,
+                date        = date,
+                monthKey    = monthKey,
+                isRecurring = isRecurring
+            )
+        )
+    }
+
+    suspend fun deleteIncome(income: IncomeEntity) = db.incomeDao().delete(income)
+
+    /**
+     * Auto-generates non-recurring copies of every recurring income template for the current
+     * month — mirroring [createRecurringExpensesForCurrentMonth] for income.
+     *
+     * Guards against duplicates: if an entry with the same source+amount already exists for
+     * the current month (non-recurring), it is skipped. Called once per app launch from
+     * [ExpenseApp] so users always see their monthly salary pre-filled.
+     */
+    suspend fun createRecurringIncomeForCurrentMonth() {
+        val currentMonth = DateUtils.currentMonthKey()
+        val templates = db.incomeDao().getRecurringTemplates()
+
+        for (template in templates) {
+            // Only generate for months *after* the template was created
+            var month = DateUtils.shiftMonthKey(template.monthKey, 1)
+            while (month <= currentMonth) {
+                val alreadyExists =
+                    db.incomeDao().countMonthlyInstance(month, template.source, template.amount) > 0
+                if (!alreadyExists) {
+                    db.incomeDao().insert(
+                        IncomeEntity(
+                            amount      = template.amount,
+                            source      = template.source,
+                            note        = template.note,
+                            date        = "$month-01",
+                            monthKey    = month,
+                            isRecurring = false   // generated copy is a normal entry
+                        )
+                    )
+                }
+                month = DateUtils.shiftMonthKey(month, 1)
+            }
+        }
     }
 }

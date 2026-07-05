@@ -2,6 +2,8 @@ package com.expensetracker.app.ui.screens
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -13,9 +15,11 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -34,8 +38,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ContentCopy
@@ -43,9 +47,15 @@ import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.CloudDownload
+import androidx.compose.material.icons.filled.CloudUpload
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -66,7 +76,6 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -100,7 +109,13 @@ import com.expensetracker.app.ui.theme.NeonTeal
 import com.expensetracker.app.ui.theme.OnAccent
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextSecondary
+import android.app.Activity
+import com.expensetracker.app.util.BackupManager
+import com.expensetracker.app.util.DriveBackupManager
 import com.expensetracker.app.viewmodel.ExpenseViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 
 private data class CurrencyOption(val symbol: String, val label: String)
 
@@ -163,6 +178,59 @@ fun SettingsScreen(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) viewModel.setReminderEnabled(true)
+    }
+
+    // ── Backup / Restore launchers ────────────────────────────────────────────
+    val backupChooserTitle = stringResource(R.string.backup_chooser_title)
+    val backupSuccessMsg   = stringResource(R.string.backup_success)
+    val restoreSuccessLabel = stringResource(R.string.restore_success)
+    val restoreErrorLabel   = stringResource(R.string.restore_error)
+
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri == null) return@rememberLauncherForActivityResult
+        viewModel.importBackup(
+            uri = uri,
+            onSuccess = { result ->
+                Toast.makeText(
+                    context,
+                    "$restoreSuccessLabel (${result.expenses} exp, ${result.khataParties} khata, ${result.debts} debts)",
+                    Toast.LENGTH_LONG
+                ).show()
+            },
+            onError = { err ->
+                Toast.makeText(context, "$restoreErrorLabel: $err", Toast.LENGTH_LONG).show()
+            }
+        )
+    }
+
+    // ── Google Drive sign-in launcher ─────────────────────────────────────────
+    var driveAccount by remember { mutableStateOf(DriveBackupManager.getAuthorizedAccount(context)) }
+    val driveBackupLoading = viewModel.driveBackupLoading
+    val driveUploadSuccessMsg  = stringResource(R.string.drive_backup_success)
+    val driveRestoreSuccessMsg = stringResource(R.string.drive_restore_success)
+    val driveNoBackupMsg       = stringResource(R.string.drive_no_backup)
+    val driveErrorMsg          = stringResource(R.string.drive_backup_error)
+
+    val driveSignInLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        // Always call getSignedInAccountFromIntent — it surfaces the actual ApiException
+        // (e.g., code 10 = DEVELOPER_ERROR when the SHA-1 isn't registered in Google Cloud
+        // Console) even when resultCode == RESULT_CANCELED. The old guard silently swallowed
+        // every sign-in failure, making the "tap email → nothing happens" symptom impossible
+        // to diagnose. Null data means the user pressed Back — ignore that case.
+        val data = result.data ?: return@rememberLauncherForActivityResult
+        GoogleSignIn.getSignedInAccountFromIntent(data)
+            .addOnSuccessListener { account -> driveAccount = account }
+            .addOnFailureListener { e ->
+                val code = (e as? com.google.android.gms.common.api.ApiException)?.statusCode
+                // Don't show a toast for a plain back-press (code 12 = SIGN_IN_CANCELLED)
+                if (code != GoogleSignInStatusCodes.SIGN_IN_CANCELLED) {
+                    Toast.makeText(context, "$driveErrorMsg: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     val detectedCurrency = remember { CurrencyLocaleMapper.detectFromDevice(context) }
@@ -254,16 +322,6 @@ fun SettingsScreen(
     )
     Scaffold(
         containerColor = Color.Transparent,
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.settings_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.close))
-                    }
-                }
-            )
-        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -272,6 +330,15 @@ fun SettingsScreen(
                 .verticalScroll(scrollState)
                 .padding(16.dp)
         ) {
+            // ── Inline title (no TopAppBar on tab screens) ─────────────────
+            Text(
+                text = stringResource(R.string.settings_title),
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                ),
+                color = com.expensetracker.app.ui.theme.TextPrimary,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
             AnimatedSection(visible = contentVisible, delayMillis = 0) {
                 SettingsSectionHeader(icon = Icons.Filled.Person, title = stringResource(R.string.your_name_label))
                 Spacer(Modifier.height(8.dp))
@@ -346,11 +413,28 @@ fun SettingsScreen(
             AnimatedSection(visible = contentVisible, delayMillis = 60) {
                 SettingsSectionHeader(icon = Icons.Filled.AttachMoney, title = stringResource(R.string.currency_label))
                 Spacer(Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.detected_region_note, detectedCurrency),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = TextSecondary
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = stringResource(R.string.detected_region_note, "").trimEnd(),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextSecondary
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    if (CurrencyLocaleMapper.isSaudiRiyalSymbol(detectedCurrency)) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_saudi_riyal),
+                            contentDescription = null,
+                            tint = TextSecondary,
+                            modifier = Modifier.size(12.dp)
+                        )
+                    } else {
+                        Text(
+                            text = detectedCurrency,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
                 Spacer(Modifier.height(8.dp))
                 val currentCurrencyLabel = allCurrencies.firstOrNull { it.symbol == currencySymbol }?.label
                     ?: currencySymbol
@@ -492,6 +576,93 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(24.dp))
 
+            // ── Security / Biometric lock ─────────────────────────────────────
+            AnimatedSection(visible = contentVisible, delayMillis = 115) {
+                SettingsSectionHeader(icon = Icons.Filled.Fingerprint, title = stringResource(R.string.security_section_title))
+                Spacer(Modifier.height(8.dp))
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = CardWhite),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(R.string.biometric_lock_toggle_label),
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            var biometricChecked by remember { mutableStateOf(viewModel.biometricEnabled) }
+                            Switch(
+                                checked = biometricChecked,
+                                onCheckedChange = {
+                                    biometricChecked = it
+                                    viewModel.setBiometricEnabled(it)
+                                }
+                            )
+                        }
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            text = stringResource(R.string.biometric_lock_description),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            // ── Data Backup / Restore ─────────────────────────────────────────
+            AnimatedSection(visible = contentVisible, delayMillis = 118) {
+                SettingsSectionHeader(icon = Icons.Filled.Backup, title = stringResource(R.string.backup_section_title))
+                Text(
+                    text = stringResource(R.string.backup_scope_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                )
+                Spacer(Modifier.height(6.dp))
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = CardWhite),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                ) {
+                    Column {
+                        SettingsActionRow(
+                            icon = Icons.Filled.Upload,
+                            label = stringResource(R.string.backup_export_label),
+                            onClick = {
+                                viewModel.exportBackup(
+                                    onUri = { uri ->
+                                        BackupManager.shareExport(context, uri, backupChooserTitle)
+                                    },
+                                    onError = { err ->
+                                        Toast.makeText(context, "${context.getString(R.string.backup_error)}: $err", Toast.LENGTH_LONG).show()
+                                    }
+                                )
+                            }
+                        )
+                        Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                        SettingsActionRow(
+                            icon = Icons.Filled.Restore,
+                            label = stringResource(R.string.backup_import_label),
+                            onClick = {
+                                importLauncher.launch(arrayOf("application/json", "*/*"))
+                            }
+                        )
+                    }
+                }
+            }
+
+
+            // Google Drive backup section hidden — re-enable in next release once
+            // OAuth consent screen is fully configured and debug SHA-1 is registered.
+
+            Spacer(Modifier.height(24.dp))
+
             AnimatedSection(visible = contentVisible, delayMillis = 120) {
                 SettingsSectionHeader(icon = Icons.Filled.Fingerprint, title = stringResource(R.string.about_section_title))
                 Spacer(Modifier.height(8.dp))
@@ -545,7 +716,10 @@ fun SettingsScreen(
             Spacer(Modifier.height(32.dp))
 
             AnimatedSection(visible = contentVisible, delayMillis = 300) {
-                SettingsFooter()
+                SettingsFooter(
+                    screenshotMode = viewModel.screenshotMode,
+                    onToggle       = { viewModel.toggleScreenshotMode() }
+                )
             }
         }
     }
@@ -778,9 +952,15 @@ private fun formatReminderHour(hour: Int): String {
     return "$h:00 $amPm"
 }
 
-/** Bottom-of-screen brand footer — small, muted, out of the way. */
+/** Bottom-of-screen brand footer — small, muted, out of the way.
+ *  Long-pressing the version label toggles screenshot mode (hides ads for clean captures). */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SettingsFooter() {
+private fun SettingsFooter(
+    screenshotMode: Boolean,
+    onToggle: () -> Unit
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -792,9 +972,21 @@ private fun SettingsFooter() {
         )
         Spacer(Modifier.height(2.dp))
         Text(
-            text = stringResource(R.string.app_version_label),
+            text = if (screenshotMode)
+                "${stringResource(R.string.app_version_label)}  📷"
+            else
+                stringResource(R.string.app_version_label),
             style = MaterialTheme.typography.labelSmall,
-            color = TextMuted
+            color = if (screenshotMode) AccentIndigo else TextMuted,
+            modifier = Modifier.combinedClickable(
+                onClick    = {},
+                onLongClick = {
+                    onToggle()
+                    val msg = if (!screenshotMode) "Screenshot mode ON — ads hidden"
+                              else "Screenshot mode OFF — ads visible"
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                }
+            )
         )
     }
 }

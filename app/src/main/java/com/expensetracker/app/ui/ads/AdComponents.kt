@@ -45,7 +45,8 @@ private const val INTERSTITIAL_UNIT_ID = "ca-app-pub-8890346685665889/4726982565
  * forward every relevant event, then destroy the view when the composable leaves.
  */
 @Composable
-fun BannerAdView(modifier: Modifier = Modifier) {
+fun BannerAdView(modifier: Modifier = Modifier, show: Boolean = true) {
+    if (!show) return   // screenshot mode — render nothing, no gap
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 

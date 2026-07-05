@@ -12,6 +12,9 @@ interface DebtPaymentDao {
     @Query("SELECT * FROM debt_payments ORDER BY date DESC, id DESC")
     fun observeAll(): Flow<List<DebtPaymentEntity>>
 
+    @Query("SELECT * FROM debt_payments ORDER BY date DESC, id DESC")
+    suspend fun getAllOnce(): List<DebtPaymentEntity>
+
     @Query("SELECT * FROM debt_payments WHERE debtId = :debtId ORDER BY date DESC, id DESC")
     suspend fun getForDebt(debtId: Long): List<DebtPaymentEntity>
 
