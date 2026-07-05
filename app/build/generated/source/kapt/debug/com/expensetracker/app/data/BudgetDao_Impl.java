@@ -35,6 +35,8 @@ public final class BudgetDao_Impl implements BudgetDao {
 
   private final EntityInsertionAdapter<BudgetEntity> __insertionAdapterOfBudgetEntity;
 
+  private final EntityInsertionAdapter<BudgetEntity> __insertionAdapterOfBudgetEntity_1;
+
   private final EntityDeletionOrUpdateAdapter<BudgetEntity> __deletionAdapterOfBudgetEntity;
 
   private final EntityDeletionOrUpdateAdapter<BudgetEntity> __updateAdapterOfBudgetEntity;
@@ -50,6 +52,25 @@ public final class BudgetDao_Impl implements BudgetDao {
       @NonNull
       protected String createQuery() {
         return "INSERT OR ABORT INTO `budgets` (`id`,`categoryId`,`amount`) VALUES (nullif(?, 0),?,?)";
+      }
+
+      @Override
+      protected void bind(@NonNull final SupportSQLiteStatement statement,
+          @NonNull final BudgetEntity entity) {
+        statement.bindLong(1, entity.getId());
+        if (entity.getCategoryId() == null) {
+          statement.bindNull(2);
+        } else {
+          statement.bindLong(2, entity.getCategoryId());
+        }
+        statement.bindDouble(3, entity.getAmount());
+      }
+    };
+    this.__insertionAdapterOfBudgetEntity_1 = new EntityInsertionAdapter<BudgetEntity>(__db) {
+      @Override
+      @NonNull
+      protected String createQuery() {
+        return "INSERT OR REPLACE INTO `budgets` (`id`,`categoryId`,`amount`) VALUES (nullif(?, 0),?,?)";
       }
 
       @Override
@@ -124,6 +145,24 @@ public final class BudgetDao_Impl implements BudgetDao {
         __db.beginTransaction();
         try {
           final Long _result = __insertionAdapterOfBudgetEntity.insertAndReturnId(budget);
+          __db.setTransactionSuccessful();
+          return _result;
+        } finally {
+          __db.endTransaction();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object upsert(final BudgetEntity budget, final Continuation<? super Long> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
+      @Override
+      @NonNull
+      public Long call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Long _result = __insertionAdapterOfBudgetEntity_1.insertAndReturnId(budget);
           __db.setTransactionSuccessful();
           return _result;
         } finally {

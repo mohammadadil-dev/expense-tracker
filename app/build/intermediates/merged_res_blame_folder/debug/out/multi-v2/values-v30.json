@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.expensetracker.app-mergeDebugResources-72:/values-v30/values-v30.xml",
+            "outputFile": "com.expensetracker.app-mergeDebugResources-80:/values-v30/values-v30.xml",
             "map": [
                 {
                     "source": "/Users/mdadil/.gradle/caches/transforms-3/de06ed67fef687fe27b96862bcbe484b/transformed/material3-release/res/values-v30/values-v30.xml",

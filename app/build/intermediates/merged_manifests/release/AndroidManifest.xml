@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.agtech.expensetracker"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="13"
+    android:versionName="1.4.2" >
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -11,6 +11,16 @@
     <!-- Required by AdMob to serve ads and check network status -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Daily "Did you log today?" reminder (Android 13+ requires runtime grant) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Re-register WorkManager reminder after device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Required for BiometricPrompt on Android 9 and below -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- suppress DeprecatedClassUsageInspection -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" />
     <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
@@ -74,6 +84,37 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8890346685665889~3572471547" />
+
+        <!--
+            Daily reminder BroadcastReceiver.
+            Handles ACTION_NOTIFY (from AlarmManager), BOOT_COMPLETED, and MY_PACKAGE_REPLACED
+            so alarms survive reboots and app updates.
+        -->
+        <receiver
+            android:name="com.expensetracker.app.util.ReminderReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+            Home-screen widget.
+            ACTION_APPWIDGET_UPDATE is mandatory; APPWIDGET_PROVIDER meta-data points to the
+            widget's configuration XML (min size, update period, etc.).
+        -->
+        <receiver
+            android:name="com.expensetracker.app.widget.ExpenseWidgetReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/expense_widget_info" />
+        </receiver>
 
         <!--
              Lets us hand a generated PDF report to the system share/save chooser without
@@ -144,6 +185,43 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="androidx.glance.appwidget.action.ActionTrampolineActivity"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoDisplay" />
+        <activity
+            android:name="androidx.glance.appwidget.action.InvisibleActionTrampolineActivity"
+            android:enabled="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:taskAffinity="androidx.glance.appwidget.ListAdapterCallbackTrampoline"
+            android:theme="@style/Widget.Glance.AppWidget.CallbackTrampoline" />
+
+        <receiver
+            android:name="androidx.glance.appwidget.action.ActionCallbackBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="androidx.glance.appwidget.UnmanagedSessionReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="androidx.glance.appwidget.MyPackageReplacedReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="androidx.glance.appwidget.GlanceRemoteViewsService"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -255,6 +333,10 @@
             </intent-filter>
         </receiver>
 
+        <service
+            android:name="androidx.core.widget.RemoteViewsCompatService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <uses-library
             android:name="android.ext.adservices"
             android:required="false" />
@@ -282,7 +364,12 @@
             <intent-filter>
                 <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
             </intent-filter>
-        </receiver>
+        </receiver> <!-- The activities will be merged into the manifest of the hosting app. -->
+        <activity
+            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+            android:exported="false"
+            android:stateNotNeeded="true"
+            android:theme="@style/Theme.PlayCore.Transparent" />
     </application>
 
 </manifest>

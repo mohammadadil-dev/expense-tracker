@@ -27,6 +27,8 @@
     <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Compartir con"</string>
     <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Compartir con <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
     <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"Ocultar"</string>
+    <string msgid="2102429900219199821" name="biometric_or_screen_lock_prompt_message">"Usa la biometría o tu bloqueo de pantalla para continuar"</string>
+    <string msgid="1160635338192065472" name="biometric_prompt_message">"Usa la biometría para continuar"</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"Responder"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Vídeo"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"Rechazar"</string>
@@ -54,13 +56,33 @@
     <string name="common_open_on_phone">Abrir en teléfono</string>
     <string name="common_signin_button_text">Iniciar sesión</string>
     <string name="common_signin_button_text_long">Iniciar sesión con Google</string>
+    <string msgid="5912733858573823945" name="confirm_device_credential_password">"Usar contraseña"</string>
     <string msgid="3260749812566568062" name="copy_toast_msg">"Enlace copiado en el portapapeles"</string>
     <string msgid="8038256446254964252" name="default_error_message">"Entrada no válida"</string>
+    <string msgid="4776854077120974966" name="default_error_msg">"Error desconocido"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"Ventana emergente"</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"Menú desplegable"</string>
+    <string msgid="4562557128765735254" name="face_or_screen_lock_prompt_message">"Usa la cara o tu bloqueo de pantalla para continuar"</string>
+    <string msgid="2282389249605674226" name="face_prompt_message">"Usa la cara para continuar"</string>
     <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Copiar enlace"</string>
     <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Abrir en el navegador"</string>
     <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Compartir enlace"</string>
+    <string msgid="5462024216548165325" name="fingerprint_dialog_icon_description">"Icono de huella digital"</string>
+    <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Toca sensor huellas digitales"</string>
+    <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"El hardware de huella digital no está disponible."</string>
+    <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"El dispositivo no tiene ningún sensor de huellas digitales"</string>
+    <string msgid="7291787166416782245" name="fingerprint_error_lockout">"Has realizado demasiados intentos. Vuelve a probar más tarde."</string>
+    <string msgid="7520712796891883488" name="fingerprint_error_no_fingerprints">"No se ha registrado ninguna huella digital."</string>
+    <string msgid="7627716295344353987" name="fingerprint_error_user_canceled">"El usuario ha cancelado la operación de huella digital."</string>
+    <string msgid="3873359464293253009" name="fingerprint_not_recognized">"No se reconoce"</string>
+    <string msgid="8382576858490514495" name="fingerprint_or_screen_lock_prompt_message">"Usa la huella digital o tu bloqueo de pantalla para continuar"</string>
+    <string msgid="7449360011861769080" name="fingerprint_prompt_message">"Usa la huella digital para continuar"</string>
+    <string msgid="3791785319221634505" name="generic_error_no_device_credential">"No se ha definido el PIN, el patrón o la contraseña."</string>
+    <string msgid="1807436368654974044" name="generic_error_no_keyguard">"Este dispositivo no admite PINs, patrones ni contraseñas."</string>
+    <string msgid="7309881387583143581" name="generic_error_user_canceled">"El usuario ha cancelado la autenticación."</string>
+    <string msgid="2863935784364843033" name="glance_error_layout_text">"Revisa el error exacto mediante "<b><tt>"adb logcat"</tt></b>" y buscando "<b><tt>"GlanceAppWidget"</tt></b></string>
+    <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"No se puede mostrar el contenido"</string>
+    <string msgid="3631961919234443531" name="glance_error_layout_title"><b>"Error del widget de la aplicación Glance"</b></string>
     <string msgid="6827826412747255547" name="in_progress">"En curso"</string>
     <string msgid="7933458017204019916" name="indeterminate">"Marcado parcialmente"</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"Contrae la hoja inferior"</string>
@@ -102,6 +124,7 @@
     <string msgid="7617233117134790350" name="m3c_dialog">"Cuadro de diálogo"</string>
     <string msgid="3177828188723359358" name="m3c_dropdown_menu_collapsed">"Contraído"</string>
     <string msgid="2360841780724299882" name="m3c_dropdown_menu_expanded">"Desplegado"</string>
+    <string msgid="8687821690726149911" name="m3c_dropdown_menu_toggle">"Mostrar/ocultar menú desplegable"</string>
     <string msgid="6152806324422087846" name="m3c_search_bar_search">"Buscar"</string>
     <string msgid="6152755701819882931" name="m3c_snackbar_dismiss">"Cerrar"</string>
     <string msgid="7655536806087401899" name="m3c_suggestions_available">"Sugerencias a continuación"</string>
@@ -127,15 +150,14 @@
     <string name="notifications_permission_confirm">Permitir</string>
     <string name="notifications_permission_decline">No permitir</string>
     <string name="notifications_permission_title">¿Permitir que la aplicación te envíe notificaciones?</string>
-    <string msgid="875452955155264703" name="off">"Desactivado"</string>
-    <string name="offline_notification_text">Toca para abrir el anuncio</string>
-    <string name="offline_notification_title">Mira el anuncio guardado cuando no tenías conexión</string>
+    <string name="offline_dialog_image_description">Icono</string>
+    <string name="offline_dialog_text">Gracias por tu interés.\nTe daremos más información cuando vuelvas a estar online.</string>
+    <string name="offline_notification_title">Vuelves a estar online. ¿Seguimos por donde lo dejamos?</string>
+    <string name="offline_notification_title_with_advertiser">Vuelves a estar online. Sigue informándote sobre %s.</string>
     <string name="offline_opt_in_confirm">Aceptar</string>
-    <string name="offline_opt_in_confirmation">Recibirás una notificación que incluirá el enlace cuando recuperes la conexión</string>
     <string name="offline_opt_in_decline">No, gracias</string>
     <string name="offline_opt_in_message">Te enviaremos una notificación que incluirá un enlace al sitio web del anunciante.</string>
     <string name="offline_opt_in_title">Se abrirá el anuncio cuando recuperes la conexión.</string>
-    <string msgid="8655164131929253426" name="on">"Activado"</string>
     <string msgid="5941395253238309765" name="range_end">"Fin del intervalo"</string>
     <string msgid="7097486360902471446" name="range_start">"Inicio del intervalo"</string>
     <string name="s1">Guardar imagen</string>
@@ -145,13 +167,24 @@
     <string name="s5">Crear evento de calendario</string>
     <string name="s6">¿Permitir que el anuncio cree un evento de calendario?</string>
     <string name="s7">Anuncio de prueba</string>
+    <string msgid="5659570757430909869" name="screen_lock_prompt_message">"Introduce tu bloqueo de pantalla para continuar"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Buscar"</string>
     <string msgid="6043586758067023" name="selected">"Seleccionado"</string>
+    <string msgid="4139871816613051306" name="state_empty">"Vacío"</string>
+    <string msgid="5834637030682409883" name="state_off">"Desactivado"</string>
+    <string msgid="1490883874751719580" name="state_on">"Activado"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"Interruptor"</string>
     <string msgid="1672349317127674378" name="tab">"Pestaña"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> por cien."</string>
     <string msgid="3765533235322692011" name="tooltip_description">"descripción emergente"</string>
     <string msgid="3124740595719787496" name="tooltip_label">"mostrar descripción emergente"</string>
+    <string msgid="6524145989441579428" name="use_biometric_label">"Usar biometría"</string>
+    <string msgid="5385448280139639016" name="use_biometric_or_screen_lock_label">"Usar biometría o bloqueo de pantalla"</string>
+    <string msgid="6533512708069459542" name="use_face_label">"Usar cara"</string>
+    <string msgid="2116180187159450292" name="use_face_or_screen_lock_label">"Usar cara o bloqueo de pantalla"</string>
+    <string msgid="6961788485681412417" name="use_fingerprint_label">"Usar huella digital"</string>
+    <string msgid="7577690399303139443" name="use_fingerprint_or_screen_lock_label">"Usar huella digital o bloqueo de pantalla"</string>
+    <string msgid="5459869335976243512" name="use_screen_lock_label">"Usar bloqueo de pantalla"</string>
     <string name="watermark_label_prefix">AdMob - </string>
 </resources>

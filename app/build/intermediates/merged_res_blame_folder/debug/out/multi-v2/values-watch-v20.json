@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.expensetracker.app-mergeDebugResources-72:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.expensetracker.app-mergeDebugResources-80:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
                     "source": "/Users/mdadil/.gradle/caches/transforms-3/7e2170f3da4dcfa7427f68fd2f616e46/transformed/play-services-auth-21.4.0/res/values-watch-v20/values.xml",

@@ -1,8 +1,6 @@
 package com.expensetracker.app.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,28 +11,40 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,6 +54,7 @@ import com.expensetracker.app.data.CategoryEntity
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.util.DateUtils
 import com.expensetracker.app.util.categoryDisplayName
+import com.expensetracker.app.util.categoryEmoji
 
 /**
  * Optional starting values for a brand-new (not-yet-existing) expense — used by the SMS review
@@ -66,7 +77,8 @@ fun AddEditExpenseSheet(
     defaultDate: String,
     prefill: ExpensePrefill? = null,
     onDismiss: () -> Unit,
-    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String) -> Unit
+    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean) -> Unit,
+    onAddCategory: ((name: String, colorHex: String) -> Unit)? = null
 ) {
     var selectedCategory by remember {
         val wantedId = existing?.categoryId ?: prefill?.categoryId
@@ -82,15 +94,25 @@ fun AddEditExpenseSheet(
     var categoryMenuExpanded by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
     var amountError by remember { mutableStateOf(false) }
+    var showAddCategoryDialog by remember { mutableStateOf(false) }
+    var newCategoryName by remember { mutableStateOf("") }
+    val quickColors = listOf("#43A047","#E53935","#1E88E5","#FB8C00","#8E24AA","#00ACC1","#D81B60","#6D4C41")
+    var newCategoryColor by remember { mutableStateOf(quickColors[0]) }
+    // Recurring: pre-populate from existing record (templates have isRecurring=true; auto-copies
+    // have isRecurring=false, so editing a copy keeps the toggle off by default — correct).
+    var isRecurring by remember { mutableStateOf(existing?.isRecurring ?: false) }
     val locale = LocalConfiguration.current.locales[0]
     val scrollState = rememberScrollState()
 
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
                 .imePadding()
+                .verticalScroll(scrollState)
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 24.dp)
         ) {
@@ -111,14 +133,9 @@ fun AddEditExpenseSheet(
                     onValueChange = {},
                     readOnly = true,
                     leadingIcon = {
-                        Box(
-                            modifier = Modifier
-                                .size(14.dp)
-                                .background(
-                                    color = selectedCategory?.colorHex?.let { runCatching { Color(android.graphics.Color.parseColor(it)) }.getOrNull() }
-                                        ?: MaterialTheme.colorScheme.primary,
-                                    shape = CircleShape
-                                )
+                        Text(
+                            text = categoryEmoji(selectedCategory?.nameKey),
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryMenuExpanded) },
@@ -138,19 +155,38 @@ fun AddEditExpenseSheet(
                                 )
                             },
                             leadingIcon = {
-                                Box(
-                                    modifier = Modifier
-                                        .size(12.dp)
-                                        .background(
-                                            color = runCatching { Color(android.graphics.Color.parseColor(category.colorHex)) }
-                                                .getOrDefault(MaterialTheme.colorScheme.primary),
-                                            shape = CircleShape
-                                        )
+                                Text(
+                                    text = categoryEmoji(category.nameKey),
+                                    style = MaterialTheme.typography.bodyLarge
                                 )
                             },
                             onClick = {
                                 selectedCategory = category
                                 categoryMenuExpanded = false
+                            }
+                        )
+                    }
+                    if (onAddCategory != null) {
+                        HorizontalDivider()
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    stringResourceCompat(R.string.add_category),
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Filled.Add,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            onClick = {
+                                categoryMenuExpanded = false
+                                newCategoryName = ""
+                                newCategoryColor = quickColors[0]
+                                showAddCategoryDialog = true
                             }
                         )
                     }
@@ -199,7 +235,53 @@ fun AddEditExpenseSheet(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
+            HorizontalDivider(color = Color.Gray.copy(alpha = 0.15f))
+            Spacer(Modifier.height(12.dp))
+
+            // Recurring toggle — only shown when adding/editing a normal expense (not an
+            // auto-generated copy, which has recurringSourceId set and isRecurring=false).
+            val isAutoCopy = existing?.recurringSourceId != null
+            if (!isAutoCopy) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(10.dp))
+                        .then(
+                            if (isRecurring) Modifier else Modifier
+                        )
+                        .padding(horizontal = 4.dp, vertical = 2.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.Repeat,
+                            contentDescription = null,
+                            tint = if (isRecurring) MaterialTheme.colorScheme.primary
+                                   else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(10.dp))
+                        Column {
+                            Text(
+                                stringResourceCompat(R.string.repeat_monthly_label),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            if (isRecurring) {
+                                Text(
+                                    stringResourceCompat(R.string.repeat_monthly_hint),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    Switch(checked = isRecurring, onCheckedChange = { isRecurring = it })
+                }
+                Spacer(Modifier.height(12.dp))
+            }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -214,13 +296,65 @@ fun AddEditExpenseSheet(
                     }
                     val categoryId = selectedCategory?.id
                     if (categoryId != null) {
-                        onSave(existing?.id, categoryId, description.trim(), amount, dateIso)
+                        onSave(existing?.id, categoryId, description.trim(), amount, dateIso, isRecurring)
                     }
                 }) {
                     Text(stringResourceCompat(if (existing == null) R.string.add else R.string.update))
                 }
             }
         }
+    }
+
+    if (showAddCategoryDialog && onAddCategory != null) {
+        AlertDialog(
+            onDismissRequest = { showAddCategoryDialog = false },
+            title = { Text(stringResourceCompat(R.string.add_category)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    OutlinedTextField(
+                        value = newCategoryName,
+                        onValueChange = { newCategoryName = it },
+                        label = { Text(stringResourceCompat(R.string.new_category_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        quickColors.forEach { hex ->
+                            val color = try {
+                                Color(android.graphics.Color.parseColor(hex))
+                            } catch (e: Exception) { Color.Gray }
+                            androidx.compose.foundation.layout.Box(
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .background(color, CircleShape)
+                                    .then(
+                                        if (hex == newCategoryColor)
+                                            Modifier.border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape)
+                                        else Modifier
+                                    )
+                                    .clickable { newCategoryColor = hex }
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val name = newCategoryName.trim()
+                        if (name.isNotBlank()) {
+                            onAddCategory(name, newCategoryColor)
+                            showAddCategoryDialog = false
+                        }
+                    }
+                ) { Text(stringResourceCompat(R.string.add)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddCategoryDialog = false }) {
+                    Text(stringResourceCompat(R.string.cancel))
+                }
+            }
+        )
     }
 
     if (showDatePicker) {

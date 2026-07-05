@@ -19,7 +19,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,11 +30,13 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -66,18 +71,27 @@ fun AddEditDebtSheet(
         interestRatePercent: Double,
         minimumPayment: Double,
         startDate: String,
-        notes: String?
+        notes: String?,
+        loanType: String?
     ) -> Unit
 ) {
     var direction by remember { mutableStateOf(existing?.direction ?: DebtEntity.DIRECTION_OWE) }
-    var name by remember { mutableStateOf(existing?.name ?: "") }
+    var loanType by remember {
+        mutableStateOf(existing?.loanType?.let { if (it in DebtEntity.ALL_TYPES) it else DebtEntity.TYPE_OTHER })
+    }
+    var customLoanTypeName by remember {
+        mutableStateOf(existing?.loanType?.takeIf { it !in DebtEntity.ALL_TYPES } ?: "")
+    }
+    var loanTypeExpanded by remember { mutableStateOf(false) }
     var principalText by remember { mutableStateOf(existing?.principal?.let { formatPlainDebtAmount(it) } ?: "") }
-    var rateText by remember { mutableStateOf(existing?.interestRatePercent?.let { formatPlainDebtAmount(it) } ?: "0") }
+    var rateText by remember {
+        mutableStateOf(existing?.interestRatePercent?.let { if (it == 0.0) "" else formatPlainDebtAmount(it) } ?: "")
+    }
     var paymentText by remember { mutableStateOf(existing?.minimumPayment?.let { formatPlainDebtAmount(it) } ?: "") }
     var startDateIso by remember { mutableStateOf(existing?.startDate ?: DateUtils.todayIso()) }
     var notes by remember { mutableStateOf(existing?.notes ?: "") }
 
-    var nameError by remember { mutableStateOf(false) }
+    var loanTypeError by remember { mutableStateOf(false) }
     var principalError by remember { mutableStateOf(false) }
     var rateError by remember { mutableStateOf(false) }
     var paymentError by remember { mutableStateOf(false) }
@@ -85,12 +99,15 @@ fun AddEditDebtSheet(
     val locale = LocalConfiguration.current.locales[0]
     val scrollState = rememberScrollState()
 
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
                 .imePadding()
+                .verticalScroll(scrollState)
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 24.dp)
         ) {
@@ -118,20 +135,48 @@ fun AddEditDebtSheet(
             }
 
             Spacer(Modifier.height(16.dp))
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it; nameError = false },
-                label = { Text(stringResource(R.string.debt_name_label)) },
-                placeholder = { Text(stringResource(R.string.debt_name_hint)) },
-                isError = nameError,
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-            if (nameError) {
-                Text(
-                    text = stringResource(R.string.error_debt_name_required),
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.labelSmall
+            ExposedDropdownMenuBox(
+                expanded = loanTypeExpanded,
+                onExpandedChange = { loanTypeExpanded = it; if (it) loanTypeError = false }
+            ) {
+                val loanTypeDisplay = loanType?.let { type ->
+                    "${DebtEntity.loanTypeEmoji(type)} ${stringResource(loanTypeStringRes(type))}"
+                } ?: ""
+                OutlinedTextField(
+                    value = loanTypeDisplay,
+                    onValueChange = {},
+                    readOnly = true,
+                    isError = loanTypeError,
+                    label = { Text(stringResource(R.string.debt_loan_type_label)) },
+                    placeholder = { Text(stringResource(R.string.loan_type_select_hint)) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = loanTypeExpanded) },
+                    supportingText = if (loanTypeError) {
+                        { Text(stringResource(R.string.error_loan_type_required)) }
+                    } else null,
+                    modifier = Modifier.fillMaxWidth().menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = loanTypeExpanded,
+                    onDismissRequest = { loanTypeExpanded = false }
+                ) {
+                    DebtEntity.ALL_TYPES.forEach { type ->
+                        DropdownMenuItem(
+                            text = { Text("${DebtEntity.loanTypeEmoji(type)} ${stringResource(loanTypeStringRes(type))}") },
+                            onClick = { loanType = type; loanTypeExpanded = false; loanTypeError = false },
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                        )
+                    }
+                }
+            }
+            if (loanType == DebtEntity.TYPE_OTHER) {
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = customLoanTypeName,
+                    onValueChange = { customLoanTypeName = it },
+                    label = { Text(stringResource(R.string.loan_type_other_name_label)) },
+                    placeholder = { Text(stringResource(R.string.loan_type_other_name_hint)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
                 )
             }
 
@@ -215,9 +260,8 @@ fun AddEditDebtSheet(
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = {
                     var hasError = false
-                    val trimmedName = name.trim()
-                    if (trimmedName.isEmpty()) {
-                        nameError = true
+                    if (loanType == null) {
+                        loanTypeError = true
                         hasError = true
                     }
                     val principal = principalText.replace(",", "").toDoubleOrNull()
@@ -225,7 +269,7 @@ fun AddEditDebtSheet(
                         principalError = true
                         hasError = true
                     }
-                    val rate = rateText.replace(",", "").toDoubleOrNull()
+                    val rate = rateText.trim().ifEmpty { "0" }.replace(",", "").toDoubleOrNull()
                     if (rate == null || rate < 0.0) {
                         rateError = true
                         hasError = true
@@ -236,15 +280,31 @@ fun AddEditDebtSheet(
                         hasError = true
                     }
                     if (hasError || principal == null || rate == null || payment == null) return@Button
+                    val finalLoanType = if (loanType == DebtEntity.TYPE_OTHER && customLoanTypeName.isNotBlank())
+                        customLoanTypeName.trim()
+                    else
+                        loanType
+                    val derivedName = when (loanType) {
+                        DebtEntity.TYPE_PERSONAL  -> "Personal Loan"
+                        DebtEntity.TYPE_HOME      -> "Home Loan"
+                        DebtEntity.TYPE_CAR       -> "Car Loan"
+                        DebtEntity.TYPE_EDUCATION -> "Education Loan"
+                        DebtEntity.TYPE_GOLD      -> "Gold Loan"
+                        DebtEntity.TYPE_BUSINESS  -> "Business Loan"
+                        DebtEntity.TYPE_INFORMAL  -> "Borrowed from Person"
+                        DebtEntity.TYPE_OTHER     -> customLoanTypeName.trim().ifEmpty { "Other Loan" }
+                        else                      -> finalLoanType ?: "Loan"
+                    }
                     onSave(
                         existing?.id,
-                        trimmedName,
+                        derivedName,
                         direction,
                         principal,
                         rate,
                         payment,
                         startDateIso,
-                        notes.trim().ifEmpty { null }
+                        notes.trim().ifEmpty { null },
+                        finalLoanType
                     )
                 }) {
                     Text(stringResource(if (existing == null) R.string.add else R.string.update))
@@ -296,6 +356,18 @@ private fun DirectionChip(label: String, selected: Boolean, onClick: () -> Unit,
             color = if (selected) OnAccent else TextSecondary
         )
     }
+}
+
+/** Maps a loan type constant to its string resource ID. */
+private fun loanTypeStringRes(type: String): Int = when (type) {
+    DebtEntity.TYPE_PERSONAL  -> R.string.loan_type_personal
+    DebtEntity.TYPE_HOME      -> R.string.loan_type_home
+    DebtEntity.TYPE_CAR       -> R.string.loan_type_car
+    DebtEntity.TYPE_EDUCATION -> R.string.loan_type_education
+    DebtEntity.TYPE_GOLD      -> R.string.loan_type_gold
+    DebtEntity.TYPE_BUSINESS  -> R.string.loan_type_business
+    DebtEntity.TYPE_INFORMAL  -> R.string.loan_type_informal
+    else                      -> R.string.loan_type_other
 }
 
 /** Same plain-number formatting as the other Add/Edit sheets — whole numbers show without a

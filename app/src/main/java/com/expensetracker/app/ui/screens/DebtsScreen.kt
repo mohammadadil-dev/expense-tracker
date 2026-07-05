@@ -1,6 +1,12 @@
 package com.expensetracker.app.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,20 +18,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.TrendingDown
+import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -53,12 +63,15 @@ import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.DebtListItem
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.components.RecordPaymentSheet
+import androidx.compose.ui.text.font.FontWeight
 import com.expensetracker.app.ui.theme.AccentIndigo
+import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.OnAccent
 import com.expensetracker.app.ui.theme.SuccessGreen
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
+import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.DebtInsights
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.viewmodel.ExpenseViewModel
@@ -91,11 +104,14 @@ fun DebtsScreen(
     val owedToUser = progressList.filter { it.debt.direction == DebtEntity.DIRECTION_OWED && !it.debt.isClosed }
     val settled = progressList.filter { it.debt.isClosed }
 
+    var heroVisible     by remember { mutableStateOf(false) }
     var expandedDebtId by remember { mutableStateOf<Long?>(null) }
     var showAddSheet by remember { mutableStateOf(false) }
     var editingDebt by remember { mutableStateOf<DebtEntity?>(null) }
     var paymentSheetDebt by remember { mutableStateOf<DebtEntity?>(null) }
     var debtPendingDelete by remember { mutableStateOf<DebtEntity?>(null) }
+
+    LaunchedEffect(Unit) { heroVisible = true }
 
     val scrollState = rememberScrollState()
     // Same parallax-feed convention as Dashboard/Settings — a rough scroll cue for the shared
@@ -113,16 +129,7 @@ fun DebtsScreen(
         )
         Scaffold(
             containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(R.string.debts_title)) },
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.close))
-                        }
-                    }
-                )
-            },
+            // ── No TopAppBar — title lives inline with the content ──
             floatingActionButton = {
                 FloatingActionButton(onClick = {
                     editingDebt = null
@@ -138,11 +145,19 @@ fun DebtsScreen(
                     .padding(innerPadding)
                     .verticalScroll(scrollState)
             ) {
-                NetPositionHeader(
-                    netPosition = netPosition,
-                    currencySymbol = currencySymbol,
-                    modifier = Modifier.fillMaxWidth().padding(16.dp)
-                )
+                // ── Animated hero header ───────────────────────────────────────
+                AnimatedVisibility(
+                    visible = heroVisible,
+                    enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                            fadeIn(tween(500))
+                ) {
+                    DebtsHeroHeader(
+                        netPosition    = netPosition,
+                        owedByUserCount = owedByUser.size,
+                        owedToUserCount = owedToUser.size,
+                        currencySymbol = currencySymbol
+                    )
+                }
 
                 if (debts.isEmpty()) {
                     EmptyDebtsState(
@@ -228,8 +243,8 @@ fun DebtsScreen(
             existing = editingDebt,
             currencySymbol = currencySymbol,
             onDismiss = { showAddSheet = false },
-            onSave = { id, name, direction, principal, rate, payment, startDate, notes ->
-                viewModel.saveDebt(id, name, direction, principal, rate, payment, startDate, notes) {
+            onSave = { id, name, direction, principal, rate, payment, startDate, notes, loanType ->
+                viewModel.saveDebt(id, name, direction, principal, rate, payment, startDate, notes, loanType) {
                     showAddSheet = false
                 }
             }
@@ -263,6 +278,153 @@ fun DebtsScreen(
         )
     }
 }
+
+// ── Debts hero header (animated, mirrors KhataHeroHeader style) ────────────────
+
+@Composable
+private fun DebtsHeroHeader(
+    netPosition: DebtInsights.NetPosition,
+    owedByUserCount: Int,
+    owedToUserCount: Int,
+    currencySymbol: String
+) {
+    val allSettled    = netPosition.net == 0.0 &&
+                        netPosition.totalOwedByUser == 0.0 &&
+                        netPosition.totalOwedToUser == 0.0
+    val netIsPositive = netPosition.net >= 0.0
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 20.dp, bottom = 12.dp)
+    ) {
+        Text(
+            text  = stringResource(R.string.debts_title),
+            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+            color = TextPrimary
+        )
+        Text(
+            text  = stringResource(R.string.debts_subtitle),
+            style = MaterialTheme.typography.bodySmall,
+            color = TextMuted
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        // Two stat cards side by side
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            DebtStatCard(
+                label          = stringResource(R.string.debts_section_you_owe),
+                amount         = netPosition.totalOwedByUser,
+                count          = owedByUserCount,
+                currencySymbol = currencySymbol,
+                amountColor    = DangerRed,
+                modifier       = Modifier.weight(1f)
+            )
+            DebtStatCard(
+                label          = stringResource(R.string.debts_section_owed_to_you),
+                amount         = netPosition.totalOwedToUser,
+                count          = owedToUserCount,
+                currencySymbol = currencySymbol,
+                amountColor    = SuccessGreen,
+                modifier       = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(Modifier.height(10.dp))
+
+        // Net position badge pill
+        Surface(
+            shape = RoundedCornerShape(50),
+            color = when {
+                allSettled    -> SuccessGreen.copy(alpha = 0.10f)
+                netIsPositive -> SuccessGreen.copy(alpha = 0.10f)
+                else          -> DangerRed.copy(alpha = 0.10f)
+            }
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = if (allSettled || netIsPositive) Icons.Filled.TrendingUp
+                                  else Icons.Filled.TrendingDown,
+                    contentDescription = null,
+                    tint     = if (allSettled || netIsPositive) SuccessGreen else DangerRed,
+                    modifier = Modifier.size(16.dp)
+                )
+                Spacer(Modifier.width(6.dp))
+                MoneyText(
+                    formatted = when {
+                        allSettled    -> stringResource(R.string.net_all_settled)
+                        netIsPositive -> stringResource(R.string.net_in_favour, Formatters.money(abs(netPosition.net), currencySymbol))
+                        else          -> stringResource(R.string.net_you_owe_net, Formatters.money(abs(netPosition.net), currencySymbol))
+                    },
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = if (allSettled || netIsPositive) SuccessGreen else DangerRed
+                )
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        // Gradient net-position card (kept from original)
+        NetPositionHeader(
+            netPosition    = netPosition,
+            currencySymbol = currencySymbol,
+            modifier       = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun DebtStatCard(
+    label: String,
+    amount: Double,
+    count: Int,
+    currencySymbol: String,
+    amountColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        colors    = CardDefaults.cardColors(containerColor = CardWhite),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        modifier  = modifier
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 14.dp, horizontal = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(label, style = MaterialTheme.typography.labelSmall, color = TextSecondary)
+            Spacer(Modifier.height(4.dp))
+            MoneyText(
+                formatted = Formatters.money(amount, currencySymbol),
+                style     = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                color     = amountColor
+            )
+            Spacer(Modifier.height(4.dp))
+            Surface(
+                shape = RoundedCornerShape(50),
+                color = amountColor.copy(alpha = 0.10f)
+            ) {
+                Text(
+                    text  = "$count ${if (count == 1) stringResource(R.string.label_debt_singular) else stringResource(R.string.label_debt_plural)}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = amountColor,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+            }
+        }
+    }
+}
+
+// ── Net position gradient card ─────────────────────────────────────────────────
 
 @Composable
 private fun NetPositionHeader(

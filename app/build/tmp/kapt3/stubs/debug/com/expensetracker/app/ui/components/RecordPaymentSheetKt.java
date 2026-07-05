@@ -4,9 +4,8 @@ package com.expensetracker.app.ui.components;
 public final class RecordPaymentSheetKt {
     
     /**
-     * Bottom sheet for recording a single payment against [debt] — a repayment if the user owes
-     * it, a collection if it's owed to the user. Mirrors [BudgetManageSheet]'s compact
-     * field-plus-Check-icon save pattern, with an extra date field and optional note.
+     * Bottom sheet for recording a single payment against [debt]. Always expands fully so the
+     * Add button is never hidden. Save action is a full Button at the bottom, not an inline icon.
      */
     @kotlin.OptIn(markerClass = {androidx.compose.material3.ExperimentalMaterial3Api.class})
     @androidx.compose.runtime.Composable()

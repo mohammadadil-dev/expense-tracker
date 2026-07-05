@@ -20,8 +20,8 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 14
+        versionName = "1.4.3"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -64,6 +64,15 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Google API client library bundles duplicate META-INF files that the
+            // Android packager rejects. Excluding them avoids the duplicate-resource error.
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/notice.txt"
         }
     }
 }
@@ -71,6 +80,7 @@ android {
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("androidx.activity:activity-compose:1.9.1")
@@ -79,7 +89,8 @@ dependencies {
     // consent flow — is guaranteed to resolve.
     implementation("androidx.activity:activity-ktx:1.9.1")
 
-    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    // Updated to 2025.01.00 — includes 16KB page-aligned graphics-path native library
+    implementation(platform("androidx.compose:compose-bom:2025.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -96,17 +107,34 @@ dependencies {
     // Google Mobile Ads (AdMob) — banner + interstitial
     // Replace test ad-unit IDs in AdComponents.kt with production IDs before publishing.
     // Verify the latest version at: https://developers.google.com/admob/android/rel-notes
-    implementation("com.google.android.gms:play-services-ads:22.6.0")
+    // 23.x adds 16KB memory page alignment required by Play Store for API 35 targets
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 
     // SMS User Consent API (SmsRetrieverClient) — lets the app read the text of one incoming
     // SMS at a time, only after the user taps "Allow" on a system-drawn prompt. Needs no
     // READ_SMS/RECEIVE_SMS manifest permission, so it doesn't trip Play Store's restricted
     // permissions review the way full SMS access would for a non-default-SMS-app like this one.
-    implementation("com.google.android.gms:play-services-auth:21.4.0")
+    implementation("com.google.android.gms:play-services-auth:21.5.0")
 
     // WorkManager — schedules the daily "Did you log today?" reminder notification.
     // Survives app restarts and device reboots; battery-friendly vs AlarmManager.
     implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+    // Glance — Compose-based home screen widget toolkit.
+    implementation("androidx.glance:glance-appwidget:1.1.0")
+    implementation("androidx.glance:glance-material3:1.1.0")
+
+    // Play In-App Updates — forces users onto the latest version via a full-screen
+    // immediate update flow that can't be dismissed (used to push users off crashing builds).
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
+    // Google Drive API — used for cloud backup / restore.
+    // SETUP REQUIRED before using: go to console.cloud.google.com, enable the Drive API,
+    // and register an Android OAuth 2.0 client with package name com.agtech.expensetracker
+    // and the SHA-1 from your release keystore. No google-services.json needed.
+    implementation("com.google.api-client:google-api-client-android:2.2.0")
+    implementation("com.google.apis:google-api-services-drive:v3-rev20220815-2.0.0")
+    implementation("com.google.http-client:google-http-client-gson:1.43.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

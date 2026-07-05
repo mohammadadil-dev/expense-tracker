@@ -73,6 +73,7 @@ import com.expensetracker.app.ui.theme.TileGreen
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.util.categoryEmoji
+import com.expensetracker.app.util.DateUtils
 import java.util.Locale
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -219,7 +220,7 @@ fun BudgetRingCard(
                 IconButton(onClick = onNavigatePrev, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.ChevronLeft,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.cd_previous_month),
                         tint = Color.White.copy(alpha = 0.75f),
                         modifier = Modifier.size(20.dp)
                     )
@@ -245,11 +246,16 @@ fun BudgetRingCard(
                         )
                     )
                 }
-                IconButton(onClick = onNavigateNext, modifier = Modifier.size(32.dp)) {
+                val isCurrentMonth = currentMonthKey == DateUtils.currentMonthKey()
+                IconButton(
+                    onClick = onNavigateNext,
+                    enabled = !isCurrentMonth,
+                    modifier = Modifier.size(32.dp)
+                ) {
                     Icon(
                         Icons.Filled.ChevronRight,
-                        contentDescription = null,
-                        tint = Color.White.copy(alpha = 0.75f),
+                        contentDescription = stringResource(R.string.cd_next_month),
+                        tint = Color.White.copy(alpha = if (isCurrentMonth) 0.25f else 0.75f),
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -258,36 +264,40 @@ fun BudgetRingCard(
             Spacer(Modifier.height(16.dp))
 
             if (overallBudget != null && overallBudget > 0.0) {
-                // ── Ring + stats row ──────────────────────────────────────
-                Row(
+                // ── Ring centred, stats in a full-width row below ─────────
+                Column(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Ring on the left
                     BudgetProgressRing(
                         spentFraction = spentFraction,
-                        modifier = Modifier.size(150.dp)
+                        modifier = Modifier.size(130.dp)
                     )
 
-                    Spacer(Modifier.width(24.dp))
+                    Spacer(Modifier.height(16.dp))
 
-                    // Stats on the right
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    // Spent | divider | Remaining — each half gets the full card width
+                    val remaining = (overallBudget - totalSpent).coerceAtLeast(0.0)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Spent
-                        Column {
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             MoneyText(
                                 formatted = Formatters.money(totalSpent, currencySymbol),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = BrandCoral,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
+                                    fontSize = 18.sp
                                 ),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
+                            Spacer(Modifier.height(2.dp))
                             Text(
                                 text = stringResource(R.string.stat_spent_label),
                                 style = MaterialTheme.typography.bodySmall.copy(
@@ -295,19 +305,29 @@ fun BudgetRingCard(
                                 )
                             )
                         }
+                        // Thin divider
+                        Box(
+                            modifier = Modifier
+                                .width(1.dp)
+                                .height(36.dp)
+                                .background(Color.White.copy(alpha = 0.18f))
+                        )
                         // Remaining
-                        Column {
-                            val remaining = (overallBudget - totalSpent).coerceAtLeast(0.0)
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             MoneyText(
                                 formatted = Formatters.money(remaining, currencySymbol),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = BrandAmber,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
+                                    fontSize = 18.sp
                                 ),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
+                            Spacer(Modifier.height(2.dp))
                             Text(
                                 text = stringResource(R.string.stat_remaining_label),
                                 style = MaterialTheme.typography.bodySmall.copy(
@@ -565,8 +585,8 @@ fun SpendingCategorySection(
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 topCategories.forEach { (cat, amt) ->
                     CategorySpendRow(
-                        category = cat,
-                        amount = amt,
+                        category       = cat,
+                        amount         = amt,
                         totalThisMonth = totalThisMonth,
                         currencySymbol = currencySymbol
                     )
@@ -593,6 +613,7 @@ fun CategorySpendRow(
         animationSpec = tween(600),
         label = "catRowProgress"
     )
+
     val barColor = remember(category.colorHex) {
         runCatching { Color(android.graphics.Color.parseColor(category.colorHex)) }.getOrElse { AccentGreen }
     }
@@ -644,8 +665,9 @@ fun CategorySpendRow(
                     )
                 }
                 Spacer(Modifier.height(6.dp))
+
                 LinearProgressIndicator(
-                    progress = animatedFraction,
+                    progress = { animatedFraction },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(6.dp)

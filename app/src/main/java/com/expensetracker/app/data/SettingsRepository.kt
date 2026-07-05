@@ -39,6 +39,16 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getBoolean(KEY_FIRST_RUN_DONE, false)
         set(value) = prefs.edit().putBoolean(KEY_FIRST_RUN_DONE, value).apply()
 
+    /**
+     * True once the user has completed (or legitimately skipped) the first-launch onboarding
+     * wizard. Defaults to [currencySetupDone] so existing installs (users who already picked a
+     * currency before onboarding existed) bypass the wizard on their next open — we don't want
+     * to interrupt a returning user who already configured the app.
+     */
+    var onboardingDone: Boolean
+        get() = prefs.getBoolean(KEY_ONBOARDING_DONE, currencySetupDone)
+        set(value) = prefs.edit().putBoolean(KEY_ONBOARDING_DONE, value).apply()
+
     /** Off by default — SMS detection is opt-in. When on, the app listens for the next
      * incoming SMS via the system consent prompt and queues anything that looks like a debit
      * transaction for the user to review. */
@@ -80,6 +90,46 @@ class SettingsRepository(private val context: Context) {
             return generated
         }
 
+    /** When true, the app shows a biometric (fingerprint / face) or device-credential prompt
+     *  every time it comes to the foreground. Off by default. */
+    var biometricEnabled: Boolean
+        get() = prefs.getBoolean(KEY_BIOMETRIC_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_BIOMETRIC_ENABLED, value).apply()
+
+    /**
+     * True once the user has completed (or skipped) the first-launch guided coachmark tour.
+     * Defaults to false for new installs. Existing users who installed before the tour existed
+     * will see it once, then it is permanently dismissed.
+     */
+    var hasSeenCoachmarks: Boolean
+        get() = prefs.getBoolean(KEY_COACHMARKS_SEEN, false)
+        set(value) = prefs.edit().putBoolean(KEY_COACHMARKS_SEEN, value).apply()
+
+    /**
+     * Persists the onboarding step to resume from after a mid-wizard locale change.
+     *
+     * When the user picks a non-English language on Step 1 and taps Continue, the app calls
+     * [applyLanguagePreference] which triggers an Activity recreation. To avoid restarting the
+     * wizard from Step 0, we save the resume step (2) and the entered name before the recreation,
+     * then restore them when the wizard is next shown. Reset to 0 when onboarding completes.
+     */
+    var onboardingResumeStep: Int
+        get() = prefs.getInt(KEY_ONBOARDING_RESUME_STEP, 0)
+        set(value) = prefs.edit().putInt(KEY_ONBOARDING_RESUME_STEP, value).apply()
+
+    /** Name typed on Step 0 — saved so it survives the mid-wizard Activity recreation. */
+    var onboardingPendingName: String
+        get() = prefs.getString(KEY_ONBOARDING_PENDING_NAME, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_ONBOARDING_PENDING_NAME, value).apply()
+
+    /**
+     * Hides the banner ad when true — intended for taking clean Play Store screenshots.
+     * Toggle via a long-press on the version label in Settings. Not exposed in UI otherwise.
+     */
+    var screenshotMode: Boolean
+        get() = prefs.getBoolean(KEY_SCREENSHOT_MODE, false)
+        set(value) = prefs.edit().putBoolean(KEY_SCREENSHOT_MODE, value).apply()
+
     companion object {
         private const val PREFS_NAME = "expense_tracker_settings"
         private const val KEY_LANGUAGE = "language"
@@ -87,10 +137,16 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_CURRENCY_SETUP_DONE = "currency_setup_done"
         private const val KEY_DISPLAY_NAME = "display_name"
         private const val KEY_FIRST_RUN_DONE = "first_run_done"
+        private const val KEY_ONBOARDING_DONE = "onboarding_done"
         private const val KEY_CUSTOMER_ID = "customer_id"
         private const val KEY_SMS_DETECTION_ENABLED = "sms_detection_enabled"
         private const val KEY_MONTHLY_SALARY = "monthly_salary"
         private const val KEY_REMINDER_ENABLED = "reminder_enabled"
         private const val KEY_REMINDER_HOUR = "reminder_hour"
+        private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
+        private const val KEY_COACHMARKS_SEEN = "coachmarks_seen"
+        private const val KEY_ONBOARDING_RESUME_STEP = "onboarding_resume_step"
+        private const val KEY_ONBOARDING_PENDING_NAME = "onboarding_pending_name"
+        private const val KEY_SCREENSHOT_MODE = "screenshot_mode"
     }
 }

@@ -14,6 +14,7 @@ import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import java.lang.Boolean;
 import java.lang.Class;
+import java.lang.Double;
 import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.Long;
@@ -55,7 +56,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR ABORT INTO `expenses` (`id`,`categoryId`,`description`,`amount`,`date`,`monthKey`) VALUES (nullif(?, 0),?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `expenses` (`id`,`categoryId`,`description`,`amount`,`date`,`monthKey`,`isRecurring`,`recurringPeriod`,`recurringSourceId`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -78,6 +79,18 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           statement.bindNull(6);
         } else {
           statement.bindString(6, entity.getMonthKey());
+        }
+        final int _tmp = entity.isRecurring() ? 1 : 0;
+        statement.bindLong(7, _tmp);
+        if (entity.getRecurringPeriod() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, entity.getRecurringPeriod());
+        }
+        if (entity.getRecurringSourceId() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindLong(9, entity.getRecurringSourceId());
         }
       }
     };
@@ -98,7 +111,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `expenses` SET `id` = ?,`categoryId` = ?,`description` = ?,`amount` = ?,`date` = ?,`monthKey` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `expenses` SET `id` = ?,`categoryId` = ?,`description` = ?,`amount` = ?,`date` = ?,`monthKey` = ?,`isRecurring` = ?,`recurringPeriod` = ?,`recurringSourceId` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -122,7 +135,19 @@ public final class ExpenseDao_Impl implements ExpenseDao {
         } else {
           statement.bindString(6, entity.getMonthKey());
         }
-        statement.bindLong(7, entity.getId());
+        final int _tmp = entity.isRecurring() ? 1 : 0;
+        statement.bindLong(7, _tmp);
+        if (entity.getRecurringPeriod() == null) {
+          statement.bindNull(8);
+        } else {
+          statement.bindString(8, entity.getRecurringPeriod());
+        }
+        if (entity.getRecurringSourceId() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindLong(9, entity.getRecurringSourceId());
+        }
+        statement.bindLong(10, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteById = new SharedSQLiteStatement(__db) {
@@ -330,6 +355,9 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           final int _cursorIndexOfAmount = CursorUtil.getColumnIndexOrThrow(_cursor, "amount");
           final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final int _cursorIndexOfMonthKey = CursorUtil.getColumnIndexOrThrow(_cursor, "monthKey");
+          final int _cursorIndexOfIsRecurring = CursorUtil.getColumnIndexOrThrow(_cursor, "isRecurring");
+          final int _cursorIndexOfRecurringPeriod = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringPeriod");
+          final int _cursorIndexOfRecurringSourceId = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringSourceId");
           final List<ExpenseEntity> _result = new ArrayList<ExpenseEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final ExpenseEntity _item;
@@ -357,7 +385,23 @@ public final class ExpenseDao_Impl implements ExpenseDao {
             } else {
               _tmpMonthKey = _cursor.getString(_cursorIndexOfMonthKey);
             }
-            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey);
+            final boolean _tmpIsRecurring;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsRecurring);
+            _tmpIsRecurring = _tmp != 0;
+            final String _tmpRecurringPeriod;
+            if (_cursor.isNull(_cursorIndexOfRecurringPeriod)) {
+              _tmpRecurringPeriod = null;
+            } else {
+              _tmpRecurringPeriod = _cursor.getString(_cursorIndexOfRecurringPeriod);
+            }
+            final Long _tmpRecurringSourceId;
+            if (_cursor.isNull(_cursorIndexOfRecurringSourceId)) {
+              _tmpRecurringSourceId = null;
+            } else {
+              _tmpRecurringSourceId = _cursor.getLong(_cursorIndexOfRecurringSourceId);
+            }
+            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey,_tmpIsRecurring,_tmpRecurringPeriod,_tmpRecurringSourceId);
             _result.add(_item);
           }
           return _result;
@@ -395,6 +439,9 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           final int _cursorIndexOfAmount = CursorUtil.getColumnIndexOrThrow(_cursor, "amount");
           final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final int _cursorIndexOfMonthKey = CursorUtil.getColumnIndexOrThrow(_cursor, "monthKey");
+          final int _cursorIndexOfIsRecurring = CursorUtil.getColumnIndexOrThrow(_cursor, "isRecurring");
+          final int _cursorIndexOfRecurringPeriod = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringPeriod");
+          final int _cursorIndexOfRecurringSourceId = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringSourceId");
           final List<ExpenseEntity> _result = new ArrayList<ExpenseEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final ExpenseEntity _item;
@@ -422,7 +469,23 @@ public final class ExpenseDao_Impl implements ExpenseDao {
             } else {
               _tmpMonthKey = _cursor.getString(_cursorIndexOfMonthKey);
             }
-            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey);
+            final boolean _tmpIsRecurring;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsRecurring);
+            _tmpIsRecurring = _tmp != 0;
+            final String _tmpRecurringPeriod;
+            if (_cursor.isNull(_cursorIndexOfRecurringPeriod)) {
+              _tmpRecurringPeriod = null;
+            } else {
+              _tmpRecurringPeriod = _cursor.getString(_cursorIndexOfRecurringPeriod);
+            }
+            final Long _tmpRecurringSourceId;
+            if (_cursor.isNull(_cursorIndexOfRecurringSourceId)) {
+              _tmpRecurringSourceId = null;
+            } else {
+              _tmpRecurringSourceId = _cursor.getLong(_cursorIndexOfRecurringSourceId);
+            }
+            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey,_tmpIsRecurring,_tmpRecurringPeriod,_tmpRecurringSourceId);
             _result.add(_item);
           }
           return _result;
@@ -461,6 +524,274 @@ public final class ExpenseDao_Impl implements ExpenseDao {
               _tmp = _cursor.getInt(0);
             }
             _result = _tmp == null ? null : _tmp != 0;
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object getAllOnce(final Continuation<? super List<ExpenseEntity>> $completion) {
+    final String _sql = "SELECT * FROM expenses ORDER BY date DESC, id DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<ExpenseEntity>>() {
+      @Override
+      @NonNull
+      public List<ExpenseEntity> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfCategoryId = CursorUtil.getColumnIndexOrThrow(_cursor, "categoryId");
+          final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+          final int _cursorIndexOfAmount = CursorUtil.getColumnIndexOrThrow(_cursor, "amount");
+          final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfMonthKey = CursorUtil.getColumnIndexOrThrow(_cursor, "monthKey");
+          final int _cursorIndexOfIsRecurring = CursorUtil.getColumnIndexOrThrow(_cursor, "isRecurring");
+          final int _cursorIndexOfRecurringPeriod = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringPeriod");
+          final int _cursorIndexOfRecurringSourceId = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringSourceId");
+          final List<ExpenseEntity> _result = new ArrayList<ExpenseEntity>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final ExpenseEntity _item;
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final long _tmpCategoryId;
+            _tmpCategoryId = _cursor.getLong(_cursorIndexOfCategoryId);
+            final String _tmpDescription;
+            if (_cursor.isNull(_cursorIndexOfDescription)) {
+              _tmpDescription = null;
+            } else {
+              _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+            }
+            final double _tmpAmount;
+            _tmpAmount = _cursor.getDouble(_cursorIndexOfAmount);
+            final String _tmpDate;
+            if (_cursor.isNull(_cursorIndexOfDate)) {
+              _tmpDate = null;
+            } else {
+              _tmpDate = _cursor.getString(_cursorIndexOfDate);
+            }
+            final String _tmpMonthKey;
+            if (_cursor.isNull(_cursorIndexOfMonthKey)) {
+              _tmpMonthKey = null;
+            } else {
+              _tmpMonthKey = _cursor.getString(_cursorIndexOfMonthKey);
+            }
+            final boolean _tmpIsRecurring;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsRecurring);
+            _tmpIsRecurring = _tmp != 0;
+            final String _tmpRecurringPeriod;
+            if (_cursor.isNull(_cursorIndexOfRecurringPeriod)) {
+              _tmpRecurringPeriod = null;
+            } else {
+              _tmpRecurringPeriod = _cursor.getString(_cursorIndexOfRecurringPeriod);
+            }
+            final Long _tmpRecurringSourceId;
+            if (_cursor.isNull(_cursorIndexOfRecurringSourceId)) {
+              _tmpRecurringSourceId = null;
+            } else {
+              _tmpRecurringSourceId = _cursor.getLong(_cursorIndexOfRecurringSourceId);
+            }
+            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey,_tmpIsRecurring,_tmpRecurringPeriod,_tmpRecurringSourceId);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object sumForDay(final String date, final Continuation<? super Double> $completion) {
+    final String _sql = "SELECT COALESCE(SUM(amount), 0.0) FROM expenses WHERE date = ? AND isRecurring = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (date == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, date);
+    }
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Double>() {
+      @Override
+      @NonNull
+      public Double call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Double _result;
+          if (_cursor.moveToFirst()) {
+            final Double _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getDouble(0);
+            }
+            _result = _tmp;
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object sumForMonth(final String monthKey, final Continuation<? super Double> $completion) {
+    final String _sql = "SELECT COALESCE(SUM(amount), 0.0) FROM expenses WHERE monthKey = ? AND isRecurring = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (monthKey == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, monthKey);
+    }
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Double>() {
+      @Override
+      @NonNull
+      public Double call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Double _result;
+          if (_cursor.moveToFirst()) {
+            final Double _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getDouble(0);
+            }
+            _result = _tmp;
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object recurringTemplatesOnce(
+      final Continuation<? super List<ExpenseEntity>> $completion) {
+    final String _sql = "SELECT * FROM expenses WHERE isRecurring = 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<ExpenseEntity>>() {
+      @Override
+      @NonNull
+      public List<ExpenseEntity> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfCategoryId = CursorUtil.getColumnIndexOrThrow(_cursor, "categoryId");
+          final int _cursorIndexOfDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+          final int _cursorIndexOfAmount = CursorUtil.getColumnIndexOrThrow(_cursor, "amount");
+          final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfMonthKey = CursorUtil.getColumnIndexOrThrow(_cursor, "monthKey");
+          final int _cursorIndexOfIsRecurring = CursorUtil.getColumnIndexOrThrow(_cursor, "isRecurring");
+          final int _cursorIndexOfRecurringPeriod = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringPeriod");
+          final int _cursorIndexOfRecurringSourceId = CursorUtil.getColumnIndexOrThrow(_cursor, "recurringSourceId");
+          final List<ExpenseEntity> _result = new ArrayList<ExpenseEntity>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final ExpenseEntity _item;
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final long _tmpCategoryId;
+            _tmpCategoryId = _cursor.getLong(_cursorIndexOfCategoryId);
+            final String _tmpDescription;
+            if (_cursor.isNull(_cursorIndexOfDescription)) {
+              _tmpDescription = null;
+            } else {
+              _tmpDescription = _cursor.getString(_cursorIndexOfDescription);
+            }
+            final double _tmpAmount;
+            _tmpAmount = _cursor.getDouble(_cursorIndexOfAmount);
+            final String _tmpDate;
+            if (_cursor.isNull(_cursorIndexOfDate)) {
+              _tmpDate = null;
+            } else {
+              _tmpDate = _cursor.getString(_cursorIndexOfDate);
+            }
+            final String _tmpMonthKey;
+            if (_cursor.isNull(_cursorIndexOfMonthKey)) {
+              _tmpMonthKey = null;
+            } else {
+              _tmpMonthKey = _cursor.getString(_cursorIndexOfMonthKey);
+            }
+            final boolean _tmpIsRecurring;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsRecurring);
+            _tmpIsRecurring = _tmp != 0;
+            final String _tmpRecurringPeriod;
+            if (_cursor.isNull(_cursorIndexOfRecurringPeriod)) {
+              _tmpRecurringPeriod = null;
+            } else {
+              _tmpRecurringPeriod = _cursor.getString(_cursorIndexOfRecurringPeriod);
+            }
+            final Long _tmpRecurringSourceId;
+            if (_cursor.isNull(_cursorIndexOfRecurringSourceId)) {
+              _tmpRecurringSourceId = null;
+            } else {
+              _tmpRecurringSourceId = _cursor.getLong(_cursorIndexOfRecurringSourceId);
+            }
+            _item = new ExpenseEntity(_tmpId,_tmpCategoryId,_tmpDescription,_tmpAmount,_tmpDate,_tmpMonthKey,_tmpIsRecurring,_tmpRecurringPeriod,_tmpRecurringSourceId);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object countRecurringInstance(final long sourceId, final String monthKey,
+      final Continuation<? super Integer> $completion) {
+    final String _sql = "SELECT COUNT(*) FROM expenses WHERE recurringSourceId = ? AND monthKey = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, sourceId);
+    _argIndex = 2;
+    if (monthKey == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, monthKey);
+    }
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<Integer>() {
+      @Override
+      @NonNull
+      public Integer call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final Integer _result;
+          if (_cursor.moveToFirst()) {
+            final Integer _tmp;
+            if (_cursor.isNull(0)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getInt(0);
+            }
+            _result = _tmp;
           } else {
             _result = null;
           }

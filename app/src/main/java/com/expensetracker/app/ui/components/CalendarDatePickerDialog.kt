@@ -154,11 +154,11 @@ private fun MonthNavHeader(label: String, onPrevious: () -> Unit, onNext: () -> 
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onPrevious) {
-            Icon(Icons.Filled.ChevronLeft, contentDescription = null)
+            Icon(Icons.Filled.ChevronLeft, contentDescription = stringResource(R.string.cd_previous_month))
         }
         Text(text = label, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
         IconButton(onClick = onNext) {
-            Icon(Icons.Filled.ChevronRight, contentDescription = null)
+            Icon(Icons.Filled.ChevronRight, contentDescription = stringResource(R.string.cd_next_month))
         }
     }
 }

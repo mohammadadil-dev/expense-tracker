@@ -27,6 +27,8 @@
     <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Del med"</string>
     <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Del med <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
     <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"Skjul"</string>
+    <string msgid="2102429900219199821" name="biometric_or_screen_lock_prompt_message">"Brug biometri eller din skærmlås for at fortsætte"</string>
+    <string msgid="1160635338192065472" name="biometric_prompt_message">"Brug biometri for at fortsætte"</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"Besvar"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Video"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"Afvis"</string>
@@ -54,13 +56,33 @@
     <string name="common_open_on_phone">Åbn på telefonen</string>
     <string name="common_signin_button_text">Log ind</string>
     <string name="common_signin_button_text_long">Log ind med Google</string>
+    <string msgid="5912733858573823945" name="confirm_device_credential_password">"Brug adgangskode"</string>
     <string msgid="3260749812566568062" name="copy_toast_msg">"Linket er kopieret til udklipsholderen"</string>
     <string msgid="8038256446254964252" name="default_error_message">"Ugyldigt input"</string>
+    <string msgid="4776854077120974966" name="default_error_msg">"Ukendt fejl"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"Pop op-vindue"</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"Rullemenu"</string>
+    <string msgid="4562557128765735254" name="face_or_screen_lock_prompt_message">"Brug din ansigts- eller skærmlås for at fortsætte"</string>
+    <string msgid="2282389249605674226" name="face_prompt_message">"Brug dit ansigt for at fortsætte"</string>
     <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Kopiér link"</string>
     <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Åbn i browser"</string>
     <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Del link"</string>
+    <string msgid="5462024216548165325" name="fingerprint_dialog_icon_description">"Ikon for fingeraftryk"</string>
+    <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Sæt finger på fingeraftrykslæser"</string>
+    <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Hardwaren til fingeraftryk er ikke tilgængelig."</string>
+    <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"Denne enhed har ingen fingeraftrykslæser"</string>
+    <string msgid="7291787166416782245" name="fingerprint_error_lockout">"Der var for mange forsøg Prøv igen senere."</string>
+    <string msgid="7520712796891883488" name="fingerprint_error_no_fingerprints">"Der er ikke registreret nogen fingeraftryk."</string>
+    <string msgid="7627716295344353987" name="fingerprint_error_user_canceled">"Fingeraftrykshandlingen blev annulleret af brugeren."</string>
+    <string msgid="3873359464293253009" name="fingerprint_not_recognized">"Ikke genkendt"</string>
+    <string msgid="8382576858490514495" name="fingerprint_or_screen_lock_prompt_message">"Brug dit fingeraftryk eller din skærmlås for at fortsætte"</string>
+    <string msgid="7449360011861769080" name="fingerprint_prompt_message">"Brug dit fingeraftryk for at fortsætte"</string>
+    <string msgid="3791785319221634505" name="generic_error_no_device_credential">"Der er ikke angivet pinkode, mønster eller adgangskode."</string>
+    <string msgid="1807436368654974044" name="generic_error_no_keyguard">"Denne enhed understøtter ikke pinkode, mønster eller adgangskode."</string>
+    <string msgid="7309881387583143581" name="generic_error_user_canceled">"Godkendelsen er annulleret af brugeren."</string>
+    <string msgid="2863935784364843033" name="glance_error_layout_text">"Brug "<b><tt>"adb logcat"</tt></b>" til at tjekke den specifikke fejl ved at søge efter "<b><tt>"GlanceAppWidget"</tt></b></string>
+    <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"Indholdet kan ikke vises"</string>
+    <string msgid="3631961919234443531" name="glance_error_layout_title"><b>"Fejl i appwidgetten Glance"</b></string>
     <string msgid="6827826412747255547" name="in_progress">"I gang"</string>
     <string msgid="7933458017204019916" name="indeterminate">"Delvist markeret"</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"Skjul felt i bunden"</string>
@@ -102,6 +124,7 @@
     <string msgid="7617233117134790350" name="m3c_dialog">"Dialogboks"</string>
     <string msgid="3177828188723359358" name="m3c_dropdown_menu_collapsed">"Skjult"</string>
     <string msgid="2360841780724299882" name="m3c_dropdown_menu_expanded">"Udvidet"</string>
+    <string msgid="8687821690726149911" name="m3c_dropdown_menu_toggle">"Skift visningen af rullemenuen"</string>
     <string msgid="6152806324422087846" name="m3c_search_bar_search">"Søg"</string>
     <string msgid="6152755701819882931" name="m3c_snackbar_dismiss">"Afvis"</string>
     <string msgid="7655536806087401899" name="m3c_suggestions_available">"Forslag nedenfor"</string>
@@ -127,15 +150,14 @@
     <string name="notifications_permission_confirm">Tillad</string>
     <string name="notifications_permission_decline">Tillad ikke</string>
     <string name="notifications_permission_title">Vil du tillade, at appen sender dig notifikationer?</string>
-    <string msgid="875452955155264703" name="off">"Fra"</string>
-    <string name="offline_notification_text">Tryk for at åbne annoncen</string>
-    <string name="offline_notification_title">Se den annonce, du gemte, mens du var offline</string>
+    <string name="offline_dialog_image_description">Ikon</string>
+    <string name="offline_dialog_text">Tak for din interesse.\nVi deler mere, når du er online igen.</string>
+    <string name="offline_notification_title">Du er online igen Lad os fortsætte, hvor vi slap</string>
+    <string name="offline_notification_title_with_advertiser">Du er online igen Fortsæt med at få flere oplysninger om %s</string>
     <string name="offline_opt_in_confirm">OK</string>
-    <string name="offline_opt_in_confirmation">Du får en notifikation med linket, når du er online igen</string>
     <string name="offline_opt_in_decline">Nej tak</string>
     <string name="offline_opt_in_message">Vi sender dig en notifikation med et link til annoncørens website.</string>
     <string name="offline_opt_in_title">Åbn annoncen, når du er online igen.</string>
-    <string msgid="8655164131929253426" name="on">"Til"</string>
     <string msgid="5941395253238309765" name="range_end">"Slutinterval"</string>
     <string msgid="7097486360902471446" name="range_start">"Startinterval"</string>
     <string name="s1">Gem billede</string>
@@ -145,13 +167,24 @@
     <string name="s5">Opret kalenderbegivenhed</string>
     <string name="s6">Vil du tillade, at annoncen opretter en kalenderbegivenhed?</string>
     <string name="s7">Testannonce</string>
+    <string msgid="5659570757430909869" name="screen_lock_prompt_message">"Angiv din skærmlås for at fortsætte"</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Søg"</string>
     <string msgid="6043586758067023" name="selected">"Valgt"</string>
+    <string msgid="4139871816613051306" name="state_empty">"Tom"</string>
+    <string msgid="5834637030682409883" name="state_off">"Fra"</string>
+    <string msgid="1490883874751719580" name="state_on">"Til"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"Kontakt"</string>
     <string msgid="1672349317127674378" name="tab">"Fane"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> procent."</string>
     <string msgid="3765533235322692011" name="tooltip_description">"værktøjstip"</string>
     <string msgid="3124740595719787496" name="tooltip_label">"se værktøjstip"</string>
+    <string msgid="6524145989441579428" name="use_biometric_label">"Brug biometri"</string>
+    <string msgid="5385448280139639016" name="use_biometric_or_screen_lock_label">"Brug biometri eller skærmlås"</string>
+    <string msgid="6533512708069459542" name="use_face_label">"Brug ansigt"</string>
+    <string msgid="2116180187159450292" name="use_face_or_screen_lock_label">"Brug ansigts- eller skærmlås"</string>
+    <string msgid="6961788485681412417" name="use_fingerprint_label">"Brug fingeraftryk"</string>
+    <string msgid="7577690399303139443" name="use_fingerprint_or_screen_lock_label">"Brug fingeraftryk eller skærmlås"</string>
+    <string msgid="5459869335976243512" name="use_screen_lock_label">"Brug skærmlås"</string>
     <string name="watermark_label_prefix">AdMob – </string>
 </resources>

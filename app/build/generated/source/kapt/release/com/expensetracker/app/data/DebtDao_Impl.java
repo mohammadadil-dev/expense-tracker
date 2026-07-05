@@ -47,7 +47,7 @@ public final class DebtDao_Impl implements DebtDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR ABORT INTO `debts` (`id`,`name`,`direction`,`principal`,`interestRatePercent`,`minimumPayment`,`startDate`,`notes`,`isClosed`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?)";
+        return "INSERT OR ABORT INTO `debts` (`id`,`name`,`direction`,`principal`,`interestRatePercent`,`minimumPayment`,`startDate`,`notes`,`isClosed`,`loanType`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -79,6 +79,11 @@ public final class DebtDao_Impl implements DebtDao {
         }
         final int _tmp = entity.isClosed() ? 1 : 0;
         statement.bindLong(9, _tmp);
+        if (entity.getLoanType() == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindString(10, entity.getLoanType());
+        }
       }
     };
     this.__deletionAdapterOfDebtEntity = new EntityDeletionOrUpdateAdapter<DebtEntity>(__db) {
@@ -98,7 +103,7 @@ public final class DebtDao_Impl implements DebtDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `debts` SET `id` = ?,`name` = ?,`direction` = ?,`principal` = ?,`interestRatePercent` = ?,`minimumPayment` = ?,`startDate` = ?,`notes` = ?,`isClosed` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `debts` SET `id` = ?,`name` = ?,`direction` = ?,`principal` = ?,`interestRatePercent` = ?,`minimumPayment` = ?,`startDate` = ?,`notes` = ?,`isClosed` = ?,`loanType` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -130,7 +135,12 @@ public final class DebtDao_Impl implements DebtDao {
         }
         final int _tmp = entity.isClosed() ? 1 : 0;
         statement.bindLong(9, _tmp);
-        statement.bindLong(10, entity.getId());
+        if (entity.getLoanType() == null) {
+          statement.bindNull(10);
+        } else {
+          statement.bindString(10, entity.getLoanType());
+        }
+        statement.bindLong(11, entity.getId());
       }
     };
     this.__preparedStmtOfDeleteAll = new SharedSQLiteStatement(__db) {
@@ -239,6 +249,7 @@ public final class DebtDao_Impl implements DebtDao {
           final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "startDate");
           final int _cursorIndexOfNotes = CursorUtil.getColumnIndexOrThrow(_cursor, "notes");
           final int _cursorIndexOfIsClosed = CursorUtil.getColumnIndexOrThrow(_cursor, "isClosed");
+          final int _cursorIndexOfLoanType = CursorUtil.getColumnIndexOrThrow(_cursor, "loanType");
           final List<DebtEntity> _result = new ArrayList<DebtEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final DebtEntity _item;
@@ -278,7 +289,13 @@ public final class DebtDao_Impl implements DebtDao {
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsClosed);
             _tmpIsClosed = _tmp != 0;
-            _item = new DebtEntity(_tmpId,_tmpName,_tmpDirection,_tmpPrincipal,_tmpInterestRatePercent,_tmpMinimumPayment,_tmpStartDate,_tmpNotes,_tmpIsClosed);
+            final String _tmpLoanType;
+            if (_cursor.isNull(_cursorIndexOfLoanType)) {
+              _tmpLoanType = null;
+            } else {
+              _tmpLoanType = _cursor.getString(_cursorIndexOfLoanType);
+            }
+            _item = new DebtEntity(_tmpId,_tmpName,_tmpDirection,_tmpPrincipal,_tmpInterestRatePercent,_tmpMinimumPayment,_tmpStartDate,_tmpNotes,_tmpIsClosed,_tmpLoanType);
             _result.add(_item);
           }
           return _result;
@@ -314,6 +331,7 @@ public final class DebtDao_Impl implements DebtDao {
           final int _cursorIndexOfStartDate = CursorUtil.getColumnIndexOrThrow(_cursor, "startDate");
           final int _cursorIndexOfNotes = CursorUtil.getColumnIndexOrThrow(_cursor, "notes");
           final int _cursorIndexOfIsClosed = CursorUtil.getColumnIndexOrThrow(_cursor, "isClosed");
+          final int _cursorIndexOfLoanType = CursorUtil.getColumnIndexOrThrow(_cursor, "loanType");
           final List<DebtEntity> _result = new ArrayList<DebtEntity>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final DebtEntity _item;
@@ -353,7 +371,13 @@ public final class DebtDao_Impl implements DebtDao {
             final int _tmp;
             _tmp = _cursor.getInt(_cursorIndexOfIsClosed);
             _tmpIsClosed = _tmp != 0;
-            _item = new DebtEntity(_tmpId,_tmpName,_tmpDirection,_tmpPrincipal,_tmpInterestRatePercent,_tmpMinimumPayment,_tmpStartDate,_tmpNotes,_tmpIsClosed);
+            final String _tmpLoanType;
+            if (_cursor.isNull(_cursorIndexOfLoanType)) {
+              _tmpLoanType = null;
+            } else {
+              _tmpLoanType = _cursor.getString(_cursorIndexOfLoanType);
+            }
+            _item = new DebtEntity(_tmpId,_tmpName,_tmpDirection,_tmpPrincipal,_tmpInterestRatePercent,_tmpMinimumPayment,_tmpStartDate,_tmpNotes,_tmpIsClosed,_tmpLoanType);
             _result.add(_item);
           }
           return _result;

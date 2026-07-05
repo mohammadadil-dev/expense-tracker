@@ -10,17 +10,34 @@ import com.expensetracker.app.data.DebtEntity
 import com.expensetracker.app.data.DebtPaymentEntity
 import com.expensetracker.app.data.DeleteCategoryResult
 import com.expensetracker.app.data.ExpenseEntity
+import com.expensetracker.app.data.IncomeEntity
 import com.expensetracker.app.data.PendingSmsExpense
+import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Rect
+import com.expensetracker.app.util.BackupManager
 import com.expensetracker.app.util.DateUtils
+import com.expensetracker.app.util.DriveBackupManager
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.util.ReminderScheduler
 import com.expensetracker.app.util.SmsExpenseParser
+import com.expensetracker.app.widget.ExpenseWidget
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ExpenseViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -32,6 +49,13 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     val currentMonthKey: StateFlow<String> = _currentMonthKey
 
     val categories: StateFlow<List<CategoryEntity>> = repository.categories
+        .map { list ->
+            // Keep "Other" pinned to last so every picker always ends with it,
+            // regardless of when the row was inserted or what sortOrder it has.
+            val other = list.filter { it.nameKey == "cat_other" }
+            val rest  = list.filter { it.nameKey != "cat_other" }
+            rest + other
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val allExpenses: StateFlow<List<ExpenseEntity>> = repository.allExpenses
@@ -42,10 +66,74 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         .flatMapLatest { key -> repository.expensesForMonth(key) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Refresh the home-screen widget after any data mutation. Fire-and-forget. */
+    private fun refreshWidget() {
+        viewModelScope.launch { ExpenseWidget.refresh(getApplication()) }
+    }
+
     /** False until user explicitly picks a currency on the setup screen. */
     val isCurrencySetupDone: Boolean get() = settings.currencySetupDone
 
     fun markCurrencySetupDone() { settings.currencySetupDone = true }
+
+    /** False until the user has finished (or bypassed) the first-launch onboarding wizard. */
+    val isOnboardingDone: Boolean get() = settings.onboardingDone
+
+    fun markOnboardingDone() { settings.onboardingDone = true }
+
+    /** False until the user has completed or skipped the guided coachmark tour. */
+    val isCoachmarksSeen: Boolean get() = settings.hasSeenCoachmarks
+
+    fun markCoachmarksSeen() { settings.hasSeenCoachmarks = true }
+
+    // ── Coachmark tour state (shared between DashboardScreen and AppNav) ──────
+    /** Current tour step. Int.MAX_VALUE = tour completed / dismissed. */
+    var coachmarkStep by mutableStateOf(if (settings.hasSeenCoachmarks) Int.MAX_VALUE else 0)
+
+    /** Bounds of the FAB (+) button — spotlight for step 1. */
+    var fabBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the BudgetRingCard — used to derive a smaller ring spotlight for step 2. */
+    var budgetCardBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the IncomeBudgetTiles row — spotlight for step 3. */
+    var incomeTilesBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the Debts bottom-nav tab — spotlight for step 4. */
+    var debtsNavBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the Ledger (Khata) bottom-nav tab — spotlight for step 5. */
+    var ledgerNavBounds by mutableStateOf<Rect?>(null)
+
+    // ── Screenshot mode ───────────────────────────────────────────────────────
+    /** When true the banner ad is hidden so Play Store screenshots look clean.
+     *  Toggle via long-press on the version label in Settings. */
+    var screenshotMode by mutableStateOf(settings.screenshotMode)
+
+    fun toggleScreenshotMode() {
+        screenshotMode = !screenshotMode
+        settings.screenshotMode = screenshotMode
+    }
+
+    // ── Onboarding mid-wizard locale resume ──────────────────────────────────
+    /** The wizard step to resume from after a mid-flow Activity recreation (locale change). 0 = start from beginning. */
+    val onboardingResumeStep: Int get() = settings.onboardingResumeStep
+
+    /** Name entered on Step 0 — survives the Activity recreation triggered by locale change. */
+    val onboardingPendingName: String get() = settings.onboardingPendingName
+
+    /**
+     * Called when the user taps Continue on Step 1 (language picker).
+     * Saves the name + language to prefs and sets the resume step to 2 so that after the
+     * Activity recreates due to the locale change the wizard reopens at Step 2 (currency).
+     */
+    fun saveOnboardingProgress(name: String, languageCode: String) {
+        settings.onboardingPendingName = name
+        settings.languagePref = languageCode
+        settings.onboardingResumeStep = 2
+    }
+
+    /** Clears the mid-wizard resume state once onboarding completes or is skipped. */
+    fun resetOnboardingResume() {
+        settings.onboardingResumeStep = 0
+        settings.onboardingPendingName = ""
+    }
 
     private val _currencySymbol = MutableStateFlow(settings.currencySymbol)
     val currencySymbol: StateFlow<String> = _currencySymbol
@@ -87,8 +175,24 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     // Stable for the lifetime of the install — generated once and persisted, never reassigned.
     val customerId: String = settings.customerId
 
+    // ── Budget alert events ──────────────────────────────────────────────────
+    // Emitted after saveExpense when the new total crosses 80 % or 100 % of the
+    // overall budget.  UI collects this as a one-shot Snackbar.
+    // Guard: track the highest level already shown per month so each threshold
+    // fires at most once — without this, every new expense above 80 % would
+    // re-show the WARNING snackbar.
+    enum class BudgetAlertLevel { WARNING, EXCEEDED }
+    private val _budgetAlertEvent = MutableSharedFlow<BudgetAlertLevel>(extraBufferCapacity = 1)
+    val budgetAlertEvent: SharedFlow<BudgetAlertLevel> = _budgetAlertEvent.asSharedFlow()
+    private var lastAlertMonthKey = ""
+    private var lastAlertLevel: BudgetAlertLevel? = null
+
     fun navigateMonth(delta: Long) {
-        _currentMonthKey.value = DateUtils.shiftMonthKey(_currentMonthKey.value, delta)
+        val next = DateUtils.shiftMonthKey(_currentMonthKey.value, delta)
+        // Never navigate into future months — clamp at current calendar month.
+        if (next <= DateUtils.currentMonthKey()) {
+            _currentMonthKey.value = next
+        }
     }
 
     fun saveExpense(
@@ -97,11 +201,38 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         description: String,
         amount: Double,
         date: String,
+        isRecurring: Boolean = false,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            repository.addOrUpdateExpense(id, categoryId, description, amount, date)
-            _currentMonthKey.value = DateUtils.monthKeyFromDate(date)
+            repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring)
+            val monthKey = DateUtils.monthKeyFromDate(date)
+            _currentMonthKey.value = monthKey
+
+            // Check overall budget threshold — only for new expenses, not edits.
+            val overallBudget = if (id == null) budgets.first().firstOrNull { it.categoryId == null }?.amount else null
+            if (overallBudget != null && overallBudget > 0.0) {
+                val totalSpent = repository.expensesForMonth(monthKey).first().sumOf { it.amount }
+                val fraction = totalSpent / overallBudget
+                val newLevel = when {
+                    fraction >= 1.0 -> BudgetAlertLevel.EXCEEDED
+                    fraction >= 0.8 -> BudgetAlertLevel.WARNING
+                    else            -> null
+                }
+                // Only emit if this month's alert hasn't already fired at this level or higher.
+                // ordinal: WARNING=0, EXCEEDED=1 — so EXCEEDED > WARNING.
+                if (newLevel != null) {
+                    val alreadyShown = monthKey == lastAlertMonthKey &&
+                        lastAlertLevel != null &&
+                        newLevel.ordinal <= lastAlertLevel!!.ordinal
+                    if (!alreadyShown) {
+                        lastAlertMonthKey = monthKey
+                        lastAlertLevel    = newLevel
+                        _budgetAlertEvent.tryEmit(newLevel)
+                    }
+                }
+            }
+            refreshWidget()
             onDone()
         }
     }
@@ -109,6 +240,7 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun deleteExpense(expense: ExpenseEntity, onDone: () -> Unit) {
         viewModelScope.launch {
             repository.deleteExpense(expense)
+            refreshWidget()
             onDone()
         }
     }
@@ -139,7 +271,10 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     /** Sets, updates, or (passing 0 or less) clears the standing budget target for
      * [categoryId] — null means the overall monthly budget rather than a per-category one. */
     fun setBudget(categoryId: Long?, amount: Double) {
-        viewModelScope.launch { repository.setBudget(categoryId, amount) }
+        viewModelScope.launch {
+            repository.setBudget(categoryId, amount)
+            refreshWidget()
+        }
     }
 
     fun setLanguagePref(pref: String) {
@@ -186,7 +321,7 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         settings.reminderEnabled = enabled
         _reminderEnabled.value = enabled
         val ctx = getApplication<Application>().applicationContext
-        if (enabled) ReminderScheduler.schedule(ctx, settings.reminderHour)
+        if (enabled) ReminderScheduler.schedule(ctx, settings.reminderHour, forceReschedule = true)
         else ReminderScheduler.cancel(ctx)
     }
 
@@ -194,13 +329,119 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         settings.reminderHour = hour
         _reminderHour.value = hour
         if (settings.reminderEnabled) {
-            ReminderScheduler.schedule(getApplication<Application>().applicationContext, hour)
+            ReminderScheduler.schedule(
+                getApplication<Application>().applicationContext,
+                hour,
+                forceReschedule = true
+            )
         }
     }
 
     fun setMonthlySalary(amount: Double) {
         settings.monthlySalary = amount
         _monthlySalary.value = amount
+    }
+
+    val biometricEnabled: Boolean get() = settings.biometricEnabled
+
+    fun setBiometricEnabled(enabled: Boolean) {
+        settings.biometricEnabled = enabled
+    }
+
+    // ── Backup / Restore ─────────────────────────────────────────────────────
+    fun exportBackup(onUri: (Uri) -> Unit, onError: (String) -> Unit) {
+        val ctx = getApplication<android.app.Application>().applicationContext
+        val db  = (ctx as com.expensetracker.app.ExpenseApp).database
+        viewModelScope.launch {
+            try {
+                val uri = BackupManager.export(ctx, db)
+                onUri(uri)
+            } catch (e: Exception) {
+                onError(e.message ?: "Export failed")
+            }
+        }
+    }
+
+    fun importBackup(
+        uri: Uri,
+        onSuccess: (BackupManager.ImportResult) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val ctx = getApplication<android.app.Application>().applicationContext
+        val db  = (ctx as com.expensetracker.app.ExpenseApp).database
+        viewModelScope.launch {
+            try {
+                val result = BackupManager.import(ctx, db, uri)
+                onSuccess(result)
+            } catch (e: Exception) {
+                onError(e.message ?: "Import failed")
+            }
+        }
+    }
+
+    // ── Google Drive Backup ───────────────────────────────────────────────────
+
+    /** True while a Drive upload or download is in progress. */
+    var driveBackupLoading by mutableStateOf(false)
+        private set
+
+    /**
+     * Serialises the local database to JSON and uploads it to the signed-in
+     * account's private Drive appDataFolder. Network I/O runs on [Dispatchers.IO];
+     * callbacks are delivered back on the Main thread.
+     */
+    fun uploadToDrive(
+        account: GoogleSignInAccount,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val ctx = getApplication<Application>().applicationContext
+        val db  = (ctx as com.expensetracker.app.ExpenseApp).database
+        viewModelScope.launch {
+            driveBackupLoading = true
+            try {
+                val json  = BackupManager.exportJson(ctx, db)
+                withContext(Dispatchers.IO) {
+                    val drive = DriveBackupManager.buildDriveService(ctx, account)
+                    DriveBackupManager.upload(drive, json)
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e.message ?: "Upload failed")
+            } finally {
+                driveBackupLoading = false
+            }
+        }
+    }
+
+    /**
+     * Downloads the backup JSON from Drive and imports it into the local database.
+     * Throws (via [onError]) with the special message "no_backup" if no backup
+     * file exists yet in Drive.
+     */
+    fun downloadFromDrive(
+        account: GoogleSignInAccount,
+        onSuccess: (BackupManager.ImportResult) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val ctx = getApplication<Application>().applicationContext
+        val db  = (ctx as com.expensetracker.app.ExpenseApp).database
+        viewModelScope.launch {
+            driveBackupLoading = true
+            try {
+                val json = withContext(Dispatchers.IO) {
+                    val drive = DriveBackupManager.buildDriveService(ctx, account)
+                    DriveBackupManager.download(drive)
+                } ?: throw IllegalStateException("no_backup")
+
+                val result = BackupManager.importFromJson(db, json)
+                onSuccess(result)
+            } catch (e: Exception) {
+                onError(e.message ?: "Restore failed")
+            } finally {
+                driveBackupLoading = false
+            }
+        }
     }
 
     /**
@@ -256,10 +497,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         minimumPayment: Double,
         startDate: String,
         notes: String?,
+        loanType: String?,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            repository.addOrUpdateDebt(id, name, direction, principal, interestRatePercent, minimumPayment, startDate, notes)
+            repository.addOrUpdateDebt(id, name, direction, principal, interestRatePercent, minimumPayment, startDate, notes, loanType)
             onDone()
         }
     }
@@ -284,5 +526,39 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     fun deleteDebtPayment(payment: DebtPaymentEntity) {
         viewModelScope.launch { repository.deleteDebtPayment(payment) }
+    }
+
+    // ── Income ────────────────────────────────────────────────────────────────
+
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    val monthIncomeEntries: StateFlow<List<IncomeEntity>> = _currentMonthKey
+        .flatMapLatest { key -> repository.incomeForMonth(key) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    val monthIncomeTotal: StateFlow<Double> = _currentMonthKey
+        .flatMapLatest { key -> repository.monthlyIncomeTotal(key) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
+
+    fun addIncome(
+        amount: Double,
+        source: String,
+        note: String,
+        date: String,
+        isRecurring: Boolean = false,
+        onDone: () -> Unit
+    ) {
+        viewModelScope.launch {
+            repository.addIncome(amount, source, note, date, isRecurring)
+            refreshWidget()
+            onDone()
+        }
+    }
+
+    fun deleteIncome(income: IncomeEntity) {
+        viewModelScope.launch {
+            repository.deleteIncome(income)
+            refreshWidget()
+        }
     }
 }

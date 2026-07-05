@@ -36,17 +36,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Receipt
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -65,19 +74,24 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.ExpenseEntity
-import com.expensetracker.app.ui.ads.BannerAdView
+import com.expensetracker.app.data.IncomeEntity
 import com.expensetracker.app.ui.ads.InterstitialAdManager
 import com.expensetracker.app.data.PendingSmsExpense
 import com.expensetracker.app.ui.components.AddEditExpenseSheet
+import com.expensetracker.app.ui.components.AddIncomeSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.BentoCard
@@ -97,6 +111,7 @@ import com.expensetracker.app.ui.components.RecentTransactionsSection
 import com.expensetracker.app.ui.components.SalarySetDialog
 import com.expensetracker.app.ui.components.SpendingCategorySection
 import com.expensetracker.app.ui.components.SmsReviewSheet
+// CoachmarkOverlay + CoachmarkStep used in AppNav now (not DashboardScreen)
 import com.expensetracker.app.ui.components.TransactionActionSheet
 import com.expensetracker.app.ui.components.TrendBarChart
 import com.expensetracker.app.ui.components.TrendPoint
@@ -114,6 +129,7 @@ import com.expensetracker.app.util.DebtInsights
 import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.FinancialInsights
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.CsvExporter
 import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.viewmodel.ExpenseViewModel
@@ -139,6 +155,8 @@ fun DashboardScreen(
     val budgets by viewModel.budgets.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     val monthlySalary by viewModel.monthlySalary.collectAsState()
+    val monthIncomeEntries by viewModel.monthIncomeEntries.collectAsState()
+    val monthIncomeTotal by viewModel.monthIncomeTotal.collectAsState()
     val locale: Locale = LocalConfiguration.current.locales[0]
 
     val context = LocalContext.current
@@ -152,6 +170,14 @@ fun DashboardScreen(
     var smsItemBeingAccepted by remember { mutableStateOf<PendingSmsExpense?>(null) }
     var showBudgetSheet by remember { mutableStateOf(false) }
     var showSalaryDialog by remember { mutableStateOf(false) }
+    var showIncomeSheet by remember { mutableStateOf(false) }
+    var incomeExpanded by remember(currentMonthKey) { mutableStateOf(false) }
+    var incomePendingDelete by remember { mutableStateOf<IncomeEntity?>(null) }
+
+    // ── Guided coachmark tour ────────────────────────────────────────────────
+    // Bounds are stored in the ViewModel so AppNav can build coachmarkSteps and
+    // render CoachmarkOverlay at the root Box level (covering the nav bar too).
+
     // Tracks which way the user just navigated so the month label slides the right direction.
     var monthSlideDirection by remember { mutableStateOf(1) }
     var viewMode by remember { mutableStateOf(ExpenseViewMode.DAY) }
@@ -169,7 +195,7 @@ fun DashboardScreen(
     // users can't accidentally file an expense there by hand (debt payments create their
     // linked expense automatically when recorded from the Debts screen).
     val expensePickerCategories = remember(categories) {
-        categories.filter { it.nameKey != "cat_debt_payments" }
+        categories.filter { it.nameKey != "cat_debt_payments" && it.nameKey != "cat_khata" }
     }
 
     val categoryById = remember(categories) { categories.associateBy { it.id } }
@@ -216,25 +242,49 @@ fun DashboardScreen(
         }
     }
 
-    val expensesByDay = remember(monthExpenses) {
-        monthExpenses.groupBy { it.date }.toList().sortedByDescending { it.first }
+    // ── Search / filter ──────────────────────────────────────────────────────
+    // categoryDisplayName is @Composable (calls stringResource), so it must be resolved
+    // here at the composable call-site — never inside a remember { } lambda.
+    val categoryNameById = categories.associate { it.id to categoryDisplayName(it) }
+
+    var searchQuery by remember { mutableStateOf("") }
+    var searchActive by remember { mutableStateOf(false) }
+
+    // When query is blank show current-month expenses; when searching span ALL months so
+    // the user can find a payment from 6 months ago without switching months first.
+    val filteredExpenses = remember(monthExpenses, allExpenses, searchQuery, categoryNameById) {
+        if (searchQuery.isBlank()) monthExpenses
+        else {
+            val q = searchQuery.trim().lowercase()
+            allExpenses.filter { e ->
+                e.description.lowercase().contains(q) ||
+                    (categoryNameById[e.categoryId]?.lowercase()?.contains(q) == true) ||
+                    e.amount.toString().contains(q)
+            }
+        }
+    }
+
+    val expensesByDay = remember(filteredExpenses) {
+        filteredExpenses.groupBy { it.date }.toList().sortedByDescending { it.first }
     }
     // Start by showing the 7 most-recent days; the user can tap "Load more" to see older days.
     // Reset to 7 whenever the month changes so switching months doesn't carry over a large count.
-    var visibleDayCount by remember(currentMonthKey) { mutableStateOf(7) }
+    // Reset visible day count when search query changes (blank→active clears the view);
+    // also reset when month changes while not searching.
+    var visibleDayCount by remember(currentMonthKey, searchQuery) { mutableStateOf(7) }
     val loadMoreLabel = stringResource(R.string.load_more)
     val todayIso = remember { DateUtils.todayIso() }
     val yesterdayIso = remember { DateUtils.yesterdayIso() }
     val todayLabel = stringResource(R.string.today)
     val yesterdayLabel = stringResource(R.string.yesterday)
 
-    val expensesByCategory = remember(monthExpenses) {
-        monthExpenses.groupBy { it.categoryId }
+    val expensesByCategory = remember(filteredExpenses) {
+        filteredExpenses.groupBy { it.categoryId }
             .toList()
             .sortedByDescending { (_, list) -> list.sumOf { it.amount } }
     }
-    val dailyTotals = remember(monthExpenses) {
-        monthExpenses.groupBy { it.date }.mapValues { (_, list) -> list.sumOf { it.amount } }
+    val dailyTotals = remember(filteredExpenses) {
+        filteredExpenses.groupBy { it.date }.mapValues { (_, list) -> list.sumOf { it.amount } }
     }
     val firstWeekdayIndex = remember(currentMonthKey) { DateUtils.firstWeekdayIndexOfMonth(currentMonthKey) }
     val daysInMonthCount = remember(currentMonthKey) { DateUtils.daysInMonth(currentMonthKey) }
@@ -242,8 +292,8 @@ fun DashboardScreen(
     val selectedDayExpenses = remember(selectedCalendarDay, monthExpenses) {
         selectedCalendarDay?.let { day -> monthExpenses.filter { it.date == day } } ?: emptyList()
     }
-    val gridRows = remember(monthExpenses) {
-        monthExpenses.sortedByDescending { it.date }.chunked(2)
+    val gridRows = remember(filteredExpenses) {
+        filteredExpenses.sortedByDescending { it.date }.chunked(2)
     }
 
     // PDF export strings resolved in composable scope so the exporter stays non-composable.
@@ -260,7 +310,6 @@ fun DashboardScreen(
     val noExpensesLabel = stringResource(R.string.no_expenses_this_month)
     val exportCustomerIdLabel = stringResource(R.string.export_customer_id_label, viewModel.customerId)
     val monthLabelForExport = DateUtils.monthLabel(currentMonthKey, locale)
-    val categoryNameById = categories.associate { it.id to categoryDisplayName(it) }
     val exportRows = remember(monthExpenses, categoryNameById, locale, currencySymbol) {
         monthExpenses.sortedByDescending { it.date }.map { e ->
             ExportRow(
@@ -297,12 +346,31 @@ fun DashboardScreen(
         PdfExporter.shareOrSave(context, uri, exportChooserTitle)
     }
 
+    val exportCsvChooserTitle = stringResource(R.string.export_csv_chooser_title)
+    fun exportMonthAsCsv() {
+        if (exportRows.isEmpty()) {
+            Toast.makeText(context, noExpensesLabel, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
+        val uri = CsvExporter.export(
+            context = context,
+            monthLabel = monthLabelForExport,
+            colDate = exportColDate,
+            colCategory = exportColCategory,
+            colDescription = exportColDescription,
+            colAmount = exportColAmount,
+            rows = exportRows
+        )
+        CsvExporter.shareOrSave(context, uri, exportCsvChooserTitle)
+    }
+
     // Scroll anchors for list navigation.
-    // breakdownItemIndex = 3: SpendingCategorySection (tapping subscription tile scrolls here)
+    // breakdownItemIndex = 4: SpendingCategorySection (tapping subscription tile scrolls here)
     // expenseListItemIndex = 7: "Expenses this month" header
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    val breakdownItemIndex = 3
+    val breakdownItemIndex = 4
     val expenseListItemIndex = 7
     fun scrollToBreakdown() {
         coroutineScope.launch { listState.animateScrollToItem(breakdownItemIndex) }
@@ -322,6 +390,22 @@ fun DashboardScreen(
         if (pendingSmsExpenses.isEmpty()) showSmsReviewSheet = false
     }
 
+    // ── Budget alert Snackbar ─────────────────────────────────────────────────
+    val snackbarHostState = remember { SnackbarHostState() }
+    val budgetWarningMsg  = stringResource(R.string.budget_alert_warning)
+    val budgetExceededMsg = stringResource(R.string.budget_alert_exceeded)
+    LaunchedEffect(Unit) {
+        viewModel.budgetAlertEvent.collect { level ->
+            snackbarHostState.currentSnackbarData?.dismiss()
+            snackbarHostState.showSnackbar(
+                message = when (level) {
+                    ExpenseViewModel.BudgetAlertLevel.WARNING  -> budgetWarningMsg
+                    ExpenseViewModel.BudgetAlertLevel.EXCEEDED -> budgetExceededMsg
+                }
+            )
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
     AnimatedBlobBackground(
         blobColors = listOf(AccentIndigo, NeonViolet, SuccessGreen),
@@ -329,11 +413,23 @@ fun DashboardScreen(
     )
     Scaffold(
         containerColor = Color.Transparent,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = com.expensetracker.app.ui.theme.AccentGreenDark,
+                    contentColor = androidx.compose.ui.graphics.Color.White
+                )
+            }
+        },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                editingExpense = null
-                showAddSheet = true
-            }) {
+            FloatingActionButton(
+                onClick = {
+                    editingExpense = null
+                    showAddSheet = true
+                },
+                modifier = Modifier.onGloballyPositioned { viewModel.fabBounds = it.boundsInWindow() }
+            ) {
                 Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_expense))
             }
         }
@@ -361,34 +457,13 @@ fun DashboardScreen(
             // Greeting header + dark indigo Budget Ring card (month nav embedded).
             item {
                 Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = greetingText(displayName),
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f).padding(end = 12.dp)
-                        )
-                        IconButton(onClick = onOpenSettings, modifier = Modifier.size(44.dp)) {
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .shadow(elevation = 4.dp, shape = CircleShape, spotColor = AccentIndigo.copy(alpha = 0.5f))
-                                    .background(AccentIndigo, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Icons.Filled.Settings,
-                                    contentDescription = stringResource(R.string.nav_settings),
-                                    tint = Color.White,
-                                    modifier = Modifier.size(22.dp)
-                                )
-                            }
-                        }
-                    }
+                    Text(
+                        text = greetingText(displayName),
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                     Spacer(Modifier.height(14.dp))
                     BudgetRingCard(
                         currentMonthKey = currentMonthKey,
@@ -406,7 +481,9 @@ fun DashboardScreen(
                             viewModel.navigateMonth(1)
                         },
                         onManageBudget = { showBudgetSheet = true },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onGloballyPositioned { viewModel.budgetCardBounds = it.boundsInWindow() }
                     )
                 }
             }
@@ -420,7 +497,24 @@ fun DashboardScreen(
                     currencySymbol = currencySymbol,
                     onSetSalary = { showSalaryDialog = true },
                     onManageBudget = { showBudgetSheet = true },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onGloballyPositioned { viewModel.incomeTilesBounds = it.boundsInWindow() }
+                )
+            }
+
+            // ── item 1b ────────────────────────────────────────────────────────
+            // Income tracking card — delegates to DashboardIncomeSection.kt.
+            item {
+                DashboardIncomeSection(
+                    monthIncomeTotal   = monthIncomeTotal,
+                    monthIncomeEntries = monthIncomeEntries,
+                    currencySymbol     = currencySymbol,
+                    locale             = locale,
+                    expanded           = incomeExpanded,
+                    onExpandToggle     = { incomeExpanded = !incomeExpanded },
+                    onAddIncome        = { showIncomeSheet = true },
+                    onDeleteIncome     = { incomePendingDelete = it }
                 )
             }
 
@@ -467,32 +561,6 @@ fun DashboardScreen(
             }
 
             // ── item 3 ─────────────────────────────────────────────────────────
-            // Spending by Category — emoji squircle icons + coloured progress bars.
-            // Index 3 is intentional: breakdownItemIndex = 3 and scrollToBreakdown() rely on it.
-            item {
-                SpendingCategorySection(
-                    categoryTotals = categoryTotals,
-                    categories = categories,
-                    totalThisMonth = totalThisMonth,
-                    currencySymbol = currencySymbol,
-                    onManageCategories = { showCategorySheet = true },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            // ── item 4 ─────────────────────────────────────────────────────────
-            // Recent Transactions — last 5 expenses from this month.
-            item {
-                RecentTransactionsSection(
-                    expenses = monthExpenses,
-                    categoryById = categoryById,
-                    currencySymbol = currencySymbol,
-                    onViewAll = { scrollToExpenseList() },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            // ── item 5 ─────────────────────────────────────────────────────────
             // AI Insights Feed — on-device rule-based intelligence cards.
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -510,6 +578,32 @@ fun DashboardScreen(
                         )
                     }
                 }
+            }
+
+            // ── item 4 ─────────────────────────────────────────────────────────
+            // Spending by Category — emoji squircle icons + coloured progress bars.
+            // Index 4 is intentional: breakdownItemIndex = 4 and scrollToBreakdown() rely on it.
+            item {
+                SpendingCategorySection(
+                    categoryTotals = categoryTotals,
+                    categories     = categories,
+                    totalThisMonth = totalThisMonth,
+                    currencySymbol = currencySymbol,
+                    onManageCategories = { showCategorySheet = true },
+                    modifier           = Modifier.fillMaxWidth()
+                )
+            }
+
+            // ── item 5 ─────────────────────────────────────────────────────────
+            // Recent Transactions — last 5 expenses from this month.
+            item {
+                RecentTransactionsSection(
+                    expenses = monthExpenses,
+                    categoryById = categoryById,
+                    currencySymbol = currencySymbol,
+                    onViewAll = { scrollToExpenseList() },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
 
             // ── item 6 ─────────────────────────────────────────────────────────
@@ -565,6 +659,23 @@ fun DashboardScreen(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f).padding(end = 8.dp)
                     )
+                    // Search toggle
+                    IconButton(
+                        onClick = { searchActive = !searchActive; if (!searchActive) searchQuery = "" },
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            if (searchActive) Icons.Filled.Close else Icons.Filled.Search,
+                            contentDescription = stringResource(R.string.search_expenses_hint),
+                            modifier = Modifier.size(20.dp),
+                            tint = if (searchActive) com.expensetracker.app.ui.theme.BrandCoral
+                                   else TextMuted
+                        )
+                    }
+                    ExportCsvChip(
+                        enabled = monthExpenses.isNotEmpty(),
+                        onClick = { exportMonthAsCsv() }
+                    )
                     ExportPdfChip(
                         enabled = monthExpenses.isNotEmpty(),
                         onClick = {
@@ -580,7 +691,37 @@ fun DashboardScreen(
                     )
                 }
             }
-            // ── item 8 ─────────────────────────────────────────────────────────
+            // ── item 8 — search bar ────────────────────────────────────────────
+            item {
+                AnimatedVisibility(
+                    visible = searchActive || searchQuery.isNotBlank(),
+                    enter = fadeIn(tween(180)) + slideInVertically(tween(180)) { -it / 2 },
+                    exit  = fadeOut(tween(180)) + slideOutVertically(tween(180)) { -it / 2 }
+                ) {
+                    androidx.compose.material3.OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text(stringResource(R.string.search_expenses_hint)) },
+                        leadingIcon = {
+                            Icon(Icons.Filled.Search, contentDescription = null,
+                                modifier = Modifier.size(20.dp))
+                        },
+                        trailingIcon = {
+                            if (searchQuery.isNotBlank()) {
+                                IconButton(onClick = { searchQuery = ""; searchActive = false }) {
+                                    Icon(Icons.Filled.Close,
+                                        contentDescription = stringResource(R.string.cd_clear_search),
+                                        modifier = Modifier.size(18.dp))
+                                }
+                            }
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(24.dp),
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                    )
+                }
+            }
+            // ── item 9 — view mode toggle ──────────────────────────────────────
             item {
                 ExpenseViewModeToggle(current = viewMode, onSelect = { viewMode = it })
             }
@@ -786,12 +927,12 @@ fun DashboardScreen(
                 }
             }
             } // close LazyColumn
-
-            // Anchored banner ad pinned below the list.
-            BannerAdView()
         } // close Column
     }
+
     } // close Box
+    // CoachmarkOverlay has been moved to AppNav so it covers the full screen
+    // including the bottom navigation bar (needed for steps 4 & 5 nav-tab spotlights).
 
     // ── Modal sheets ──────────────────────────────────────────────────────────
 
@@ -810,6 +951,46 @@ fun DashboardScreen(
         )
     }
 
+    if (showIncomeSheet) {
+        AddIncomeSheet(
+            defaultDate = DateUtils.todayIso(),
+            onDismiss = { showIncomeSheet = false },
+            onSave = { amount, source, note, date, isRecurring ->
+                viewModel.addIncome(amount, source, note, date, isRecurring) { showIncomeSheet = false }
+            }
+        )
+    }
+
+    incomePendingDelete?.let { income ->
+        AlertDialog(
+            onDismissRequest = { incomePendingDelete = null },
+            title = { Text(stringResource(R.string.delete)) },
+            text = {
+                Text(
+                    stringResource(
+                        if (income.isRecurring) R.string.delete_income_recurring_confirm
+                        else R.string.delete_income_confirm
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteIncome(income)
+                    incomePendingDelete = null
+                }) {
+                    Text(
+                        if (income.isRecurring) stringResource(R.string.delete_recurring_stop_future)
+                        else stringResource(R.string.delete),
+                        color = DangerRed
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { incomePendingDelete = null }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+
     if (showAddSheet) {
         AddEditExpenseSheet(
             // Deliberately excludes cat_debt_payments — that category is auto-managed by the
@@ -818,9 +999,10 @@ fun DashboardScreen(
             existing = editingExpense,
             defaultDate = DateUtils.todayIso(),
             onDismiss = { showAddSheet = false },
-            onSave = { id, catId, desc, amt, date ->
-                viewModel.saveExpense(id, catId, desc, amt, date) { showAddSheet = false }
-            }
+            onSave = { id, catId, desc, amt, date, recurring ->
+                viewModel.saveExpense(id, catId, desc, amt, date, recurring) { showAddSheet = false }
+            },
+            onAddCategory = { name, hex -> viewModel.addCategory(name, hex) {} }
         )
     }
 
@@ -837,10 +1019,10 @@ fun DashboardScreen(
 
     if (showBudgetSheet) {
         BudgetManageSheet(
-            overallBudget = overallBudget,
+            overallBudget  = overallBudget,
             currencySymbol = currencySymbol,
-            onDismiss = { showBudgetSheet = false },
-            onSave = { amount -> viewModel.setBudget(null, amount) }
+            onDismiss      = { showBudgetSheet = false },
+            onSave         = { categoryId, amount -> viewModel.setBudget(categoryId, amount) }
         )
     }
 
@@ -860,11 +1042,25 @@ fun DashboardScreen(
         AlertDialog(
             onDismissRequest = { expensePendingDelete = null },
             title = { Text(stringResource(R.string.delete)) },
-            text = { Text(stringResource(R.string.delete_expense_confirm)) },
+            text = {
+                Text(
+                    stringResource(
+                        if (expense.isRecurring) R.string.delete_recurring_confirm
+                        else R.string.delete_expense_confirm
+                    )
+                )
+            },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteExpense(expense) { expensePendingDelete = null }
-                }) { Text(stringResource(R.string.delete)) }
+                }) {
+                    Text(
+                        stringResource(
+                            if (expense.isRecurring) R.string.delete_recurring_stop_future
+                            else R.string.delete
+                        )
+                    )
+                }
             },
             dismissButton = {
                 TextButton(onClick = { expensePendingDelete = null }) { Text(stringResource(R.string.cancel)) }
@@ -900,125 +1096,15 @@ fun DashboardScreen(
                 date = item.date
             ),
             onDismiss = { smsItemBeingAccepted = null },
-            onSave = { _, catId, desc, amt, date ->
+            onSave = { _, catId, desc, amt, date, _ ->
+                // SMS-detected expenses are never recurring — ignore the toggle value.
                 viewModel.acceptPendingSms(item, catId, desc, amt, date) {
                     smsItemBeingAccepted = null
                 }
-            }
+            },
+            onAddCategory = { name, hex -> viewModel.addCategory(name, hex) {} }
         )
     }
 }
 
-// ── Private helper composables ────────────────────────────────────────────────
-
-@Composable
-private fun ExportPdfChip(enabled: Boolean, onClick: () -> Unit) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val pressScale by animateFloatAsState(
-        targetValue = if (isPressed && enabled) 0.95f else 1f,
-        animationSpec = tween(120),
-        label = "exportChipPress"
-    )
-    val tint = if (enabled) AccentIndigo else TextMuted
-    val bg = if (enabled) AccentIndigo.copy(alpha = 0.1f) else TextMuted.copy(alpha = 0.1f)
-
-    // Icon-only chip — no text label — so it never overflows the row regardless of how long
-    // the section title is in any language (e.g. Tagalog "Mga Gastos Ngayong Buwan" already
-    // fills most of the available width; adding a translated text label would push this chip
-    // off-screen). The PDF icon is universally recognised.
-    Box(
-        modifier = Modifier
-            .scale(pressScale)
-            .clip(RoundedCornerShape(20.dp))
-            .background(bg)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = LocalIndication.current,
-                onClick = onClick
-            )
-            .padding(8.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            Icons.Filled.PictureAsPdf,
-            contentDescription = stringResource(R.string.export_pdf),
-            tint = tint,
-            modifier = Modifier.size(20.dp)
-        )
-    }
-}
-
-@Composable
-private fun PendingSmsBanner(count: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val pressScale by animateFloatAsState(
-        targetValue = if (isPressed) 0.97f else 1f,
-        animationSpec = tween(120),
-        label = "smsBannerPress"
-    )
-
-    Row(
-        modifier = modifier
-            .scale(pressScale)
-            .clip(RoundedCornerShape(14.dp))
-            .background(AccentIndigo.copy(alpha = 0.12f))
-            .clickable(
-                interactionSource = interactionSource,
-                indication = LocalIndication.current,
-                onClick = onClick
-            )
-            .padding(horizontal = 14.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(Icons.Filled.Sms, contentDescription = null, tint = AccentIndigo, modifier = Modifier.size(20.dp))
-        Spacer(Modifier.width(10.dp))
-        Text(
-            text = stringResource(R.string.sms_pending_banner, count),
-            style = MaterialTheme.typography.bodyMedium,
-            color = AccentIndigo,
-            modifier = Modifier.weight(1f),
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(Modifier.width(8.dp))
-        Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = AccentIndigo, modifier = Modifier.size(18.dp))
-    }
-}
-
-private fun colorFromHex(hex: String): Color =
-    runCatching { Color(android.graphics.Color.parseColor(hex)) }.getOrDefault(TextMuted)
-
-@Composable
-private fun greetingText(name: String): String =
-    if (name.isBlank()) stringResource(R.string.greeting_hello)
-    else stringResource(R.string.greeting_hello_named, name)
-
-private fun insightAccentColor(kind: FinancialInsights.InsightKind): Color = when (kind) {
-    FinancialInsights.InsightKind.POSITIVE -> SuccessGreen
-    FinancialInsights.InsightKind.WARNING -> WarningAmber
-    FinancialInsights.InsightKind.NEUTRAL -> NeonCyan
-}
-
-@Composable
-private fun insightText(insight: FinancialInsights.Insight, categoryNameById: Map<Long, String>): String {
-    val resId = when (insight.template) {
-        FinancialInsights.InsightTemplate.TREND_DOWN -> R.string.insight_trend_down
-        FinancialInsights.InsightTemplate.TREND_UP -> R.string.insight_trend_up
-        FinancialInsights.InsightTemplate.TREND_FLAT -> R.string.insight_trend_flat
-        FinancialInsights.InsightTemplate.CATEGORY_INCREASE -> R.string.insight_category_increase
-        FinancialInsights.InsightTemplate.CATEGORY_DECREASE -> R.string.insight_category_decrease
-        FinancialInsights.InsightTemplate.PROJECTED_SAVINGS -> R.string.insight_projected_savings
-        FinancialInsights.InsightTemplate.PROJECTED_OVERSPEND -> R.string.insight_projected_overspend
-        FinancialInsights.InsightTemplate.STRONGEST_DAY -> R.string.insight_strongest_day
-        FinancialInsights.InsightTemplate.SUBSCRIPTION_LOAD -> R.string.insight_subscription_load
-        FinancialInsights.InsightTemplate.DAILY_AVERAGE -> R.string.insight_daily_average
-        FinancialInsights.InsightTemplate.NOT_ENOUGH_DATA -> R.string.insight_not_enough_data
-    }
-    val args: List<String> = buildList {
-        insight.categoryId?.let { id -> add(categoryNameById[id] ?: "") }
-        addAll(insight.args)
-    }
-    return if (args.isEmpty()) stringResource(resId) else stringResource(resId, *args.toTypedArray())
-}
+// Private helper composables and pure functions live in DashboardHelpers.kt.

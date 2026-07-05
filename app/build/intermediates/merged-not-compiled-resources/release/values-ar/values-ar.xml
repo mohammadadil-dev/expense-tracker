@@ -31,21 +31,37 @@
     <string name="add">إضافة</string>
     <string name="add_category">إضافة فئة</string>
     <string name="add_expense">إضافة مصروف</string>
+    <string name="add_income">إضافة دخل</string>
     <string name="ai_insights_feed_title">رؤى ذكية</string>
     <string name="amount_label">المبلغ</string>
     <string name="app_name">متابع المصروفات</string>
     <string name="app_version_label">الإصدار 1.0</string>
+    <string name="backup_chooser_title">حفظ أو مشاركة النسخة الاحتياطية</string>
+    <string name="backup_error">فشل النسخ الاحتياطي</string>
+    <string name="backup_export_label">تصدير النسخة الاحتياطية</string>
+    <string name="backup_import_label">استيراد النسخة الاحتياطية</string>
+    <string name="backup_scope_note">يغطي المصروفات والفئات والميزانيات والخاطة والديون</string>
+    <string name="backup_section_title">نسخ احتياطي للبيانات</string>
+    <string name="backup_success">تم تصدير النسخة الاحتياطية</string>
     <string name="bento_budget_no_target">لم تُحدَّد ميزانية</string>
     <string name="bento_budget_remaining">المتبقي من الميزانية</string>
     <string name="bento_budget_remaining_subtitle">من ميزانية %1$s</string>
     <string name="bento_debts_title">الديون والقروض</string>
     <string name="bento_monthly_spending">الإنفاق الشهري</string>
     <string name="bento_savings_goal">هدف الادخار</string>
-    <string name="bento_savings_goal_no_data">تابع لبضعة أسابيع لإظهار هذا</string>
+    <string name="bento_savings_goal_no_data">أضف مصروفاتك لأسابيع قليلة لتظهر هذه الإحصائيات</string>
     <string name="bento_savings_goal_subtitle">نحو هدف %1$s</string>
     <string name="bento_subscription_cost">تكلفة الاشتراكات</string>
     <string name="bento_subscription_subtitle">%1$s من إنفاق الشهر</string>
+    <string name="biometric_lock_description">طلب القياسات الحيوية أو PIN عند كل فتح للتطبيق</string>
+    <string name="biometric_lock_subtitle">استخدم القياسات الحيوية أو رمز PIN للدخول</string>
+    <string name="biometric_lock_title">فتح تطبيق المصروفات</string>
+    <string name="biometric_lock_toggle_label">قفل التطبيق</string>
+    <string msgid="2102429900219199821" name="biometric_or_screen_lock_prompt_message">"استخدِم المقاييس الحيوية أو قفل الشاشة للمتابعة."</string>
+    <string msgid="1160635338192065472" name="biometric_prompt_message">"استخدِم المقاييس الحيوية للمتابعة."</string>
     <string name="breakdown_title">التوزيع حسب الفئة</string>
+    <string name="budget_alert_exceeded">🚨 لقد تجاوزت ميزانيتك الشهرية!</string>
+    <string name="budget_alert_warning">⚠️ لقد استخدمت 80% من ميزانيتك الشهرية</string>
     <string name="budget_cap_label">حد الميزانية</string>
     <string name="budget_left">متبقٍ %1$s</string>
     <string name="budget_manage_sheet_title">إدارة الميزانية</string>
@@ -68,10 +84,16 @@
     <string msgid="59049573811482460" name="call_notification_screening_text">"يتم فحص المكالمة الواردة"</string>
     <string name="cancel">إلغاء</string>
     <string name="cat_debt_payments">مدفوعات الدين أو القرض</string>
+    <string name="cat_education">تعليم</string>
+    <string name="cat_electricity">الكهرباء</string>
     <string name="cat_entertainment">الترفيه</string>
+    <string name="cat_farming">الزراعة</string>
     <string name="cat_food">الطعام والبقالة</string>
+    <string name="cat_fuel">الوقود</string>
     <string name="cat_healthcare">الرعاية الصحية</string>
     <string name="cat_housing">السكن</string>
+    <string name="cat_khata">الحساب</string>
+    <string name="cat_mobile_recharge">شحن الجوال</string>
     <string name="cat_other">أخرى</string>
     <string name="cat_savings">الادخار والاستثمار</string>
     <string name="cat_shopping">التسوق</string>
@@ -100,6 +122,7 @@
     <string name="common_open_on_phone">فتح على الهاتف</string>
     <string name="common_signin_button_text">تسجل الدخول</string>
     <string name="common_signin_button_text_long">‏تسجيل الدخول عبر Google</string>
+    <string msgid="5912733858573823945" name="confirm_device_credential_password">"استخدام كلمة المرور"</string>
     <string name="convert">تحويل</string>
     <string name="convert_currency_message">أدخل سعر الصرف لتحويل مصروفاتك الحالية من %1$s إلى %2$s (1 %1$s = ؟ %2$s). سيتم ضرب جميع المبالغ المخزّنة بهذا السعر.</string>
     <string name="convert_currency_rate_hint">سعر الصرف</string>
@@ -118,7 +141,8 @@
     <string name="debt_direction_owed">مستحق لي</string>
     <string name="debt_edit_title">تعديل الدين أو القرض</string>
     <string name="debt_history_title">سجل الدفعات</string>
-    <string name="debt_insight_accelerate">سدّد الدين أسرع بـ%1$d شهر بإضافة %2$s شهريًا.</string>
+    <string name="debt_insight_accelerate">سدّد الدين أسرع بـ%1$d أشهر بإضافة %2$s شهريًا.</string>
+    <string name="debt_loan_type_label">نوع القرض (اختياري)</string>
     <string name="debt_mark_settled">تمييز كمسوّى</string>
     <string name="debt_name_hint">مثال: قرض سيارة، قرض شخصي لصديق</string>
     <string name="debt_name_label">الاسم</string>
@@ -129,7 +153,7 @@
     <string name="debt_paid_of_principal">%1$s من %2$s</string>
     <string name="debt_payment_hint">مثال: 5000 (اتركه 0 إذا لم يوجد جدول ثابت)</string>
     <string name="debt_payment_label">الدفعة الشهرية</string>
-    <string name="debt_payoff_projection">السداد المتوقع بحلول %1$s (%2$d شهر)</string>
+    <string name="debt_payoff_projection">السداد المتوقع بحلول %1$s (%2$d أشهر)</string>
     <string name="debt_principal_hint">المبلغ الإجمالي المُقترَض أو المُقرَض</string>
     <string name="debt_principal_label">المبلغ الأساسي</string>
     <string name="debt_rate_hint">مثال: 12 (أدخل 0 إذا كان بدون فائدة)</string>
@@ -147,17 +171,35 @@
     <string name="debts_section_owed_to_you">المستحق لك</string>
     <string name="debts_section_settled">مسوّى</string>
     <string name="debts_section_you_owe">ما عليك</string>
+    <string name="debts_subtitle">تتبع الأموال التي تدين بها وتلك المستحقة لك</string>
     <string name="debts_title">الديون والقروض</string>
     <string msgid="8038256446254964252" name="default_error_message">"إدخال غير صالح"</string>
+    <string msgid="4776854077120974966" name="default_error_msg">"خطأ غير معروف"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"نافذة منبثقة"</string>
     <string name="delete">حذف</string>
     <string name="delete_category_confirm">سيتم نقل المصروفات المرتبطة بهذه الفئة إلى أول فئة متبقية. هل تريد الاستمرار؟</string>
     <string name="delete_debt_confirm">حذف هذا الدين وكامل سجل دفعاته؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="delete_expense_confirm">هل تريد حذف هذا المصروف؟</string>
+    <string name="delete_income_confirm">هل تريد حذف هذا الدخل؟</string>
+    <string name="delete_income_recurring_confirm">هذا قالب دخل متكرر. حذفه سيوقف الإدخالات التلقائية المستقبلية. ستبقى النسخ السابقة.</string>
+    <string name="delete_payment_confirm">هل تريد حذف هذه الدفعة؟</string>
+    <string name="delete_recurring_confirm">هذا قالب مصروف متكرر. حذفه سيوقف الإدخالات التلقائية المستقبلية. ستبقى النسخ السابقة.</string>
+    <string name="delete_recurring_stop_future">إيقاف التكرار</string>
     <string name="description_hint">مثال: تسوق من السوبر ماركت</string>
     <string name="description_label">الوصف</string>
     <string name="detected_region_note">تم اكتشافه من جهازك: %1$s</string>
     <string name="done">تم</string>
+    <string name="drive_backup_error">خطأ في Google Drive</string>
+    <string name="drive_backup_restore">استعادة من Drive</string>
+    <string name="drive_backup_save">حفظ في Drive</string>
+    <string name="drive_backup_scope_note">يُحفظ بشكل خاص في مجلد التطبيق على Google Drive</string>
+    <string name="drive_backup_section_title">النسخ الاحتياطي على Google Drive</string>
+    <string name="drive_backup_sign_in">تسجيل الدخول بحساب Google</string>
+    <string name="drive_backup_sign_out">تسجيل الخروج من Google</string>
+    <string name="drive_backup_signed_in_as">مسجّل الدخول بـ %1$s</string>
+    <string name="drive_backup_success">تم حفظ النسخة الاحتياطية على Google Drive</string>
+    <string name="drive_no_backup">لا توجد نسخة احتياطية على Drive بعد</string>
+    <string name="drive_restore_success">تمت استعادة البيانات من Google Drive</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"قائمة منسدلة"</string>
     <string name="edit">تعديل</string>
     <string name="edit_expense">تعديل المصروف</string>
@@ -167,22 +209,46 @@
     <string name="error_debt_rate_invalid">أدخل معدلًا صحيحًا، 0 أو أكثر.</string>
     <string name="error_invalid_amount">أدخل مبلغًا صحيحًا أكبر من 0.</string>
     <string name="error_invalid_budget_amount">أدخل مبلغًا صحيحًا، أو اتركه فارغًا لمسح الميزانية.</string>
+    <string name="error_invalid_date">أدخل تاريخًا صحيحًا بصيغة YYYY-MM-DD.</string>
     <string name="error_invalid_rate">أدخل سعرًا صحيحًا أكبر من 0.</string>
+    <string name="error_loan_type_required">الرجاء اختيار نوع القرض</string>
     <string name="error_select_date">يرجى اختيار تاريخ.</string>
     <string name="expenses_this_month">مصروفات هذا الشهر</string>
+    <string name="export_csv">تصدير CSV</string>
+    <string name="export_csv_chooser_title">حفظ أو مشاركة ملف CSV</string>
     <string name="export_customer_id_label">رقم العميل: %1$s</string>
     <string name="export_pdf">تصدير PDF</string>
     <string name="export_pdf_chooser_title">حفظ أو مشاركة تقريرك</string>
     <string name="export_report_title">تقرير المصروفات الشهري</string>
     <string name="export_started">يتم تجهيز تقرير PDF…</string>
     <string name="export_total_label">الإجمالي</string>
+    <string msgid="4562557128765735254" name="face_or_screen_lock_prompt_message">"استخدِم الوجه أو قفل الشاشة للمتابعة."</string>
+    <string msgid="2282389249605674226" name="face_prompt_message">"استخدِم الوجه للمتابعة."</string>
     <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"نسخ الرابط"</string>
     <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"فتح في المتصفح"</string>
     <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"مشاركة الرابط"</string>
+    <string msgid="5462024216548165325" name="fingerprint_dialog_icon_description">"رمز بصمة الإصبع"</string>
+    <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"المس أداة استشعار بصمة الإصبع"</string>
+    <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"جهاز بصمة الإصبع غير متاح."</string>
+    <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"لا يحتوي هذا الجهاز على جهاز استشعار بصمات الأصابع."</string>
+    <string msgid="7291787166416782245" name="fingerprint_error_lockout">"تم إجراء محاولات كثيرة جدًا. يُرجى المحاولة مرة أخرى لاحقًا."</string>
+    <string msgid="7520712796891883488" name="fingerprint_error_no_fingerprints">"ليست هناك بصمات إصبع مسجَّلة."</string>
+    <string msgid="7627716295344353987" name="fingerprint_error_user_canceled">"تم إلغاء تشغيل بصمة الإصبع بواسطة المستخدم."</string>
+    <string msgid="3873359464293253009" name="fingerprint_not_recognized">"لم يتم التعرف عليها."</string>
+    <string msgid="8382576858490514495" name="fingerprint_or_screen_lock_prompt_message">"استخدِم بصمة الإصبع أو قفل الشاشة للمتابعة."</string>
+    <string msgid="7449360011861769080" name="fingerprint_prompt_message">"استخدِم بصمة الإصبع للمتابعة."</string>
+    <string msgid="3791785319221634505" name="generic_error_no_device_credential">"لم يتم ضبط رقم تعريف شخصي أو نقش أو كلمة مرور."</string>
+    <string msgid="1807436368654974044" name="generic_error_no_keyguard">"هذا الجهاز لا يتيح استخدام رقم تعريف شخصي أو نقش أو كلمة مرور."</string>
+    <string msgid="7309881387583143581" name="generic_error_user_canceled">"ألغى المستخدم المصادقة."</string>
+    <string msgid="2863935784364843033" name="glance_error_layout_text">"‏تأكَّد من الخطأ بالضبط باستخدام "<b><tt>"أداة adb logcat"</tt></b>"، من خلال البحث عن "<b><tt>"GlanceAppWidget"</tt></b>"."</string>
+    <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"يتعذّر عرض المحتوى."</string>
+    <string msgid="3631961919234443531" name="glance_error_layout_title">"‏"<b>"خطأ في التطبيق المصغّر Glance"</b></string>
     <string name="greeting_afternoon">نهارك سعيد</string>
     <string name="greeting_afternoon_named">نهارك سعيد، %1$s</string>
     <string name="greeting_evening">مساء الخير</string>
     <string name="greeting_evening_named">مساء الخير، %1$s</string>
+    <string name="greeting_hello">أهلاً 👋</string>
+    <string name="greeting_hello_named">أهلاً، %1$s 👋</string>
     <string name="greeting_morning">صباح الخير</string>
     <string name="greeting_morning_named">صباح الخير، %1$s</string>
     <string name="health_band_excellent">ممتاز</string>
@@ -194,26 +260,104 @@
     <string name="health_sub_subscriptions">الاشتراكات</string>
     <string name="health_sub_trend">الاتجاه</string>
     <string msgid="6827826412747255547" name="in_progress">"قيد التقدم"</string>
+    <string name="income_history_title">الدخل هذا الشهر</string>
+    <string name="income_note_hint">ملاحظة (اختياري)</string>
+    <string name="income_recurring_badge">يتكرر شهريًا</string>
+    <string name="income_recurring_hint">ستُضاف نسخة تلقائياً كل شهر.</string>
+    <string name="income_recurring_label">تكرار شهرياً</string>
+    <string name="income_source_hint">المصدر</string>
+    <string name="income_source_placeholder">مثال: راتب، عمل حر، مكافأة</string>
+    <string name="income_total_label">إجمالي الدخل</string>
     <string msgid="7933458017204019916" name="indeterminate">"تم وضع علامة في المربّع بشكل جزئي"</string>
     <string name="insight_category_decrease">انخفض إنفاق %1$s بنسبة %2$s هذا الشهر.</string>
     <string name="insight_category_increase">ارتفع إنفاق %1$s بنسبة %2$s هذا الشهر.</string>
     <string name="insight_daily_average">متوسط إنفاقك %1$s في اليوم هذا الشهر.</string>
     <string name="insight_not_enough_data">أضف بعض المصروفات لإظهار رؤى مخصصة لك.</string>
-    <string name="insight_projected_overspend">من المتوقع أن تتجاوز الميزانية بمقدار %1$s هذا الشهر.</string>
-    <string name="insight_projected_savings">أنت في طريقك لتوفير %1$s هذا الشهر.</string>
-    <string name="insight_strongest_day">أفضل يوم توفير لك هو %1$s.</string>
+    <string name="insight_projected_overspend">بهذه الوتيرة قد تنفق %1$s أكثر من الشهر الماضي.</string>
+    <string name="insight_projected_savings">بهذه الوتيرة قد توفر %1$s مقارنةً بالشهر الماضي.</string>
+    <string name="insight_strongest_day">عادةً ما تكون نفقاتك أقل في يوم %1$s.</string>
     <string name="insight_subscription_load">تمثل الاشتراكات %1$s من إنفاق هذا الشهر.</string>
     <string name="insight_trend_down">إنفاقك أقل بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="insight_trend_flat">إنفاقك مطابق للأسبوع الماضي.</string>
     <string name="insight_trend_up">إنفاقك أعلى بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="keep_one_category_warning">يجب الاحتفاظ بفئة واحدة على الأقل.</string>
+    <string name="khata_add_entry">إضافة إدخال</string>
+    <string name="khata_add_party">إضافة طرف</string>
+    <string name="khata_amount_hint">المبلغ</string>
+    <string name="khata_credit_label">دين (أُخذ بالأجل)</string>
+    <string name="khata_delete_entry">حذف الإدخال</string>
+    <string name="khata_delete_party">حذف الطرف</string>
+    <string name="khata_delete_party_confirm">سيتم حذف %1$s وجميع سجلاته نهائياً. لا يمكن التراجع عن هذا.</string>
+    <string name="khata_delete_party_title">حذف الطرف؟</string>
+    <string name="khata_direction_i_owe_label">أنا مدين لهذا الطرف</string>
+    <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
+    <string name="khata_edit_party">تعديل الطرف</string>
+    <string name="khata_entry_date">التاريخ</string>
+    <string name="khata_i_owe">ما عليّ</string>
+    <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
+    <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
+    <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
+    <string name="khata_label_they_owe">%1$s مدين لك</string>
+    <string name="khata_no_entries">لا توجد إدخالات بعد. اضغط + لتسجيل دين أو دفعة.</string>
+    <string name="khata_no_parties_i_owe">لم تتم إضافة أي محل بعد.
+اضغط + لإضافة محل لديك رصيد به.</string>
+    <string name="khata_no_parties_they_owe">لم تتم إضافة أي عملاء بعد.
+اضغط + لإضافة شخص مدين لك.</string>
+    <string name="khata_note_hint">ملاحظة (اختياري)</string>
+    <string name="khata_outstanding">المستحق</string>
+    <string name="khata_party_name_hint">الاسم (محل أو شخص)</string>
+    <string name="khata_party_phone_hint">رقم الهاتف (للواتساب)</string>
+    <string name="khata_party_phone_optional">اختياري — مطلوب فقط لتذكيرات واتساب</string>
+    <string name="khata_payment_label">دفعة (تمت التسوية)</string>
+    <string name="khata_reminder_msg_credit">مرحباً %1$s 👋
+
+ملاحظة — لديك رصيد دائن بقيمة %2$s في محلي.
+
+استخدمه في أي وقت!
+
+— %3$s</string>
+    <string name="khata_reminder_msg_owe">مرحباً %1$s 👋
+
+تذكير ودي — لديك رصيد مستحق بقيمة %2$s.
+
+يرجى السداد عند الإمكان 🙏
+
+— %3$s</string>
+    <string name="khata_save_party">حفظ</string>
+    <string name="khata_screen_title">الحساب</string>
+    <string name="khata_sender_name_default">أنا</string>
+    <string name="khata_settled">تمت التسوية ✓</string>
+    <string name="khata_subtitle">تتبع الأموال المُقرضة والمُقترضة مع جهات الاتصال</string>
+    <string name="khata_tab_label">الحساب</string>
+    <string name="khata_they_owe">ما لي</string>
+    <string name="khata_total_i_owe">إجمالي ما عليّ</string>
+    <string name="khata_total_they_owe">إجمالي ما لي</string>
+    <string name="khata_whatsapp_not_installed">واتساب غير مثبت.</string>
+    <string name="khata_whatsapp_reminder">إرسال تذكير</string>
+    <string name="label_debt_plural">ديون</string>
+    <string name="label_debt_singular">دين</string>
+    <string name="label_party_plural">أطراف</string>
+    <string name="label_party_singular">طرف</string>
     <string name="language_arabic">العربية</string>
+    <string name="language_bengali">البنغالية (বাংলা)</string>
     <string name="language_english">الإنجليزية</string>
     <string name="language_hindi">الهندية</string>
     <string name="language_label">اللغة</string>
     <string name="language_tagalog">التاغالوغية (Filipino)</string>
     <string name="language_urdu">الأردية (اردو)</string>
     <string name="load_more">تحميل المزيد</string>
+    <string name="loan_type_business">قرض تجاري</string>
+    <string name="loan_type_car">قرض سيارة</string>
+    <string name="loan_type_education">قرض تعليمي</string>
+    <string name="loan_type_gold">قرض ذهب</string>
+    <string name="loan_type_home">قرض عقاري</string>
+    <string name="loan_type_informal">مقترض من شخص</string>
+    <string name="loan_type_none">لا شيء (اختياري)</string>
+    <string name="loan_type_other">أخرى</string>
+    <string name="loan_type_other_name_hint">مثال: قرض مركبة، قرض طلابي…</string>
+    <string name="loan_type_other_name_label">حدد نوع القرض</string>
+    <string name="loan_type_personal">قرض شخصي</string>
+    <string name="loan_type_select_hint">اختر نوع القرض</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"تصغير البطاقة السفلية"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"إغلاق البطاقة السفلية"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"مقبض السحب"</string>
@@ -253,6 +397,7 @@
     <string msgid="7617233117134790350" name="m3c_dialog">"مربّع حوار"</string>
     <string msgid="3177828188723359358" name="m3c_dropdown_menu_collapsed">"مصغَّرة"</string>
     <string msgid="2360841780724299882" name="m3c_dropdown_menu_expanded">"موسَّعة"</string>
+    <string msgid="8687821690726149911" name="m3c_dropdown_menu_toggle">"توسيع القائمة المنسدلة أو تصغيرها"</string>
     <string msgid="6152806324422087846" name="m3c_search_bar_search">"شريط بحث"</string>
     <string msgid="6152755701819882931" name="m3c_snackbar_dismiss">"إغلاق"</string>
     <string msgid="7655536806087401899" name="m3c_suggestions_available">"إليك الاقتراحات"</string>
@@ -279,26 +424,46 @@
     <string name="native_media_view">عرض الوسائط</string>
     <string name="nav_categories">الفئات</string>
     <string name="nav_dashboard">الرئيسية</string>
+    <string name="nav_debts">الديون</string>
     <string name="nav_settings">الإعدادات</string>
     <string msgid="542007171693138492" name="navigation_menu">"قائمة تنقل"</string>
+    <string name="net_all_settled">تمت التسوية ✓</string>
+    <string name="net_in_favour">صافي +%1$s لصالحك</string>
+    <string name="net_you_owe_net">صافي −%1$s عليك</string>
     <string name="new_category_hint">اسم الفئة الجديدة</string>
     <string name="no_expenses_breakdown">لا توجد مصروفات لعرض توزيعها بعد.</string>
     <string name="no_expenses_this_day">لا توجد مصروفات في هذا اليوم.</string>
     <string name="no_expenses_this_month">لا توجد مصروفات مسجّلة لهذا الشهر بعد.</string>
+    <string name="no_income_this_month">لم يتم تسجيل أي دخل بعد</string>
     <string msgid="6610465462668679431" name="not_selected">"غير محدّد"</string>
     <string name="notifications_permission_confirm">السماح</string>
     <string name="notifications_permission_decline">عدم السماح</string>
     <string name="notifications_permission_title">هل تريد السماح للتطبيق بإرسال إشعارات إليك؟</string>
-    <string msgid="875452955155264703" name="off">"غير مفعّل"</string>
-    <string name="offline_notification_text">انقر لفتح الإعلان</string>
-    <string name="offline_notification_title">عرض الإعلان الذي حفظته عند عدم الاتصال بالإنترنت</string>
+    <string name="offline_dialog_image_description">رمز</string>
+    <string name="offline_dialog_text">‏نشكرك على اهتمامك.\nسنشارك المزيد من المعلومات بعد إعادة الاتصال بالإنترنت.</string>
+    <string name="offline_notification_title">تمت إعادة الاتصال بالإنترنت وبإمكانك الآن الاستئناف من حيث توقفت</string>
+    <string name="offline_notification_title_with_advertiser">تمت إعادة الاتصال بالإنترنت وبإمكانك الآن مواصلة التعرّف على \"%s\"</string>
     <string name="offline_opt_in_confirm">حسنًا</string>
-    <string name="offline_opt_in_confirmation">ستتلقّى إشعارًا يحتوي على الرابط عند إعادة الاتصال بالإنترنت.</string>
     <string name="offline_opt_in_decline">لا، شكرًا</string>
     <string name="offline_opt_in_message">سنرسل إليك إشعارًا يحتوي على رابط إلى الموقع الإلكتروني للمعلِن.</string>
     <string name="offline_opt_in_title">فتح العنوان عند إعادة الاتصال بالإنترنت</string>
     <string name="ok">حسنًا</string>
-    <string msgid="8655164131929253426" name="on">"مفعّل"</string>
+    <string name="onboard_all_set_body">اضغط على \'ابدأ الآن\' للبدء في تتبع مصاريفك.</string>
+    <string name="onboard_all_set_title">أنت جاهز!</string>
+    <string name="onboard_back">رجوع</string>
+    <string name="onboard_budget_label">الميزانية الشهرية</string>
+    <string name="onboard_continue">التالي</string>
+    <string name="onboard_currency_body">ستُعرض جميع المبالغ بعملتك المحلية.</string>
+    <string name="onboard_currency_title">اختر عملتك</string>
+    <string name="onboard_finances_body">كلاهما اختياريان — يمكنك ملؤهما لاحقاً من الإعدادات.</string>
+    <string name="onboard_finances_title">حدّد ميزانيتك</string>
+    <string name="onboard_get_started">ابدأ الآن</string>
+    <string name="onboard_income_label">الدخل الشهري</string>
+    <string name="onboard_reminder_body">تنبيه لطيف كل مساء لتسجيل مصاريف اليوم.</string>
+    <string name="onboard_reminder_time">وقت التذكير: %s</string>
+    <string name="onboard_reminder_title">تذكير يومي</string>
+    <string name="onboard_reminder_toggle">تفعيل التذكير اليومي</string>
+    <string name="onboard_skip">تخطّ</string>
     <string name="payment_note_hint">مثال: دفعة جزئية، دُفع نقدًا</string>
     <string name="payment_note_label">ملاحظة (اختياري)</string>
     <string name="powered_by_footer">بدعم من AG Tech</string>
@@ -306,10 +471,20 @@
     <string msgid="7097486360902471446" name="range_start">"بداية النطاق"</string>
     <string name="rate_us">قيّم التطبيق</string>
     <string name="recent_transactions_label">المعاملات الأخيرة</string>
+    <string name="reminder_notification_body">اضغط لإضافة أي نفقات قد فاتتك اليوم.</string>
+    <string name="reminder_notification_title">هل سجّلت نفقات اليوم؟ 💸</string>
+    <string name="reminder_section_title">تذكير يومي</string>
+    <string name="reminder_time_label">وقت التذكير</string>
+    <string name="reminder_toggle_desc">احصل على تذكير يومي لتسجيل نفقاتك</string>
+    <string name="reminder_toggle_label">تذكير يومي بالإنفاق</string>
+    <string name="repeat_monthly_hint">تُضاف نسخة تلقائيًا في الأول من كل شهر</string>
+    <string name="repeat_monthly_label">تكرار كل شهر</string>
     <string name="reset_all_data">إعادة تعيين جميع البيانات</string>
     <string name="reset_confirm_1">سيتم حذف جميع المصروفات والفئات المخصصة على هذا الجهاز بشكل نهائي. هل تريد الاستمرار؟</string>
     <string name="reset_confirm_2">هل أنت متأكد تمامًا؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="reset_data">إعادة تعيين البيانات</string>
+    <string name="restore_error">فشلت الاستعادة</string>
+    <string name="restore_success">اكتملت الاستعادة</string>
     <string name="s1">حفظ الصورة</string>
     <string name="s2">هل تريد السماح للإعلان بتخزين الصورة في معرض الصور؟</string>
     <string name="s3">قبول</string>
@@ -322,7 +497,10 @@
     <string name="salary_set_label">صافي الراتب الشهري</string>
     <string name="salary_set_title">تعيين الدخل الشهري</string>
     <string name="save">حفظ</string>
+    <string msgid="5659570757430909869" name="screen_lock_prompt_message">"أدخِل قفل الشاشة للمتابعة."</string>
+    <string name="search_expenses_hint">البحث في المصروفات…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"البحث"</string>
+    <string name="security_section_title">الأمان</string>
     <string name="select_date">اختر التاريخ</string>
     <string msgid="6043586758067023" name="selected">"محدّد"</string>
     <string name="settings_title">الإعدادات</string>
@@ -333,9 +511,9 @@
     <string name="sms_detection_title">كشف الرسائل النصية</string>
     <string name="sms_detection_toggle_label">اكتشاف المعاملات من الرسائل النصية</string>
     <string name="sms_dismiss">تجاهل</string>
-    <string name="sms_pending_banner">تم رصد %1$d معاملة من الرسائل النصية — اضغط للمراجعة</string>
+    <string name="sms_pending_banner">تم رصد %1$d معاملات من الرسائل النصية — اضغط للمراجعة</string>
     <string name="sms_review_subtitle">أكّد أو عدّل كل معاملة قبل حفظها كمصروف.</string>
-    <string name="sms_review_title">مراجعة %1$d معاملة</string>
+    <string name="sms_review_title">مراجعة %1$d معاملات</string>
     <string name="spending_by_category">الإنفاق حسب الفئة</string>
     <string name="splash_tagline">تابع كل مصروف بسهولة</string>
     <string name="stat_daily_average">المعدل اليومي</string>
@@ -348,12 +526,16 @@
     <string name="stat_top_category">أعلى فئة</string>
     <string name="stat_total_spent">إجمالي المصروفات</string>
     <string name="stat_transactions">عدد العمليات</string>
-    <string name="stat_up_from_zero">زيادة من %1$s في الشهر الماضي</string>
+    <string name="stat_up_from_zero">ارتفع من %1$s عن الشهر الماضي</string>
     <string name="stat_vs_last_month">مقارنة بالشهر الماضي</string>
+    <string msgid="4139871816613051306" name="state_empty">"حقل فارغ"</string>
+    <string msgid="5834637030682409883" name="state_off">"غير مفعَّل"</string>
+    <string msgid="1490883874751719580" name="state_on">"مفعَّل"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"تبديل"</string>
     <string msgid="1672349317127674378" name="tab">"علامة تبويب"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> في المئة."</string>
+    <string name="test_reminder_button">إرسال إشعار تجريبي</string>
     <string name="toast_all_reset">تمت إعادة تعيين جميع البيانات.</string>
     <string name="toast_expense_added">تمت إضافة المصروف.</string>
     <string name="toast_expense_deleted">تم حذف المصروف.</string>
@@ -361,8 +543,28 @@
     <string name="today">اليوم</string>
     <string msgid="3765533235322692011" name="tooltip_description">"تلميح"</string>
     <string msgid="3124740595719787496" name="tooltip_label">"إظهار التلميح"</string>
+    <string name="tour_done">هيا بنا!</string>
+    <string name="tour_next">التالي</string>
+    <string name="tour_skip">تخطّ</string>
+    <string name="tour_step1_body">اضغط على زر + لتسجيل أي مصروف. أدخل المبلغ، اختر الفئة، حدد التاريخ، ثم احفظ.</string>
+    <string name="tour_step1_title">سجّل مصروفاً</string>
+    <string name="tour_step2_body">الإنفاق مقابل الميزانية دفعةً واحدة. اضغط ‹ › للتنقل بين الأشهر.</string>
+    <string name="tour_step2_title">نظرة شهرية</string>
+    <string name="tour_step3_body">اضغط على بطاقة الدخل لتسجيل راتبك أو أي أرباح. راجع إجمالي ما كسبته هذا الشهر بلمحة.</string>
+    <string name="tour_step3_title">تتبع دخلك</string>
+    <string name="tour_step4_body">استخدم تبويب الديون لتتبع ما تدين به أو ما هو مستحق لك، مع توقعات السداد وتذكيرات الأقساط.</string>
+    <string name="tour_step4_title">الديون والقروض</string>
+    <string name="tour_step5_body">الخاطة لتتبع ائتمان المتجر. الإعدادات تتيح تصدير التقارير ونسخ البيانات احتياطياً والتنبيهات اليومية.</string>
+    <string name="tour_step5_title">استكشف المزيد</string>
     <string name="trend_title">الاتجاه الشهري (آخر 12 شهرًا)</string>
     <string name="update">تحديث</string>
+    <string msgid="6524145989441579428" name="use_biometric_label">"استخدام المقاييس الحيوية"</string>
+    <string msgid="5385448280139639016" name="use_biometric_or_screen_lock_label">"استخدام المقاييس الحيوية أو قفل الشاشة"</string>
+    <string msgid="6533512708069459542" name="use_face_label">"استخدام الوجه"</string>
+    <string msgid="2116180187159450292" name="use_face_or_screen_lock_label">"استخدام الوجه أو قفل الشاشة"</string>
+    <string msgid="6961788485681412417" name="use_fingerprint_label">"استخدام بصمة الإصبع"</string>
+    <string msgid="7577690399303139443" name="use_fingerprint_or_screen_lock_label">"استخدام بصمة الإصبع أو قفل الشاشة"</string>
+    <string msgid="5459869335976243512" name="use_screen_lock_label">"استخدام قفل الشاشة"</string>
     <string name="view_all_label">عرض الكل</string>
     <string name="view_mode_calendar">تقويم</string>
     <string name="view_mode_category">حسب الفئة</string>

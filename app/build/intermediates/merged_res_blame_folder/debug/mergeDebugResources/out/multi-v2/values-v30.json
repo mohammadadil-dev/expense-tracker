@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.expensetracker.app-mergeDebugResources-81:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "/Users/mdadil/.gradle/caches/transforms-4/ac7750f57ce93aa911e0e287cc2d6f17/transformed/material3-release/res/values-v30/values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

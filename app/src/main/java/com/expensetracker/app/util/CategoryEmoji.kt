@@ -16,5 +16,11 @@ fun categoryEmoji(nameKey: String?): String = when (nameKey) {
     "cat_savings"         -> "💰"
     "cat_other"           -> "📦"
     "cat_debt_payments"   -> "🏦"
+    "cat_mobile_recharge" -> "📶"
+    "cat_electricity"     -> "💡"
+    "cat_fuel"            -> "⛽"
+    "cat_farming"         -> "🌾"
+    "cat_khata"           -> "📒"
+    "cat_education"       -> "📚"
     else                  -> "💳"
 }

@@ -27,25 +27,41 @@
     <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"اس کے ساتھ اشتراک کریں"</string>
     <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g> کے ساتھ اشتراک کریں"</string>
     <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"سکیڑیں"</string>
-    <string name="about_section_title">کے بارے میں</string>
+    <string name="about_section_title">ایپ کے بارے میں</string>
     <string name="add">شامل کریں</string>
     <string name="add_category">زمرہ شامل کریں</string>
     <string name="add_expense">خرچ شامل کریں</string>
+    <string name="add_income">آمدنی شامل کریں</string>
     <string name="ai_insights_feed_title">AI بصیرتیں</string>
     <string name="amount_label">رقم</string>
     <string name="app_name">اخراجات ٹریکر</string>
     <string name="app_version_label">ورژن 1.0</string>
+    <string name="backup_chooser_title">بیک اپ محفوظ یا شیئر کریں</string>
+    <string name="backup_error">بیک اپ ناکام</string>
+    <string name="backup_export_label">بیک اپ برآمد کریں</string>
+    <string name="backup_import_label">بیک اپ درآمد کریں</string>
+    <string name="backup_scope_note">اخراجات، زمرے، بجٹ، کھاتہ اور قرض شامل ہیں</string>
+    <string name="backup_section_title">ڈیٹا بیک اپ</string>
+    <string name="backup_success">بیک اپ برآمد ہو گیا</string>
     <string name="bento_budget_no_target">کوئی بجٹ طے نہیں</string>
     <string name="bento_budget_remaining">باقی بجٹ</string>
     <string name="bento_budget_remaining_subtitle">%1$s بجٹ میں سے</string>
     <string name="bento_debts_title">قرض اور لون</string>
     <string name="bento_monthly_spending">ماہانہ اخراجات</string>
     <string name="bento_savings_goal">بچت کا ہدف</string>
-    <string name="bento_savings_goal_no_data">چند ہفتے ٹریک کریں تاکہ آن لاک ہو</string>
+    <string name="bento_savings_goal_no_data">چند ہفتے ٹریک کریں تاکہ یہ ظاہر ہو</string>
     <string name="bento_savings_goal_subtitle">%1$s ہدف کی طرف</string>
     <string name="bento_subscription_cost">سبسکرپشن لاگت</string>
     <string name="bento_subscription_subtitle">ماہانہ خرچ کا %1$s</string>
+    <string name="biometric_lock_description">ہر بار ایپ کھولتے وقت بائیومیٹرکس یا PIN ضروری ہے</string>
+    <string name="biometric_lock_subtitle">ایپ کھولنے کے لیے بائیومیٹرکس یا PIN استعمال کریں</string>
+    <string name="biometric_lock_title">اخراجات ٹریکر کھولیں</string>
+    <string name="biometric_lock_toggle_label">ایپ لاک</string>
+    <string msgid="2102429900219199821" name="biometric_or_screen_lock_prompt_message">"جاری رکھنے کے لیے اپنے بایو میٹرک یا اسکرین لاک کا استعمال کریں"</string>
+    <string msgid="1160635338192065472" name="biometric_prompt_message">"جاری رکھنے کے لیے اپنا بایو میٹرک استعمال کریں"</string>
     <string name="breakdown_title">زمرے کے مطابق تقسیم</string>
+    <string name="budget_alert_exceeded">🚨 آپ نے اپنا ماہانہ بجٹ پار کر لیا ہے!</string>
+    <string name="budget_alert_warning">⚠️ آپ نے اپنے ماہانہ بجٹ کا 80% استعمال کر لیا ہے</string>
     <string name="budget_cap_label">بجٹ کی حد</string>
     <string name="budget_left">%1$s باقی</string>
     <string name="budget_manage_sheet_title">بجٹ منظم کریں</string>
@@ -68,10 +84,16 @@
     <string msgid="59049573811482460" name="call_notification_screening_text">"اِن کمنگ کال کی اسکریننگ"</string>
     <string name="cancel">منسوخ</string>
     <string name="cat_debt_payments">قرض یا لون کی ادائیگی</string>
+    <string name="cat_education">تعلیم</string>
+    <string name="cat_electricity">بجلی</string>
     <string name="cat_entertainment">تفریح</string>
+    <string name="cat_farming">کاشتکاری</string>
     <string name="cat_food">کھانا اور گروسری</string>
+    <string name="cat_fuel">ایندھن</string>
     <string name="cat_healthcare">صحت کی دیکھ بھال</string>
     <string name="cat_housing">رہائش</string>
+    <string name="cat_khata">کھاتہ</string>
+    <string name="cat_mobile_recharge">موبائل ریچارج</string>
     <string name="cat_other">دیگر</string>
     <string name="cat_savings">بچت اور سرمایہ کاری</string>
     <string name="cat_shopping">شاپنگ</string>
@@ -100,8 +122,9 @@
     <string name="common_open_on_phone">فون پر کھولیں</string>
     <string name="common_signin_button_text">سائن ان کریں</string>
     <string name="common_signin_button_text_long">‏Google کے ساتھ سائن ان کریں</string>
+    <string msgid="5912733858573823945" name="confirm_device_credential_password">"پاس ورڈ استعمال کریں"</string>
     <string name="convert">تبدیل کریں</string>
-    <string name="convert_currency_message">اپنے موجودہ اخراجات کو %1$s سے %2$s میں تبدیل کرنے کے لیے شرح تبادلہ درج کریں (1 %1$s = ? %2$s)۔</string>
+    <string name="convert_currency_message">اپنے موجودہ اخراجات کو %1$s سے %2$s میں تبدیل کرنے کے لیے شرح تبادلہ درج کریں (1 %1$s = ? %2$s)۔ آپ کی تمام محفوظ رقوم اس شرح سے ضرب دی جائیں گی۔</string>
     <string name="convert_currency_rate_hint">شرح تبادلہ</string>
     <string name="convert_currency_title">کرنسی تبدیل کریں</string>
     <string msgid="3260749812566568062" name="copy_toast_msg">"لنک کلپ بورڈ پر کاپی ہو گیا"</string>
@@ -119,6 +142,7 @@
     <string name="debt_edit_title">قرض یا لون ترمیم کریں</string>
     <string name="debt_history_title">ادائیگی کی تاریخ</string>
     <string name="debt_insight_accelerate">%2$s/ماہ اضافہ کر کے %1$d ماہ پہلے ادا کریں۔</string>
+    <string name="debt_loan_type_label">قرض کی قسم (اختیاری)</string>
     <string name="debt_mark_settled">چکتا نشان کریں</string>
     <string name="debt_name_hint">مثال: کار لون، دوست کو ذاتی قرض</string>
     <string name="debt_name_label">نام</string>
@@ -140,24 +164,42 @@
     <string name="debt_start_date_label">شروع کی تاریخ</string>
     <string name="debts_empty_subtitle">وہ رقم ٹریک کریں جو آپ واجب ہیں یا جو آپ کو ملنی ہے، ہر ایک کے لیے ادائیگی کے منصوبے کے ساتھ۔</string>
     <string name="debts_empty_title">ابھی تک کوئی قرض یا لون نہیں</string>
-    <string name="debts_net_owed_to_you">مجموعی طور پر آپ کو ادا کرنی ہے</string>
+    <string name="debts_net_owed_to_you">مجموعی طور پر آپ کو ملنی ہے</string>
     <string name="debts_net_settled">سب چکتا ہو گیا</string>
     <string name="debts_net_title">خالص پوزیشن</string>
     <string name="debts_net_you_owe">مجموعی طور پر آپ واجب ہیں</string>
-    <string name="debts_section_owed_to_you">آپ کو ادا کرنی ہے</string>
+    <string name="debts_section_owed_to_you">آپ کو ملنی ہے</string>
     <string name="debts_section_settled">چکتا</string>
     <string name="debts_section_you_owe">آپ واجب ہیں</string>
+    <string name="debts_subtitle">جو رقم آپ پر ہے اور جو آپ کو ملنی ہے ٹریک کریں</string>
     <string name="debts_title">قرض اور لون</string>
     <string msgid="8038256446254964252" name="default_error_message">"غلط ان پٹ"</string>
+    <string msgid="4776854077120974966" name="default_error_msg">"نامعلوم خرابی"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"پاپ اپ ونڈو"</string>
     <string name="delete">حذف کریں</string>
     <string name="delete_category_confirm">اس زمرے کے اخراجات پہلے موجود زمرے کو تفویض ہو جائیں گے۔ جاری رکھیں؟</string>
     <string name="delete_debt_confirm">یہ قرض اور اس کی مکمل ادائیگی کی تاریخ حذف کریں؟ یہ واپس نہیں ہو سکتا۔</string>
     <string name="delete_expense_confirm">یہ خرچ حذف کریں؟</string>
+    <string name="delete_income_confirm">یہ آمدنی اندراج حذف کریں؟</string>
+    <string name="delete_income_recurring_confirm">یہ ایک بار بار آنے والا آمدنی ٹیمپلیٹ ہے۔ اسے حذف کرنے سے مستقبل کے خودکار اندراجات بند ہو جائیں گے۔ پچھلی کاپیاں باقی رہیں گی۔</string>
+    <string name="delete_payment_confirm">یہ ادائیگی حذف کریں؟</string>
+    <string name="delete_recurring_confirm">یہ ایک بار بار خرچ کا ٹیمپلیٹ ہے۔ اسے حذف کرنے سے مستقبل کے اندراجات بند ہوں گے۔ پچھلی کاپیاں رہیں گی۔</string>
+    <string name="delete_recurring_stop_future">بار بار بند کریں</string>
     <string name="description_hint">مثال: سپر مارکیٹ میں گروسری</string>
     <string name="description_label">تفصیل</string>
     <string name="detected_region_note">آپ کے آلے سے شناخت شدہ: %1$s</string>
     <string name="done">ہو گیا</string>
+    <string name="drive_backup_error">Google Drive خرابی</string>
+    <string name="drive_backup_restore">Drive سے بحال کریں</string>
+    <string name="drive_backup_save">Drive میں محفوظ کریں</string>
+    <string name="drive_backup_scope_note">Google Drive کے ایپ فولڈر میں محفوظ کیا جاتا ہے</string>
+    <string name="drive_backup_section_title">Google Drive بیک اپ</string>
+    <string name="drive_backup_sign_in">Google سے سائن ان کریں</string>
+    <string name="drive_backup_sign_out">Google سے سائن آؤٹ کریں</string>
+    <string name="drive_backup_signed_in_as">%1$s کے طور پر سائن ان ہیں</string>
+    <string name="drive_backup_success">Google Drive پر بیک اپ محفوظ ہو گیا</string>
+    <string name="drive_no_backup">Drive پر ابھی کوئی بیک اپ نہیں ہے</string>
+    <string name="drive_restore_success">Google Drive سے ڈیٹا بحال ہو گیا</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"ڈراپ ڈاؤن مینیو"</string>
     <string name="edit">ترمیم</string>
     <string name="edit_expense">خرچ ترمیم کریں</string>
@@ -167,18 +209,40 @@
     <string name="error_debt_rate_invalid">0 یا اس سے زیادہ درست شرح درج کریں۔</string>
     <string name="error_invalid_amount">0 سے زیادہ درست رقم درج کریں۔</string>
     <string name="error_invalid_budget_amount">درست رقم درج کریں، یا صاف کرنے کے لیے خالی چھوڑیں۔</string>
+    <string name="error_invalid_date">YYYY-MM-DD فارمیٹ میں ایک درست تاریخ درج کریں۔</string>
     <string name="error_invalid_rate">0 سے زیادہ درست شرح درج کریں۔</string>
+    <string name="error_loan_type_required">براہ کرم قرض کی قسم منتخب کریں</string>
     <string name="error_select_date">براہ کرم تاریخ منتخب کریں۔</string>
     <string name="expenses_this_month">اس مہینے کے اخراجات</string>
+    <string name="export_csv">CSV برآمد کریں</string>
+    <string name="export_csv_chooser_title">CSV محفوظ یا شیئر کریں</string>
     <string name="export_customer_id_label">کسٹمر ID: %1$s</string>
     <string name="export_pdf">PDF برآمد کریں</string>
     <string name="export_pdf_chooser_title">اپنی رپورٹ محفوظ یا شیئر کریں</string>
     <string name="export_report_title">ماہانہ اخراجات رپورٹ</string>
     <string name="export_started">آپ کی PDF رپورٹ تیار ہو رہی ہے…</string>
     <string name="export_total_label">کل</string>
+    <string msgid="4562557128765735254" name="face_or_screen_lock_prompt_message">"جاری رکھنے کے لیے اپنے چہرے یا اسکرین لاک کا استعمال کریں"</string>
+    <string msgid="2282389249605674226" name="face_prompt_message">"جاری رکھنے کے لیے اپنے چہرے کا استعمال کریں"</string>
     <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"لنک کاپی کریں"</string>
     <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"براؤزر میں کھولیں"</string>
     <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"لنک کا اشتراک کریں"</string>
+    <string msgid="5462024216548165325" name="fingerprint_dialog_icon_description">"فنگر پرنٹ آئیکن"</string>
+    <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"فنگر پرنٹ سینسر کو ٹچ کریں"</string>
+    <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"فنگر پرنٹ ہارڈ ویئر دستیاب نہیں ہے۔"</string>
+    <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"اس آلہ میں فنگر پرنٹ سینسر نہیں ہے"</string>
+    <string msgid="7291787166416782245" name="fingerprint_error_lockout">"کافی زیادہ کوششیں۔ براہ کرم بعد میں دوبارہ کوشش کریں۔"</string>
+    <string msgid="7520712796891883488" name="fingerprint_error_no_fingerprints">"کوئی فنگر پرنٹ مندرج نہیں ہے۔"</string>
+    <string msgid="7627716295344353987" name="fingerprint_error_user_canceled">"صارف نے فنگر پرنٹ کی کارروائی منسوخ کر دی۔"</string>
+    <string msgid="3873359464293253009" name="fingerprint_not_recognized">"شناخت نہیں ہو سکی"</string>
+    <string msgid="8382576858490514495" name="fingerprint_or_screen_lock_prompt_message">"جاری رکھنے کے لیے اپنے فنگر پرنٹ یا اسکرین لاک کا استعمال کریں"</string>
+    <string msgid="7449360011861769080" name="fingerprint_prompt_message">"جاری رکھنے کے لیے اپنا فنگر پرنٹ استعمال کریں"</string>
+    <string msgid="3791785319221634505" name="generic_error_no_device_credential">"کوئی پن، پیٹرن، یا پاس ورڈ سیٹ نہیں ہے۔"</string>
+    <string msgid="1807436368654974044" name="generic_error_no_keyguard">"‏یہ آلہ PIN، پیٹرن یا پاس ورڈ کو سپورٹ نہیں کرتا ہے۔"</string>
+    <string msgid="7309881387583143581" name="generic_error_user_canceled">"صارف نے تصدیق کو منسوخ کر دیا۔"</string>
+    <string msgid="2863935784364843033" name="glance_error_layout_text">"‏"<b><tt>"GlanceAppWidget"</tt></b>" کو تلاش کرتے ہوئے "<b><tt>"adb logcat"</tt></b>" کا استعمال کر کے اصل خرابی کو چیک کریں"</string>
+    <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"مواد نہیں دکھایا جاسکتا"</string>
+    <string msgid="3631961919234443531" name="glance_error_layout_title">"‏"<b>"Glance App Widget کی خرابی"</b></string>
     <string name="greeting_afternoon">دوپہر بخیر</string>
     <string name="greeting_afternoon_named">دوپہر بخیر، %1$s</string>
     <string name="greeting_evening">شام بخیر</string>
@@ -196,6 +260,14 @@
     <string name="health_sub_subscriptions">سبسکرپشنز</string>
     <string name="health_sub_trend">رجحان</string>
     <string msgid="6827826412747255547" name="in_progress">"پیشرفت میں"</string>
+    <string name="income_history_title">اس ماہ کی آمدنی</string>
+    <string name="income_note_hint">نوٹ (اختیاری)</string>
+    <string name="income_recurring_badge">ماہانہ دہرایا جاتا ہے</string>
+    <string name="income_recurring_hint">ہر ماہ خودکار ایک کاپی شامل کی جائے گی۔</string>
+    <string name="income_recurring_label">ماہانہ دہرائیں</string>
+    <string name="income_source_hint">ذریعہ</string>
+    <string name="income_source_placeholder">جیسے: تنخواہ، فری لانس، بونس</string>
+    <string name="income_total_label">کل آمدنی</string>
     <string msgid="7933458017204019916" name="indeterminate">"جزوی طور پر چیک کردہ"</string>
     <string name="insight_category_decrease">%1$s اخراجات اس مہینے %2$s کم ہو گئے۔</string>
     <string name="insight_category_increase">%1$s اخراجات اس مہینے %2$s بڑھ گئے۔</string>
@@ -209,14 +281,83 @@
     <string name="insight_trend_flat">آپ کے اخراجات پچھلے ہفتے جتنے رہے۔</string>
     <string name="insight_trend_up">آپ کے اخراجات پچھلے ہفتے سے %1$s زیادہ ہیں۔</string>
     <string name="keep_one_category_warning">کم از کم ایک زمرہ رکھنا ضروری ہے۔</string>
-    <string name="language_arabic">Arabic (العربية)</string>
-    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="khata_add_entry">اندراج شامل کریں</string>
+    <string name="khata_add_party">فریق شامل کریں</string>
+    <string name="khata_amount_hint">رقم</string>
+    <string name="khata_credit_label">ادھار (کھاتے پر لیا)</string>
+    <string name="khata_delete_entry">اندراج حذف کریں</string>
+    <string name="khata_delete_party">فریق حذف کریں</string>
+    <string name="khata_delete_party_confirm">%1$s اور ان کی تمام اندراجات مستقل طور پر حذف ہو جائیں گی۔</string>
+    <string name="khata_delete_party_title">فریق حذف کریں؟</string>
+    <string name="khata_direction_i_owe_label">میں نے اس فریق کو دینا ہے</string>
+    <string name="khata_direction_they_owe_label">اس فریق نے مجھے دینا ہے</string>
+    <string name="khata_edit_party">فریق میں ترمیم کریں</string>
+    <string name="khata_entry_date">تاریخ</string>
+    <string name="khata_i_owe">میں نے دینا ہے</string>
+    <string name="khata_initial_amount_label">ابتدائی رقم (اختیاری)</string>
+    <string name="khata_label_all_cleared">%1$s کے ساتھ تصفیہ ✓</string>
+    <string name="khata_label_i_owe">آپ %1$s کے مقروض ہیں</string>
+    <string name="khata_label_they_owe">%1$s آپ کے مقروض ہیں</string>
+    <string name="khata_no_entries">ابھی کوئی اندراج نہیں۔ کریڈٹ یا ادائیگی درج کرنے کے لیے + دبائیں۔</string>
+    <string name="khata_no_parties_i_owe">ابھی کوئی دکان نہیں جوڑی گئی۔
+ادھار والی دکان جوڑنے کے لیے + دبائیں۔</string>
+    <string name="khata_no_parties_they_owe">ابھی کوئی گاہک نہیں جوڑا گیا۔
+جس نے ادھار لیا ہو اسے جوڑنے کے لیے + دبائیں۔</string>
+    <string name="khata_note_hint">نوٹ (اختیاری)</string>
+    <string name="khata_outstanding">باقی</string>
+    <string name="khata_party_name_hint">نام (دکان یا شخص)</string>
+    <string name="khata_party_phone_hint">فون نمبر (واٹس ایپ کے لیے)</string>
+    <string name="khata_party_phone_optional">اختیاری — صرف واٹس ایپ یاددہانی کے لیے</string>
+    <string name="khata_payment_label">ادائیگی (چکا دیا)</string>
+    <string name="khata_reminder_msg_credit">السلام علیکم %1$s 👋
+
+اطلاع — میری دکان پر آپ کا %2$s کریڈٹ ہے۔
+
+جب چاہیں استعمال کریں!
+
+— %3$s</string>
+    <string name="khata_reminder_msg_owe">السلام علیکم %1$s 👋
+
+یاد دہانی — آپ کا باقی %2$s ہے۔
+
+براہ کرم جب آسانی ہو ادا کر دیں 🙏
+
+— %3$s</string>
+    <string name="khata_save_party">محفوظ کریں</string>
+    <string name="khata_screen_title">کھاتہ</string>
+    <string name="khata_sender_name_default">میں</string>
+    <string name="khata_settled">ادائیگی ہو گئی ✓</string>
+    <string name="khata_subtitle">اپنے رابطوں کے ساتھ قرض اور ادھار کو ٹریک کریں</string>
+    <string name="khata_tab_label">کھاتہ</string>
+    <string name="khata_they_owe">مجھے ملنا ہے</string>
+    <string name="khata_total_i_owe">کل دینا</string>
+    <string name="khata_total_they_owe">کل ملنا</string>
+    <string name="khata_whatsapp_not_installed">واٹس ایپ انسٹال نہیں ہے۔</string>
+    <string name="khata_whatsapp_reminder">یاددہانی بھیجیں</string>
+    <string name="label_debt_plural">قرضے</string>
+    <string name="label_debt_singular">قرض</string>
+    <string name="label_party_plural">فریقین</string>
+    <string name="label_party_singular">فریق</string>
+    <string name="language_arabic">عربی (العربية)</string>
+    <string name="language_bengali">بنگالی (বাংলা)</string>
     <string name="language_english">English</string>
-    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_hindi">ہندی (हिन्दी)</string>
     <string name="language_label">زبان</string>
-    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_tagalog">تاگالوگ (Filipino)</string>
     <string name="language_urdu">اردو</string>
     <string name="load_more">مزید لوڈ کریں</string>
+    <string name="loan_type_business">کاروباری قرض</string>
+    <string name="loan_type_car">گاڑی کا قرض</string>
+    <string name="loan_type_education">تعلیمی قرض</string>
+    <string name="loan_type_gold">سونے کا قرض</string>
+    <string name="loan_type_home">گھر کا قرض</string>
+    <string name="loan_type_informal">کسی سے ادھار</string>
+    <string name="loan_type_none">کوئی نہیں (اختیاری)</string>
+    <string name="loan_type_other">دیگر</string>
+    <string name="loan_type_other_name_hint">مثلاً: گاڑی کا قرض، طالب علم قرض…</string>
+    <string name="loan_type_other_name_label">قرض کی قسم بتائیں</string>
+    <string name="loan_type_personal">ذاتی قرض</string>
+    <string name="loan_type_select_hint">قرض کی قسم منتخب کریں</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"نیچے کی شیٹ کو سکیڑیں"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"نیچے کی شیٹ کو برخاست کریں"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"گھسیٹنے کا ہینڈل"</string>
@@ -283,24 +424,46 @@
     <string name="native_media_view">میڈیا منظر</string>
     <string name="nav_categories">زمرے</string>
     <string name="nav_dashboard">ڈیش بورڈ</string>
+    <string name="nav_debts">قرضے</string>
     <string name="nav_settings">ترتیبات</string>
     <string msgid="542007171693138492" name="navigation_menu">"نیویگیشن مینیو"</string>
+    <string name="net_all_settled">سب چکتا ✓</string>
+    <string name="net_in_favour">خالص +%1$s آپ کے حق میں</string>
+    <string name="net_you_owe_net">خالص −%1$s آپ پر واجب</string>
     <string name="new_category_hint">نئے زمرے کا نام</string>
     <string name="no_expenses_breakdown">ابھی تک کوئی اخراجات نہیں۔</string>
     <string name="no_expenses_this_day">اس دن کوئی خرچ نہیں۔</string>
     <string name="no_expenses_this_month">اس مہینے ابھی تک کوئی خرچ درج نہیں۔</string>
+    <string name="no_income_this_month">ابھی تک کوئی آمدنی درج نہیں</string>
     <string msgid="6610465462668679431" name="not_selected">"غیر منتخب کردہ"</string>
     <string name="notifications_permission_confirm">اجازت دیں</string>
     <string name="notifications_permission_decline">اجازت نہ دیں</string>
     <string name="notifications_permission_title">آپ کو اطلاعات بھیجنے کیلئے ایپ کو اجازت دیں؟</string>
-    <string name="offline_notification_text">اشتہار کھولنے کیلئے تھپتھپائیں</string>
-    <string name="offline_notification_title">جب آپ آف لائن تھے تب آپ نے جس اشتہار کو محفوظ کیا تھا اس کا ملاحظہ کریں</string>
+    <string name="offline_dialog_image_description">آئیکن</string>
+    <string name="offline_dialog_text">‏آپ کی دلچسپی کا شکریہ۔\nآپ کے واپس آن لائن آنے کے بعد ہم مزید اشتراک کریں گے۔</string>
+    <string name="offline_notification_title">آپ دوبارہ آن لائن ہیں! آئیے، جہاں ہم نے چھوڑا تھا وہیں سے شروع کریں</string>
+    <string name="offline_notification_title_with_advertiser">آپ دوبارہ آن لائن ہیں! %s کے بارے میں جاننا جاری رکھیں</string>
     <string name="offline_opt_in_confirm">ٹھیک ہے</string>
-    <string name="offline_opt_in_confirmation">جب آپ آن لائن واپس آئیں گے تو آپ کو لنک کے ساتھ اطلاع حاصل ہوگی</string>
     <string name="offline_opt_in_decline">نہیں شکریہ</string>
     <string name="offline_opt_in_message">ہم آپ کو مشتہر کی سائٹ کے لنک کے ساتھ اطلاع بھیجیں گے۔</string>
     <string name="offline_opt_in_title">آن لائن واپس آنے پر اشتہار کھولیں۔</string>
     <string name="ok">ٹھیک ہے</string>
+    <string name="onboard_all_set_body">اخراجات ٹریک کرنا شروع کرنے کے لیے \'شروع کریں\' دبائیں۔</string>
+    <string name="onboard_all_set_title">سب تیار ہے!</string>
+    <string name="onboard_back">پیچھے</string>
+    <string name="onboard_budget_label">ماہانہ بجٹ</string>
+    <string name="onboard_continue">آگے</string>
+    <string name="onboard_currency_body">تمام رقمیں آپ کی مقامی کرنسی میں دکھائی جائیں گی۔</string>
+    <string name="onboard_currency_title">کرنسی منتخب کریں</string>
+    <string name="onboard_finances_body">دونوں اختیاری ہیں — انہیں بعد میں ترتیبات میں بھرا جا سکتا ہے۔</string>
+    <string name="onboard_finances_title">مالی تفصیل درج کریں</string>
+    <string name="onboard_get_started">شروع کریں</string>
+    <string name="onboard_income_label">ماہانہ آمدنی</string>
+    <string name="onboard_reminder_body">ہر شام دن کے اخراجات درج کرنے کی نرم یاد دہانی۔</string>
+    <string name="onboard_reminder_time">یاددہانی کا وقت: %s</string>
+    <string name="onboard_reminder_title">روزانہ یاددہانی</string>
+    <string name="onboard_reminder_toggle">روزانہ یاددہانی فعال کریں</string>
+    <string name="onboard_skip">چھوڑیں</string>
     <string name="payment_note_hint">مثال: جزوی ادائیگی، نقد ادائیگی</string>
     <string name="payment_note_label">نوٹ (اختیاری)</string>
     <string name="powered_by_footer">AG Tech کی طرف سے</string>
@@ -313,11 +476,15 @@
     <string name="reminder_section_title">روزانہ یاددہانی</string>
     <string name="reminder_time_label">یاددہانی کا وقت</string>
     <string name="reminder_toggle_desc">اپنے اخراجات درج کرنے کے لیے روزانہ یاددہانی حاصل کریں</string>
-    <string name="reminder_toggle_label">شام کی اخراجات یاددہانی</string>
+    <string name="reminder_toggle_label">روزانہ اخراجات یاددہانی</string>
+    <string name="repeat_monthly_hint">ہر مہینے کی 1 تاریخ کو خودکار طریقے سے ایک کاپی شامل ہو جاتی ہے</string>
+    <string name="repeat_monthly_label">ہر مہینے دہرائیں</string>
     <string name="reset_all_data">تمام ڈیٹا ری سیٹ کریں</string>
     <string name="reset_confirm_1">یہ اس آلے پر تمام اخراجات اور کسٹم زمرے مستقل طور پر حذف کر دے گا۔ جاری رکھیں؟</string>
     <string name="reset_confirm_2">کیا آپ واقعی یقین رکھتے ہیں؟ یہ واپس نہیں ہو سکتا۔</string>
     <string name="reset_data">ڈیٹا ری سیٹ کریں</string>
+    <string name="restore_error">بحالی ناکام</string>
+    <string name="restore_success">بحالی مکمل</string>
     <string name="s1">تصویر محفوظ کریں</string>
     <string name="s2">اشتہار کو تصویری گیلری میں تصویر محفوظ کرنے کی اجازت دیں؟</string>
     <string name="s3">قبول کریں</string>
@@ -330,14 +497,17 @@
     <string name="salary_set_label">ماہانہ خالص آمدنی</string>
     <string name="salary_set_title">ماہانہ آمدنی طے کریں</string>
     <string name="save">محفوظ کریں</string>
+    <string msgid="5659570757430909869" name="screen_lock_prompt_message">"جاری رکھنے کے لیے اپنا اسکرین لاک درج کریں"</string>
+    <string name="search_expenses_hint">اخراجات تلاش کریں…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"تلاش کریں"</string>
+    <string name="security_section_title">سیکیورٹی</string>
     <string name="select_date">تاریخ منتخب کریں</string>
     <string msgid="6043586758067023" name="selected">"منتخب کردہ"</string>
     <string name="settings_title">ترتیبات</string>
     <string name="share_app">یہ ایپ شیئر کریں</string>
     <string name="share_app_message">%1$s دیکھیں — جو ایپ میں اپنے اخراجات ٹریک کرنے کے لیے استعمال کرتا ہوں: %2$s</string>
     <string name="sms_accept">قبول کریں</string>
-    <string name="sms_detection_description">جب آپ کو بینک، UPI، یا کارڈ SMS ملتا ہے، ایپ صرف وہ ایک پیغام پڑھنے کی اجازت مانگتی ہے، پھر اسے ریویو قطار میں شامل کرتی ہے — جب تک آپ تصدیق نہ کریں کچھ محفوظ نہیں ہوتا۔</string>
+    <string name="sms_detection_description">جب آپ کو بینک، UPI، یا کارڈ SMS ملتا ہے، ایپ صرف وہ ایک پیغام پڑھنے کی اجازت مانگتی ہے، پھر اسے ریویو قطار میں شامل کرتی ہے — جب تک آپ تصدیق نہ کریں کچھ محفوظ نہیں ہوتا۔ یہ پتہ لگانا صرف اس وقت کام کرتا ہے جب ایپ کھلی ہو۔</string>
     <string name="sms_detection_title">SMS کا پتہ لگانا</string>
     <string name="sms_detection_toggle_label">SMS سے لین دین کا پتہ لگائیں</string>
     <string name="sms_dismiss">مسترد کریں</string>
@@ -365,6 +535,7 @@
     <string msgid="2561197295334830845" name="switch_role">"سوئچ"</string>
     <string msgid="1672349317127674378" name="tab">"ٹیب"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> فیصد۔"</string>
+    <string name="test_reminder_button">آزمائشی اطلاع بھیجیں</string>
     <string name="toast_all_reset">تمام ڈیٹا ری سیٹ ہو گیا۔</string>
     <string name="toast_expense_added">خرچ شامل ہو گیا۔</string>
     <string name="toast_expense_deleted">خرچ حذف ہو گیا۔</string>
@@ -372,8 +543,28 @@
     <string name="today">آج</string>
     <string msgid="3765533235322692011" name="tooltip_description">"ٹول ٹپ"</string>
     <string msgid="3124740595719787496" name="tooltip_label">"ٹول ٹپ دکھائیں"</string>
+    <string name="tour_done">شروع کریں!</string>
+    <string name="tour_next">اگلا</string>
+    <string name="tour_skip">چھوڑیں</string>
+    <string name="tour_step1_body">کوئی بھی خرچ ریکارڈ کرنے کے لیے + بٹن دبائیں۔ رقم درج کریں، زمرہ چنیں، تاریخ منتخب کریں، اور محفوظ کریں۔</string>
+    <string name="tour_step1_title">خرچ درج کریں</string>
+    <string name="tour_step2_body">اخراجات بمقابلہ بجٹ ایک نظر میں۔ ماہ بدلنے کے لیے ‹ › دبائیں۔</string>
+    <string name="tour_step2_title">ماہانہ جائزہ</string>
+    <string name="tour_step3_body">اس مہینے کی کمائی درج کرنے کے لیے آمدنی کارڈ پر ٹیپ کریں۔ ایک نظر میں جانیں آپ نے کتنا کمایا۔</string>
+    <string name="tour_step3_title">آمدنی ٹریک کریں</string>
+    <string name="tour_step4_body">قرض ٹیب استعمال کر کے ٹریک کریں کہ آپ پر کتنا بقایا ہے، خودکار ادائیگی اندازوں کے ساتھ۔</string>
+    <string name="tour_step4_title">قرض اور ادھار</string>
+    <string name="tour_step5_body">کھاتہ دکان کا ادھار ٹریک کرتا ہے۔ ترتیبات میں رپورٹ برآمد، بیک اپ اور روزانہ یاددہانی ترتیب دیں۔</string>
+    <string name="tour_step5_title">مزید دریافت کریں</string>
     <string name="trend_title">ماہانہ رجحان (آخری 12 مہینے)</string>
     <string name="update">اپ ڈیٹ کریں</string>
+    <string msgid="6524145989441579428" name="use_biometric_label">"بایو میٹرکس استعمال کریں"</string>
+    <string msgid="5385448280139639016" name="use_biometric_or_screen_lock_label">"بایو میٹرکس یا اسکرین لاک استعمال کریں"</string>
+    <string msgid="6533512708069459542" name="use_face_label">"چہرے کا استعمال کریں"</string>
+    <string msgid="2116180187159450292" name="use_face_or_screen_lock_label">"چہرہ یا اسکرین لاک استعمال کریں"</string>
+    <string msgid="6961788485681412417" name="use_fingerprint_label">"فنگر پرنٹ استعمال کریں"</string>
+    <string msgid="7577690399303139443" name="use_fingerprint_or_screen_lock_label">"فنگر پرنٹ یا اسکرین لاک استعمال کریں"</string>
+    <string msgid="5459869335976243512" name="use_screen_lock_label">"اسکرین لاک استعمال کریں"</string>
     <string name="view_all_label">سب دیکھیں</string>
     <string name="view_mode_calendar">کیلنڈر</string>
     <string name="view_mode_category">زمرے کے مطابق</string>

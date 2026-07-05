@@ -4,7 +4,7 @@ package com.expensetracker.app.data;
  * Single source of truth for all expense/category data. Backed entirely by the local
  * Room database — no network calls anywhere in this class.
  */
-@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000x\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\t\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0010\u0006\n\u0002\b\u0013\n\u0002\u0018\u0002\n\u0002\b\u0011\n\u0002\u0010\u000b\n\u0002\b\u0011\u0018\u0000 [2\u00020\u0001:\u0001[B\r\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\u001e\u0010\u001a\u001a\u00020\u001b2\u0006\u0010\u001c\u001a\u00020\u001d2\u0006\u0010\u001e\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010\u001fJR\u0010 \u001a\u00020!2\b\u0010\"\u001a\u0004\u0018\u00010\u001b2\u0006\u0010\u001c\u001a\u00020\u001d2\u0006\u0010#\u001a\u00020\u001d2\u0006\u0010$\u001a\u00020%2\u0006\u0010&\u001a\u00020%2\u0006\u0010\'\u001a\u00020%2\u0006\u0010(\u001a\u00020\u001d2\b\u0010)\u001a\u0004\u0018\u00010\u001dH\u0086@\u00a2\u0006\u0002\u0010*J8\u0010+\u001a\u00020!2\b\u0010\"\u001a\u0004\u0018\u00010\u001b2\u0006\u0010,\u001a\u00020\u001b2\u0006\u0010-\u001a\u00020\u001d2\u0006\u0010.\u001a\u00020%2\u0006\u0010/\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u00100J\u0016\u00101\u001a\u00020\u001b2\u0006\u00102\u001a\u00020\u0018H\u0086@\u00a2\u0006\u0002\u00103J\u0016\u00104\u001a\u00020!2\u0006\u00105\u001a\u00020%H\u0086@\u00a2\u0006\u0002\u00106J\u000e\u00107\u001a\b\u0012\u0004\u0012\u00020\u000f0\u0007H\u0002J\u0016\u00108\u001a\u0002092\u0006\u0010:\u001a\u00020\u000fH\u0086@\u00a2\u0006\u0002\u0010;J\u0016\u0010<\u001a\u00020!2\u0006\u0010=\u001a\u00020\u0015H\u0086@\u00a2\u0006\u0002\u0010>J\u0016\u0010?\u001a\u00020!2\u0006\u0010@\u001a\u00020\u0012H\u0086@\u00a2\u0006\u0002\u0010AJ\u0016\u0010B\u001a\u00020!2\u0006\u0010C\u001a\u00020\bH\u0086@\u00a2\u0006\u0002\u0010DJ\u0016\u0010E\u001a\u00020!2\u0006\u00102\u001a\u00020\u0018H\u0086@\u00a2\u0006\u0002\u00103J\u000e\u0010F\u001a\u00020\u001bH\u0082@\u00a2\u0006\u0002\u0010GJ\u001a\u0010H\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\b0\u00070\u00062\u0006\u0010I\u001a\u00020\u001dJ\u0016\u0010J\u001a\u00020K2\u0006\u0010,\u001a\u00020\u001bH\u0086@\u00a2\u0006\u0002\u0010LJ\u001e\u0010M\u001a\u00020!2\u0006\u0010:\u001a\u00020\u000f2\u0006\u0010\u001e\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010NJ0\u0010O\u001a\u00020!2\u0006\u0010=\u001a\u00020\u00152\u0006\u0010.\u001a\u00020%2\u0006\u0010/\u001a\u00020\u001d2\b\u0010P\u001a\u0004\u0018\u00010\u001dH\u0086@\u00a2\u0006\u0002\u0010QJ\u001e\u0010R\u001a\u00020!2\u0006\u0010:\u001a\u00020\u000f2\u0006\u0010S\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010NJ\u000e\u0010T\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010GJ\u000e\u0010U\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010GJ \u0010V\u001a\u00020!2\b\u0010,\u001a\u0004\u0018\u00010\u001b2\u0006\u0010.\u001a\u00020%H\u0086@\u00a2\u0006\u0002\u0010WJ\u001e\u0010X\u001a\u00020!2\u0006\u0010=\u001a\u00020\u00152\u0006\u0010Y\u001a\u00020KH\u0086@\u00a2\u0006\u0002\u0010ZR\u001d\u0010\u0005\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\b0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\t\u0010\nR\u001d\u0010\u000b\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\f0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\r\u0010\nR\u001d\u0010\u000e\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u000f0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0010\u0010\nR\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u001d\u0010\u0011\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00120\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0013\u0010\nR\u001d\u0010\u0014\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00150\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0016\u0010\nR\u001d\u0010\u0017\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00180\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0019\u0010\n\u00a8\u0006\\"}, d2 = {"Lcom/expensetracker/app/data/ExpenseRepository;", "", "db", "Lcom/expensetracker/app/data/AppDatabase;", "(Lcom/expensetracker/app/data/AppDatabase;)V", "allExpenses", "Lkotlinx/coroutines/flow/Flow;", "", "Lcom/expensetracker/app/data/ExpenseEntity;", "getAllExpenses", "()Lkotlinx/coroutines/flow/Flow;", "budgets", "Lcom/expensetracker/app/data/BudgetEntity;", "getBudgets", "categories", "Lcom/expensetracker/app/data/CategoryEntity;", "getCategories", "debtPayments", "Lcom/expensetracker/app/data/DebtPaymentEntity;", "getDebtPayments", "debts", "Lcom/expensetracker/app/data/DebtEntity;", "getDebts", "pendingSmsExpenses", "Lcom/expensetracker/app/data/PendingSmsExpense;", "getPendingSmsExpenses", "addCategory", "", "name", "", "colorHex", "(Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addOrUpdateDebt", "", "id", "direction", "principal", "", "interestRatePercent", "minimumPayment", "startDate", "notes", "(Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;DDDLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addOrUpdateExpense", "categoryId", "description", "amount", "date", "(Ljava/lang/Long;JLjava/lang/String;DLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addPendingSmsExpense", "item", "(Lcom/expensetracker/app/data/PendingSmsExpense;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "convertAllAmounts", "rate", "(DLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "defaultCategorySeed", "deleteCategory", "Lcom/expensetracker/app/data/DeleteCategoryResult;", "category", "(Lcom/expensetracker/app/data/CategoryEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteDebt", "debt", "(Lcom/expensetracker/app/data/DebtEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteDebtPayment", "payment", "(Lcom/expensetracker/app/data/DebtPaymentEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteExpense", "expense", "(Lcom/expensetracker/app/data/ExpenseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "dismissPendingSmsExpense", "ensureDebtPaymentCategory", "(Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "expensesForMonth", "monthKey", "isCategoryInUse", "", "(JLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "recolorCategory", "(Lcom/expensetracker/app/data/CategoryEntity;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "recordDebtPayment", "note", "(Lcom/expensetracker/app/data/DebtEntity;DLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "renameCategory", "newName", "resetAllData", "seedDefaultCategoriesIfNeeded", "setBudget", "(Ljava/lang/Long;DLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "setDebtClosed", "isClosed", "(Lcom/expensetracker/app/data/DebtEntity;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "Companion", "app_release"})
+@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000~\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\t\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u0006\n\u0002\b\u0004\n\u0002\u0010\u000b\n\u0002\b\u001b\n\u0002\u0018\u0002\n\u0002\b\r\n\u0002\u0018\u0002\n\u0002\b\u0019\u0018\u0000 j2\u00020\u0001:\u0001jB\r\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\u001e\u0010\u001a\u001a\u00020\u001b2\u0006\u0010\u001c\u001a\u00020\u001d2\u0006\u0010\u001e\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010\u001fJ8\u0010 \u001a\u00020!2\u0006\u0010\"\u001a\u00020#2\u0006\u0010$\u001a\u00020\u001d2\u0006\u0010%\u001a\u00020\u001d2\u0006\u0010&\u001a\u00020\u001d2\b\b\u0002\u0010\'\u001a\u00020(H\u0086@\u00a2\u0006\u0002\u0010)J\\\u0010*\u001a\u00020!2\b\u0010+\u001a\u0004\u0018\u00010\u001b2\u0006\u0010\u001c\u001a\u00020\u001d2\u0006\u0010,\u001a\u00020\u001d2\u0006\u0010-\u001a\u00020#2\u0006\u0010.\u001a\u00020#2\u0006\u0010/\u001a\u00020#2\u0006\u00100\u001a\u00020\u001d2\b\u00101\u001a\u0004\u0018\u00010\u001d2\b\u00102\u001a\u0004\u0018\u00010\u001dH\u0086@\u00a2\u0006\u0002\u00103JN\u00104\u001a\u00020!2\b\u0010+\u001a\u0004\u0018\u00010\u001b2\u0006\u00105\u001a\u00020\u001b2\u0006\u00106\u001a\u00020\u001d2\u0006\u0010\"\u001a\u00020#2\u0006\u0010&\u001a\u00020\u001d2\b\b\u0002\u0010\'\u001a\u00020(2\n\b\u0002\u00107\u001a\u0004\u0018\u00010\u001dH\u0086@\u00a2\u0006\u0002\u00108J\u0016\u00109\u001a\u00020\u001b2\u0006\u0010:\u001a\u00020\u0018H\u0086@\u00a2\u0006\u0002\u0010;J\u0016\u0010<\u001a\u00020!2\u0006\u0010=\u001a\u00020#H\u0086@\u00a2\u0006\u0002\u0010>J\u000e\u0010?\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010@J\u000e\u0010A\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010@J\u000e\u0010B\u001a\b\u0012\u0004\u0012\u00020\u000f0\u0007H\u0002J\u0016\u0010C\u001a\u00020D2\u0006\u0010E\u001a\u00020\u000fH\u0086@\u00a2\u0006\u0002\u0010FJ\u0016\u0010G\u001a\u00020!2\u0006\u0010H\u001a\u00020\u0015H\u0086@\u00a2\u0006\u0002\u0010IJ\u0016\u0010J\u001a\u00020!2\u0006\u0010K\u001a\u00020\u0012H\u0086@\u00a2\u0006\u0002\u0010LJ\u0016\u0010M\u001a\u00020!2\u0006\u0010N\u001a\u00020\bH\u0086@\u00a2\u0006\u0002\u0010OJ\u0016\u0010P\u001a\u00020!2\u0006\u0010Q\u001a\u00020RH\u0086@\u00a2\u0006\u0002\u0010SJ\u0016\u0010T\u001a\u00020!2\u0006\u0010:\u001a\u00020\u0018H\u0086@\u00a2\u0006\u0002\u0010;J\u000e\u0010U\u001a\u00020\u001bH\u0082@\u00a2\u0006\u0002\u0010@J\u000e\u0010V\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010@J\u001a\u0010W\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\b0\u00070\u00062\u0006\u0010X\u001a\u00020\u001dJ\u001a\u0010Y\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020R0\u00070\u00062\u0006\u0010X\u001a\u00020\u001dJ\u0016\u0010Z\u001a\u00020(2\u0006\u00105\u001a\u00020\u001bH\u0086@\u00a2\u0006\u0002\u0010[J\u0014\u0010\\\u001a\b\u0012\u0004\u0012\u00020#0\u00062\u0006\u0010X\u001a\u00020\u001dJ\u001e\u0010]\u001a\u00020!2\u0006\u0010E\u001a\u00020\u000f2\u0006\u0010\u001e\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010^J0\u0010_\u001a\u00020!2\u0006\u0010H\u001a\u00020\u00152\u0006\u0010\"\u001a\u00020#2\u0006\u0010&\u001a\u00020\u001d2\b\u0010%\u001a\u0004\u0018\u00010\u001dH\u0086@\u00a2\u0006\u0002\u0010`J\u001e\u0010a\u001a\u00020!2\u0006\u0010E\u001a\u00020\u000f2\u0006\u0010b\u001a\u00020\u001dH\u0086@\u00a2\u0006\u0002\u0010^J\u000e\u0010c\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010@J\u000e\u0010d\u001a\u00020!H\u0086@\u00a2\u0006\u0002\u0010@J \u0010e\u001a\u00020!2\b\u00105\u001a\u0004\u0018\u00010\u001b2\u0006\u0010\"\u001a\u00020#H\u0086@\u00a2\u0006\u0002\u0010fJ\u001e\u0010g\u001a\u00020!2\u0006\u0010H\u001a\u00020\u00152\u0006\u0010h\u001a\u00020(H\u0086@\u00a2\u0006\u0002\u0010iR\u001d\u0010\u0005\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\b0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\t\u0010\nR\u001d\u0010\u000b\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\f0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\r\u0010\nR\u001d\u0010\u000e\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u000f0\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0010\u0010\nR\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u001d\u0010\u0011\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00120\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0013\u0010\nR\u001d\u0010\u0014\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00150\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0016\u0010\nR\u001d\u0010\u0017\u001a\u000e\u0012\n\u0012\b\u0012\u0004\u0012\u00020\u00180\u00070\u0006\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0019\u0010\n\u00a8\u0006k"}, d2 = {"Lcom/expensetracker/app/data/ExpenseRepository;", "", "db", "Lcom/expensetracker/app/data/AppDatabase;", "(Lcom/expensetracker/app/data/AppDatabase;)V", "allExpenses", "Lkotlinx/coroutines/flow/Flow;", "", "Lcom/expensetracker/app/data/ExpenseEntity;", "getAllExpenses", "()Lkotlinx/coroutines/flow/Flow;", "budgets", "Lcom/expensetracker/app/data/BudgetEntity;", "getBudgets", "categories", "Lcom/expensetracker/app/data/CategoryEntity;", "getCategories", "debtPayments", "Lcom/expensetracker/app/data/DebtPaymentEntity;", "getDebtPayments", "debts", "Lcom/expensetracker/app/data/DebtEntity;", "getDebts", "pendingSmsExpenses", "Lcom/expensetracker/app/data/PendingSmsExpense;", "getPendingSmsExpenses", "addCategory", "", "name", "", "colorHex", "(Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addIncome", "", "amount", "", "source", "note", "date", "isRecurring", "", "(DLjava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addOrUpdateDebt", "id", "direction", "principal", "interestRatePercent", "minimumPayment", "startDate", "notes", "loanType", "(Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;DDDLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addOrUpdateExpense", "categoryId", "description", "recurringPeriod", "(Ljava/lang/Long;JLjava/lang/String;DLjava/lang/String;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "addPendingSmsExpense", "item", "(Lcom/expensetracker/app/data/PendingSmsExpense;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "convertAllAmounts", "rate", "(DLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "createRecurringExpensesForCurrentMonth", "(Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "createRecurringIncomeForCurrentMonth", "defaultCategorySeed", "deleteCategory", "Lcom/expensetracker/app/data/DeleteCategoryResult;", "category", "(Lcom/expensetracker/app/data/CategoryEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteDebt", "debt", "(Lcom/expensetracker/app/data/DebtEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteDebtPayment", "payment", "(Lcom/expensetracker/app/data/DebtPaymentEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteExpense", "expense", "(Lcom/expensetracker/app/data/ExpenseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "deleteIncome", "income", "Lcom/expensetracker/app/data/IncomeEntity;", "(Lcom/expensetracker/app/data/IncomeEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "dismissPendingSmsExpense", "ensureDebtPaymentCategory", "ensureNewBuiltinCategories", "expensesForMonth", "monthKey", "incomeForMonth", "isCategoryInUse", "(JLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "monthlyIncomeTotal", "recolorCategory", "(Lcom/expensetracker/app/data/CategoryEntity;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "recordDebtPayment", "(Lcom/expensetracker/app/data/DebtEntity;DLjava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;", "renameCategory", "newName", "resetAllData", "seedDefaultCategoriesIfNeeded", "setBudget", "(Ljava/lang/Long;DLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "setDebtClosed", "isClosed", "(Lcom/expensetracker/app/data/DebtEntity;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;", "Companion", "app_release"})
 public final class ExpenseRepository {
     @org.jetbrains.annotations.NotNull()
     private final com.expensetracker.app.data.AppDatabase db = null;
@@ -84,11 +84,38 @@ public final class ExpenseRepository {
         return null;
     }
     
+    /**
+     * Inserts any built-in categories that are missing from the DB — safe to call on every
+     * app launch. New categories added in a later release appear automatically for existing
+     * users without wiping their data.
+     */
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object ensureNewBuiltinCategories(@org.jetbrains.annotations.NotNull()
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
+        return null;
+    }
+    
     @org.jetbrains.annotations.Nullable()
     public final java.lang.Object addOrUpdateExpense(@org.jetbrains.annotations.Nullable()
     java.lang.Long id, long categoryId, @org.jetbrains.annotations.NotNull()
     java.lang.String description, double amount, @org.jetbrains.annotations.NotNull()
-    java.lang.String date, @org.jetbrains.annotations.NotNull()
+    java.lang.String date, boolean isRecurring, @org.jetbrains.annotations.Nullable()
+    java.lang.String recurringPeriod, @org.jetbrains.annotations.NotNull()
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
+        return null;
+    }
+    
+    /**
+     * Auto-creates expense entries for the current month for every recurring-expense template
+     * that doesn't already have one. Called once per app startup (in a background coroutine) —
+     * idempotent, so running it multiple times is safe.
+     *
+     * Backfills any missed months: if the app hasn't been opened since e.g. March and today is
+     * June, it inserts April, May, and June all in one pass, so the user never silently loses
+     * recurring entries for months they were away.
+     */
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object createRecurringExpensesForCurrentMonth(@org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
         return null;
     }
@@ -195,7 +222,8 @@ public final class ExpenseRepository {
     java.lang.String name, @org.jetbrains.annotations.NotNull()
     java.lang.String direction, double principal, double interestRatePercent, double minimumPayment, @org.jetbrains.annotations.NotNull()
     java.lang.String startDate, @org.jetbrains.annotations.Nullable()
-    java.lang.String notes, @org.jetbrains.annotations.NotNull()
+    java.lang.String notes, @org.jetbrains.annotations.Nullable()
+    java.lang.String loanType, @org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
         return null;
     }
@@ -251,6 +279,48 @@ public final class ExpenseRepository {
     @org.jetbrains.annotations.Nullable()
     public final java.lang.Object deleteDebtPayment(@org.jetbrains.annotations.NotNull()
     com.expensetracker.app.data.DebtPaymentEntity payment, @org.jetbrains.annotations.NotNull()
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final kotlinx.coroutines.flow.Flow<java.util.List<com.expensetracker.app.data.IncomeEntity>> incomeForMonth(@org.jetbrains.annotations.NotNull()
+    java.lang.String monthKey) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final kotlinx.coroutines.flow.Flow<java.lang.Double> monthlyIncomeTotal(@org.jetbrains.annotations.NotNull()
+    java.lang.String monthKey) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object addIncome(double amount, @org.jetbrains.annotations.NotNull()
+    java.lang.String source, @org.jetbrains.annotations.NotNull()
+    java.lang.String note, @org.jetbrains.annotations.NotNull()
+    java.lang.String date, boolean isRecurring, @org.jetbrains.annotations.NotNull()
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object deleteIncome(@org.jetbrains.annotations.NotNull()
+    com.expensetracker.app.data.IncomeEntity income, @org.jetbrains.annotations.NotNull()
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
+        return null;
+    }
+    
+    /**
+     * Auto-generates non-recurring copies of every recurring income template for the current
+     * month — mirroring [createRecurringExpensesForCurrentMonth] for income.
+     *
+     * Guards against duplicates: if an entry with the same source+amount already exists for
+     * the current month (non-recurring), it is skipped. Called once per app launch from
+     * [ExpenseApp] so users always see their monthly salary pre-filled.
+     */
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.Object createRecurringIncomeForCurrentMonth(@org.jetbrains.annotations.NotNull()
     kotlin.coroutines.Continuation<? super kotlin.Unit> $completion) {
         return null;
     }

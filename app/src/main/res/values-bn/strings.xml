@@ -12,6 +12,7 @@
     <string name="nav_dashboard">ড্যাশবোর্ড</string>
     <string name="nav_categories">বিভাগ</string>
     <string name="nav_settings">সেটিংস</string>
+    <string name="nav_debts">ঋণ</string>
 
     <string name="stat_total_spent">মোট খরচ</string>
     <string name="stat_transactions">লেনদেন</string>
@@ -48,11 +49,11 @@
     <string name="bento_budget_remaining_subtitle">%1$s বাজেটের মধ্যে</string>
     <string name="bento_savings_goal">সঞ্চয় লক্ষ্য</string>
     <string name="bento_savings_goal_subtitle">%1$s লক্ষ্যের দিকে</string>
-    <string name="bento_savings_goal_no_data">কয়েক সপ্তাহ ট্র্যাক করুন</string>
+    <string name="bento_savings_goal_no_data">কয়েক সপ্তাহ ট্র্যাক করুন, তাহলে এটি দেখাবে</string>
     <string name="bento_subscription_cost">সাবস্ক্রিপশন খরচ</string>
     <string name="bento_subscription_subtitle">এই মাসের খরচের %1$s</string>
 
-    <string name="ai_insights_feed_title">AI অন্তর্দৃষ্টি</string>
+    <string name="ai_insights_feed_title">AI ইনসাইট</string>
     <string name="insight_trend_down">আপনার খরচ গত সপ্তাহের চেয়ে %1$s কম।</string>
     <string name="insight_trend_up">আপনার খরচ গত সপ্তাহের চেয়ে %1$s বেশি।</string>
     <string name="insight_trend_flat">আপনার খরচ গত সপ্তাহের মতোই।</string>
@@ -63,7 +64,7 @@
     <string name="insight_strongest_day">আপনি সাধারণত %1$s দিন সবচেয়ে কম খরচ করেন।</string>
     <string name="insight_subscription_load">সাবস্ক্রিপশন এই মাসের খরচের %1$s।</string>
     <string name="insight_daily_average">এই মাসে আপনার গড় দৈনিক খরচ %1$s।</string>
-    <string name="insight_not_enough_data">ব্যক্তিগত অন্তর্দৃষ্টি দেখতে কিছু খরচ যোগ করুন।</string>
+    <string name="insight_not_enough_data">ব্যক্তিগত ইনসাইট দেখতে কিছু খরচ যোগ করুন।</string>
 
     <string name="breakdown_title">বিভাগ অনুযায়ী বিশ্লেষণ</string>
     <string name="no_expenses_breakdown">এখনো বিশ্লেষণের জন্য কোনো খরচ নেই।</string>
@@ -86,6 +87,44 @@
     <string name="edit">সম্পাদনা করুন</string>
     <string name="delete">মুছুন</string>
     <string name="delete_expense_confirm">এই খরচটি মুছবেন?</string>
+    <string name="delete_payment_confirm">এই পেমেন্টটি মুছবেন?</string>
+    <string name="delete_income_confirm">এই আয় এন্ট্রিটি মুছবেন?</string>
+    <string name="delete_income_recurring_confirm">এটি একটি পুনরাবৃত্তি আয় টেমপ্লেট। এটি মুছলে ভবিষ্যতের স্বয়ংক্রিয় এন্ট্রি বন্ধ হবে। পুরানো কপিগুলি থাকবে।</string>
+    <string name="income_recurring_badge">মাসিক পুনরাবৃত্তি হয়</string>
+    <string name="tour_step1_title">খরচ লগ করুন</string>
+    <string name="tour_step1_body">যেকোনো খরচ রেকর্ড করতে + বোতামে ট্যাপ করুন। পরিমাণ লিখুন, বিভাগ বেছে নিন, তারিখ সেট করুন এবং সেভ করুন।</string>
+    <string name="tour_step2_title">মাসিক ওভারভিউ</string>
+    <string name="tour_step2_body">এক নজরে ব্যয় বনাম বাজেট। মাস বদলাতে ‹ › চাপুন।</string>
+    <string name="tour_step3_title">আয় ট্র্যাক করুন</string>
+    <string name="tour_step3_body">এই মাসের উপার্জন লগ করতে আয় কার্ডে ট্যাপ করুন। এক নজরে দেখুন এই মাসে কত আয় হয়েছে।</string>
+    <string name="tour_step4_title">ঋণ ও লোন</string>
+    <string name="tour_step4_body">ঋণ ট্যাব ব্যবহার করে ট্র্যাক করুন আপনি কতটুকু পাওনা বা দেনা আছেন, স্বয়ংক্রিয় পরিশোধ অনুমানসহ।</string>
+    <string name="tour_step5_title">আরও অন্বেষণ করুন</string>
+    <string name="tour_step5_body">খাতা দোকানের বাকি ট্র্যাক করে। সেটিংসে রিপোর্ট এক্সপোর্ট, ব্যাকআপ ও দৈনিক রিমাইন্ডার সেট করুন।</string>
+    <string name="tour_next">পরবর্তী</string>
+    <string name="tour_done">শুরু করি!</string>
+    <string name="tour_skip">বাদ দিন</string>
+
+    <!-- Onboarding wizard — steps 2–4 (shown after locale is applied) -->
+    <string name="onboard_currency_title">মুদ্রা বেছে নিন</string>
+    <string name="onboard_currency_body">সমস্ত পরিমাণ আপনার স্থানীয় মুদ্রায় দেখানো হবে।</string>
+    <string name="onboard_finances_title">আর্থিক তথ্য দিন</string>
+    <string name="onboard_finances_body">দুটোই ঐচ্ছিক — পরে সেটিংসে পূরণ করতে পারবেন।</string>
+    <string name="onboard_income_label">মাসিক আয়</string>
+    <string name="onboard_budget_label">মাসিক বাজেট</string>
+    <string name="onboard_reminder_title">দৈনিক রিমাইন্ডার</string>
+    <string name="onboard_reminder_body">প্রতিদিন সন্ধ্যায় দিনের খরচ লগ করার মৃদু স্মরণ।</string>
+    <string name="onboard_reminder_toggle">দৈনিক রিমাইন্ডার চালু করুন</string>
+    <string name="onboard_reminder_time">রিমাইন্ডারের সময়: %s</string>
+    <string name="onboard_all_set_title">সব প্রস্তুত!</string>
+    <string name="onboard_all_set_body">খরচ ট্র্যাক শুরু করতে \'শুরু করি!\' চাপুন।</string>
+    <string name="onboard_continue">পরবর্তী</string>
+    <string name="onboard_get_started">শুরু করি!</string>
+    <string name="onboard_back">পেছনে</string>
+    <string name="onboard_skip">বাদ দিন</string>
+
+    <string name="delete_recurring_confirm">এটি একটি পুনরাবৃত্তি ব্যয় টেমপ্লেট। মুছলে ভবিষ্যতের স্বয়ংক্রিয় এন্ট্রি বন্ধ হবে। আগের কপিগুলো থাকবে।</string>
+    <string name="delete_recurring_stop_future">পুনরাবৃত্তি বন্ধ করুন</string>
     <string name="today">আজ</string>
     <string name="yesterday">গতকাল</string>
     <string name="view_mode_day">দিন অনুযায়ী</string>
@@ -127,7 +166,7 @@
     <string name="reset_confirm_2">আপনি কি সত্যিই নিশ্চিত? এটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
     <string name="data_local_note">আপনার সব ডেটা এই ডিভাইসেই থাকে। কোনো সার্ভারে আপলোড হয় না।</string>
     <string name="detected_region_note">আপনার ডিভাইস থেকে শনাক্ত: %1$s</string>
-    <string name="more_section_title">আরো</string>
+    <string name="more_section_title">আরও</string>
     <string name="share_app">এই অ্যাপ শেয়ার করুন</string>
     <string name="share_app_message">%1$s দেখুন — আমি এই অ্যাপ দিয়ে খরচ ট্র্যাক করি: %2$s</string>
     <string name="rate_us">আমাদের রেটিং দিন</string>
@@ -151,6 +190,7 @@
     <string name="toast_expense_deleted">খরচ মুছে গেছে।</string>
     <string name="toast_all_reset">সব ডেটা রিসেট হয়েছে।</string>
     <string name="error_invalid_amount">০-এর বেশি একটি বৈধ পরিমাণ লিখুন।</string>
+    <string name="error_invalid_date">YYYY-MM-DD ফরম্যাটে একটি বৈধ তারিখ লিখুন।</string>
     <string name="error_select_date">একটি তারিখ বেছে নিন।</string>
 
     <string name="done">সম্পন্ন</string>
@@ -172,6 +212,14 @@
     <string name="cat_savings">সঞ্চয় ও বিনিয়োগ</string>
     <string name="cat_other">অন্যান্য</string>
     <string name="cat_debt_payments">ঋণ বা লোনের কিস্তি</string>
+    <string name="cat_mobile_recharge">মোবাইল রিচার্জ</string>
+    <string name="cat_electricity">বিদ্যুৎ</string>
+    <string name="cat_fuel">জ্বালানি</string>
+    <string name="cat_farming">কৃষি</string>
+    <string name="cat_khata">খাতা</string>
+    <string name="cat_education">শিক্ষা</string>
+    <string name="khata_delete_party_title">পার্টি মুছবেন?</string>
+    <string name="khata_delete_party_confirm">%1$s এবং তাদের সমস্ত এন্ট্রি স্থায়ীভাবে মুছে যাবে।</string>
 
     <!-- Budget tracking -->
     <string name="budget_title">বাজেট</string>
@@ -203,6 +251,19 @@
 
     <string name="debt_add_title">ঋণ বা লোন যোগ করুন</string>
     <string name="debt_edit_title">ঋণ বা লোন সম্পাদনা করুন</string>
+    <string name="debt_loan_type_label">লোনের ধরন (ঐচ্ছিক)</string>
+    <string name="loan_type_personal">ব্যক্তিগত লোন</string>
+    <string name="loan_type_home">হোম লোন</string>
+    <string name="loan_type_car">গাড়ির লোন</string>
+    <string name="loan_type_education">শিক্ষা লোন</string>
+    <string name="loan_type_gold">গোল্ড লোন</string>
+    <string name="loan_type_business">ব্যবসায়িক লোন</string>
+    <string name="loan_type_informal">কারো কাছ থেকে ধার</string>
+    <string name="loan_type_other">অন্যান্য</string>
+    <string name="loan_type_none">কোনোটি নয় (ঐচ্ছিক)</string>
+    <string name="loan_type_other_name_label">লোনের ধরন উল্লেখ করুন</string>
+    <string name="loan_type_other_name_hint">যেমন: গাড়ির লোন, শিক্ষার্থী লোন…</string>
+
     <string name="debt_direction_label">দিক</string>
     <string name="debt_direction_owe">আমার দেনা</string>
     <string name="debt_direction_owed">আমার পাওনা</string>
@@ -241,19 +302,139 @@
     <string name="spending_by_category">বিভাগ অনুযায়ী খরচ</string>
     <string name="recent_transactions_label">সাম্প্রতিক লেনদেন</string>
     <string name="view_all_label">সব দেখুন</string>
-    <string name="load_more">আরো লোড করুন</string>
+    <string name="load_more">আরও লোড করুন</string>
     <string name="salary_set_title">মাসিক আয় নির্ধারণ করুন</string>
     <string name="salary_set_label">মাসিক টেক-হোম বেতন</string>
     <string name="salary_set_hint">যেমন: ৫০০০০</string>
+    <string name="add_income">আয় যোগ করুন</string>
+    <string name="income_source_hint">উৎস</string>
+    <string name="income_source_placeholder">যেমন: বেতন, ফ্রিল্যান্স, বোনাস</string>
+    <string name="income_note_hint">নোট (ঐচ্ছিক)</string>
+    <string name="income_recurring_label">প্রতি মাসে পুনরাবৃত্তি করুন</string>
+    <string name="income_recurring_hint">প্রতি মাসে স্বয়ংক্রিয়ভাবে একটি কপি যোগ করা হবে।</string>
+    <string name="income_history_title">এই মাসের আয়</string>
+    <string name="no_income_this_month">এখনও কোনো আয় নথিভুক্ত নেই</string>
+    <string name="income_total_label">মোট আয়</string>
     <string name="stat_spent_label">খরচ</string>
     <string name="stat_remaining_label">অবশিষ্ট</string>
     <string name="months_budget_label">%1$s বাজেট</string>
 
     <!-- Daily reminder notification -->
-    <string name="reminder_section_title">দৈনিক স্মরণিকা</string>
-    <string name="reminder_toggle_label">সন্ধ্যার খরচ স্মরণিকা</string>
-    <string name="reminder_toggle_desc">প্রতিদিন খরচ লেখার জন্য একটি স্মরণিকা পান</string>
-    <string name="reminder_time_label">স্মরণিকার সময়</string>
+    <string name="reminder_section_title">দৈনিক রিমাইন্ডার</string>
+    <string name="reminder_toggle_label">দৈনিক খরচ রিমাইন্ডার</string>
+    <string name="reminder_toggle_desc">প্রতিদিন খরচ লেখার জন্য রিমাইন্ডার পান</string>
+    <string name="reminder_time_label">রিমাইন্ডারের সময়</string>
     <string name="reminder_notification_title">আজকের খরচ কি লিখেছেন? 💸</string>
     <string name="reminder_notification_body">আজ মিস হওয়া খরচ দ্রুত যোগ করতে ট্যাপ করুন।</string>
+
+    <!-- ── খাতা / স্থানীয় দোকান ক্রেডিট ট্র্যাকার ──────────────────────────── -->
+    <string name="khata_tab_label">খাতা</string>
+    <string name="khata_screen_title">খাতা</string>
+    <string name="khata_i_owe">আমি দেব</string>
+    <string name="khata_they_owe">আমি পাব</string>
+    <string name="khata_total_i_owe">মোট দেওয়ার পরিমাণ</string>
+    <string name="khata_total_they_owe">মোট পাওয়ার পরিমাণ</string>
+    <string name="khata_add_party">পার্টি যোগ করুন</string>
+    <string name="khata_edit_party">পার্টি সম্পাদনা করুন</string>
+    <string name="khata_party_name_hint">নাম (দোকান বা ব্যক্তি)</string>
+    <string name="khata_party_phone_hint">ফোন নম্বর (WhatsApp-এর জন্য)</string>
+    <string name="khata_party_phone_optional">ঐচ্ছিক — শুধুমাত্র WhatsApp রিমাইন্ডারের জন্য প্রয়োজন</string>
+    <string name="khata_save_party">সংরক্ষণ করুন</string>
+    <string name="khata_delete_party">পার্টি মুছুন</string>
+    <string name="khata_no_parties_i_owe">এখনো কোনো দোকান যোগ করা হয়নি।
+বাকি আছে এমন দোকান যোগ করতে + চাপুন।</string>
+    <string name="khata_no_parties_they_owe">এখনো কোনো গ্রাহক যোগ করা হয়নি।
+যে ধার নিয়েছে তাকে যোগ করতে + চাপুন।</string>
+    <string name="khata_outstanding">বকেয়া</string>
+    <string name="khata_settled">পরিশোধ হয়েছে ✓</string>
+    <string name="khata_add_entry">এন্ট্রি যোগ করুন</string>
+    <string name="khata_credit_label">বাকি (ধারে নেওয়া)</string>
+    <string name="khata_payment_label">পরিশোধ (দেওয়া হয়েছে)</string>
+    <string name="khata_amount_hint">পরিমাণ</string>
+    <string name="khata_note_hint">নোট (ঐচ্ছিক)</string>
+    <string name="khata_entry_date">তারিখ</string>
+    <string name="khata_no_entries">এখনো কোনো এন্ট্রি নেই। ক্রেডিট বা পরিশোধ লগ করতে + চাপুন।</string>
+    <string name="khata_delete_entry">এন্ট্রি মুছুন</string>
+    <string name="khata_whatsapp_reminder">রিমাইন্ডার পাঠান</string>
+    <string name="khata_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
+    <string name="khata_reminder_msg_owe">হ্যালো %1$s 👋
+
+একটু মনে করিয়ে দিচ্ছি — আপনার বকেয়া %2$s আছে।
+
+সুবিধামতো পরিশোধ করুন 🙏
+
+— %3$s</string>
+    <string name="khata_reminder_msg_credit">হ্যালো %1$s 👋
+
+জানিয়ে রাখছি — আমার দোকানে আপনার %2$s ক্রেডিট আছে।
+
+যেকোনো সময় ব্যবহার করুন!
+
+— %3$s</string>
+    <string name="khata_direction_i_owe_label">আমি এই পার্টিকে দেব</string>
+    <string name="khata_direction_they_owe_label">এই পার্টি আমাকে দেবে</string>
+    <string name="khata_initial_amount_label">প্রারম্ভিক পরিমাণ (ঐচ্ছিক)</string>
+
+    <string name="loan_type_select_hint">ঋণের ধরন নির্বাচন করুন</string>
+    <string name="error_loan_type_required">অনুগ্রহ করে একটি ঋণের ধরন নির্বাচন করুন</string>
+    <string name="test_reminder_button">পরীক্ষামূলক বিজ্ঞপ্তি পাঠান</string>
+    <string name="repeat_monthly_label">প্রতি মাসে পুনরাবৃত্তি করুন</string>
+    <string name="repeat_monthly_hint">প্রতি মাসের ১ তারিখে স্বয়ংক্রিয়ভাবে একটি কপি যোগ হয়</string>
+
+    <!-- ── Budget alerts ── -->
+    <string name="budget_alert_warning">⚠️ আপনি আপনার মাসিক বাজেটের 80% ব্যবহার করেছেন</string>
+    <string name="budget_alert_exceeded">🚨 আপনি আপনার মাসিক বাজেট ছাড়িয়ে গেছেন!</string>
+
+    <!-- ── CSV export ── -->
+    <string name="export_csv">CSV রপ্তানি করুন</string>
+    <string name="export_csv_chooser_title">CSV সংরক্ষণ বা শেয়ার করুন</string>
+
+    <!-- ── Search ── -->
+    <string name="search_expenses_hint">খরচ অনুসন্ধান করুন…</string>
+
+    <!-- ── Security ── -->
+    <string name="security_section_title">নিরাপত্তা</string>
+    <string name="biometric_lock_title">খরচ ট্র্যাকার আনলক করুন</string>
+    <string name="biometric_lock_subtitle">অ্যাপ খুলতে বায়োমেট্রিক্স বা ডিভাইস PIN ব্যবহার করুন</string>
+    <string name="biometric_lock_toggle_label">অ্যাপ লক</string>
+    <string name="biometric_lock_description">প্রতিবার অ্যাপ খোলার সময় বায়োমেট্রিক্স বা PIN প্রয়োজন</string>
+
+    <!-- ── Backup / Restore ── -->
+    <string name="backup_section_title">ডেটা ব্যাকআপ</string>
+    <string name="backup_export_label">ব্যাকআপ রপ্তানি করুন</string>
+    <string name="backup_import_label">ব্যাকআপ আমদানি করুন</string>
+    <string name="backup_chooser_title">ব্যাকআপ সংরক্ষণ বা শেয়ার করুন</string>
+    <string name="backup_success">ব্যাকআপ রপ্তানি হয়েছে</string>
+    <string name="backup_error">ব্যাকআপ ব্যর্থ</string>
+    <string name="restore_success">পুনরুদ্ধার সম্পন্ন</string>
+    <string name="restore_error">পুনরুদ্ধার ব্যর্থ</string>
+
+    <!-- ── Google Drive Backup ── -->
+    <string name="drive_backup_section_title">Google Drive ব্যাকআপ</string>
+    <string name="drive_backup_scope_note">Google Drive-এর অ্যাপ ফোল্ডারে সুরক্ষিতভাবে সংরক্ষিত</string>
+    <string name="drive_backup_sign_in">Google দিয়ে সাইন ইন করুন</string>
+    <string name="drive_backup_signed_in_as">%1$s হিসেবে সাইন ইন করা আছে</string>
+    <string name="drive_backup_save">Drive-এ সেভ করুন</string>
+    <string name="drive_backup_restore">Drive থেকে পুনরুদ্ধার করুন</string>
+    <string name="drive_backup_sign_out">Google থেকে সাইন আউট করুন</string>
+    <string name="drive_backup_success">Google Drive-এ ব্যাকআপ সংরক্ষিত হয়েছে</string>
+    <string name="drive_restore_success">Google Drive থেকে ডেটা পুনরুদ্ধার হয়েছে</string>
+    <string name="drive_no_backup">Drive-এ এখনো কোনো ব্যাকআপ নেই</string>
+    <string name="drive_backup_error">Google Drive ত্রুটি</string>
+    <string name="backup_scope_note">ব্যয়, বিভাগ, বাজেট, খাতা এবং ঋণ অন্তর্ভুক্ত</string>
+    <string name="khata_label_all_cleared">%1$s-এর সাথে সব পরিষ্কার ✓</string>
+    <string name="khata_label_i_owe">আপনি %1$s-এর কাছে ঋণী</string>
+    <string name="khata_label_they_owe">%1$s আপনার কাছে ঋণী</string>
+    <string name="khata_sender_name_default">আমি</string>
+
+    <!-- ── Khata / Debts shared localized labels ── -->
+    <string name="khata_subtitle">আপনার পরিচিতদের সাথে ধার দেওয়া ও নেওয়া অর্থ ট্র্যাক করুন</string>
+    <string name="debts_subtitle">আপনার দেওয়া ও পাওয়ার টাকা ট্র্যাক করুন</string>
+    <string name="net_all_settled">সব মিটিয়ে দেওয়া হয়েছে ✓</string>
+    <string name="net_in_favour">নেট +%1$s আপনার পক্ষে</string>
+    <string name="net_you_owe_net">নেট −%1$s আপনাকে দিতে হবে</string>
+    <string name="label_party_singular">পক্ষ</string>
+    <string name="label_party_plural">পক্ষসমূহ</string>
+    <string name="label_debt_singular">ঋণ</string>
+    <string name="label_debt_plural">ঋণসমূহ</string>
 </resources>

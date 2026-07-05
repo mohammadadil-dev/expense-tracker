@@ -34,7 +34,9 @@ data class DebtEntity(
     val minimumPayment: Double = 0.0,
     val startDate: String,
     val notes: String? = null,
-    val isClosed: Boolean = false
+    val isClosed: Boolean = false,
+    /** Optional loan type tag — one of the TYPE_* constants below, or null for unclassified. */
+    val loanType: String? = null
 ) {
     companion object {
         /** Money the user owes someone else (a liability). */
@@ -42,5 +44,34 @@ data class DebtEntity(
 
         /** Money someone else owes the user (a receivable). */
         const val DIRECTION_OWED = "OWED"
+
+        // Loan type constants — stored as plain strings so no TypeConverter is needed.
+        const val TYPE_PERSONAL  = "personal"
+        const val TYPE_HOME      = "home"
+        const val TYPE_CAR       = "car"
+        const val TYPE_EDUCATION = "education"
+        const val TYPE_GOLD      = "gold"
+        const val TYPE_BUSINESS  = "business"
+        const val TYPE_INFORMAL  = "informal"
+        const val TYPE_OTHER     = "other"
+
+        /** Emoji for each loan type — used in the list card and add/edit chips. */
+        fun loanTypeEmoji(type: String?): String = when (type) {
+            TYPE_PERSONAL  -> "💳"
+            TYPE_HOME      -> "🏠"
+            TYPE_CAR       -> "🚗"
+            TYPE_EDUCATION -> "🎓"
+            TYPE_GOLD      -> "💛"
+            TYPE_BUSINESS  -> "💼"
+            TYPE_INFORMAL  -> "🤝"
+            TYPE_OTHER     -> "📦"
+            else           -> ""
+        }
+
+        /** All types in display order for the picker. */
+        val ALL_TYPES = listOf(
+            TYPE_PERSONAL, TYPE_HOME, TYPE_CAR, TYPE_EDUCATION,
+            TYPE_GOLD, TYPE_BUSINESS, TYPE_INFORMAL, TYPE_OTHER
+        )
     }
 }

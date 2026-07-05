@@ -251,6 +251,62 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
   }
 
   @Override
+  public Object getAllOnce(final Continuation<? super List<DebtPaymentEntity>> $completion) {
+    final String _sql = "SELECT * FROM debt_payments ORDER BY date DESC, id DESC";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<DebtPaymentEntity>>() {
+      @Override
+      @NonNull
+      public List<DebtPaymentEntity> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfDebtId = CursorUtil.getColumnIndexOrThrow(_cursor, "debtId");
+          final int _cursorIndexOfAmount = CursorUtil.getColumnIndexOrThrow(_cursor, "amount");
+          final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfNote = CursorUtil.getColumnIndexOrThrow(_cursor, "note");
+          final int _cursorIndexOfLinkedExpenseId = CursorUtil.getColumnIndexOrThrow(_cursor, "linkedExpenseId");
+          final List<DebtPaymentEntity> _result = new ArrayList<DebtPaymentEntity>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final DebtPaymentEntity _item;
+            final long _tmpId;
+            _tmpId = _cursor.getLong(_cursorIndexOfId);
+            final long _tmpDebtId;
+            _tmpDebtId = _cursor.getLong(_cursorIndexOfDebtId);
+            final double _tmpAmount;
+            _tmpAmount = _cursor.getDouble(_cursorIndexOfAmount);
+            final String _tmpDate;
+            if (_cursor.isNull(_cursorIndexOfDate)) {
+              _tmpDate = null;
+            } else {
+              _tmpDate = _cursor.getString(_cursorIndexOfDate);
+            }
+            final String _tmpNote;
+            if (_cursor.isNull(_cursorIndexOfNote)) {
+              _tmpNote = null;
+            } else {
+              _tmpNote = _cursor.getString(_cursorIndexOfNote);
+            }
+            final Long _tmpLinkedExpenseId;
+            if (_cursor.isNull(_cursorIndexOfLinkedExpenseId)) {
+              _tmpLinkedExpenseId = null;
+            } else {
+              _tmpLinkedExpenseId = _cursor.getLong(_cursorIndexOfLinkedExpenseId);
+            }
+            _item = new DebtPaymentEntity(_tmpId,_tmpDebtId,_tmpAmount,_tmpDate,_tmpNote,_tmpLinkedExpenseId);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
   public Object getForDebt(final long debtId,
       final Continuation<? super List<DebtPaymentEntity>> $completion) {
     final String _sql = "SELECT * FROM debt_payments WHERE debtId = ? ORDER BY date DESC, id DESC";
