@@ -28,6 +28,7 @@ class ExpenseRepository(private val db: AppDatabase) {
     val budgets: Flow<List<BudgetEntity>> = db.budgetDao().observeAll()
     val debts: Flow<List<DebtEntity>> = db.debtDao().observeAll()
     val debtPayments: Flow<List<DebtPaymentEntity>> = db.debtPaymentDao().observeAll()
+    val activeGoals: Flow<List<GoalEntity>> = db.goalDao().activeGoals()
 
     fun expensesForMonth(monthKey: String): Flow<List<ExpenseEntity>> =
         db.expenseDao().observeByMonth(monthKey)
@@ -215,8 +216,28 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.debtDao().deleteAll()
         db.debtPaymentDao().deleteAll()
         db.incomeDao().deleteAll()
+        // Goals are personal commitments — deliberately NOT wiped on data reset so users
+        // don't lose their savings targets when clearing transaction history.
         seedDefaultCategoriesIfNeeded()
     }
+
+    // ── Savings Goals ─────────────────────────────────────────────────────────
+
+    suspend fun addGoal(name: String, emoji: String, targetAmount: Double, targetDate: String): Long =
+        db.goalDao().insert(GoalEntity(name = name, emoji = emoji, targetAmount = targetAmount, targetDate = targetDate))
+
+    suspend fun updateGoal(goal: GoalEntity) = db.goalDao().update(goal)
+
+    suspend fun contributeToGoal(goalId: Long, additionalAmount: Double) {
+        val goal = db.goalDao().getById(goalId) ?: return
+        val newSaved = (goal.savedAmount + additionalAmount).coerceAtMost(goal.targetAmount)
+        db.goalDao().updateSavedAmount(goalId, newSaved)
+        if (newSaved >= goal.targetAmount) db.goalDao().markCompleted(goalId)
+    }
+
+    suspend fun deleteGoal(goalId: Long) = db.goalDao().deleteById(goalId)
+
+    suspend fun markGoalCompleted(goalId: Long) = db.goalDao().markCompleted(goalId)
 
     suspend fun addOrUpdateDebt(
         id: Long?,

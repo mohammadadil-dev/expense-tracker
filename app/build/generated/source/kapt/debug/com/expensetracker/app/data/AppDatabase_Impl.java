@@ -43,10 +43,12 @@ public final class AppDatabase_Impl extends AppDatabase {
 
   private volatile IncomeDao _incomeDao;
 
+  private volatile GoalDao _goalDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(11) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(12) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nameKey` TEXT, `customName` TEXT, `colorHex` TEXT NOT NULL, `sortOrder` INTEGER NOT NULL)");
@@ -63,8 +65,9 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_khata_entries_partyId` ON `khata_entries` (`partyId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `income_entries` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `amount` REAL NOT NULL, `source` TEXT NOT NULL, `note` TEXT NOT NULL, `date` TEXT NOT NULL, `monthKey` TEXT NOT NULL, `isRecurring` INTEGER NOT NULL)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_income_entries_monthKey` ON `income_entries` (`monthKey`)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `savings_goals` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `emoji` TEXT NOT NULL, `targetAmount` REAL NOT NULL, `savedAmount` REAL NOT NULL, `targetDate` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `isCompleted` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '27c5d57f581f18fa82794350c2ee014a')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '446b2e31bc3a94a3631028b974d58466')");
       }
 
       @Override
@@ -78,6 +81,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("DROP TABLE IF EXISTS `khata_parties`");
         db.execSQL("DROP TABLE IF EXISTS `khata_entries`");
         db.execSQL("DROP TABLE IF EXISTS `income_entries`");
+        db.execSQL("DROP TABLE IF EXISTS `savings_goals`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -277,9 +281,27 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoIncomeEntries + "\n"
                   + " Found:\n" + _existingIncomeEntries);
         }
+        final HashMap<String, TableInfo.Column> _columnsSavingsGoals = new HashMap<String, TableInfo.Column>(8);
+        _columnsSavingsGoals.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("emoji", new TableInfo.Column("emoji", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("targetAmount", new TableInfo.Column("targetAmount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("savedAmount", new TableInfo.Column("savedAmount", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("targetDate", new TableInfo.Column("targetDate", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSavingsGoals.put("isCompleted", new TableInfo.Column("isCompleted", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysSavingsGoals = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesSavingsGoals = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoSavingsGoals = new TableInfo("savings_goals", _columnsSavingsGoals, _foreignKeysSavingsGoals, _indicesSavingsGoals);
+        final TableInfo _existingSavingsGoals = TableInfo.read(db, "savings_goals");
+        if (!_infoSavingsGoals.equals(_existingSavingsGoals)) {
+          return new RoomOpenHelper.ValidationResult(false, "savings_goals(com.expensetracker.app.data.GoalEntity).\n"
+                  + " Expected:\n" + _infoSavingsGoals + "\n"
+                  + " Found:\n" + _existingSavingsGoals);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "27c5d57f581f18fa82794350c2ee014a", "054fbab3ab9ee507890587509f05a80c");
+    }, "446b2e31bc3a94a3631028b974d58466", "9355d655de3ff425b860dd5cfbfc2bb6");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -290,7 +312,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "categories","expenses","pending_sms_expenses","budgets","debts","debt_payments","khata_parties","khata_entries","income_entries");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "categories","expenses","pending_sms_expenses","budgets","debts","debt_payments","khata_parties","khata_entries","income_entries","savings_goals");
   }
 
   @Override
@@ -315,6 +337,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       _db.execSQL("DELETE FROM `khata_parties`");
       _db.execSQL("DELETE FROM `khata_entries`");
       _db.execSQL("DELETE FROM `income_entries`");
+      _db.execSQL("DELETE FROM `savings_goals`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -340,6 +363,7 @@ public final class AppDatabase_Impl extends AppDatabase {
     _typeConvertersMap.put(DebtPaymentDao.class, DebtPaymentDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(KhataDao.class, KhataDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(IncomeDao.class, IncomeDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(GoalDao.class, GoalDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -466,6 +490,20 @@ public final class AppDatabase_Impl extends AppDatabase {
           _incomeDao = new IncomeDao_Impl(this);
         }
         return _incomeDao;
+      }
+    }
+  }
+
+  @Override
+  public GoalDao goalDao() {
+    if (_goalDao != null) {
+      return _goalDao;
+    } else {
+      synchronized(this) {
+        if(_goalDao == null) {
+          _goalDao = new GoalDao_Impl(this);
+        }
+        return _goalDao;
       }
     }
   }

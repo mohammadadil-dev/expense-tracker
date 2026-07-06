@@ -137,7 +137,7 @@ public final class BudgetDao_Impl implements BudgetDao {
   }
 
   @Override
-  public Object insert(final BudgetEntity budget, final Continuation<? super Long> $completion) {
+  public Object insert(final BudgetEntity budget, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -151,11 +151,11 @@ public final class BudgetDao_Impl implements BudgetDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object upsert(final BudgetEntity budget, final Continuation<? super Long> $completion) {
+  public Object upsert(final BudgetEntity budget, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -169,11 +169,11 @@ public final class BudgetDao_Impl implements BudgetDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final BudgetEntity budget, final Continuation<? super Unit> $completion) {
+  public Object delete(final BudgetEntity budget, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -187,11 +187,11 @@ public final class BudgetDao_Impl implements BudgetDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object update(final BudgetEntity budget, final Continuation<? super Unit> $completion) {
+  public Object update(final BudgetEntity budget, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -205,12 +205,11 @@ public final class BudgetDao_Impl implements BudgetDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteForCategory(final long categoryId,
-      final Continuation<? super Unit> $completion) {
+  public Object deleteForCategory(final long categoryId, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -231,11 +230,11 @@ public final class BudgetDao_Impl implements BudgetDao {
           __preparedStmtOfDeleteForCategory.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -254,7 +253,7 @@ public final class BudgetDao_Impl implements BudgetDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -300,7 +299,7 @@ public final class BudgetDao_Impl implements BudgetDao {
   }
 
   @Override
-  public Object getAllOnce(final Continuation<? super List<BudgetEntity>> $completion) {
+  public Object getAllOnce(final Continuation<? super List<BudgetEntity>> arg0) {
     final String _sql = "SELECT * FROM budgets";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -335,7 +334,7 @@ public final class BudgetDao_Impl implements BudgetDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @NonNull

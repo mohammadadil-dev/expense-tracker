@@ -101,6 +101,9 @@
     <string name="cat_transport">পরিবহন</string>
     <string name="cat_utilities">ইউটিলিটি বিল</string>
     <string name="category_label">বিভাগ</string>
+    <string name="cd_clear_search">খোঁজ মুছুন</string>
+    <string name="cd_next_month">পরের মাস</string>
+    <string name="cd_previous_month">আগের মাস</string>
     <string name="close">বন্ধ করুন</string>
     <string msgid="406453423630273620" name="close_drawer">"নেভিগেশন মেনু বন্ধ করুন"</string>
     <string msgid="7573152094250666567" name="close_sheet">"শিট বন্ধ করুন"</string>
@@ -188,6 +191,12 @@
     <string name="description_hint">যেমন: সুপারমার্কেট থেকে বাজার</string>
     <string name="description_label">বিবরণ</string>
     <string name="detected_region_note">আপনার ডিভাইস থেকে শনাক্ত: %1$s</string>
+    <string name="digest_body_first_week">এই সপ্তাহে আপনি %1$s খরচ করেছেন — ট্র্যাকিং চালিয়ে যান!</string>
+    <string name="digest_body_less">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% কম 🎉</string>
+    <string name="digest_body_more">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% বেশি</string>
+    <string name="digest_body_no_spend">দারুণ সপ্তাহ — কোনো খরচ রেকর্ড হয়নি! 🎉</string>
+    <string name="digest_body_same">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের মতোই</string>
+    <string name="digest_title">সাপ্তাহিক সারসংক্ষেপ 📊</string>
     <string name="done">সম্পন্ন</string>
     <string name="drive_backup_error">Google Drive ত্রুটি</string>
     <string name="drive_backup_restore">Drive থেকে পুনরুদ্ধার করুন</string>
@@ -243,6 +252,20 @@
     <string msgid="2863935784364843033" name="glance_error_layout_text">"আসল সমস্যাটি কী তা "<b><tt>"adb logcat"</tt></b>"-এর সাহায্যে চেক করুন, "<b><tt>"GlanceAppWidget"</tt></b>"-এর জন্য সার্চ করা হচ্ছে"</string>
     <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"কন্টেন্ট দেখানো যাচ্ছে না"</string>
     <string msgid="3631961919234443531" name="glance_error_layout_title"><b>"Glance App উইজেট সংক্রান্ত সমস্যা"</b></string>
+    <string name="goals_add">লক্ষ্য যোগ করুন</string>
+    <string name="goals_date_label">লক্ষ্য তারিখ</string>
+    <string name="goals_date_optional">(ঐচ্ছিক)</string>
+    <string name="goals_edit">লক্ষ্য সম্পাদনা করুন</string>
+    <string name="goals_emoji_label">ইমোজি বেছে নিন</string>
+    <string name="goals_empty_hint">প্রথম সঞ্চয় লক্ষ্য যোগ করতে + চাপুন</string>
+    <string name="goals_name_error">অনুগ্রহ করে লক্ষ্যের নাম লিখুন</string>
+    <string name="goals_name_hint">যেমন: নতুন ফোন, ছুটি…</string>
+    <string name="goals_name_label">লক্ষ্যের নাম</string>
+    <string name="goals_section_title">সঞ্চয় লক্ষ্য</string>
+    <string name="goals_sheet_subtitle">আপনি কিসের জন্য সঞ্চয় করছেন তা ট্র্যাক করুন</string>
+    <string name="goals_target_error">অনুগ্রহ করে একটি সঠিক পরিমাণ লিখুন</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_label">লক্ষ্য পরিমাণ</string>
     <string name="greeting_afternoon">শুভ বিকেল</string>
     <string name="greeting_afternoon_named">শুভ বিকেল, %1$s</string>
     <string name="greeting_evening">শুভ সন্ধ্যা</string>
@@ -464,6 +487,12 @@
     <string name="onboard_reminder_title">দৈনিক রিমাইন্ডার</string>
     <string name="onboard_reminder_toggle">দৈনিক রিমাইন্ডার চালু করুন</string>
     <string name="onboard_skip">বাদ দিন</string>
+    <string name="payday_day_label">দিন %1$d</string>
+    <string name="payday_days_away">দিন বাকি</string>
+    <string name="payday_not_set">বেতন দিন সেট করতে ট্যাপ করুন</string>
+    <string name="payday_per_day">প্রতিদিন</string>
+    <string name="payday_picker_hint">আপনার মাসিক বেতন তারিখ</string>
+    <string name="payday_title">বেতন দিন</string>
     <string name="payment_note_hint">যেমন: আংশিক পরিশোধ, নগদে পরিশোধ</string>
     <string name="payment_note_label">নোট (ঐচ্ছিক)</string>
     <string name="powered_by_footer">AG Tech দ্বারা চালিত</string>
@@ -498,9 +527,12 @@
     <string name="salary_set_title">মাসিক আয় নির্ধারণ করুন</string>
     <string name="save">সংরক্ষণ করুন</string>
     <string msgid="5659570757430909869" name="screen_lock_prompt_message">"চালিয়ে যেতে আপনার স্ক্রিন লক দিন"</string>
+    <string name="screenshot_mode_off">স্ক্রিনশট মোড বন্ধ — বিজ্ঞাপন দৃশ্যমান</string>
+    <string name="screenshot_mode_on">স্ক্রিনশট মোড চালু — বিজ্ঞাপন লুকানো</string>
     <string name="search_expenses_hint">খরচ অনুসন্ধান করুন…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"সার্চ করুন"</string>
     <string name="security_section_title">নিরাপত্তা</string>
+    <string name="select_country_code">দেশের কোড বেছে নিন</string>
     <string name="select_date">তারিখ বেছে নিন</string>
     <string msgid="6043586758067023" name="selected">"বেছে নেওয়া হয়েছে"</string>
     <string name="settings_title">সেটিংস</string>
@@ -532,6 +564,9 @@
     <string msgid="5834637030682409883" name="state_off">"বন্ধ আছে"</string>
     <string msgid="1490883874751719580" name="state_on">"চালু আছে"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"৯৯৯+"</string>
+    <string name="streak_best_label">সেরা</string>
+    <string name="streak_days_suffix">দিন</string>
+    <string name="streak_label">লগিং স্ট্রিক</string>
     <string msgid="2561197295334830845" name="switch_role">"সুইচ"</string>
     <string msgid="1672349317127674378" name="tab">"ট্যাব"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> শতাংশ।"</string>

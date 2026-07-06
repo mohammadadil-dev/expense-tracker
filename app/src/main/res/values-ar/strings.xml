@@ -437,4 +437,50 @@
     <string name="label_party_plural">أطراف</string>
     <string name="label_debt_singular">دين</string>
     <string name="label_debt_plural">ديون</string>
+    <!-- ── Accessibility content descriptions ── -->
+    <string name="cd_previous_month">الشهر السابق</string>
+    <string name="cd_next_month">الشهر التالي</string>
+    <string name="cd_clear_search">مسح البحث</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">وضع لقطة الشاشة مفعّل — الإعلانات مخفية</string>
+    <string name="screenshot_mode_off">وضع لقطة الشاشة متوقف — الإعلانات مرئية</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">اختر رمز الدولة</string>
+
+    <!-- ── Logging streak card ── -->
+    <string name="streak_label">سلسلة التسجيل</string>
+    <string name="streak_days_suffix">أيام</string>
+    <string name="streak_best_label">الأفضل</string>
+
+    <!-- ── Payday countdown card + Settings picker ── -->
+    <string name="payday_title">يوم الراتب</string>
+    <string name="payday_not_set">اضغط لتحديد يوم الراتب</string>
+    <string name="payday_days_away">أيام حتى الراتب</string>
+    <string name="payday_per_day">يومياً</string>
+    <string name="payday_day_label">اليوم %1$d</string>
+    <string name="payday_picker_hint">يوم استلام راتبك الشهري</string>
+
+    <!-- ── Savings goals ── -->
+    <string name="goals_section_title">أهداف الادخار</string>
+    <string name="goals_add">إضافة هدف</string>
+    <string name="goals_edit">تعديل الهدف</string>
+    <string name="goals_empty_hint">اضغط + لإضافة أول هدف ادخار</string>
+    <string name="goals_sheet_subtitle">تتبّع ما تدّخر من أجله</string>
+    <string name="goals_emoji_label">اختر رمزاً تعبيرياً</string>
+    <string name="goals_name_label">اسم الهدف</string>
+    <string name="goals_name_hint">مثل: هاتف جديد، إجازة…</string>
+    <string name="goals_name_error">الرجاء إدخال اسم الهدف</string>
+    <string name="goals_target_label">المبلغ المستهدف</string>
+    <string name="goals_target_hint">٠٫٠٠</string>
+    <string name="goals_target_error">الرجاء إدخال مبلغ صحيح</string>
+    <string name="goals_date_label">تاريخ الهدف</string>
+    <string name="goals_date_optional">(اختياري)</string>
+
+    <!-- ── Weekly digest notification ── -->
+    <string name="digest_title">ملخّص الأسبوع 📊</string>
+    <string name="digest_body_first_week">أنفقت هذا الأسبوع %1$s — واصل التتبع!</string>
+    <string name="digest_body_no_spend">أسبوع رائع — لم تُسجَّل أي مصاريف! 🎉</string>
+    <string name="digest_body_less">أنفقت هذا الأسبوع %1$s — أقل بـ %2$d%% من الأسبوع الماضي 🎉</string>
+    <string name="digest_body_more">أنفقت هذا الأسبوع %1$s — أكثر بـ %2$d%% من الأسبوع الماضي</string>
+    <string name="digest_body_same">أنفقت هذا الأسبوع %1$s — تقريباً نفس الأسبوع الماضي</string>
 </resources>

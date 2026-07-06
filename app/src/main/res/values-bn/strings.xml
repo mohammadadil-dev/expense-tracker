@@ -437,4 +437,43 @@
     <string name="label_party_plural">পক্ষসমূহ</string>
     <string name="label_debt_singular">ঋণ</string>
     <string name="label_debt_plural">ঋণসমূহ</string>
+    <!-- ── Accessibility content descriptions ── -->
+    <string name="cd_previous_month">আগের মাস</string>
+    <string name="cd_next_month">পরের মাস</string>
+    <string name="cd_clear_search">খোঁজ মুছুন</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">স্ক্রিনশট মোড চালু — বিজ্ঞাপন লুকানো</string>
+    <string name="screenshot_mode_off">স্ক্রিনশট মোড বন্ধ — বিজ্ঞাপন দৃশ্যমান</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">দেশের কোড বেছে নিন</string>
+
+    <string name="streak_label">লগিং স্ট্রিক</string>
+    <string name="streak_days_suffix">দিন</string>
+    <string name="streak_best_label">সেরা</string>
+    <string name="payday_title">বেতন দিন</string>
+    <string name="payday_not_set">বেতন দিন সেট করতে ট্যাপ করুন</string>
+    <string name="payday_days_away">দিন বাকি</string>
+    <string name="payday_per_day">প্রতিদিন</string>
+    <string name="payday_day_label">দিন %1$d</string>
+    <string name="payday_picker_hint">আপনার মাসিক বেতন তারিখ</string>
+    <string name="goals_section_title">সঞ্চয় লক্ষ্য</string>
+    <string name="goals_add">লক্ষ্য যোগ করুন</string>
+    <string name="goals_edit">লক্ষ্য সম্পাদনা করুন</string>
+    <string name="goals_empty_hint">প্রথম সঞ্চয় লক্ষ্য যোগ করতে + চাপুন</string>
+    <string name="goals_sheet_subtitle">আপনি কিসের জন্য সঞ্চয় করছেন তা ট্র্যাক করুন</string>
+    <string name="goals_emoji_label">ইমোজি বেছে নিন</string>
+    <string name="goals_name_label">লক্ষ্যের নাম</string>
+    <string name="goals_name_hint">যেমন: নতুন ফোন, ছুটি…</string>
+    <string name="goals_name_error">অনুগ্রহ করে লক্ষ্যের নাম লিখুন</string>
+    <string name="goals_target_label">লক্ষ্য পরিমাণ</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">অনুগ্রহ করে একটি সঠিক পরিমাণ লিখুন</string>
+    <string name="goals_date_label">লক্ষ্য তারিখ</string>
+    <string name="goals_date_optional">(ঐচ্ছিক)</string>
+    <string name="digest_title">সাপ্তাহিক সারসংক্ষেপ 📊</string>
+    <string name="digest_body_first_week">এই সপ্তাহে আপনি %1$s খরচ করেছেন — ট্র্যাকিং চালিয়ে যান!</string>
+    <string name="digest_body_no_spend">দারুণ সপ্তাহ — কোনো খরচ রেকর্ড হয়নি! 🎉</string>
+    <string name="digest_body_less">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% কম 🎉</string>
+    <string name="digest_body_more">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% বেশি</string>
+    <string name="digest_body_same">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের মতোই</string>
 </resources>

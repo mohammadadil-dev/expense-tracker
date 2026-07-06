@@ -12,6 +12,8 @@ import com.expensetracker.app.data.SettingsRepository
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.util.ReminderScheduler
 import com.expensetracker.app.util.ReminderWorker
+import com.expensetracker.app.util.WeeklyDigestScheduler
+import com.expensetracker.app.util.WeeklyDigestWorker
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,17 +55,24 @@ class ExpenseApp : Application() {
         // Re-apply the stored language preference on every cold start.
         LocaleHelper.applyLanguagePreference(settings.languagePref)
 
-        // Create the notification channel for daily reminders.
+        // Create notification channels.
         // NotificationChannel is a no-op below API 26 but required on 26+.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                ReminderWorker.CHANNEL_ID,
-                "Daily Reminder",
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "Daily nudge to log your expenses"
-            }
-            getSystemService(NotificationManager::class.java)?.createNotificationChannel(channel)
+            val nm = getSystemService(NotificationManager::class.java)
+            nm?.createNotificationChannel(
+                NotificationChannel(
+                    ReminderWorker.CHANNEL_ID,
+                    "Daily Reminder",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply { description = "Daily nudge to log your expenses" }
+            )
+            nm?.createNotificationChannel(
+                NotificationChannel(
+                    WeeklyDigestWorker.CHANNEL_ID,
+                    "Weekly Digest",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply { description = "Weekly spending summary every Sunday" }
+            )
         }
 
         // Ensure the daily reminder WorkManager job exists if the user has it enabled.
@@ -71,6 +80,9 @@ class ExpenseApp : Application() {
         if (settings.reminderEnabled) {
             ReminderScheduler.schedule(this, settings.reminderHour)
         }
+
+        // Schedule the weekly digest — always on, fires Sunday evenings.
+        WeeklyDigestScheduler.schedule(this)
 
         // Initialize AdMob SDK. This must be called once before any AdView or InterstitialAd
         // is created. The callback fires when initialization is complete, but ads can often

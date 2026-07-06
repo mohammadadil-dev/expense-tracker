@@ -99,7 +99,7 @@ public final class PendingSmsExpenseDao_Impl implements PendingSmsExpenseDao {
   }
 
   @Override
-  public Object insert(final PendingSmsExpense item, final Continuation<? super Long> $completion) {
+  public Object insert(final PendingSmsExpense item, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -113,11 +113,11 @@ public final class PendingSmsExpenseDao_Impl implements PendingSmsExpenseDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final PendingSmsExpense item, final Continuation<? super Unit> $completion) {
+  public Object delete(final PendingSmsExpense item, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -131,11 +131,11 @@ public final class PendingSmsExpenseDao_Impl implements PendingSmsExpenseDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -154,7 +154,7 @@ public final class PendingSmsExpenseDao_Impl implements PendingSmsExpenseDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override

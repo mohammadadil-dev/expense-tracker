@@ -422,4 +422,43 @@ Gamitin anumang oras!
     <string name="label_party_plural">partido</string>
     <string name="label_debt_singular">utang</string>
     <string name="label_debt_plural">utang</string>
+    <!-- ── Accessibility content descriptions ── -->
+    <string name="cd_previous_month">Nakaraang buwan</string>
+    <string name="cd_next_month">Susunod na buwan</string>
+    <string name="cd_clear_search">I-clear ang paghahanap</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">Screenshot mode ON — nakatago ang mga ad</string>
+    <string name="screenshot_mode_off">Screenshot mode OFF — nakikita ang mga ad</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">Pumili ng Country Code</string>
+
+    <string name="streak_label">Logging Streak</string>
+    <string name="streak_days_suffix">araw</string>
+    <string name="streak_best_label">Pinakamahusay</string>
+    <string name="payday_title">Araw ng Sahod</string>
+    <string name="payday_not_set">I-tap para itakda ang araw ng sahod</string>
+    <string name="payday_days_away">araw na natitira</string>
+    <string name="payday_per_day">bawat araw</string>
+    <string name="payday_day_label">Araw %1$d</string>
+    <string name="payday_picker_hint">Iyong buwanang petsa ng sahod</string>
+    <string name="goals_section_title">Mga Layunin sa Ipon</string>
+    <string name="goals_add">Magdagdag ng Layunin</string>
+    <string name="goals_edit">I-edit ang Layunin</string>
+    <string name="goals_empty_hint">I-tap ang + para magdagdag ng unang layunin</string>
+    <string name="goals_sheet_subtitle">Subaybayan kung para saan ka nag-iimpok</string>
+    <string name="goals_emoji_label">Pumili ng emoji</string>
+    <string name="goals_name_label">Pangalan ng layunin</string>
+    <string name="goals_name_hint">hal. Bagong telepono, Bakasyon…</string>
+    <string name="goals_name_error">Mangyaring maglagay ng pangalan ng layunin</string>
+    <string name="goals_target_label">Target na halaga</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">Mangyaring maglagay ng wastong halaga</string>
+    <string name="goals_date_label">Target na petsa</string>
+    <string name="goals_date_optional">(opsyonal)</string>
+    <string name="digest_title">Lingguhang Buod 📊</string>
+    <string name="digest_body_first_week">Ngayong linggo ay gumastos ka ng %1$s — patuloy na mag-track!</string>
+    <string name="digest_body_no_spend">Napakagandang linggo — walang naitalang gastos! 🎉</string>
+    <string name="digest_body_less">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mababa kaysa noong nakaraang linggo 🎉</string>
+    <string name="digest_body_more">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mataas kaysa noong nakaraang linggo</string>
+    <string name="digest_body_same">Ngayong linggo ay gumastos ka ng %1$s — halos katulad ng nakaraang linggo</string>
 </resources>

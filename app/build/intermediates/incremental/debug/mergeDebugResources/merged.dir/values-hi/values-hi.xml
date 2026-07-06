@@ -101,6 +101,9 @@
     <string name="cat_transport">परिवहन</string>
     <string name="cat_utilities">उपयोगिता बिल</string>
     <string name="category_label">श्रेणी</string>
+    <string name="cd_clear_search">खोज साफ करें</string>
+    <string name="cd_next_month">अगला महीना</string>
+    <string name="cd_previous_month">पिछला महीना</string>
     <string name="close">बंद करें</string>
     <string msgid="406453423630273620" name="close_drawer">"नेविगेशन मेन्यू बंद करें"</string>
     <string msgid="7573152094250666567" name="close_sheet">"शीट बंद करें"</string>
@@ -188,6 +191,12 @@
     <string name="description_hint">उदाहरण: सुपरमार्केट से किराना सामान</string>
     <string name="description_label">विवरण</string>
     <string name="detected_region_note">आपके डिवाइस से पता चला: %1$s</string>
+    <string name="digest_body_first_week">इस सप्ताह आपने %1$s खर्च किया — ट्रैक करते रहें!</string>
+    <string name="digest_body_less">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% कम 🎉</string>
+    <string name="digest_body_more">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% अधिक</string>
+    <string name="digest_body_no_spend">शानदार सप्ताह — कोई खर्च दर्ज नहीं हुआ! 🎉</string>
+    <string name="digest_body_same">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह जितना ही</string>
+    <string name="digest_title">साप्ताहिक सारांश 📊</string>
     <string name="done">हो गया</string>
     <string name="drive_backup_error">Google Drive त्रुटि</string>
     <string name="drive_backup_restore">Drive से पुनर्स्थापित करें</string>
@@ -243,6 +252,20 @@
     <string msgid="2863935784364843033" name="glance_error_layout_text"><b><tt>"adb logcat"</tt></b>" की मदद से, "<b><tt>"GlanceAppWidget"</tt></b>" को ढूंढकर असल गड़बड़ी का पता लगाएं"</string>
     <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"कॉन्टेंट नहीं दिखाया जा सकता"</string>
     <string msgid="3631961919234443531" name="glance_error_layout_title"><b>"Glance App Widget की गड़बड़ी"</b></string>
+    <string name="goals_add">लक्ष्य जोड़ें</string>
+    <string name="goals_date_label">लक्ष्य तिथि</string>
+    <string name="goals_date_optional">(वैकल्पिक)</string>
+    <string name="goals_edit">लक्ष्य संपादित करें</string>
+    <string name="goals_emoji_label">इमोजी चुनें</string>
+    <string name="goals_empty_hint">पहला बचत लक्ष्य जोड़ने के लिए + दबाएं</string>
+    <string name="goals_name_error">कृपया लक्ष्य का नाम दर्ज करें</string>
+    <string name="goals_name_hint">जैसे: नया फोन, छुट्टी…</string>
+    <string name="goals_name_label">लक्ष्य का नाम</string>
+    <string name="goals_section_title">बचत लक्ष्य</string>
+    <string name="goals_sheet_subtitle">ट्रैक करें कि आप किसके लिए बचत कर रहे हैं</string>
+    <string name="goals_target_error">कृपया एक वैध राशि दर्ज करें</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_label">लक्ष्य राशि</string>
     <string name="greeting_afternoon">शुभ दोपहर</string>
     <string name="greeting_afternoon_named">शुभ दोपहर, %1$s</string>
     <string name="greeting_evening">शुभ शाम</string>
@@ -464,6 +487,12 @@
     <string name="onboard_reminder_title">दैनिक रिमाइंडर</string>
     <string name="onboard_reminder_toggle">दैनिक रिमाइंडर चालू करें</string>
     <string name="onboard_skip">छोड़ें</string>
+    <string name="payday_day_label">दिन %1$d</string>
+    <string name="payday_days_away">दिन बाकी</string>
+    <string name="payday_not_set">वेतन दिवस सेट करने के लिए टैप करें</string>
+    <string name="payday_per_day">प्रति दिन</string>
+    <string name="payday_picker_hint">आपका मासिक वेतन दिवस</string>
+    <string name="payday_title">वेतन दिवस</string>
     <string name="payment_note_hint">उदाहरण: आंशिक भुगतान, नकद में चुकाया</string>
     <string name="payment_note_label">नोट (वैकल्पिक)</string>
     <string name="powered_by_footer">AG Tech द्वारा संचालित</string>
@@ -498,9 +527,12 @@
     <string name="salary_set_title">मासिक आय सेट करें</string>
     <string name="save">सहेजें</string>
     <string msgid="5659570757430909869" name="screen_lock_prompt_message">"जारी रखने के लिए, अपना स्क्रीन लॉक क्रेडेंशियल डालें"</string>
+    <string name="screenshot_mode_off">स्क्रीनशॉट मोड बंद — विज्ञापन दिख रहे हैं</string>
+    <string name="screenshot_mode_on">स्क्रीनशॉट मोड चालू — विज्ञापन छिपे हैं</string>
     <string name="search_expenses_hint">खर्च खोजें…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"खोजें"</string>
     <string name="security_section_title">सुरक्षा</string>
+    <string name="select_country_code">देश कोड चुनें</string>
     <string name="select_date">तारीख़ चुनें</string>
     <string msgid="6043586758067023" name="selected">"चुना गया"</string>
     <string name="settings_title">सेटिंग्स</string>
@@ -532,6 +564,9 @@
     <string msgid="5834637030682409883" name="state_off">"बंद है"</string>
     <string msgid="1490883874751719580" name="state_on">"चालू है"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="streak_best_label">सर्वश्रेष्ठ</string>
+    <string name="streak_days_suffix">दिन</string>
+    <string name="streak_label">लॉगिंग स्ट्रीक</string>
     <string msgid="2561197295334830845" name="switch_role">"स्विच करें"</string>
     <string msgid="1672349317127674378" name="tab">"टैब"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> प्रतिशत."</string>

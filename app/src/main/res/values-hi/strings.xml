@@ -437,4 +437,43 @@
     <string name="label_party_plural">पार्टियां</string>
     <string name="label_debt_singular">कर्ज़</string>
     <string name="label_debt_plural">कर्ज़े</string>
+    <!-- ── Accessibility content descriptions ── -->
+    <string name="cd_previous_month">पिछला महीना</string>
+    <string name="cd_next_month">अगला महीना</string>
+    <string name="cd_clear_search">खोज साफ करें</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">स्क्रीनशॉट मोड चालू — विज्ञापन छिपे हैं</string>
+    <string name="screenshot_mode_off">स्क्रीनशॉट मोड बंद — विज्ञापन दिख रहे हैं</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">देश कोड चुनें</string>
+
+    <string name="streak_label">लॉगिंग स्ट्रीक</string>
+    <string name="streak_days_suffix">दिन</string>
+    <string name="streak_best_label">सर्वश्रेष्ठ</string>
+    <string name="payday_title">वेतन दिवस</string>
+    <string name="payday_not_set">वेतन दिवस सेट करने के लिए टैप करें</string>
+    <string name="payday_days_away">दिन बाकी</string>
+    <string name="payday_per_day">प्रति दिन</string>
+    <string name="payday_day_label">दिन %1$d</string>
+    <string name="payday_picker_hint">आपका मासिक वेतन दिवस</string>
+    <string name="goals_section_title">बचत लक्ष्य</string>
+    <string name="goals_add">लक्ष्य जोड़ें</string>
+    <string name="goals_edit">लक्ष्य संपादित करें</string>
+    <string name="goals_empty_hint">पहला बचत लक्ष्य जोड़ने के लिए + दबाएं</string>
+    <string name="goals_sheet_subtitle">ट्रैक करें कि आप किसके लिए बचत कर रहे हैं</string>
+    <string name="goals_emoji_label">इमोजी चुनें</string>
+    <string name="goals_name_label">लक्ष्य का नाम</string>
+    <string name="goals_name_hint">जैसे: नया फोन, छुट्टी…</string>
+    <string name="goals_name_error">कृपया लक्ष्य का नाम दर्ज करें</string>
+    <string name="goals_target_label">लक्ष्य राशि</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">कृपया एक वैध राशि दर्ज करें</string>
+    <string name="goals_date_label">लक्ष्य तिथि</string>
+    <string name="goals_date_optional">(वैकल्पिक)</string>
+    <string name="digest_title">साप्ताहिक सारांश 📊</string>
+    <string name="digest_body_first_week">इस सप्ताह आपने %1$s खर्च किया — ट्रैक करते रहें!</string>
+    <string name="digest_body_no_spend">शानदार सप्ताह — कोई खर्च दर्ज नहीं हुआ! 🎉</string>
+    <string name="digest_body_less">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% कम 🎉</string>
+    <string name="digest_body_more">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% अधिक</string>
+    <string name="digest_body_same">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह जितना ही</string>
 </resources>

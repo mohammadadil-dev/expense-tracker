@@ -169,8 +169,7 @@ public final class KhataDao_Impl implements KhataDao {
   }
 
   @Override
-  public Object insertParty(final KhataPartyEntity party,
-      final Continuation<? super Long> $completion) {
+  public Object insertParty(final KhataPartyEntity party, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -184,12 +183,11 @@ public final class KhataDao_Impl implements KhataDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object insertEntry(final KhataEntryEntity entry,
-      final Continuation<? super Long> $completion) {
+  public Object insertEntry(final KhataEntryEntity entry, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -203,12 +201,11 @@ public final class KhataDao_Impl implements KhataDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteParty(final KhataPartyEntity party,
-      final Continuation<? super Unit> $completion) {
+  public Object deleteParty(final KhataPartyEntity party, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -222,12 +219,11 @@ public final class KhataDao_Impl implements KhataDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteEntry(final KhataEntryEntity entry,
-      final Continuation<? super Unit> $completion) {
+  public Object deleteEntry(final KhataEntryEntity entry, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -241,12 +237,11 @@ public final class KhataDao_Impl implements KhataDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object updateParty(final KhataPartyEntity party,
-      final Continuation<? super Unit> $completion) {
+  public Object updateParty(final KhataPartyEntity party, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -260,7 +255,7 @@ public final class KhataDao_Impl implements KhataDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
@@ -382,7 +377,7 @@ public final class KhataDao_Impl implements KhataDao {
   }
 
   @Override
-  public Object getAllPartiesOnce(final Continuation<? super List<KhataPartyEntity>> $completion) {
+  public Object getAllPartiesOnce(final Continuation<? super List<KhataPartyEntity>> arg0) {
     final String _sql = "SELECT * FROM khata_parties ORDER BY name ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -431,11 +426,11 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
-  public Object partyById(final long id, final Continuation<? super KhataPartyEntity> $completion) {
+  public Object partyById(final long id, final Continuation<? super KhataPartyEntity> arg1) {
     final String _sql = "SELECT * FROM khata_parties WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -486,7 +481,7 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
@@ -559,7 +554,7 @@ public final class KhataDao_Impl implements KhataDao {
 
   @Override
   public Object entriesForPartyOnce(final long partyId,
-      final Continuation<? super List<KhataEntryEntity>> $completion) {
+      final Continuation<? super List<KhataEntryEntity>> arg1) {
     final String _sql = "SELECT * FROM khata_entries WHERE partyId = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -620,7 +615,7 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
@@ -690,7 +685,7 @@ public final class KhataDao_Impl implements KhataDao {
   }
 
   @Override
-  public Object getAllEntriesOnce(final Continuation<? super List<KhataEntryEntity>> $completion) {
+  public Object getAllEntriesOnce(final Continuation<? super List<KhataEntryEntity>> arg0) {
     final String _sql = "SELECT * FROM khata_entries ORDER BY date DESC, id DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -749,12 +744,11 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
-  public Object totalCreditForParty(final long partyId,
-      final Continuation<? super Double> $completion) {
+  public Object totalCreditForParty(final long partyId, final Continuation<? super Double> arg1) {
     final String _sql = "SELECT COALESCE(SUM(amount),0) FROM khata_entries WHERE partyId = ? AND type = 'CREDIT'";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -784,12 +778,11 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object totalPaymentForParty(final long partyId,
-      final Continuation<? super Double> $completion) {
+  public Object totalPaymentForParty(final long partyId, final Continuation<? super Double> arg1) {
     final String _sql = "SELECT COALESCE(SUM(amount),0) FROM khata_entries WHERE partyId = ? AND type = 'PAYMENT'";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -819,7 +812,7 @@ public final class KhataDao_Impl implements KhataDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @NonNull

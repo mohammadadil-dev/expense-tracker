@@ -185,7 +185,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
   }
 
   @Override
-  public Object insert(final ExpenseEntity expense, final Continuation<? super Long> $completion) {
+  public Object insert(final ExpenseEntity expense, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -199,11 +199,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final ExpenseEntity expense, final Continuation<? super Unit> $completion) {
+  public Object delete(final ExpenseEntity expense, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -217,11 +217,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object update(final ExpenseEntity expense, final Continuation<? super Unit> $completion) {
+  public Object update(final ExpenseEntity expense, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -235,11 +235,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteById(final long id, final Continuation<? super Unit> $completion) {
+  public Object deleteById(final long id, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -260,12 +260,12 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __preparedStmtOfDeleteById.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
   public Object reassignCategory(final long oldCategoryId, final long newCategoryId,
-      final Continuation<? super Unit> $completion) {
+      final Continuation<? super Unit> arg2) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -288,11 +288,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __preparedStmtOfReassignCategory.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg2);
   }
 
   @Override
-  public Object scaleAllAmounts(final double rate, final Continuation<? super Unit> $completion) {
+  public Object scaleAllAmounts(final double rate, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -313,11 +313,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __preparedStmtOfScaleAllAmounts.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -336,7 +336,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -502,8 +502,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
   }
 
   @Override
-  public Object categoryInUse(final long categoryId,
-      final Continuation<? super Boolean> $completion) {
+  public Object categoryInUse(final long categoryId, final Continuation<? super Boolean> arg1) {
     final String _sql = "SELECT EXISTS(SELECT 1 FROM expenses WHERE categoryId = ?)";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -533,11 +532,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object getAllOnce(final Continuation<? super List<ExpenseEntity>> $completion) {
+  public Object getAllOnce(final Continuation<? super List<ExpenseEntity>> arg0) {
     final String _sql = "SELECT * FROM expenses ORDER BY date DESC, id DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -608,11 +607,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
-  public Object sumForDay(final String date, final Continuation<? super Double> $completion) {
+  public Object sumForDay(final String date, final Continuation<? super Double> arg1) {
     final String _sql = "SELECT COALESCE(SUM(amount), 0.0) FROM expenses WHERE date = ? AND isRecurring = 0";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -646,11 +645,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object sumForMonth(final String monthKey, final Continuation<? super Double> $completion) {
+  public Object sumForMonth(final String monthKey, final Continuation<? super Double> arg1) {
     final String _sql = "SELECT COALESCE(SUM(amount), 0.0) FROM expenses WHERE monthKey = ? AND isRecurring = 0";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -684,12 +683,11 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object recurringTemplatesOnce(
-      final Continuation<? super List<ExpenseEntity>> $completion) {
+  public Object recurringTemplatesOnce(final Continuation<? super List<ExpenseEntity>> arg0) {
     final String _sql = "SELECT * FROM expenses WHERE isRecurring = 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -760,12 +758,12 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
   public Object countRecurringInstance(final long sourceId, final String monthKey,
-      final Continuation<? super Integer> $completion) {
+      final Continuation<? super Integer> arg2) {
     final String _sql = "SELECT COUNT(*) FROM expenses WHERE recurringSourceId = ? AND monthKey = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
@@ -801,7 +799,7 @@ public final class ExpenseDao_Impl implements ExpenseDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg2);
   }
 
   @NonNull

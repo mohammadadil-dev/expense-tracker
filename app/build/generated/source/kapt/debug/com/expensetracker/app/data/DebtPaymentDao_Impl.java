@@ -106,8 +106,7 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
   }
 
   @Override
-  public Object insert(final DebtPaymentEntity payment,
-      final Continuation<? super Long> $completion) {
+  public Object insert(final DebtPaymentEntity payment, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -121,12 +120,11 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final DebtPaymentEntity payment,
-      final Continuation<? super Unit> $completion) {
+  public Object delete(final DebtPaymentEntity payment, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -140,11 +138,11 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteForDebt(final long debtId, final Continuation<? super Unit> $completion) {
+  public Object deleteForDebt(final long debtId, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -165,11 +163,11 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           __preparedStmtOfDeleteForDebt.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -188,7 +186,7 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -251,7 +249,7 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
   }
 
   @Override
-  public Object getAllOnce(final Continuation<? super List<DebtPaymentEntity>> $completion) {
+  public Object getAllOnce(final Continuation<? super List<DebtPaymentEntity>> arg0) {
     final String _sql = "SELECT * FROM debt_payments ORDER BY date DESC, id DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -303,12 +301,12 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
   public Object getForDebt(final long debtId,
-      final Continuation<? super List<DebtPaymentEntity>> $completion) {
+      final Continuation<? super List<DebtPaymentEntity>> arg1) {
     final String _sql = "SELECT * FROM debt_payments WHERE debtId = ? ORDER BY date DESC, id DESC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -362,11 +360,11 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object totalPaidFor(final long debtId, final Continuation<? super Double> $completion) {
+  public Object totalPaidFor(final long debtId, final Continuation<? super Double> arg1) {
     final String _sql = "SELECT COALESCE(SUM(amount), 0.0) FROM debt_payments WHERE debtId = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -396,7 +394,7 @@ public final class DebtPaymentDao_Impl implements DebtPaymentDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @NonNull

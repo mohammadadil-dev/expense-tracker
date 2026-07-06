@@ -101,6 +101,9 @@
     <string name="cat_transport">النقل والمواصلات</string>
     <string name="cat_utilities">الفواتير والخدمات</string>
     <string name="category_label">الفئة</string>
+    <string name="cd_clear_search">مسح البحث</string>
+    <string name="cd_next_month">الشهر التالي</string>
+    <string name="cd_previous_month">الشهر السابق</string>
     <string name="close">إغلاق</string>
     <string msgid="406453423630273620" name="close_drawer">"إغلاق قائمة التنقل"</string>
     <string msgid="7573152094250666567" name="close_sheet">"إغلاق الورقة"</string>
@@ -188,6 +191,12 @@
     <string name="description_hint">مثال: تسوق من السوبر ماركت</string>
     <string name="description_label">الوصف</string>
     <string name="detected_region_note">تم اكتشافه من جهازك: %1$s</string>
+    <string name="digest_body_first_week">أنفقت هذا الأسبوع %1$s — واصل التتبع!</string>
+    <string name="digest_body_less">أنفقت هذا الأسبوع %1$s — أقل بـ %2$d%% من الأسبوع الماضي 🎉</string>
+    <string name="digest_body_more">أنفقت هذا الأسبوع %1$s — أكثر بـ %2$d%% من الأسبوع الماضي</string>
+    <string name="digest_body_no_spend">أسبوع رائع — لم تُسجَّل أي مصاريف! 🎉</string>
+    <string name="digest_body_same">أنفقت هذا الأسبوع %1$s — تقريباً نفس الأسبوع الماضي</string>
+    <string name="digest_title">ملخّص الأسبوع 📊</string>
     <string name="done">تم</string>
     <string name="drive_backup_error">خطأ في Google Drive</string>
     <string name="drive_backup_restore">استعادة من Drive</string>
@@ -243,6 +252,20 @@
     <string msgid="2863935784364843033" name="glance_error_layout_text">"‏تأكَّد من الخطأ بالضبط باستخدام "<b><tt>"أداة adb logcat"</tt></b>"، من خلال البحث عن "<b><tt>"GlanceAppWidget"</tt></b>"."</string>
     <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"يتعذّر عرض المحتوى."</string>
     <string msgid="3631961919234443531" name="glance_error_layout_title">"‏"<b>"خطأ في التطبيق المصغّر Glance"</b></string>
+    <string name="goals_add">إضافة هدف</string>
+    <string name="goals_date_label">تاريخ الهدف</string>
+    <string name="goals_date_optional">(اختياري)</string>
+    <string name="goals_edit">تعديل الهدف</string>
+    <string name="goals_emoji_label">اختر رمزاً تعبيرياً</string>
+    <string name="goals_empty_hint">اضغط + لإضافة أول هدف ادخار</string>
+    <string name="goals_name_error">الرجاء إدخال اسم الهدف</string>
+    <string name="goals_name_hint">مثل: هاتف جديد، إجازة…</string>
+    <string name="goals_name_label">اسم الهدف</string>
+    <string name="goals_section_title">أهداف الادخار</string>
+    <string name="goals_sheet_subtitle">تتبّع ما تدّخر من أجله</string>
+    <string name="goals_target_error">الرجاء إدخال مبلغ صحيح</string>
+    <string name="goals_target_hint">٠٫٠٠</string>
+    <string name="goals_target_label">المبلغ المستهدف</string>
     <string name="greeting_afternoon">نهارك سعيد</string>
     <string name="greeting_afternoon_named">نهارك سعيد، %1$s</string>
     <string name="greeting_evening">مساء الخير</string>
@@ -464,6 +487,12 @@
     <string name="onboard_reminder_title">تذكير يومي</string>
     <string name="onboard_reminder_toggle">تفعيل التذكير اليومي</string>
     <string name="onboard_skip">تخطّ</string>
+    <string name="payday_day_label">اليوم %1$d</string>
+    <string name="payday_days_away">أيام حتى الراتب</string>
+    <string name="payday_not_set">اضغط لتحديد يوم الراتب</string>
+    <string name="payday_per_day">يومياً</string>
+    <string name="payday_picker_hint">يوم استلام راتبك الشهري</string>
+    <string name="payday_title">يوم الراتب</string>
     <string name="payment_note_hint">مثال: دفعة جزئية، دُفع نقدًا</string>
     <string name="payment_note_label">ملاحظة (اختياري)</string>
     <string name="powered_by_footer">بدعم من AG Tech</string>
@@ -498,9 +527,12 @@
     <string name="salary_set_title">تعيين الدخل الشهري</string>
     <string name="save">حفظ</string>
     <string msgid="5659570757430909869" name="screen_lock_prompt_message">"أدخِل قفل الشاشة للمتابعة."</string>
+    <string name="screenshot_mode_off">وضع لقطة الشاشة متوقف — الإعلانات مرئية</string>
+    <string name="screenshot_mode_on">وضع لقطة الشاشة مفعّل — الإعلانات مخفية</string>
     <string name="search_expenses_hint">البحث في المصروفات…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"البحث"</string>
     <string name="security_section_title">الأمان</string>
+    <string name="select_country_code">اختر رمز الدولة</string>
     <string name="select_date">اختر التاريخ</string>
     <string msgid="6043586758067023" name="selected">"محدّد"</string>
     <string name="settings_title">الإعدادات</string>
@@ -532,6 +564,9 @@
     <string msgid="5834637030682409883" name="state_off">"غير مفعَّل"</string>
     <string msgid="1490883874751719580" name="state_on">"مفعَّل"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="streak_best_label">الأفضل</string>
+    <string name="streak_days_suffix">أيام</string>
+    <string name="streak_label">سلسلة التسجيل</string>
     <string msgid="2561197295334830845" name="switch_role">"تبديل"</string>
     <string msgid="1672349317127674378" name="tab">"علامة تبويب"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> في المئة."</string>

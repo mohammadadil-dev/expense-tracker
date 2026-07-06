@@ -154,7 +154,7 @@ public final class DebtDao_Impl implements DebtDao {
   }
 
   @Override
-  public Object insert(final DebtEntity debt, final Continuation<? super Long> $completion) {
+  public Object insert(final DebtEntity debt, final Continuation<? super Long> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -168,11 +168,11 @@ public final class DebtDao_Impl implements DebtDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final DebtEntity debt, final Continuation<? super Unit> $completion) {
+  public Object delete(final DebtEntity debt, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -186,11 +186,11 @@ public final class DebtDao_Impl implements DebtDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object update(final DebtEntity debt, final Continuation<? super Unit> $completion) {
+  public Object update(final DebtEntity debt, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -204,11 +204,11 @@ public final class DebtDao_Impl implements DebtDao {
           __db.endTransaction();
         }
       }
-    }, $completion);
+    }, arg1);
   }
 
   @Override
-  public Object deleteAll(final Continuation<? super Unit> $completion) {
+  public Object deleteAll(final Continuation<? super Unit> arg0) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -227,7 +227,7 @@ public final class DebtDao_Impl implements DebtDao {
           __preparedStmtOfDeleteAll.release(_stmt);
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @Override
@@ -312,7 +312,7 @@ public final class DebtDao_Impl implements DebtDao {
   }
 
   @Override
-  public Object getAllOnce(final Continuation<? super List<DebtEntity>> $completion) {
+  public Object getAllOnce(final Continuation<? super List<DebtEntity>> arg0) {
     final String _sql = "SELECT * FROM debts";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -386,7 +386,7 @@ public final class DebtDao_Impl implements DebtDao {
           _statement.release();
         }
       }
-    }, $completion);
+    }, arg0);
   }
 
   @NonNull

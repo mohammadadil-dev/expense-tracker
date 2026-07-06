@@ -161,6 +161,7 @@ fun SettingsScreen(
     val smsDetectionEnabled by viewModel.smsDetectionEnabled.collectAsState()
     val reminderEnabled by viewModel.reminderEnabled.collectAsState()
     val reminderHour by viewModel.reminderHour.collectAsState()
+    val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
     val allExpenses by viewModel.allExpenses.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
@@ -168,6 +169,7 @@ fun SettingsScreen(
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
     var pickerHour by remember { mutableStateOf(reminderHour) }
+    var showPaydayPicker by remember { mutableStateOf(false) }
     var pendingCurrencySymbol by remember { mutableStateOf<String?>(null) }
     var rateText by remember { mutableStateOf("") }
     var rateError by remember { mutableStateOf(false) }
@@ -570,6 +572,31 @@ fun SettingsScreen(
                                 )
                             }
                         }
+                        // Payday picker — always visible
+                        Spacer(Modifier.height(12.dp))
+                        Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                        Spacer(Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { showPaydayPicker = true }
+                                .padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(R.string.payday_title),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                text = if (paydayDayOfMonth > 0)
+                                    stringResource(R.string.payday_day_label, paydayDayOfMonth)
+                                else stringResource(R.string.payday_not_set),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (paydayDayOfMonth > 0) AccentIndigo
+                                else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
             }
@@ -844,6 +871,44 @@ fun SettingsScreen(
             }
         )
     }
+
+    // Payday day-of-month picker dialog
+    if (showPaydayPicker) {
+        var pickerDay by remember { mutableStateOf(paydayDayOfMonth.coerceIn(1, 31).toFloat()) }
+        AlertDialog(
+            onDismissRequest = { showPaydayPicker = false },
+            title = { Text(stringResource(R.string.payday_title)) },
+            text = {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = stringResource(R.string.payday_day_label, pickerDay.toInt()),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Slider(
+                        value = pickerDay,
+                        onValueChange = { pickerDay = it },
+                        valueRange = 1f..31f,
+                        steps = 29    // 31 values → 29 inner steps
+                    )
+                    Text(
+                        text = stringResource(R.string.payday_picker_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.setPaydayDayOfMonth(pickerDay.toInt())
+                    showPaydayPicker = false
+                }) { Text(stringResource(R.string.done)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPaydayPicker = false }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
 }
 
 /** Wraps a settings block in a gentle staggered fade + slide-up entrance. */
@@ -961,6 +1026,8 @@ private fun SettingsFooter(
     onToggle: () -> Unit
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
+    val screenshotModeOnMsg  = stringResource(R.string.screenshot_mode_on)
+    val screenshotModeOffMsg = stringResource(R.string.screenshot_mode_off)
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -982,8 +1049,7 @@ private fun SettingsFooter(
                 onClick    = {},
                 onLongClick = {
                     onToggle()
-                    val msg = if (!screenshotMode) "Screenshot mode ON — ads hidden"
-                              else "Screenshot mode OFF — ads visible"
+                    val msg = if (!screenshotMode) screenshotModeOnMsg else screenshotModeOffMsg
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 }
             )

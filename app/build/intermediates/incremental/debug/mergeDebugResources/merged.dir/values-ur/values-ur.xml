@@ -101,6 +101,9 @@
     <string name="cat_transport">نقل و حمل</string>
     <string name="cat_utilities">یوٹیلیٹیز</string>
     <string name="category_label">زمرہ</string>
+    <string name="cd_clear_search">تلاش صاف کریں</string>
+    <string name="cd_next_month">اگلا مہینہ</string>
+    <string name="cd_previous_month">پچھلا مہینہ</string>
     <string name="close">بند کریں</string>
     <string msgid="406453423630273620" name="close_drawer">"نیویگیشن مینیو بند کریں"</string>
     <string msgid="7573152094250666567" name="close_sheet">"شیٹ بند کریں"</string>
@@ -188,6 +191,12 @@
     <string name="description_hint">مثال: سپر مارکیٹ میں گروسری</string>
     <string name="description_label">تفصیل</string>
     <string name="detected_region_note">آپ کے آلے سے شناخت شدہ: %1$s</string>
+    <string name="digest_body_first_week">اس ہفتے آپ نے %1$s خرچ کیا — ٹریکنگ جاری رکھیں!</string>
+    <string name="digest_body_less">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے سے %2$d%% کم 🎉</string>
+    <string name="digest_body_more">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے سے %2$d%% زیادہ</string>
+    <string name="digest_body_no_spend">شاندار ہفتہ — کوئی خرچ درج نہیں! 🎉</string>
+    <string name="digest_body_same">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے جتنا ہی</string>
+    <string name="digest_title">ہفتہ وار خلاصہ 📊</string>
     <string name="done">ہو گیا</string>
     <string name="drive_backup_error">Google Drive خرابی</string>
     <string name="drive_backup_restore">Drive سے بحال کریں</string>
@@ -243,6 +252,20 @@
     <string msgid="2863935784364843033" name="glance_error_layout_text">"‏"<b><tt>"GlanceAppWidget"</tt></b>" کو تلاش کرتے ہوئے "<b><tt>"adb logcat"</tt></b>" کا استعمال کر کے اصل خرابی کو چیک کریں"</string>
     <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"مواد نہیں دکھایا جاسکتا"</string>
     <string msgid="3631961919234443531" name="glance_error_layout_title">"‏"<b>"Glance App Widget کی خرابی"</b></string>
+    <string name="goals_add">ہدف شامل کریں</string>
+    <string name="goals_date_label">ہدف کی تاریخ</string>
+    <string name="goals_date_optional">(اختیاری)</string>
+    <string name="goals_edit">ہدف میں ترمیم کریں</string>
+    <string name="goals_emoji_label">ایموجی منتخب کریں</string>
+    <string name="goals_empty_hint">پہلا بچت ہدف شامل کرنے کے لیے + دبائیں</string>
+    <string name="goals_name_error">براہ کرم ہدف کا نام درج کریں</string>
+    <string name="goals_name_hint">مثلاً: نیا فون، چھٹی…</string>
+    <string name="goals_name_label">ہدف کا نام</string>
+    <string name="goals_section_title">بچت کے اہداف</string>
+    <string name="goals_sheet_subtitle">ٹریک کریں کہ آپ کس کے لیے بچت کر رہے ہیں</string>
+    <string name="goals_target_error">براہ کرم درست رقم درج کریں</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_label">ہدفی رقم</string>
     <string name="greeting_afternoon">دوپہر بخیر</string>
     <string name="greeting_afternoon_named">دوپہر بخیر، %1$s</string>
     <string name="greeting_evening">شام بخیر</string>
@@ -464,6 +487,12 @@
     <string name="onboard_reminder_title">روزانہ یاددہانی</string>
     <string name="onboard_reminder_toggle">روزانہ یاددہانی فعال کریں</string>
     <string name="onboard_skip">چھوڑیں</string>
+    <string name="payday_day_label">دن %1$d</string>
+    <string name="payday_days_away">دن باقی</string>
+    <string name="payday_not_set">تنخواہ کا دن ترتیب دینے کے لیے دبائیں</string>
+    <string name="payday_per_day">یومیہ</string>
+    <string name="payday_picker_hint">آپ کی ماہانہ تنخواہ کی تاریخ</string>
+    <string name="payday_title">تنخواہ کا دن</string>
     <string name="payment_note_hint">مثال: جزوی ادائیگی، نقد ادائیگی</string>
     <string name="payment_note_label">نوٹ (اختیاری)</string>
     <string name="powered_by_footer">AG Tech کی طرف سے</string>
@@ -498,9 +527,12 @@
     <string name="salary_set_title">ماہانہ آمدنی طے کریں</string>
     <string name="save">محفوظ کریں</string>
     <string msgid="5659570757430909869" name="screen_lock_prompt_message">"جاری رکھنے کے لیے اپنا اسکرین لاک درج کریں"</string>
+    <string name="screenshot_mode_off">اسکرین شاٹ موڈ آف — اشتہارات دکھ رہے ہیں</string>
+    <string name="screenshot_mode_on">اسکرین شاٹ موڈ آن — اشتہارات چھپے ہیں</string>
     <string name="search_expenses_hint">اخراجات تلاش کریں…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"تلاش کریں"</string>
     <string name="security_section_title">سیکیورٹی</string>
+    <string name="select_country_code">ملک کا کوڈ منتخب کریں</string>
     <string name="select_date">تاریخ منتخب کریں</string>
     <string msgid="6043586758067023" name="selected">"منتخب کردہ"</string>
     <string name="settings_title">ترتیبات</string>
@@ -532,6 +564,9 @@
     <string msgid="5834637030682409883" name="state_off">"آف ہے"</string>
     <string msgid="1490883874751719580" name="state_on">"آن ہے"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"+999"</string>
+    <string name="streak_best_label">بہترین</string>
+    <string name="streak_days_suffix">دن</string>
+    <string name="streak_label">لاگنگ اسٹریک</string>
     <string msgid="2561197295334830845" name="switch_role">"سوئچ"</string>
     <string msgid="1672349317127674378" name="tab">"ٹیب"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> فیصد۔"</string>

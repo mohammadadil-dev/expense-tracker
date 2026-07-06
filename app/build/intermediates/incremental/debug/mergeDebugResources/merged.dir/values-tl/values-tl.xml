@@ -101,6 +101,9 @@
     <string name="cat_transport">Transportasyon</string>
     <string name="cat_utilities">Mga Utility</string>
     <string name="category_label">Kategorya</string>
+    <string name="cd_clear_search">I-clear ang paghahanap</string>
+    <string name="cd_next_month">Susunod na buwan</string>
+    <string name="cd_previous_month">Nakaraang buwan</string>
     <string name="close">Isara</string>
     <string msgid="406453423630273620" name="close_drawer">"Isara ang menu ng navigation"</string>
     <string msgid="7573152094250666567" name="close_sheet">"Isara ang sheet"</string>
@@ -188,6 +191,12 @@
     <string name="description_hint">hal. Pagkain sa supermarket</string>
     <string name="description_label">Paglalarawan</string>
     <string name="detected_region_note">Natukoy mula sa iyong device: %1$s</string>
+    <string name="digest_body_first_week">Ngayong linggo ay gumastos ka ng %1$s — patuloy na mag-track!</string>
+    <string name="digest_body_less">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mababa kaysa noong nakaraang linggo 🎉</string>
+    <string name="digest_body_more">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mataas kaysa noong nakaraang linggo</string>
+    <string name="digest_body_no_spend">Napakagandang linggo — walang naitalang gastos! 🎉</string>
+    <string name="digest_body_same">Ngayong linggo ay gumastos ka ng %1$s — halos katulad ng nakaraang linggo</string>
+    <string name="digest_title">Lingguhang Buod 📊</string>
     <string name="done">Tapos na</string>
     <string name="drive_backup_error">Google Drive error</string>
     <string name="drive_backup_restore">Ibalik mula sa Drive</string>
@@ -243,6 +252,20 @@
     <string msgid="2863935784364843033" name="glance_error_layout_text">"Tingnan ang eksaktong error gamit ang "<b><tt>"adb logcat"</tt></b>", at paghahanap sa "<b><tt>"GlanceAppWidget"</tt></b></string>
     <string msgid="5191168365305634625" name="glance_error_layout_text_v2">"Hindi makapagpakita ng content"</string>
     <string msgid="3631961919234443531" name="glance_error_layout_title"><b>"Error sa Widget ng Glance App"</b></string>
+    <string name="goals_add">Magdagdag ng Layunin</string>
+    <string name="goals_date_label">Target na petsa</string>
+    <string name="goals_date_optional">(opsyonal)</string>
+    <string name="goals_edit">I-edit ang Layunin</string>
+    <string name="goals_emoji_label">Pumili ng emoji</string>
+    <string name="goals_empty_hint">I-tap ang + para magdagdag ng unang layunin</string>
+    <string name="goals_name_error">Mangyaring maglagay ng pangalan ng layunin</string>
+    <string name="goals_name_hint">hal. Bagong telepono, Bakasyon…</string>
+    <string name="goals_name_label">Pangalan ng layunin</string>
+    <string name="goals_section_title">Mga Layunin sa Ipon</string>
+    <string name="goals_sheet_subtitle">Subaybayan kung para saan ka nag-iimpok</string>
+    <string name="goals_target_error">Mangyaring maglagay ng wastong halaga</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_label">Target na halaga</string>
     <string name="greeting_afternoon">Magandang hapon</string>
     <string name="greeting_afternoon_named">Magandang hapon, %1$s</string>
     <string name="greeting_evening">Magandang gabi</string>
@@ -464,6 +487,12 @@ Mangyaring bayaran kapag maginhawa 🙏
     <string name="onboard_reminder_title">Pang-araw-araw na paalala</string>
     <string name="onboard_reminder_toggle">I-enable ang pang-araw-araw na paalala</string>
     <string name="onboard_skip">Laktawan</string>
+    <string name="payday_day_label">Araw %1$d</string>
+    <string name="payday_days_away">araw na natitira</string>
+    <string name="payday_not_set">I-tap para itakda ang araw ng sahod</string>
+    <string name="payday_per_day">bawat araw</string>
+    <string name="payday_picker_hint">Iyong buwanang petsa ng sahod</string>
+    <string name="payday_title">Araw ng Sahod</string>
     <string name="payment_note_hint">hal. bahagyang bayad, binayad sa cash</string>
     <string name="payment_note_label">Tala (opsyonal)</string>
     <string name="powered_by_footer">Pinapagana ng AG Tech</string>
@@ -498,9 +527,12 @@ Mangyaring bayaran kapag maginhawa 🙏
     <string name="salary_set_title">Itakda ang Buwanang Kita</string>
     <string name="save">I-save</string>
     <string msgid="5659570757430909869" name="screen_lock_prompt_message">"Ilagay ang iyong lock ng screen para magpatuloy"</string>
+    <string name="screenshot_mode_off">Screenshot mode OFF — nakikita ang mga ad</string>
+    <string name="screenshot_mode_on">Screenshot mode ON — nakatago ang mga ad</string>
     <string name="search_expenses_hint">Maghanap ng gastos…</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Maghanap"</string>
     <string name="security_section_title">Seguridad</string>
+    <string name="select_country_code">Pumili ng Country Code</string>
     <string name="select_date">Pumili ng petsa</string>
     <string msgid="6043586758067023" name="selected">"Napili"</string>
     <string name="settings_title">Mga Setting</string>
@@ -532,6 +564,9 @@ Mangyaring bayaran kapag maginhawa 🙏
     <string msgid="5834637030682409883" name="state_off">"Naka-off"</string>
     <string msgid="1490883874751719580" name="state_on">"Naka-on"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="streak_best_label">Pinakamahusay</string>
+    <string name="streak_days_suffix">araw</string>
+    <string name="streak_label">Logging Streak</string>
     <string msgid="2561197295334830845" name="switch_role">"Lumipat"</string>
     <string msgid="1672349317127674378" name="tab">"Tab"</string>
     <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> (na) porsyento."</string>
