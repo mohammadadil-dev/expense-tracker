@@ -46,6 +46,7 @@ import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -108,11 +109,16 @@ import com.expensetracker.app.ui.components.InsightFeedCard
 import com.expensetracker.app.ui.components.MonthCalendarView
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.components.RecentTransactionsSection
+import com.expensetracker.app.ui.components.AddEditGoalSheet
+import com.expensetracker.app.ui.components.GoalProgressCard
+import com.expensetracker.app.ui.components.PaydayCard
 import com.expensetracker.app.ui.components.SalarySetDialog
 import com.expensetracker.app.ui.components.SpendingCategorySection
 import com.expensetracker.app.ui.components.SmsReviewSheet
+import com.expensetracker.app.ui.components.StreakCard
 // CoachmarkOverlay + CoachmarkStep used in AppNav now (not DashboardScreen)
 import com.expensetracker.app.ui.components.TransactionActionSheet
+import com.expensetracker.app.data.GoalEntity
 import com.expensetracker.app.ui.components.TrendBarChart
 import com.expensetracker.app.ui.components.TrendPoint
 import com.expensetracker.app.ui.theme.AccentIndigo
@@ -157,6 +163,10 @@ fun DashboardScreen(
     val monthlySalary by viewModel.monthlySalary.collectAsState()
     val monthIncomeEntries by viewModel.monthIncomeEntries.collectAsState()
     val monthIncomeTotal by viewModel.monthIncomeTotal.collectAsState()
+    val logStreak by viewModel.logStreak.collectAsState()
+    val logStreakBest by viewModel.logStreakBest.collectAsState()
+    val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
+    val activeGoals by viewModel.activeGoals.collectAsState()
     val locale: Locale = LocalConfiguration.current.locales[0]
 
     val context = LocalContext.current
@@ -171,6 +181,9 @@ fun DashboardScreen(
     var showBudgetSheet by remember { mutableStateOf(false) }
     var showSalaryDialog by remember { mutableStateOf(false) }
     var showIncomeSheet by remember { mutableStateOf(false) }
+    var showAddGoalSheet by remember { mutableStateOf(false) }
+    var editingGoal by remember { mutableStateOf<GoalEntity?>(null) }
+    var showPaydayPicker by remember { mutableStateOf(false) }
     var incomeExpanded by remember(currentMonthKey) { mutableStateOf(false) }
     var incomePendingDelete by remember { mutableStateOf<IncomeEntity?>(null) }
 
@@ -207,6 +220,25 @@ fun DashboardScreen(
 
     // Overall budget target (categoryId == null)
     val overallBudget = remember(budgets) { budgets.find { it.categoryId == null } }
+
+    // Payday countdown — how many days until next payday, and daily budget headroom.
+    val daysUntilPayday: Int? = remember(paydayDayOfMonth) {
+        if (paydayDayOfMonth <= 0) null
+        else {
+            val today = java.time.LocalDate.now()
+            var next = today.withDayOfMonth(paydayDayOfMonth.coerceAtMost(today.lengthOfMonth()))
+            if (!next.isAfter(today)) {
+                val nextMonth = today.plusMonths(1)
+                next = nextMonth.withDayOfMonth(paydayDayOfMonth.coerceAtMost(nextMonth.lengthOfMonth()))
+            }
+            java.time.temporal.ChronoUnit.DAYS.between(today, next).toInt()
+        }
+    }
+    val dailyBudgetRemaining: Double? = remember(overallBudget, totalThisMonth, daysUntilPayday) {
+        val budget = overallBudget?.amount ?: return@remember null
+        val days = daysUntilPayday ?: return@remember null
+        if (days <= 0) null else ((budget - totalThisMonth) / days).coerceAtLeast(0.0)
+    }
 
     val previousKey = remember(currentMonthKey) { DateUtils.previousMonthKey(currentMonthKey) }
     val previousTotal = remember(allExpenses, previousKey) {
@@ -516,6 +548,36 @@ fun DashboardScreen(
                     onAddIncome        = { showIncomeSheet = true },
                     onDeleteIncome     = { incomePendingDelete = it }
                 )
+            }
+
+            // ── item 1c ────────────────────────────────────────────────────────
+            // Engagement: Streak + Payday countdown side by side, then Goals below.
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    StreakCard(
+                        streak = logStreak,
+                        bestStreak = logStreakBest
+                    )
+                    PaydayCard(
+                        daysUntilPayday = daysUntilPayday,
+                        dailyBudgetRemaining = dailyBudgetRemaining,
+                        currencySymbol = currencySymbol,
+                        paydayDayOfMonth = paydayDayOfMonth,
+                        onConfigurePayday = { showPaydayPicker = true }
+                    )
+                    GoalProgressCard(
+                        goals = activeGoals,
+                        currencySymbol = currencySymbol,
+                        onAddGoal = {
+                            editingGoal = null
+                            showAddGoalSheet = true
+                        },
+                        onGoalTap = { goal ->
+                            editingGoal = goal
+                            showAddGoalSheet = true
+                        }
+                    )
+                }
             }
 
             // ── item 2 ─────────────────────────────────────────────────────────
@@ -1026,6 +1088,29 @@ fun DashboardScreen(
         )
     }
 
+    if (showAddGoalSheet) {
+        AddEditGoalSheet(
+            existing       = editingGoal,
+            currencySymbol = currencySymbol,
+            onDismiss      = { showAddGoalSheet = false; editingGoal = null },
+            onSave         = { name, emoji, targetAmount, targetDate ->
+                val existing = editingGoal
+                if (existing == null) {
+                    viewModel.addGoal(name, emoji, targetAmount, targetDate)
+                } else {
+                    viewModel.updateGoal(existing.copy(
+                        name         = name,
+                        emoji        = emoji,
+                        targetAmount = targetAmount,
+                        targetDate   = targetDate
+                    ))
+                }
+                showAddGoalSheet = false
+                editingGoal = null
+            }
+        )
+    }
+
     if (showSalaryDialog) {
         SalarySetDialog(
             currentSalary = monthlySalary,
@@ -1080,6 +1165,44 @@ fun DashboardScreen(
                 smsItemBeingAccepted = item
             },
             onDismissItem = { item -> viewModel.dismissPendingSms(item) }
+        )
+    }
+
+    // Payday day-of-month picker — shown directly on Dashboard (no Settings redirect)
+    if (showPaydayPicker) {
+        var pickerDay by remember { mutableStateOf(paydayDayOfMonth.coerceIn(1, 31).toFloat()) }
+        AlertDialog(
+            onDismissRequest = { showPaydayPicker = false },
+            title = { Text(stringResource(R.string.payday_title)) },
+            text = {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = stringResource(R.string.payday_day_label, pickerDay.toInt()),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Slider(
+                        value = pickerDay,
+                        onValueChange = { pickerDay = it },
+                        valueRange = 1f..31f,
+                        steps = 29
+                    )
+                    Text(
+                        text = stringResource(R.string.payday_picker_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.setPaydayDayOfMonth(pickerDay.toInt())
+                    showPaydayPicker = false
+                }) { Text(stringResource(R.string.done)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPaydayPicker = false }) { Text(stringResource(R.string.cancel)) }
+            }
         )
     }
 

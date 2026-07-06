@@ -156,7 +156,22 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _monthlySalary = MutableStateFlow(settings.monthlySalary)
     val monthlySalary: StateFlow<Double> = _monthlySalary
 
+    // ── Logging streak ────────────────────────────────────────────────────────
+    private val _logStreak = MutableStateFlow(settings.logStreak)
+    val logStreak: StateFlow<Int> = _logStreak
+
+    private val _logStreakBest = MutableStateFlow(settings.logStreakBest)
+    val logStreakBest: StateFlow<Int> = _logStreakBest
+
+    // ── Payday countdown ──────────────────────────────────────────────────────
+    private val _paydayDayOfMonth = MutableStateFlow(settings.paydayDayOfMonth)
+    val paydayDayOfMonth: StateFlow<Int> = _paydayDayOfMonth
+
     val pendingSmsExpenses: StateFlow<List<PendingSmsExpense>> = repository.pendingSmsExpenses
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    // ── Active savings goals ──────────────────────────────────────────────────
+    val activeGoals: StateFlow<List<com.expensetracker.app.data.GoalEntity>> = repository.activeGoals
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Standing budget targets (overall + per-category) — only the spend they're compared
@@ -206,6 +221,8 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     ) {
         viewModelScope.launch {
             repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring)
+            // Update logging streak only for new expenses, not edits.
+            if (id == null) updateLogStreak(date)
             val monthKey = DateUtils.monthKeyFromDate(date)
             _currentMonthKey.value = monthKey
 
@@ -560,5 +577,73 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
             repository.deleteIncome(income)
             refreshWidget()
         }
+    }
+
+    // ── Streak management ─────────────────────────────────────────────────────
+
+    /**
+     * Called when a *new* expense is saved.
+     * - Same day as last log → no change (idempotent).
+     * - Previous day → increment streak.
+     * - Older → reset to 1 (gap in logging).
+     */
+    private fun updateLogStreak(expenseDateIso: String) {
+        val today = DateUtils.todayIso()
+        val loggedDate = expenseDateIso  // may be a past date if user back-fills
+        val lastDate = settings.logStreakLastDate
+
+        // Only count today's date for the streak — back-filled past expenses don't extend it.
+        if (loggedDate != today) return
+
+        val newStreak = when {
+            lastDate.isEmpty() -> 1
+            lastDate == today -> settings.logStreak  // already counted today
+            lastDate == DateUtils.yesterdayIso() -> settings.logStreak + 1
+            else -> 1  // gap — reset
+        }
+        settings.logStreak = newStreak
+        settings.logStreakLastDate = today
+        if (newStreak > settings.logStreakBest) settings.logStreakBest = newStreak
+
+        _logStreak.value = newStreak
+        _logStreakBest.value = settings.logStreakBest
+    }
+
+    // ── Payday settings ───────────────────────────────────────────────────────
+
+    fun setPaydayDayOfMonth(day: Int) {
+        settings.paydayDayOfMonth = day
+        _paydayDayOfMonth.value = day
+    }
+
+    // ── Savings goals ─────────────────────────────────────────────────────────
+
+    fun addGoal(name: String, emoji: String, targetAmount: Double, targetDate: String, onDone: () -> Unit = {}) {
+        viewModelScope.launch {
+            repository.addGoal(name, emoji, targetAmount, targetDate)
+            onDone()
+        }
+    }
+
+    fun updateGoal(goal: com.expensetracker.app.data.GoalEntity, onDone: () -> Unit = {}) {
+        viewModelScope.launch {
+            repository.updateGoal(goal)
+            onDone()
+        }
+    }
+
+    fun contributeToGoal(goalId: Long, additionalAmount: Double, onDone: () -> Unit = {}) {
+        viewModelScope.launch {
+            repository.contributeToGoal(goalId, additionalAmount)
+            onDone()
+        }
+    }
+
+    fun deleteGoal(goalId: Long) {
+        viewModelScope.launch { repository.deleteGoal(goalId) }
+    }
+
+    fun markGoalCompleted(goalId: Long) {
+        viewModelScope.launch { repository.markGoalCompleted(goalId) }
     }
 }

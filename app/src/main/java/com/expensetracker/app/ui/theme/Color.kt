@@ -37,6 +37,7 @@ val BorderLight   = Color(0xFFE8E0D5)     // warm-tinted border to match cream b
 val DangerRed    = Color(0xFFE8614A)      // shares coral for consistency
 val SuccessGreen = Color(0xFF43A047)      // matches salary tile
 val WarningAmber = Color(0xFFFFC107)      // same as BrandAmber
+val StreakOrange  = Color(0xFFFF5722)     // deep orange — streak/fire accent, readable on any bg
 
 // ─── Legacy aliases — kept so existing components that still reference these
 //     old names compile without changes. Gradually migrate call-sites to the

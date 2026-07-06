@@ -433,4 +433,43 @@
     <string name="label_party_plural">فریقین</string>
     <string name="label_debt_singular">قرض</string>
     <string name="label_debt_plural">قرضے</string>
+    <!-- ── Accessibility content descriptions ── -->
+    <string name="cd_previous_month">پچھلا مہینہ</string>
+    <string name="cd_next_month">اگلا مہینہ</string>
+    <string name="cd_clear_search">تلاش صاف کریں</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">اسکرین شاٹ موڈ آن — اشتہارات چھپے ہیں</string>
+    <string name="screenshot_mode_off">اسکرین شاٹ موڈ آف — اشتہارات دکھ رہے ہیں</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">ملک کا کوڈ منتخب کریں</string>
+
+    <string name="streak_label">لاگنگ اسٹریک</string>
+    <string name="streak_days_suffix">دن</string>
+    <string name="streak_best_label">بہترین</string>
+    <string name="payday_title">تنخواہ کا دن</string>
+    <string name="payday_not_set">تنخواہ کا دن ترتیب دینے کے لیے دبائیں</string>
+    <string name="payday_days_away">دن باقی</string>
+    <string name="payday_per_day">یومیہ</string>
+    <string name="payday_day_label">دن %1$d</string>
+    <string name="payday_picker_hint">آپ کی ماہانہ تنخواہ کی تاریخ</string>
+    <string name="goals_section_title">بچت کے اہداف</string>
+    <string name="goals_add">ہدف شامل کریں</string>
+    <string name="goals_edit">ہدف میں ترمیم کریں</string>
+    <string name="goals_empty_hint">پہلا بچت ہدف شامل کرنے کے لیے + دبائیں</string>
+    <string name="goals_sheet_subtitle">ٹریک کریں کہ آپ کس کے لیے بچت کر رہے ہیں</string>
+    <string name="goals_emoji_label">ایموجی منتخب کریں</string>
+    <string name="goals_name_label">ہدف کا نام</string>
+    <string name="goals_name_hint">مثلاً: نیا فون، چھٹی…</string>
+    <string name="goals_name_error">براہ کرم ہدف کا نام درج کریں</string>
+    <string name="goals_target_label">ہدفی رقم</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">براہ کرم درست رقم درج کریں</string>
+    <string name="goals_date_label">ہدف کی تاریخ</string>
+    <string name="goals_date_optional">(اختیاری)</string>
+    <string name="digest_title">ہفتہ وار خلاصہ 📊</string>
+    <string name="digest_body_first_week">اس ہفتے آپ نے %1$s خرچ کیا — ٹریکنگ جاری رکھیں!</string>
+    <string name="digest_body_no_spend">شاندار ہفتہ — کوئی خرچ درج نہیں! 🎉</string>
+    <string name="digest_body_less">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے سے %2$d%% کم 🎉</string>
+    <string name="digest_body_more">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے سے %2$d%% زیادہ</string>
+    <string name="digest_body_same">اس ہفتے آپ نے %1$s خرچ کیا — گزشتہ ہفتے جتنا ہی</string>
 </resources>

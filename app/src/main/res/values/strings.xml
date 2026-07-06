@@ -443,4 +443,46 @@ Feel free to use it anytime!
     <string name="label_party_plural">parties</string>
     <string name="label_debt_singular">debt</string>
     <string name="label_debt_plural">debts</string>
+    <!-- ── Screenshot mode toast messages ── -->
+    <string name="screenshot_mode_on">Screenshot mode ON — ads hidden</string>
+    <string name="screenshot_mode_off">Screenshot mode OFF — ads visible</string>
+    <!-- ── Country code picker dialog ── -->
+    <string name="select_country_code">Select Country Code</string>
+
+    <!-- ── Logging streak card ── -->
+    <string name="streak_label">Logging Streak</string>
+    <string name="streak_days_suffix">days</string>
+    <string name="streak_best_label">Best</string>
+
+    <!-- ── Payday countdown card + Settings picker ── -->
+    <string name="payday_title">Payday</string>
+    <string name="payday_not_set">Tap to set payday</string>
+    <string name="payday_days_away">days away</string>
+    <string name="payday_per_day">per day</string>
+    <string name="payday_day_label">Day %1$d</string>
+    <string name="payday_picker_hint">Your monthly salary date</string>
+
+    <!-- ── Savings goals ── -->
+    <string name="goals_section_title">Savings Goals</string>
+    <string name="goals_add">Add Goal</string>
+    <string name="goals_edit">Edit Goal</string>
+    <string name="goals_empty_hint">Tap + to add your first savings goal</string>
+    <string name="goals_sheet_subtitle">Track what you\'re saving toward</string>
+    <string name="goals_emoji_label">Choose emoji</string>
+    <string name="goals_name_label">Goal name</string>
+    <string name="goals_name_hint">e.g. New Phone, Vacation…</string>
+    <string name="goals_name_error">Please enter a goal name</string>
+    <string name="goals_target_label">Target amount</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">Please enter a valid amount</string>
+    <string name="goals_date_label">Target date</string>
+    <string name="goals_date_optional">(optional)</string>
+
+    <!-- ── Weekly digest notification ── -->
+    <string name="digest_title">Weekly Digest 📊</string>
+    <string name="digest_body_first_week">This week you spent %1$s — keep tracking!</string>
+    <string name="digest_body_no_spend">Great week — no expenses logged! 🎉</string>
+    <string name="digest_body_less">This week you spent %1$s — %2$d%% less than last week 🎉</string>
+    <string name="digest_body_more">This week you spent %1$s — %2$d%% more than last week</string>
+    <string name="digest_body_same">This week you spent %1$s — about the same as last week</string>
 </resources>

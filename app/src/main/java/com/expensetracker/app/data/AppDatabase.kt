@@ -16,9 +16,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
     entities = [
         CategoryEntity::class, ExpenseEntity::class, PendingSmsExpense::class,
         BudgetEntity::class, DebtEntity::class, DebtPaymentEntity::class,
-        KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class
+        KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class,
+        GoalEntity::class
     ],
-    version = 11,
+    version = 12,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -31,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun debtPaymentDao(): DebtPaymentDao
     abstract fun khataDao(): KhataDao
     abstract fun incomeDao(): IncomeDao
+    abstract fun goalDao(): GoalDao
 
     companion object {
         @Volatile
@@ -341,13 +343,37 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v11 -> v12: adds the savings_goals table for goal-tracking feature.
+        private val MIGRATION_11_12 = object : Migration(11, 12) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `savings_goals` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `emoji` TEXT NOT NULL DEFAULT '🎯',
+                        `targetAmount` REAL NOT NULL,
+                        `savedAmount` REAL NOT NULL DEFAULT 0.0,
+                        `targetDate` TEXT NOT NULL DEFAULT '',
+                        `createdAt` INTEGER NOT NULL,
+                        `isCompleted` INTEGER NOT NULL DEFAULT 0
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "expense_tracker.db"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11).build().also { INSTANCE = it }
+                ).addMigrations(
+                    MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
+                    MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
+                    MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12
+                ).build().also { INSTANCE = it }
             }
         }
     }

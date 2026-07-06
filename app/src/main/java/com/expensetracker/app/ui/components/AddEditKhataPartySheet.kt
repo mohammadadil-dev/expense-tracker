@@ -191,7 +191,7 @@ fun AddEditKhataPartySheet(
     if (showCountryPicker) {
         AlertDialog(
             onDismissRequest = { showCountryPicker = false },
-            title = { Text("Select Country Code", style = MaterialTheme.typography.titleMedium) },
+            title = { Text(stringResource(R.string.select_country_code), style = MaterialTheme.typography.titleMedium) },
             text = {
                 LazyColumn(modifier = Modifier.heightIn(max = 360.dp)) {
                     items(COUNTRY_ENTRIES) { entry ->

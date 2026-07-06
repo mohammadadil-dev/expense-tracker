@@ -130,6 +130,30 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getBoolean(KEY_SCREENSHOT_MODE, false)
         set(value) = prefs.edit().putBoolean(KEY_SCREENSHOT_MODE, value).apply()
 
+    // ── Daily logging streak ──────────────────────────────────────────────────
+
+    /** Number of consecutive calendar days on which the user logged at least one expense. */
+    var logStreak: Int
+        get() = prefs.getInt(KEY_LOG_STREAK, 0)
+        set(value) = prefs.edit().putInt(KEY_LOG_STREAK, value).apply()
+
+    /** ISO date string (yyyy-MM-dd) of the last day an expense was logged. */
+    var logStreakLastDate: String
+        get() = prefs.getString(KEY_LOG_STREAK_LAST_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_LOG_STREAK_LAST_DATE, value).apply()
+
+    /** All-time highest streak. */
+    var logStreakBest: Int
+        get() = prefs.getInt(KEY_LOG_STREAK_BEST, 0)
+        set(value) = prefs.edit().putInt(KEY_LOG_STREAK_BEST, value).apply()
+
+    // ── Payday countdown ─────────────────────────────────────────────────────
+
+    /** Day of month on which the user gets paid (1–31). 0 = not configured. */
+    var paydayDayOfMonth: Int
+        get() = prefs.getInt(KEY_PAYDAY_DAY, 0)
+        set(value) = prefs.edit().putInt(KEY_PAYDAY_DAY, value).apply()
+
     companion object {
         private const val PREFS_NAME = "expense_tracker_settings"
         private const val KEY_LANGUAGE = "language"
@@ -148,5 +172,9 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_ONBOARDING_RESUME_STEP = "onboarding_resume_step"
         private const val KEY_ONBOARDING_PENDING_NAME = "onboarding_pending_name"
         private const val KEY_SCREENSHOT_MODE = "screenshot_mode"
+        private const val KEY_LOG_STREAK = "log_streak"
+        private const val KEY_LOG_STREAK_LAST_DATE = "log_streak_last_date"
+        private const val KEY_LOG_STREAK_BEST = "log_streak_best"
+        private const val KEY_PAYDAY_DAY = "payday_day_of_month"
     }
 }
