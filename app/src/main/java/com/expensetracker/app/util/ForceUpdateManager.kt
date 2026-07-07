@@ -31,10 +31,10 @@ object ForceUpdateManager {
      * Set it to the versionCode of that release. Users on any lower code see the
      * blocking dialog.
      *
-     * Current versionCode = 15 (v1.5.0). Users on versionCode 14 or below will see
+     * Current versionCode = 16 (v1.6.0). Users on versionCode 15 or below will see
      * the blocking dialog and cannot use the app until they update.
      */
-    const val MIN_VERSION_CODE = 15   // v1.5.0 — all users on 14 or below must update
+    const val MIN_VERSION_CODE = 16   // v1.6.0 — all users on 15 or below must update
 
     /**
      * No longer used by the main update flow — kept for any legacy reference.
