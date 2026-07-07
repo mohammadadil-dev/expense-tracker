@@ -7,9 +7,12 @@ import android.os.Build
 import com.expensetracker.app.data.AppDatabase
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ExpenseRepository
+import com.expensetracker.app.data.FamilyRepository
 import com.expensetracker.app.data.KhataRepository
 import com.expensetracker.app.data.SettingsRepository
+import com.expensetracker.app.data.SplitRepository
 import com.expensetracker.app.util.LocaleHelper
+import com.expensetracker.app.util.ReminderReceiver
 import com.expensetracker.app.util.ReminderScheduler
 import com.expensetracker.app.util.ReminderWorker
 import com.expensetracker.app.util.WeeklyDigestScheduler
@@ -25,6 +28,8 @@ class ExpenseApp : Application() {
     lateinit var database: AppDatabase
     lateinit var repository: ExpenseRepository
     lateinit var khataRepository: KhataRepository
+    lateinit var familyRepository: FamilyRepository
+    lateinit var splitRepository: SplitRepository
     lateinit var settings: SettingsRepository
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -35,6 +40,13 @@ class ExpenseApp : Application() {
         database = AppDatabase.getInstance(this)
         repository = ExpenseRepository(database)
         khataRepository = KhataRepository(database)
+        familyRepository = FamilyRepository(database.familyMemberDao())
+        splitRepository = SplitRepository(
+            database.splitGroupDao(),
+            database.splitMemberDao(),
+            database.splitExpenseDao(),
+            database.splitExpenseShareDao()
+        )
         settings = SettingsRepository(this)
 
         // Detect the default currency from the phone's region on every launch,
@@ -59,12 +71,17 @@ class ExpenseApp : Application() {
         // NotificationChannel is a no-op below API 26 but required on 26+.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val nm = getSystemService(NotificationManager::class.java)
+            // IMPORTANCE_HIGH → heads-up popup + sound + vibration on lock screen.
             nm?.createNotificationChannel(
                 NotificationChannel(
-                    ReminderWorker.CHANNEL_ID,
+                    ReminderReceiver.CHANNEL_ID,
                     "Daily Reminder",
-                    NotificationManager.IMPORTANCE_DEFAULT
-                ).apply { description = "Daily nudge to log your expenses" }
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = "Daily nudge to log your expenses"
+                    enableVibration(true)
+                    enableLights(true)
+                }
             )
             nm?.createNotificationChannel(
                 NotificationChannel(
@@ -75,8 +92,7 @@ class ExpenseApp : Application() {
             )
         }
 
-        // Ensure the daily reminder WorkManager job exists if the user has it enabled.
-        // Uses KEEP policy so existing schedules are not disrupted on every app open.
+        // Ensure the daily reminder AlarmManager alarm is set if the user has it enabled.
         if (settings.reminderEnabled) {
             ReminderScheduler.schedule(this, settings.reminderHour)
         }

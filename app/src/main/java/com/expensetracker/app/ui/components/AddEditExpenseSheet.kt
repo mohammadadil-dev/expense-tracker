@@ -1,6 +1,8 @@
 package com.expensetracker.app.ui.components
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CategoryEntity
 import com.expensetracker.app.data.ExpenseEntity
+import com.expensetracker.app.data.FamilyMemberEntity
 import com.expensetracker.app.util.DateUtils
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.util.categoryEmoji
@@ -76,8 +79,10 @@ fun AddEditExpenseSheet(
     existing: ExpenseEntity?,
     defaultDate: String,
     prefill: ExpensePrefill? = null,
+    familyModeEnabled: Boolean = false,
+    familyMembers: List<FamilyMemberEntity> = emptyList(),
     onDismiss: () -> Unit,
-    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean) -> Unit,
+    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean, memberId: Long?) -> Unit,
     onAddCategory: ((name: String, colorHex: String) -> Unit)? = null
 ) {
     var selectedCategory by remember {
@@ -101,6 +106,8 @@ fun AddEditExpenseSheet(
     // Recurring: pre-populate from existing record (templates have isRecurring=true; auto-copies
     // have isRecurring=false, so editing a copy keeps the toggle off by default — correct).
     var isRecurring by remember { mutableStateOf(existing?.isRecurring ?: false) }
+    // Family member assignment — pre-populate from existing expense when editing.
+    var selectedMemberId by remember { mutableStateOf<Long?>(existing?.memberId) }
     val locale = LocalConfiguration.current.locales[0]
     val scrollState = rememberScrollState()
 
@@ -282,6 +289,79 @@ fun AddEditExpenseSheet(
                 Spacer(Modifier.height(12.dp))
             }
 
+            // ── Family member picker — hidden (feature not yet ready for release) ──
+            if (false && familyModeEnabled && familyMembers.isNotEmpty()) {
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    stringResourceCompat(R.string.family_expense_assigned_to),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Spacer(Modifier.height(8.dp))
+                val memberRowScroll = rememberScrollState()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(memberRowScroll),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // "Shared" option — null memberId
+                    val sharedSelected = selectedMemberId == null
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                if (sharedSelected) MaterialTheme.colorScheme.primaryContainer
+                                else MaterialTheme.colorScheme.surfaceVariant,
+                                RoundedCornerShape(20.dp)
+                            )
+                            .border(
+                                1.dp,
+                                if (sharedSelected) MaterialTheme.colorScheme.primary
+                                else Color.Transparent,
+                                RoundedCornerShape(20.dp)
+                            )
+                            .clickable { selectedMemberId = null }
+                            .padding(horizontal = 14.dp, vertical = 6.dp)
+                    ) {
+                        Text(
+                            stringResourceCompat(R.string.family_shared),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (sharedSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    familyMembers.forEach { member ->
+                        val memberSelected = selectedMemberId == member.id
+                        val memberColor = try {
+                            Color(android.graphics.Color.parseColor(member.colorHex))
+                        } catch (_: Exception) { MaterialTheme.colorScheme.primary }
+                        val displayLabel = member.emoji.ifBlank { member.name.take(1) } + " " + member.name
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    if (memberSelected) memberColor.copy(alpha = 0.2f)
+                                    else MaterialTheme.colorScheme.surfaceVariant,
+                                    RoundedCornerShape(20.dp)
+                                )
+                                .border(
+                                    1.dp,
+                                    if (memberSelected) memberColor else Color.Transparent,
+                                    RoundedCornerShape(20.dp)
+                                )
+                                .clickable { selectedMemberId = member.id }
+                                .padding(horizontal = 14.dp, vertical = 6.dp)
+                        ) {
+                            Text(
+                                displayLabel,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (memberSelected) memberColor
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+            }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -296,7 +376,7 @@ fun AddEditExpenseSheet(
                     }
                     val categoryId = selectedCategory?.id
                     if (categoryId != null) {
-                        onSave(existing?.id, categoryId, description.trim(), amount, dateIso, isRecurring)
+                        onSave(existing?.id, categoryId, description.trim(), amount, dateIso, isRecurring, selectedMemberId)
                     }
                 }) {
                     Text(stringResourceCompat(if (existing == null) R.string.add else R.string.update))

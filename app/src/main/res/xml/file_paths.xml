@@ -5,4 +5,6 @@
     <cache-path name="exports" path="exports/" />
     <!-- Matches the root of cacheDir where BackupManager writes the JSON backup file. -->
     <cache-path name="cache" path="." />
+    <!-- Temp images captured by the camera for receipt scanning. -->
+    <cache-path name="camera" path="camera/" />
 </paths>

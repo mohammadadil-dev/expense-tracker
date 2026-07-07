@@ -86,7 +86,8 @@ class ExpenseRepository(private val db: AppDatabase) {
         amount: Double,
         date: String,
         isRecurring: Boolean = false,
-        recurringPeriod: String? = null
+        recurringPeriod: String? = null,
+        memberId: Long? = null
     ) {
         val monthKey = date.substring(0, 7)
         val period = if (isRecurring) (recurringPeriod ?: "MONTHLY") else null
@@ -95,7 +96,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                 ExpenseEntity(
                     categoryId = categoryId, description = description,
                     amount = amount, date = date, monthKey = monthKey,
-                    isRecurring = isRecurring, recurringPeriod = period
+                    isRecurring = isRecurring, recurringPeriod = period,
+                    memberId = memberId
                 )
             )
         } else {
@@ -103,7 +105,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                 ExpenseEntity(
                     id = id, categoryId = categoryId, description = description,
                     amount = amount, date = date, monthKey = monthKey,
-                    isRecurring = isRecurring, recurringPeriod = period
+                    isRecurring = isRecurring, recurringPeriod = period,
+                    memberId = memberId
                 )
             )
         }

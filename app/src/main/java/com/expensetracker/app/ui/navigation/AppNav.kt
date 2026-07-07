@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Settings
@@ -23,6 +24,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -52,21 +54,27 @@ import com.expensetracker.app.ui.screens.KhataDetailScreen
 import com.expensetracker.app.ui.screens.KhataScreen
 import com.expensetracker.app.ui.screens.SettingsScreen
 import com.expensetracker.app.ui.screens.SplashScreen
+import com.expensetracker.app.ui.screens.SplitsScreen
+import com.expensetracker.app.ui.screens.SplitGroupDetailScreen
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
+import com.expensetracker.app.viewmodel.SplitViewModel
 
 private object Routes {
-    const val SPLASH         = "splash"
-    const val ONBOARDING     = "onboarding"
-    const val CURRENCY_SETUP = "currency_setup"
-    const val DASHBOARD      = "dashboard"
-    const val KHATA          = "khata"
-    const val KHATA_DETAIL   = "khata_detail/{partyId}"
-    const val DEBTS          = "debts"
-    const val SETTINGS       = "settings"
+    const val SPLASH          = "splash"
+    const val ONBOARDING      = "onboarding"
+    const val CURRENCY_SETUP  = "currency_setup"
+    const val DASHBOARD       = "dashboard"
+    const val KHATA           = "khata"
+    const val KHATA_DETAIL    = "khata_detail/{partyId}"
+    const val DEBTS           = "debts"
+    const val SPLITS          = "splits"
+    const val SPLIT_DETAIL    = "split_detail/{groupId}"
+    const val SETTINGS        = "settings"
 
     fun khataDetail(partyId: Long) = "khata_detail/$partyId"
+    fun splitDetail(groupId: Long) = "split_detail/$groupId"
 }
 
 private const val TRANSITION_MS = 260
@@ -78,20 +86,25 @@ private data class BottomNavItem(
 )
 
 private val bottomNavItems = listOf(
-    BottomNavItem(Routes.DASHBOARD, R.string.nav_dashboard,  Icons.Filled.Home),
+    BottomNavItem(Routes.DASHBOARD, R.string.nav_dashboard,   Icons.Filled.Home),
     BottomNavItem(Routes.KHATA,     R.string.khata_tab_label, Icons.Filled.MenuBook),
     BottomNavItem(Routes.DEBTS,     R.string.nav_debts,       Icons.Filled.AccountBalance),
+    BottomNavItem(Routes.SPLITS,    R.string.nav_splits,      Icons.Filled.Groups),
     BottomNavItem(Routes.SETTINGS,  R.string.nav_settings,    Icons.Filled.Settings),
 )
 
 // Routes where the bottom nav should be hidden
-private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/")
+private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/")
 
 @Composable
 fun AppNav() {
     val navController = rememberNavController()
     val viewModel: ExpenseViewModel = viewModel()
     val khataViewModel: KhataViewModel = viewModel()
+    val splitViewModel: SplitViewModel = viewModel()
+
+    val currencySymbol by viewModel.currencySymbol.collectAsState()
+    val displayName    by viewModel.displayName.collectAsState()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -104,7 +117,8 @@ fun AppNav() {
     val coachDensity = LocalDensity.current
     val coachmarkSteps = remember(
         viewModel.fabBounds, viewModel.budgetCardBounds,
-        viewModel.incomeTilesBounds, viewModel.debtsNavBounds, viewModel.ledgerNavBounds
+        viewModel.incomeTilesBounds, viewModel.debtsNavBounds, viewModel.ledgerNavBounds,
+        viewModel.receiptScanBounds, viewModel.micButtonBounds, viewModel.splitsNavBounds
     ) {
         // Step 2: spotlight only the ring (upper 38%, fixed 88dp radius) not the whole card
         val budgetRingSpot = viewModel.budgetCardBounds?.let { bounds ->
@@ -124,6 +138,12 @@ fun AppNav() {
             CoachmarkStep(R.string.tour_step3_title, R.string.tour_step3_body, incomeSpot),
             CoachmarkStep(R.string.tour_step4_title, R.string.tour_step4_body, viewModel.debtsNavBounds),
             CoachmarkStep(R.string.tour_step5_title, R.string.tour_step5_body, viewModel.ledgerNavBounds),
+            // Steps 6–9: new feature introductions (spotlight the actual button/tab)
+            CoachmarkStep(R.string.tour_step6_title, R.string.tour_step6_body, viewModel.receiptScanBounds),
+            CoachmarkStep(R.string.tour_step7_title, R.string.tour_step7_body, viewModel.micButtonBounds),
+            CoachmarkStep(R.string.tour_step8_title, R.string.tour_step8_body, viewModel.splitsNavBounds),
+            // step9 (Khata/Ledger) removed — already covered by step 5
+            CoachmarkStep(R.string.tour_step10_title, R.string.tour_step10_body, null),
         )
     }
 
@@ -158,6 +178,9 @@ fun AppNav() {
                                     }
                                     Routes.KHATA -> Modifier.onGloballyPositioned { coords ->
                                         viewModel.ledgerNavBounds = coords.boundsInWindow()
+                                    }
+                                    Routes.SPLITS -> Modifier.onGloballyPositioned { coords ->
+                                        viewModel.splitsNavBounds = coords.boundsInWindow()
                                     }
                                     else -> Modifier
                                 },
@@ -330,6 +353,44 @@ fun AppNav() {
                 }
 
                 composable(
+                    Routes.SPLITS,
+                    enterTransition    = { fadeIn(tween(TRANSITION_MS)) },
+                    exitTransition     = { fadeOut(tween(TRANSITION_MS)) },
+                    popEnterTransition = { fadeIn(tween(TRANSITION_MS)) },
+                    popExitTransition  = { fadeOut(tween(TRANSITION_MS)) }
+                ) {
+                    SplitsScreen(
+                        viewModel       = splitViewModel,
+                        ownerName       = displayName.ifBlank { "Me" },
+                        currencySymbol  = currencySymbol,
+                        onOpenGroup     = { groupId ->
+                            navController.navigate(Routes.splitDetail(groupId))
+                        }
+                    )
+                }
+
+                composable(
+                    Routes.SPLIT_DETAIL,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) { backStackEntry ->
+                    val groupId = backStackEntry.arguments
+                        ?.getString("groupId")?.toLongOrNull() ?: return@composable
+                    SplitGroupDetailScreen(
+                        groupId        = groupId,
+                        viewModel      = splitViewModel,
+                        currencySymbol = currencySymbol,
+                        onBack         = { navController.popBackStack() }
+                    )
+                }
+
+                composable(
                     Routes.SETTINGS,
                     enterTransition   = {
                         fadeIn(tween(TRANSITION_MS)) +
@@ -349,10 +410,13 @@ fun AppNav() {
         }
     } // end Scaffold
 
-    // CoachmarkOverlay rendered at root Box level — covers full screen including nav bar
-    // so steps 4 (Debts tab) and 5 (Ledger tab) can spotlight bottom nav items.
-    // bottomPadding keeps the card + Next button above the ad banner + nav bar zone.
-    if (viewModel.coachmarkStep < coachmarkSteps.size && currentRoute == Routes.DASHBOARD) {
+    // CoachmarkOverlay renders at root Box level so it covers the full window
+    // including the bottom nav bar (steps 4 & 5 spotlight nav tab items).
+    // Steps 6–10 introduce new features with null spotlight (full-screen dim, centered card).
+    // Only new installs see the full 10-step tour; returning users who already have
+    // hasSeenCoachmarks=true are unaffected.
+    if (viewModel.coachmarkStep < coachmarkSteps.size &&
+        currentRoute == Routes.DASHBOARD) {
         CoachmarkOverlay(
             steps         = coachmarkSteps,
             currentStep   = viewModel.coachmarkStep,

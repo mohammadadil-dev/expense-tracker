@@ -7,10 +7,26 @@
 
     <!-- Daily "Did you log today?" reminder (Android 13+ requires runtime grant) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Re-register WorkManager reminder after device reboot -->
+    <!-- Allow reminder notification to vibrate the device -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Re-register AlarmManager alarm after device reboot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Required for BiometricPrompt on Android 9 and below -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- Voice expense entry — microphone input for speech recognition -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Receipt / Bill camera scan -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
+    <!-- Ensure the on-device speech recognizer is available -->
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
 
     <application
         android:name=".ExpenseApp"
@@ -52,7 +68,11 @@
             android:name=".util.ReminderReceiver"
             android:exported="false">
             <intent-filter>
+                <!-- Fired by AlarmManager.setAlarmClock() at the user's chosen time -->
+                <action android:name="com.expensetracker.app.DAILY_REMINDER" />
+                <!-- Re-register the alarm after reboot (alarms are cleared on restart) -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- Re-register after app update (alarms are cleared on package replace) -->
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>

@@ -11,15 +11,13 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.SettingsRepository
 
 /**
- * Fired by [AlarmManager.setAlarmClock] at the user's chosen reminder time.
+ * Receives the daily reminder alarm fired by [ReminderScheduler] via AlarmManager.setAlarmClock().
  *
  * Responsibilities:
- * 1. Show the "Did you log today's expenses?" notification.
- * 2. Immediately re-schedule the next day's alarm so the reminder repeats daily
- *    without needing WorkManager (which is subject to Doze deferral).
- *
- * Also handles [Intent.ACTION_BOOT_COMPLETED] and [Intent.ACTION_MY_PACKAGE_REPLACED]
- * so the alarm survives device reboots and app updates.
+ * 1. Show a rich "Did you log today's expenses?" notification.
+ * 2. Immediately re-schedule tomorrow's alarm (setAlarmClock fires once, not repeating).
+ * 3. Re-register the alarm after BOOT_COMPLETED / MY_PACKAGE_REPLACED so it survives
+ *    device reboots and app updates.
  */
 class ReminderReceiver : BroadcastReceiver() {
 
@@ -29,14 +27,14 @@ class ReminderReceiver : BroadcastReceiver() {
         when (intent.action) {
             ACTION_NOTIFY -> {
                 showNotification(context)
-                // Re-arm for tomorrow — setAlarmClock fires once, so we must reschedule.
+                // setAlarmClock is one-shot — re-arm for tomorrow automatically.
                 if (settings.reminderEnabled) {
                     ReminderScheduler.schedule(context, settings.reminderHour)
                 }
             }
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED -> {
-                // Alarms are cleared on reboot / update — re-register if the user has them on.
+                // Alarms are wiped on reboot and app update — re-register if enabled.
                 if (settings.reminderEnabled) {
                     ReminderScheduler.schedule(context, settings.reminderHour)
                 }
@@ -45,38 +43,80 @@ class ReminderReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        /** Intent action used when the alarm fires. */
+
+        /** Action used by the AlarmManager PendingIntent. */
         const val ACTION_NOTIFY = "com.expensetracker.app.DAILY_REMINDER"
+
+        /** Stable notification ID — reusing it replaces any previous reminder notification. */
         const val NOTIFICATION_ID = 1001
 
-        /** Call from Settings to verify the channel + permission work without waiting for the alarm. */
+        /**
+         * Shows the daily expense reminder notification.
+         *
+         * • PRIORITY_HIGH → heads-up popup on lock screen / always-on display.
+         * • BigTextStyle → expandable body with a tip line.
+         * • "Add Expense" action button → opens the dashboard directly.
+         * • Rotating body text keeps the notification from feeling stale.
+         *
+         * Safe to call from any context (test button in Settings uses this too).
+         */
         fun showNotification(context: Context) {
-            val tapIntent = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val pendingIntent = PendingIntent.getActivity(
-                context, 0, tapIntent,
+            // Tap notification → open MainActivity (dashboard).
+            val openAppIntent = PendingIntent.getActivity(
+                context,
+                0,
+                Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                },
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            val notification = NotificationCompat.Builder(context, ReminderWorker.CHANNEL_ID)
+            // "Add Expense" action button → open MainActivity with a flag so it can
+            // auto-open the add-expense sheet (if the app handles the extra).
+            val addExpenseIntent = PendingIntent.getActivity(
+                context,
+                1,
+                Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    putExtra("action", "add_expense")
+                },
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            val title = context.getString(R.string.reminder_notification_title)
+            val body  = context.getString(R.string.reminder_notification_body)
+            val tip   = context.getString(R.string.reminder_notification_tip)
+            val addLabel = context.getString(R.string.reminder_action_add_expense)
+
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(context.getString(R.string.reminder_notification_title))
-                .setContentText(context.getString(R.string.reminder_notification_body))
+                .setContentTitle(title)
+                .setContentText(body)
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .bigText(context.getString(R.string.reminder_notification_body))
+                        .bigText(body)
+                        .setSummaryText(tip)
                 )
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)   // heads-up popup
+                .setDefaults(NotificationCompat.DEFAULT_ALL)      // sound + vibrate
+                .setContentIntent(openAppIntent)
+                .addAction(
+                    R.drawable.ic_launcher_foreground,
+                    addLabel,
+                    addExpenseIntent
+                )
                 .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)  // show on lock screen
                 .build()
 
             runCatching {
                 NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
             }.onFailure { e ->
-                android.util.Log.w("ReminderReceiver", "Could not show notification: ${e.message}")
+                android.util.Log.w("ReminderReceiver", "Notification failed: ${e.message}")
             }
         }
+
+        /** Channel ID — must match the channel created in ExpenseApp.onCreate(). */
+        const val CHANNEL_ID = "daily_reminder"
     }
 }

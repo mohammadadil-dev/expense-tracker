@@ -1,0 +1,24 @@
+# Build outputs
+build/
+app/build/
+.gradle/
+local.properties
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+.DS_Store
+captures/
+*.orig
+
+# Keystore / signing (never commit these)
+*.jks
+*.keystore
+release-key*
+
+# Gradle wrapper jar (optional — keep gradlew scripts, skip the jar)
+gradle/wrapper/gradle-wrapper.jar
+
+# NDK
+.externalNativeBuild/
+.cxx/

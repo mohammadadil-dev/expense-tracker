@@ -3,6 +3,7 @@
     <color name="accent_indigo">#4F46E5</color>
     <color name="accent_indigo_dark">#4338CA</color>
     <color name="bg_app">#F4F5F8</color>
+    <color name="bg_dark_green">#0D2B1F</color>
     <color name="card_white">#FFFFFF</color>
     <color name="text_primary">#1F2430</color>
     <color name="text_secondary">#6B7280</color>

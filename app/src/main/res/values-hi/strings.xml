@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">खर्च ट्रैकर</string>
+    <string name="app_name">खर्च ट्रैकर - बजट मैनेजर</string>
     <string name="dashboard_subtitle">अपने खर्च दर्ज करें, श्रेणियों को ट्रैक करें, और समय के साथ रुझान देखें।</string>
     <string name="manage_categories">श्रेणियाँ प्रबंधित करें</string>
     <string name="reset_data">डेटा रीसेट करें</string>
@@ -9,7 +9,7 @@
     <string name="your_name_hint">जैसे: मोहम्मद</string>
     <string name="your_name_note">इसका उपयोग केवल आपके डैशबोर्ड अभिवादन को व्यक्तिगत बनाने के लिए होता है। यह कहीं भी नहीं भेजा जाता।</string>
 
-    <string name="nav_dashboard">डैशबोर्ड</string>
+    <string name="nav_dashboard">होम</string>
     <string name="nav_categories">श्रेणियाँ</string>
     <string name="nav_settings">सेटिंग्स</string>
     <string name="nav_debts">ऋण</string>
@@ -101,6 +101,16 @@
     <string name="tour_step4_body">ऋण टैब का उपयोग करके ट्रैक करें कि आप पर कितना बकाया है, स्वचालित भुगतान अनुमान सहित।</string>
     <string name="tour_step5_title">और जानें</string>
     <string name="tour_step5_body">खाता से दुकान का उधार ट्रैक करें। सेटिंग्स में रिपोर्ट निर्यात, बैकअप और रोज़ाना रिमाइंडर सेट करें।</string>
+    <string name="tour_step6_title">📷 रसीद स्कैन करें</string>
+    <string name="tour_step6_body">किसी भी बिल या रसीद पर कैमरा लगाएं। ऐप राशि पढ़कर खर्च तुरंत दर्ज कर लेगा — टाइप करने की ज़रूरत नहीं।</string>
+    <string name="tour_step7_title">🎤 वॉइस इनपुट</string>
+    <string name="tour_step7_body">बस कहें "खाने पर 50 खर्च किए" और यह दर्ज हो जाएगा। चलते-फिरते हैंड्स-फ्री खर्च ट्रैकिंग।</string>
+    <string name="tour_step8_title">👥 बिल विभाजित करें</string>
+    <string name="tour_step8_body">ग्रुप बनाएं, साझा खर्च जोड़ें, और ऐप को हिसाब लगाने दें। एक WhatsApp मैसेज से हिसाब चुकाएं।</string>
+    <string name="tour_step9_title">📒 खाता / बही</string>
+    <string name="tour_step9_body">ट्रैक करें कौन आपको देता है और आप किसे देते हैं। एक टैप में WhatsApp पर पेमेंट रिमाइंडर भेजें।</string>
+    <string name="tour_step10_title">🎯 लक्ष्य और स्ट्रीक</string>
+    <string name="tour_step10_body">बचत लक्ष्य निर्धारित करें और प्रगति ट्रैक करें। रोज़ाना दर्ज करने की आदत बनाएं और अपनी स्ट्रीक बनाए रखें!</string>
     <string name="tour_next">अगला</string>
     <string name="tour_done">शुरू करें!</string>
     <string name="tour_skip">छोड़ें</string>
@@ -476,4 +486,150 @@
     <string name="digest_body_less">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% कम 🎉</string>
     <string name="digest_body_more">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह से %2$d%% अधिक</string>
     <string name="digest_body_same">इस सप्ताह आपने %1$s खर्च किया — पिछले सप्ताह जितना ही</string>
+
+    <!-- ── खर्च व्यक्तित्व कार्ड ── -->
+    <string name="personality_card_title">इस महीने आप हैं एक</string>
+    <string name="personality_share_hint">%1$d%% खर्च %2$s पर</string>
+    <string name="personality_foodie">फूडी</string>
+    <string name="personality_commuter">यात्री</string>
+    <string name="personality_homebody">घरेलू</string>
+    <string name="personality_bill_payer">बिल भुगतानकर्ता</string>
+    <string name="personality_entertainer">मनोरंजन प्रेमी</string>
+    <string name="personality_health_first">स्वास्थ्य प्रथम</string>
+    <string name="personality_shopaholic">शॉपिंग दीवाना</string>
+    <string name="personality_tech_buff">टेक प्रेमी</string>
+    <string name="personality_saver">बचतकर्ता</string>
+    <string name="personality_road_warrior">सड़क योद्धा</string>
+    <string name="personality_scholar">विद्वान</string>
+    <string name="personality_connected">हमेशा जुड़ा</string>
+    <string name="personality_power_user">पावर यूज़र</string>
+    <string name="personality_farmer">किसान</string>
+    <string name="personality_trader">व्यापारी</string>
+    <string name="personality_debt_crusher">कर्ज मुक्तिदाता</string>
+    <string name="personality_versatile">बहुमुखी खर्चकर्ता</string>
+
+    <!-- ── आवाज़ से खर्च दर्ज करें ── -->
+    <string name="voice_listening">सुन रहा है…</string>
+    <string name="voice_tap_to_speak">अपना खर्च बोलें — जैसे "दोपहर के खाने पर 200 खर्च किए"</string>
+    <string name="voice_result_title">यह मैंने सुना</string>
+    <string name="voice_confirm">पुष्टि करें और खर्च जोड़ें</string>
+    <string name="voice_try_again">फिर से कोशिश करें</string>
+    <string name="voice_no_speech">कोई आवाज़ नहीं मिली। फिर से कोशिश करें।</string>
+    <string name="voice_not_detected">नहीं मिला</string>
+    <string name="voice_field_amount">राशि</string>
+    <string name="voice_field_description">विवरण</string>
+    <string name="voice_field_category">श्रेणी</string>
+    <string name="voice_permission_denied">आवाज़ प्रविष्टि के लिए माइक्रोफ़ोन अनुमति आवश्यक है</string>
+
+    <!-- Receipt / Bill Camera Scan -->
+    <string name="receipt_scan_title">रसीद / बिल स्कैन करें</string>
+    <string name="receipt_scan_hint">कैमरे को रसीद या बिल की ओर करें। हम कुल राशि अपने आप पढ़ लेंगे।</string>
+    <string name="receipt_open_camera">कैमरा खोलें</string>
+    <string name="receipt_scanning">रसीद पढ़ी जा रही है…</string>
+    <string name="receipt_amount_found">राशि मिल गई</string>
+    <string name="receipt_use_amount">यह राशि उपयोग करें</string>
+    <string name="receipt_edit_hint">यदि आवश्यक हो तो ऊपर दी गई राशि को सुधारें</string>
+    <string name="receipt_rescan">फिर से स्कैन करें</string>
+    <string name="receipt_no_amount_title">राशि नहीं पढ़ी जा सकी</string>
+    <string name="receipt_no_amount_body">स्कैन में कोई स्पष्ट कुल नहीं मिला। बेहतर रोशनी में फिर कोशिश करें, या राशि मैन्युअल दर्ज करें।</string>
+    <string name="receipt_enter_manually">मैन्युअल दर्ज करें</string>
+    <string name="receipt_error_title">कुछ गलत हुआ</string>
+    <string name="receipt_retry">फिर से कोशिश करें</string>
+    <string name="receipt_close">बंद करें</string>
+    <string name="receipt_camera_permission_denied">रसीद स्कैन करने के लिए कैमरा अनुमति आवश्यक है</string>
+
+
+    <!-- Family / Couple Mode -->
+    <string name="family_mode_title">फ़ैमिली मोड</string>
+    <string name="family_mode_subtitle">परिवार के साथ साझा बजट — सभी डेटा डिवाइस पर।</string>
+    <string name="family_mode_toggle_label">फ़ैमिली मोड सक्षम करें</string>
+    <string name="family_mode_description">हर परिवार सदस्य का खर्च ट्रैक करें। अपने साथी को इनवाइट कोड शेयर करें।</string>
+    <string name="family_setup_members">सदस्य प्रबंधित करें (%d)</string>
+    <string name="family_setup">फ़ैमिली मोड सेट करें</string>
+    <string name="family_add_member">सदस्य जोड़ें</string>
+    <string name="family_edit_member">सदस्य संपादित करें</string>
+    <string name="family_delete_member">सदस्य हटाएं</string>
+    <string name="family_me_label">· मैं</string>
+    <string name="family_member_name_hint">नाम (जैसे सारा)</string>
+    <string name="family_member_emoji_hint">इमोजी अवतार (वैकल्पिक)</string>
+    <string name="family_pick_color">रंग चुनें</string>
+    <string name="family_shared">साझा</string>
+    <string name="family_share_code_title">साथी या परिवार के साथ शेयर करें</string>
+    <string name="family_share_code_desc">एक कोड बनाएं जो आपका साथी अपने फोन पर दर्ज कर सके। केवल सदस्यों के नाम शेयर होते हैं।</string>
+    <string name="family_generate_code">इनवाइट कोड बनाएं</string>
+    <string name="family_join_code_title">घर से जुड़ें</string>
+    <string name="family_join_with_code">इनवाइट कोड दर्ज करें</string>
+    <string name="family_enter_code_hint">कोड पेस्ट या टाइप करें</string>
+    <string name="family_join">सदस्य आयात करें</string>
+    <string name="family_disable">फ़ैमिली मोड बंद करें</string>
+    <string name="family_disable_confirm_title">फ़ैमिली मोड बंद करें?</string>
+    <string name="family_disable_confirm_body">सभी सदस्य प्रोफ़ाइल हटा दी जाएंगी। आपका खर्च इतिहास सुरक्षित रहेगा।</string>
+    <string name="family_delete_confirm_title">सदस्य हटाएं?</string>
+    <string name="family_delete_confirm_body">%s को घर से हटाएं? उनके पिछले खर्च साझा के रूप में दिखेंगे।</string>
+    <string name="family_invite_code_title">आपका इनवाइट कोड</string>
+    <string name="family_invite_code_desc">यह कोड अपने साथी या परिवार सदस्य को शेयर करें।</string>
+    <string name="family_copy_code">कोड कॉपी करें</string>
+    <string name="family_no_members_hint">अभी कोई सदस्य नहीं — सेटिंग्स टैप करके घर सेट करें।</string>
+    <string name="family_expense_assigned_to">किसके लिए</string>
+    <string name="family_total_spent">कुल: %1$s%2$.2f इस महीने</string>
+
+    <!-- family_import (missing from earlier) -->
+    <string name="family_import_up_to_date">पहले से अपडेट है</string>
+    <string name="family_import_added">जोड़ा गया: %s</string>
+
+    <!-- Splits -->
+    <string name="nav_splits">विभाजन</string>
+    <string name="split_screen_title">विभाजन</string>
+    <string name="split_screen_subtitle">समूह खर्च विभाजन</string>
+    <string name="split_empty_title">कोई समूह नहीं</string>
+    <string name="split_empty_subtitle">दोस्तों या परिवार के साथ खर्च बांटने के लिए समूह बनाएं</string>
+    <string name="split_create_group">समूह बनाएं</string>
+    <string name="split_new_group">नया समूह</string>
+    <string name="split_new_group_subtitle">नाम दर्ज करें, इमोजी चुनें, सदस्य जोड़ें</string>
+    <string name="split_group_emoji">इमोजी</string>
+    <string name="split_group_name_hint">समूह का नाम (जैसे: दुबई यात्रा)</string>
+    <string name="split_members_label">सदस्य</string>
+    <string name="split_add_member_hint">सदस्य का नाम जोड़ें</string>
+    <string name="split_member_count">%d सदस्य</string>
+    <string name="split_settled">निपटा ✓</string>
+    <string name="split_you_owe">आप बकाया हैं %1%212f</string>
+    <string name="split_you_get">आपको मिलेगा %1%212f</string>
+    <string name="split_settle_up">हिसाब चुकाएं</string>
+    <string name="split_member_balances">सदस्यों का बैलेंस</string>
+    <string name="split_expenses_label">खर्च</string>
+    <string name="split_expense_count">%d खर्च</string>
+    <string name="split_no_expenses">अभी कोई खर्च नहीं — + दबाएं</string>
+    <string name="split_add_expense">खर्च जोड़ें</string>
+    <string name="split_expense_description">यह किस लिए था?</string>
+    <string name="split_expense_amount">राशि</string>
+    <string name="split_paid_by">किसने दिया</string>
+    <string name="split_paid_by_member">%s ने दिया</string>
+    <string name="split_split_among">किनमें बांटें</string>
+    <string name="split_split_among_hint">इस खर्च को बराबर बांटने वाले चुनें</string>
+    <string name="split_save_expense">खर्च सहेजें</string>
+    <string name="split_delete_expense">खर्च हटाएं?</string>
+    <string name="split_delete_expense_confirm">"%s" हटाएं? यह पूर्ववत नहीं होगा।</string>
+    <string name="split_delete_group">समूह हटाएं</string>
+    <string name="split_delete_group_confirm">"%s" और इसके सभी खर्च हटाएं? यह पूर्ववत नहीं होगा।</string>
+    <string name="split_all_settled">सब निपट गया! 🎉</string>
+    <string name="split_all_settled_subtitle">सभी बराबर हैं। कोई भुगतान नहीं चाहिए।</string>
+    <string name="split_transfers_needed">%d भुगतान जरूरी</string>
+    <string name="split_mark_paid">भुगतान हुआ</string>
+    <string name="split_share_whatsapp">WhatsApp पर शेयर करें</string>
+    <string name="split_more_options">अधिक विकल्प</string>
+
+    <!-- WhatsApp split summary labels -->
+    <string name="split_wa_header">खर्च सारांश</string>
+    <string name="split_wa_expenses">खर्चे (%d)</string>
+    <string name="split_wa_paid_by">भुगतानकर्ता: %s</string>
+    <string name="split_wa_total">कुल: %s</string>
+    <string name="split_wa_balances">शेष राशि</string>
+    <string name="split_wa_gets">मिलेंगे</string>
+    <string name="split_wa_owes">देना है</string>
+    <string name="split_wa_member_settled">चुकता</string>
+    <string name="split_wa_to_pay">भुगतान करें</string>
+    <string name="split_wa_all_settled">सब चुकता हो गया! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">सुझाव: रोज़ाना लॉग करने से बजट पर नज़र रहती है 📊</string>
+    <string name="reminder_action_add_expense">खर्च जोड़ें</string>
 </resources>

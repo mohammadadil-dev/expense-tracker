@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">متابع المصروفات</string>
+    <string name="app_name">متابع المصروفات - مدير الميزانية</string>
     <string name="dashboard_subtitle">سجّل مصروفاتك، وتابع الفئات، وشاهد الاتجاهات بمرور الوقت.</string>
     <string name="manage_categories">إدارة الفئات</string>
     <string name="reset_data">إعادة تعيين البيانات</string>
@@ -101,6 +101,16 @@
     <string name="tour_step4_body">استخدم تبويب الديون لتتبع ما تدين به أو ما هو مستحق لك، مع توقعات السداد وتذكيرات الأقساط.</string>
     <string name="tour_step5_title">استكشف المزيد</string>
     <string name="tour_step5_body">الخاطة لتتبع ائتمان المتجر. الإعدادات تتيح تصدير التقارير ونسخ البيانات احتياطياً والتنبيهات اليومية.</string>
+    <string name="tour_step6_title">📷 مسح الإيصالات</string>
+    <string name="tour_step6_body">وجّه الكاميرا نحو أي فاتورة أو إيصال، سيقرأ التطبيق المبلغ ويسجل المصروف فوراً — دون حاجة للكتابة.</string>
+    <string name="tour_step7_title">🎤 الإدخال الصوتي</string>
+    <string name="tour_step7_body">قل فقط «صرفت 50 على الطعام» وسيُسجَّل تلقائياً. تتبع مصاريفك بلا يدين أينما كنت.</string>
+    <string name="tour_step8_title">👥 تقسيم الفواتير</string>
+    <string name="tour_step8_body">أنشئ مجموعات، أضف نفقات مشتركة، ودع التطبيق يحسب من يدين لمن. سوّ الحسابات برسالة واتساب واحدة.</string>
+    <string name="tour_step9_title">📒 الخاطة / الدفتر</string>
+    <string name="tour_step9_body">تتبع من يدين لك ومن تدين له. أرسل تذكيرات الدفع مباشرةً عبر واتساب بنقرة واحدة.</string>
+    <string name="tour_step10_title">🎯 الأهداف والسلاسل</string>
+    <string name="tour_step10_body">حدد أهداف الادخار وتابع تقدمك. ابنِ عادة يومية في التسجيل وحافظ على سلسلتك!</string>
     <string name="tour_next">التالي</string>
     <string name="tour_done">هيا بنا!</string>
     <string name="tour_skip">تخطّ</string>
@@ -483,4 +493,150 @@
     <string name="digest_body_less">أنفقت هذا الأسبوع %1$s — أقل بـ %2$d%% من الأسبوع الماضي 🎉</string>
     <string name="digest_body_more">أنفقت هذا الأسبوع %1$s — أكثر بـ %2$d%% من الأسبوع الماضي</string>
     <string name="digest_body_same">أنفقت هذا الأسبوع %1$s — تقريباً نفس الأسبوع الماضي</string>
+
+    <!-- ── بطاقة الشخصية الإنفاقية ── -->
+    <string name="personality_card_title">هذا الشهر أنت</string>
+    <string name="personality_share_hint">%1$d%% من إنفاقك على %2$s</string>
+    <string name="personality_foodie">عاشق الطعام</string>
+    <string name="personality_commuter">المسافر اليومي</string>
+    <string name="personality_homebody">محب المنزل</string>
+    <string name="personality_bill_payer">دافع الفواتير</string>
+    <string name="personality_entertainer">المُسلّي</string>
+    <string name="personality_health_first">الصحة أولاً</string>
+    <string name="personality_shopaholic">المتسوق المحترف</string>
+    <string name="personality_tech_buff">عاشق التقنية</string>
+    <string name="personality_saver">المدّخر</string>
+    <string name="personality_road_warrior">فارس الطريق</string>
+    <string name="personality_scholar">الباحث العلمي</string>
+    <string name="personality_connected">دائم الاتصال</string>
+    <string name="personality_power_user">مستهلك الطاقة</string>
+    <string name="personality_farmer">المزارع</string>
+    <string name="personality_trader">التاجر</string>
+    <string name="personality_debt_crusher">مُسدِّد الديون</string>
+    <string name="personality_versatile">المُنفق المتنوع</string>
+
+    <!-- ── إدخال المصاريف بالصوت ── -->
+    <string name="voice_listening">جارٍ الاستماع…</string>
+    <string name="voice_tap_to_speak">تحدث عن مصروفك — مثلاً: "صرفت 200 على الغداء"</string>
+    <string name="voice_result_title">هذا ما سمعته</string>
+    <string name="voice_confirm">تأكيد وإضافة المصروف</string>
+    <string name="voice_try_again">حاول مجدداً</string>
+    <string name="voice_no_speech">لم يُرصد كلام. حاول مجدداً.</string>
+    <string name="voice_not_detected">لم يُكتشف</string>
+    <string name="voice_field_amount">المبلغ</string>
+    <string name="voice_field_description">الوصف</string>
+    <string name="voice_field_category">الفئة</string>
+    <string name="voice_permission_denied">يلزم إذن الميكروفون لاستخدام الإدخال الصوتي</string>
+
+    <!-- Receipt / Bill Camera Scan -->
+    <string name="receipt_scan_title">مسح الإيصال / الفاتورة</string>
+    <string name="receipt_scan_hint">وجّه الكاميرا نحو الإيصال أو الفاتورة، وسنقرأ المبلغ الإجمالي تلقائياً.</string>
+    <string name="receipt_open_camera">فتح الكاميرا</string>
+    <string name="receipt_scanning">جارٍ قراءة الإيصال…</string>
+    <string name="receipt_amount_found">تم اكتشاف المبلغ</string>
+    <string name="receipt_use_amount">استخدام هذا المبلغ</string>
+    <string name="receipt_edit_hint">اضغط على المبلغ أعلاه لتصحيحه إذا لزم الأمر</string>
+    <string name="receipt_rescan">مسح مرة أخرى</string>
+    <string name="receipt_no_amount_title">تعذّر قراءة المبلغ</string>
+    <string name="receipt_no_amount_body">لم يتمكن المسح من العثور على إجمالي واضح. حاول مرة أخرى في ضوء أفضل، أو أدخل المبلغ يدوياً.</string>
+    <string name="receipt_enter_manually">إدخال يدوي</string>
+    <string name="receipt_error_title">حدث خطأ ما</string>
+    <string name="receipt_retry">إعادة المحاولة</string>
+    <string name="receipt_close">إغلاق</string>
+    <string name="receipt_camera_permission_denied">يلزم إذن الكاميرا لمسح الإيصالات</string>
+
+
+    <!-- Family / Couple Mode -->
+    <string name="family_mode_title">وضع العائلة</string>
+    <string name="family_mode_subtitle">ميزانية مشتركة للأسرة — جميع البيانات على الجهاز.</string>
+    <string name="family_mode_toggle_label">تفعيل وضع العائلة</string>
+    <string name="family_mode_description">تتبع الإنفاق لكل فرد من أفراد الأسرة. شارك رمز الدعوة مع شريكك أو أحد أفراد الأسرة.</string>
+    <string name="family_setup_members">إدارة الأعضاء (%d)</string>
+    <string name="family_setup">إعداد وضع العائلة</string>
+    <string name="family_add_member">إضافة عضو</string>
+    <string name="family_edit_member">تعديل العضو</string>
+    <string name="family_delete_member">حذف العضو</string>
+    <string name="family_me_label">· أنا</string>
+    <string name="family_member_name_hint">الاسم (مثل: سارة)</string>
+    <string name="family_member_emoji_hint">رمز تعبيري (اختياري)</string>
+    <string name="family_pick_color">اختر لوناً</string>
+    <string name="family_shared">مشترك</string>
+    <string name="family_share_code_title">مشاركة مع شريك أو أحد أفراد الأسرة</string>
+    <string name="family_share_code_desc">أنشئ رمزاً يمكن لشريكك إدخاله على هاتفه. تُشارك فقط أسماء الأعضاء والألوان.</string>
+    <string name="family_generate_code">إنشاء رمز دعوة</string>
+    <string name="family_join_code_title">الانضمام إلى منزل</string>
+    <string name="family_join_with_code">أدخل رمز دعوة</string>
+    <string name="family_enter_code_hint">الصق أو اكتب رمز الدعوة</string>
+    <string name="family_join">استيراد الأعضاء</string>
+    <string name="family_disable">تعطيل وضع العائلة</string>
+    <string name="family_disable_confirm_title">تعطيل وضع العائلة؟</string>
+    <string name="family_disable_confirm_body">سيتم حذف جميع ملفات الأعضاء. لن يتأثر سجل نفقاتك.</string>
+    <string name="family_delete_confirm_title">إزالة عضو؟</string>
+    <string name="family_delete_confirm_body">هل تريد إزالة %s من المنزل؟ ستظهر نفقاته السابقة كـ مشترك.</string>
+    <string name="family_invite_code_title">رمز الدعوة الخاص بك</string>
+    <string name="family_invite_code_desc">شارك هذا الرمز مع شريكك أو أحد أفراد الأسرة.</string>
+    <string name="family_copy_code">نسخ الرمز</string>
+    <string name="family_no_members_hint">لا يوجد أعضاء بعد — اضغط على الإعدادات لإعداد منزلك.</string>
+    <string name="family_expense_assigned_to">مخصص لـ</string>
+    <string name="family_total_spent">الإجمالي: %1$s%2$.2f هذا الشهر</string>
+
+    <!-- family_import (missing from earlier) -->
+    <string name="family_import_up_to_date">محدّث بالفعل</string>
+    <string name="family_import_added">تمت الإضافة: %s</string>
+
+    <!-- Splits / Group Expense Tracker -->
+    <string name="nav_splits">التقسيم</string>
+    <string name="split_screen_title">التقسيم</string>
+    <string name="split_screen_subtitle">تقسيم المصاريف الجماعية</string>
+    <string name="split_empty_title">لا توجد مجموعات بعد</string>
+    <string name="split_empty_subtitle">أنشئ مجموعة لتقسيم المصاريف مع الأصدقاء أو العائلة</string>
+    <string name="split_create_group">إنشاء مجموعة</string>
+    <string name="split_new_group">مجموعة جديدة</string>
+    <string name="split_new_group_subtitle">أدخل اسماً واختر رمزاً وأضف الأعضاء</string>
+    <string name="split_group_emoji">الرمز التعبيري</string>
+    <string name="split_group_name_hint">اسم المجموعة (مثلاً: رحلة دبي)</string>
+    <string name="split_members_label">الأعضاء</string>
+    <string name="split_add_member_hint">أضف اسم عضو</string>
+    <string name="split_member_count">%d أعضاء</string>
+    <string name="split_settled">تمت التسوية ✓</string>
+    <string name="split_you_owe">أنت مدين بـ %1$s%2$.2f</string>
+    <string name="split_you_get">لك %1$s%2$.2f</string>
+    <string name="split_settle_up">تسوية الحساب</string>
+    <string name="split_member_balances">أرصدة الأعضاء</string>
+    <string name="split_expenses_label">المصاريف</string>
+    <string name="split_expense_count">%d مصاريف</string>
+    <string name="split_no_expenses">لا توجد مصاريف — اضغط + لإضافة واحدة</string>
+    <string name="split_add_expense">إضافة مصروف</string>
+    <string name="split_expense_description">ما هذا؟</string>
+    <string name="split_expense_amount">المبلغ</string>
+    <string name="split_paid_by">دفع بواسطة</string>
+    <string name="split_paid_by_member">دفعه %s</string>
+    <string name="split_split_among">تقسيم بين</string>
+    <string name="split_split_among_hint">اختر من يتشارك هذا المصروف بالتساوي</string>
+    <string name="split_save_expense">حفظ المصروف</string>
+    <string name="split_delete_expense">حذف المصروف؟</string>
+    <string name="split_delete_expense_confirm">حذف "%s"؟ لا يمكن التراجع.</string>
+    <string name="split_delete_group">حذف المجموعة</string>
+    <string name="split_delete_group_confirm">حذف "%s" وجميع مصاريفها؟ لا يمكن التراجع.</string>
+    <string name="split_all_settled">تمت التسوية كاملة! 🎉</string>
+    <string name="split_all_settled_subtitle">الجميع متساوون. لا حاجة لتحويلات.</string>
+    <string name="split_transfers_needed">%d تحويل(ات) مطلوبة</string>
+    <string name="split_mark_paid">تأكيد الدفع</string>
+    <string name="split_share_whatsapp">مشاركة عبر واتساب</string>
+    <string name="split_more_options">خيارات أخرى</string>
+
+    <!-- WhatsApp split summary labels -->
+    <string name="split_wa_header">ملخص المصاريف</string>
+    <string name="split_wa_expenses">المصاريف (%d)</string>
+    <string name="split_wa_paid_by">دفع بواسطة: %s</string>
+    <string name="split_wa_total">الإجمالي: %s</string>
+    <string name="split_wa_balances">الأرصدة</string>
+    <string name="split_wa_gets">يسترد</string>
+    <string name="split_wa_owes">مدين</string>
+    <string name="split_wa_member_settled">مسدد</string>
+    <string name="split_wa_to_pay">للسداد</string>
+    <string name="split_wa_all_settled">الجميع مسدد! 🎉</string>
+    <string name="split_wa_footer">متتبع المصاريف</string>
+    <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
+    <string name="reminder_action_add_expense">إضافة مصروف</string>
 </resources>

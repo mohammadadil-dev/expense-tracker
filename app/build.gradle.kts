@@ -20,8 +20,8 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.4.3"
+        versionCode = 15
+        versionName = "1.5.0"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -127,6 +127,10 @@ dependencies {
     // Play In-App Updates — forces users onto the latest version via a full-screen
     // immediate update flow that can't be dismissed (used to push users off crashing builds).
     implementation("com.google.android.play:app-update-ktx:2.1.0")
+
+    // ML Kit Text Recognition — offline OCR for receipt/bill scanning.
+    // On-device model (bundled); no network call needed at scan time.
+    implementation("com.google.mlkit:text-recognition:16.0.1")
 
     // Google Drive API — used for cloud backup / restore.
     // SETUP REQUIRED before using: go to console.cloud.google.com, enable the Drive API,

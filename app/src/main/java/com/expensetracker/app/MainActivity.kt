@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.expensetracker.app.ui.components.ForceUpdateDialog
 import com.expensetracker.app.ui.navigation.AppNav
 import com.expensetracker.app.ui.theme.BgApp
 import com.expensetracker.app.ui.theme.ExpenseTrackerTheme
+import com.expensetracker.app.util.ForceUpdateManager
 import com.expensetracker.app.util.BiometricHelper
 import com.expensetracker.app.util.SmsConsentManager
 import com.expensetracker.app.viewmodel.ExpenseViewModel
@@ -22,7 +24,9 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 
 /**
@@ -53,6 +57,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>
 
+    // Tracks whether the currently active update flow is IMMEDIATE (blocking).
+    // Used in updateResultLauncher so we only finish() the app when the user
+    // cancels/rejects a mandatory immediate update — not a flexible one.
+    private var immediateUpdateStarted = false
+
+    // Flexible-update listener: fires when a background download completes.
+    // We call completeUpdate() immediately so the app restarts and installs
+    // without asking the user — this makes every release a forced update even
+    // when Play Console priority is not set to 5.
+    private val flexibleInstallListener = InstallStateUpdatedListener { state ->
+        if (state.installStatus() == InstallStatus.DOWNLOADED) {
+            appUpdateManager.completeUpdate()
+        }
+    }
+
     // True while biometric prompt is showing — prevents double-firing on quick resume/pause.
     private var biometricPromptShowing = false
 
@@ -79,13 +98,15 @@ class MainActivity : AppCompatActivity() {
         }
         smsConsentManager = SmsConsentManager(this, smsResultLauncher)
 
-        // Register the update flow launcher. If the user somehow cancels (e.g. backs out of
-        // the Play Store overlay), finish the app — they cannot use it without updating.
+        // Register the update flow launcher.
+        // For IMMEDIATE updates: if user cancels/rejects → finish() so they can't bypass.
+        // For FLEXIBLE updates: cancelling is allowed — the download continues in background
+        // and installs automatically when done (via flexibleInstallListener).
         appUpdateManager = AppUpdateManagerFactory.create(this)
         updateResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartIntentSenderForResult()
         ) { result ->
-            if (result.resultCode != RESULT_OK) finish()
+            if (immediateUpdateStarted && result.resultCode != RESULT_OK) finish()
         }
         // Only check for updates on a true first launch, not on Activity recreations
         // (language switch, rotation) — the Play Store network call adds unnecessary
@@ -101,17 +122,44 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkForAppUpdate() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-            if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-            ) {
-                appUpdateManager.startUpdateFlowForResult(
-                    info,
-                    updateResultLauncher,
-                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
-                )
+            if (info.updateAvailability() != UpdateAvailability.UPDATE_AVAILABLE) return@addOnSuccessListener
+
+            when {
+                // Layer 1: IMMEDIATE (blocking full-screen) — triggered when Play Console
+                // update priority is 4 or 5, OR after staleness threshold passes.
+                // The user cannot dismiss this; cancelling finishes the app.
+                info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> {
+                    immediateUpdateStarted = true
+                    appUpdateManager.startUpdateFlowForResult(
+                        info,
+                        updateResultLauncher,
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                    )
+                }
+
+                // Layer 2: FLEXIBLE fallback — works even when Play Console priority is 0.
+                // The update downloads silently in the background. When it finishes,
+                // flexibleInstallListener calls completeUpdate() which restarts the app
+                // automatically. No user action needed — effectively a silent force update.
+                info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> {
+                    immediateUpdateStarted = false
+                    appUpdateManager.registerListener(flexibleInstallListener)
+                    appUpdateManager.startUpdateFlowForResult(
+                        info,
+                        updateResultLauncher,
+                        AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
+                    )
+                }
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Always unregister to avoid memory leaks on Activity recreation.
+        appUpdateManager.unregisterListener(flexibleInstallListener)
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -168,11 +216,17 @@ class MainActivity : AppCompatActivity() {
 @Composable
 private fun ExpenseTrackerApp() {
     ExpenseTrackerTheme {
-        // No shared background mounted here anymore — Dashboard and Settings each mount their
-        // own AnimatedBlobBackground instance with a distinct color trio, so every screen reads
-        // as its own "place" instead of sharing one global backdrop.
         Surface(modifier = Modifier.fillMaxSize(), color = BgApp) {
             AppNav()
+        }
+
+        // Layer 3: in-app custom dialog — shown when the installed versionCode is below
+        // ForceUpdateManager.MIN_VERSION_CODE. This fires even if the Play In-App Updates
+        // API fails (e.g. no network at install time, sideloaded APK, Play Store cache lag).
+        // The dialog is non-dismissable; the only action is "Update Now" → Play Store.
+        val context = androidx.compose.ui.platform.LocalContext.current
+        if (ForceUpdateManager.isUpdateRequired(context)) {
+            ForceUpdateDialog()
         }
     }
 }

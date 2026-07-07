@@ -1,6 +1,9 @@
 package com.expensetracker.app.ui.screens
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -34,6 +37,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
@@ -47,6 +51,10 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -98,6 +106,8 @@ import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.BentoCard
 import com.expensetracker.app.ui.components.BudgetManageSheet
 import com.expensetracker.app.ui.components.BudgetRingCard
+import com.expensetracker.app.ui.components.FamilyModeCard
+import com.expensetracker.app.ui.components.FamilySetupSheet
 import com.expensetracker.app.ui.components.CategoryManageSheet
 import com.expensetracker.app.ui.components.ExpenseGridCard
 import com.expensetracker.app.ui.components.ExpensePrefill
@@ -118,6 +128,11 @@ import com.expensetracker.app.ui.components.SmsReviewSheet
 import com.expensetracker.app.ui.components.StreakCard
 // CoachmarkOverlay + CoachmarkStep used in AppNav now (not DashboardScreen)
 import com.expensetracker.app.ui.components.TransactionActionSheet
+import com.expensetracker.app.ui.components.VoiceInputSheet
+import com.expensetracker.app.ui.components.VoiceExpenseResult
+import com.expensetracker.app.ui.components.ReceiptScanSheet
+import com.expensetracker.app.ui.components.SpendingPersonalityCard
+import com.expensetracker.app.util.SpendingPersonalityEngine
 import com.expensetracker.app.data.GoalEntity
 import com.expensetracker.app.ui.components.TrendBarChart
 import com.expensetracker.app.ui.components.TrendPoint
@@ -143,6 +158,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import kotlin.math.abs
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     viewModel: ExpenseViewModel,
@@ -167,6 +183,8 @@ fun DashboardScreen(
     val logStreakBest by viewModel.logStreakBest.collectAsState()
     val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
     val activeGoals by viewModel.activeGoals.collectAsState()
+    val familyModeEnabled by viewModel.familyModeEnabled.collectAsState()
+    val familyMembers by viewModel.familyMembers.collectAsState()
     val locale: Locale = LocalConfiguration.current.locales[0]
 
     val context = LocalContext.current
@@ -184,6 +202,20 @@ fun DashboardScreen(
     var showAddGoalSheet by remember { mutableStateOf(false) }
     var editingGoal by remember { mutableStateOf<GoalEntity?>(null) }
     var showPaydayPicker by remember { mutableStateOf(false) }
+    var showVoiceSheet by remember { mutableStateOf(false) }
+    var voicePrefill by remember { mutableStateOf<ExpensePrefill?>(null) }
+    var showReceiptSheet by remember { mutableStateOf(false) }
+    @Suppress("UNUSED_VARIABLE")
+    var showFamilySetupSheet by remember { mutableStateOf(false) } // reserved for Family Mode re-enable
+
+    val voiceSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    // Runtime permission launcher for RECORD_AUDIO
+    val micPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) showVoiceSheet = true
+        else Toast.makeText(context, context.getString(R.string.voice_permission_denied), Toast.LENGTH_SHORT).show()
+    }
     var incomeExpanded by remember(currentMonthKey) { mutableStateOf(false) }
     var incomePendingDelete by remember { mutableStateOf<IncomeEntity?>(null) }
 
@@ -455,14 +487,48 @@ fun DashboardScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    editingExpense = null
-                    showAddSheet = true
-                },
-                modifier = Modifier.onGloballyPositioned { viewModel.fabBounds = it.boundsInWindow() }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_expense))
+                // Secondary camera FAB — receipt / bill scan
+                SmallFloatingActionButton(
+                    onClick = { showReceiptSheet = true },
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    modifier = Modifier.onGloballyPositioned { viewModel.receiptScanBounds = it.boundsInWindow() }
+                ) {
+                    Icon(
+                        Icons.Filled.Receipt,
+                        contentDescription = stringResource(R.string.receipt_scan_title)
+                    )
+                }
+                // Secondary mic FAB — voice expense entry
+                SmallFloatingActionButton(
+                    onClick = {
+                        val hasPerm = ContextCompat.checkSelfPermission(
+                            context, Manifest.permission.RECORD_AUDIO
+                        ) == PackageManager.PERMISSION_GRANTED
+                        if (hasPerm) showVoiceSheet = true
+                        else micPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                    },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    modifier = Modifier.onGloballyPositioned { viewModel.micButtonBounds = it.boundsInWindow() }
+                ) {
+                    Icon(
+                        Icons.Filled.Mic,
+                        contentDescription = stringResource(R.string.voice_tap_to_speak)
+                    )
+                }
+                // Primary add FAB
+                FloatingActionButton(
+                    onClick = {
+                        editingExpense = null
+                        showAddSheet = true
+                    },
+                    modifier = Modifier.onGloballyPositioned { viewModel.fabBounds = it.boundsInWindow() }
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_expense))
+                }
             }
         }
     ) { innerPadding ->
@@ -577,6 +643,15 @@ fun DashboardScreen(
                             showAddGoalSheet = true
                         }
                     )
+                    // Spending Personality — derived from current month's top category.
+                    // Only shown once we have ≥3 expenses (threshold inside engine).
+                    val spendingPersonality = remember(monthExpenses, categories) {
+                        SpendingPersonalityEngine.compute(monthExpenses, categories)
+                    }
+                    spendingPersonality?.let { p ->
+                        SpendingPersonalityCard(personality = p)
+                    }
+                    // Family Mode card — hidden (feature not yet ready for release)
                 }
             }
 
@@ -1060,9 +1135,15 @@ fun DashboardScreen(
             categories = expensePickerCategories,
             existing = editingExpense,
             defaultDate = DateUtils.todayIso(),
-            onDismiss = { showAddSheet = false },
-            onSave = { id, catId, desc, amt, date, recurring ->
-                viewModel.saveExpense(id, catId, desc, amt, date, recurring) { showAddSheet = false }
+            prefill = voicePrefill,          // non-null when opened from voice entry
+            familyModeEnabled = familyModeEnabled,
+            familyMembers = familyMembers,
+            onDismiss = { showAddSheet = false; voicePrefill = null },
+            onSave = { id, catId, desc, amt, date, recurring, memberId ->
+                viewModel.saveExpense(id, catId, desc, amt, date, recurring, memberId) {
+                    showAddSheet = false
+                    voicePrefill = null
+                }
             },
             onAddCategory = { name, hex -> viewModel.addCategory(name, hex) {} }
         )
@@ -1168,6 +1249,49 @@ fun DashboardScreen(
         )
     }
 
+    // ── Voice expense entry sheet ─────────────────────────────────────────────
+    if (showVoiceSheet) {
+        VoiceInputSheet(
+            sheetState = voiceSheetState,
+            locale     = locale,
+            onDismiss  = { showVoiceSheet = false },
+            onConfirm  = { result: VoiceExpenseResult ->
+                showVoiceSheet = false
+                // Map the suggested category key to a real CategoryEntity id
+                val matchedCatId = categories
+                    .firstOrNull { it.nameKey == result.suggestedCategoryKey }?.id
+                editingExpense = null
+                // Re-use the SMS prefill mechanism to open AddEditExpenseSheet pre-filled
+                smsItemBeingAccepted = null
+                showAddSheet = true
+                voicePrefill = ExpensePrefill(
+                    description = result.description,
+                    amount      = result.amount ?: 0.0,
+                    categoryId  = matchedCatId,
+                    date        = DateUtils.todayIso()
+                )
+            }
+        )
+    }
+
+    // ── Receipt / Bill camera scan sheet ─────────────────────────────────────
+    if (showReceiptSheet) {
+        ReceiptScanSheet(
+            onDismiss = { showReceiptSheet = false },
+            onAmountConfirmed = { prefill ->
+                showReceiptSheet = false
+                editingExpense = null
+                smsItemBeingAccepted = null
+                voicePrefill = prefill
+                showAddSheet = true
+            }
+        )
+    }
+
+    // Family Mode setup sheet — hidden (feature not yet ready for release)
+
+
+
     // Payday day-of-month picker — shown directly on Dashboard (no Settings redirect)
     if (showPaydayPicker) {
         var pickerDay by remember { mutableStateOf(paydayDayOfMonth.coerceIn(1, 31).toFloat()) }
@@ -1219,7 +1343,7 @@ fun DashboardScreen(
                 date = item.date
             ),
             onDismiss = { smsItemBeingAccepted = null },
-            onSave = { _, catId, desc, amt, date, _ ->
+            onSave = { _, catId, desc, amt, date, _, _ ->
                 // SMS-detected expenses are never recurring — ignore the toggle value.
                 viewModel.acceptPendingSms(item, catId, desc, amt, date) {
                     smsItemBeingAccepted = null

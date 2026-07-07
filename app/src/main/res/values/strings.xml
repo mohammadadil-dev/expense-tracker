@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker</string>
+    <string name="app_name">Expense Tracker - Budget Manager</string>
     <string name="dashboard_subtitle">Log expenses, track categories, and watch trends over time.</string>
     <string name="manage_categories">Manage Categories</string>
     <string name="reset_data">Reset Data</string>
@@ -9,7 +9,7 @@
     <string name="your_name_hint">e.g. Mohammad</string>
     <string name="your_name_note">Used only to personalize your dashboard greeting. Never sent anywhere.</string>
 
-    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_dashboard">Home</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_debts">Debts</string>
@@ -102,6 +102,16 @@
     <string name="tour_step4_body">Use the Debts tab to track what you owe or are owed, with automatic payoff projections and EMI reminders.</string>
     <string name="tour_step5_title">Explore More</string>
     <string name="tour_step5_body">Ledger tracks shop credit. Settings lets you export reports, back up your data, and set daily reminders.</string>
+    <string name="tour_step6_title">📷 Scan Receipts</string>
+    <string name="tour_step6_body">Point your camera at any bill or receipt. The app reads the amount and logs the expense instantly — no typing needed.</string>
+    <string name="tour_step7_title">🎤 Voice Input</string>
+    <string name="tour_step7_body">Just say \"spent 50 on food\" and it\'s logged. Hands-free expense tracking for when you\'re on the go.</string>
+    <string name="tour_step8_title">👥 Split Bills</string>
+    <string name="tour_step8_body">Create groups, add shared expenses, and let the app calculate who owes what. Settle up with one WhatsApp message.</string>
+    <string name="tour_step9_title">📒 Khata / Ledger</string>
+    <string name="tour_step9_body">Track who owes you money and what you owe others. Send payment reminders directly on WhatsApp with one tap.</string>
+    <string name="tour_step10_title">🎯 Goals &amp; Streaks</string>
+    <string name="tour_step10_body">Set savings goals and track your progress. Build a daily logging habit and keep your streak going!</string>
     <string name="tour_next">Next</string>
     <string name="tour_done">Let\'s go!</string>
     <string name="tour_skip">Skip</string>
@@ -485,4 +495,147 @@ Feel free to use it anytime!
     <string name="digest_body_less">This week you spent %1$s — %2$d%% less than last week 🎉</string>
     <string name="digest_body_more">This week you spent %1$s — %2$d%% more than last week</string>
     <string name="digest_body_same">This week you spent %1$s — about the same as last week</string>
+
+    <!-- ── Spending Personality card ── -->
+    <string name="personality_card_title">This Month You\'re a</string>
+    <string name="personality_share_hint">%1$d%% spent on %2$s</string>
+    <string name="personality_foodie">Foodie</string>
+    <string name="personality_commuter">Commuter</string>
+    <string name="personality_homebody">Homebody</string>
+    <string name="personality_bill_payer">Bill Payer</string>
+    <string name="personality_entertainer">Entertainer</string>
+    <string name="personality_health_first">Health-First</string>
+    <string name="personality_shopaholic">Shopaholic</string>
+    <string name="personality_tech_buff">Tech Buff</string>
+    <string name="personality_saver">Saver</string>
+    <string name="personality_road_warrior">Road Warrior</string>
+    <string name="personality_scholar">Scholar</string>
+    <string name="personality_connected">Always Connected</string>
+    <string name="personality_power_user">Power User</string>
+    <string name="personality_farmer">Farmer</string>
+    <string name="personality_trader">Trader</string>
+    <string name="personality_debt_crusher">Debt Crusher</string>
+    <string name="personality_versatile">Versatile Spender</string>
+
+    <!-- ── Voice expense entry ── -->
+    <string name="voice_listening">Listening…</string>
+    <string name="voice_tap_to_speak">Speak your expense — e.g. "Spent 200 on lunch"</string>
+    <string name="voice_result_title">Here\'s what I heard</string>
+    <string name="voice_confirm">Confirm &amp; Add Expense</string>
+    <string name="voice_try_again">Try Again</string>
+    <string name="voice_no_speech">No speech detected. Please try again.</string>
+    <string name="voice_not_detected">Not detected</string>
+    <string name="voice_field_amount">Amount</string>
+    <string name="voice_field_description">Description</string>
+    <string name="voice_field_category">Category</string>
+    <string name="voice_permission_denied">Microphone permission is required for voice entry</string>
+
+    <!-- Receipt / Bill Camera Scan -->
+    <string name="receipt_scan_title">Scan Receipt / Bill</string>
+    <string name="receipt_scan_hint">Point your camera at a receipt or bill. We\'ll read the total amount automatically.</string>
+    <string name="receipt_open_camera">Open Camera</string>
+    <string name="receipt_scanning">Reading receipt…</string>
+    <string name="receipt_amount_found">Amount detected</string>
+    <string name="receipt_use_amount">Use this amount</string>
+    <string name="receipt_edit_hint">Tap the amount above to correct it if needed</string>
+    <string name="receipt_rescan">Scan again</string>
+    <string name="receipt_no_amount_title">Couldn\'t read an amount</string>
+    <string name="receipt_no_amount_body">The scan didn\'t find a clear total. Try again with better lighting, or enter the amount manually.</string>
+    <string name="receipt_enter_manually">Enter manually</string>
+    <string name="receipt_error_title">Something went wrong</string>
+    <string name="receipt_retry">Try again</string>
+    <string name="receipt_close">Close</string>
+    <string name="receipt_camera_permission_denied">Camera permission is required to scan receipts</string>
+
+    <!-- Family / Couple Mode -->
+    <string name="family_mode_title">Family Mode</string>
+    <string name="family_mode_subtitle">Shared budget with your household — all data stays on-device.</string>
+    <string name="family_mode_toggle_label">Enable Family Mode</string>
+    <string name="family_mode_description">Track spending per household member. Share an invite code so a partner or family member can see the same members on their device.</string>
+    <string name="family_setup_members">Manage Members (%d)</string>
+    <string name="family_setup">Set up Family Mode</string>
+    <string name="family_add_member">Add Member</string>
+    <string name="family_edit_member">Edit member</string>
+    <string name="family_delete_member">Remove member</string>
+    <string name="family_me_label">· Me</string>
+    <string name="family_member_name_hint">Name (e.g. Sara)</string>
+    <string name="family_member_emoji_hint">Emoji avatar (optional)</string>
+    <string name="family_pick_color">Pick a colour</string>
+    <string name="family_shared">Shared</string>
+    <string name="family_share_code_title">Share with partner or family</string>
+    <string name="family_share_code_desc">Generate a code your partner can enter on their phone. Only member names and colours are shared — not expense data.</string>
+    <string name="family_generate_code">Generate Invite Code</string>
+    <string name="family_join_code_title">Join a household</string>
+    <string name="family_join_with_code">Enter an invite code</string>
+    <string name="family_enter_code_hint">Paste or type invite code</string>
+    <string name="family_join">Import Members</string>
+    <string name="family_disable">Disable Family Mode</string>
+    <string name="family_disable_confirm_title">Disable Family Mode?</string>
+    <string name="family_disable_confirm_body">All member profiles will be deleted. Your expense history is not affected.</string>
+    <string name="family_delete_confirm_title">Remove member?</string>
+    <string name="family_delete_confirm_body">Remove %s from your household? Their past expenses will still show as Shared.</string>
+    <string name="family_invite_code_title">Your Invite Code</string>
+    <string name="family_invite_code_desc">Share this code with your partner or family member. They tap Enter an invite code in their Family Mode settings.</string>
+    <string name="family_copy_code">Copy Code</string>
+    <string name="family_no_members_hint">No members yet — tap the settings icon to set up your household.</string>
+    <string name="family_expense_assigned_to">Assigned to</string>
+    <string name="family_total_spent">Total: %1$s%2$.2f this month</string>
+    <string name="family_import_up_to_date">Already up to date</string>
+    <string name="family_import_added">Added: %s</string>
+
+    <!-- Splits / Group Expense Tracker -->
+    <string name="nav_splits">Splits</string>
+    <string name="split_screen_title">Splits</string>
+    <string name="split_screen_subtitle">Group expense splitting</string>
+    <string name="split_empty_title">No groups yet</string>
+    <string name="split_empty_subtitle">Create a group to start splitting expenses with friends or family</string>
+    <string name="split_create_group">Create Group</string>
+    <string name="split_new_group">New Group</string>
+    <string name="split_new_group_subtitle">Enter a name, pick an emoji, and add members</string>
+    <string name="split_group_emoji">Emoji</string>
+    <string name="split_group_name_hint">Group name (e.g. Trip to Dubai)</string>
+    <string name="split_members_label">Members</string>
+    <string name="split_add_member_hint">Add member name</string>
+    <string name="split_member_count">%d members</string>
+    <string name="split_settled">Settled ✓</string>
+    <string name="split_you_owe">You owe %1$s%2$.2f</string>
+    <string name="split_you_get">You get %1$s%2$.2f</string>
+    <string name="split_settle_up">Settle Up</string>
+    <string name="split_member_balances">Member Balances</string>
+    <string name="split_expenses_label">Expenses</string>
+    <string name="split_expense_count">%d expenses</string>
+    <string name="split_no_expenses">No expenses yet — tap + to add one</string>
+    <string name="split_add_expense">Add Expense</string>
+    <string name="split_expense_description">What was this for?</string>
+    <string name="split_expense_amount">Amount</string>
+    <string name="split_paid_by">Paid by</string>
+    <string name="split_paid_by_member">Paid by %s</string>
+    <string name="split_split_among">Split among</string>
+    <string name="split_split_among_hint">Select who shares this expense equally</string>
+    <string name="split_save_expense">Save Expense</string>
+    <string name="split_delete_expense">Delete Expense?</string>
+    <string name="split_delete_expense_confirm">Delete "%s"? This can\'t be undone.</string>
+    <string name="split_delete_group">Delete Group</string>
+    <string name="split_delete_group_confirm">Delete "%s" and all its expenses? This can\'t be undone.</string>
+    <string name="split_all_settled">All settled! 🎉</string>
+    <string name="split_all_settled_subtitle">Everyone is even. No transfers needed.</string>
+    <string name="split_transfers_needed">%d transfer(s) needed</string>
+    <string name="split_mark_paid">Mark Paid</string>
+    <string name="split_share_whatsapp">Share via WhatsApp</string>
+    <string name="split_more_options">More options</string>
+
+    <!-- WhatsApp split summary labels -->
+    <string name="split_wa_header">Expense Summary</string>
+    <string name="split_wa_expenses">Expenses (%d)</string>
+    <string name="split_wa_paid_by">Paid by: %s</string>
+    <string name="split_wa_total">Total: %s</string>
+    <string name="split_wa_balances">Balances</string>
+    <string name="split_wa_gets">gets</string>
+    <string name="split_wa_owes">owes</string>
+    <string name="split_wa_member_settled">Settled</string>
+    <string name="split_wa_to_pay">To Pay</string>
+    <string name="split_wa_all_settled">Everyone is settled! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
+    <string name="reminder_action_add_expense">Add Expense</string>
 </resources>

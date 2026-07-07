@@ -49,6 +49,11 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getBoolean(KEY_ONBOARDING_DONE, currencySetupDone)
         set(value) = prefs.edit().putBoolean(KEY_ONBOARDING_DONE, value).apply()
 
+    /** Whether Family / Couple Mode is active. Off by default — premium opt-in. */
+    var familyModeEnabled: Boolean
+        get() = prefs.getBoolean(KEY_FAMILY_MODE_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_FAMILY_MODE_ENABLED, value).apply()
+
     /** Off by default — SMS detection is opt-in. When on, the app listens for the next
      * incoming SMS via the system consent prompt and queues anything that looks like a debit
      * transaction for the user to review. */
@@ -176,5 +181,6 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_LOG_STREAK_LAST_DATE = "log_streak_last_date"
         private const val KEY_LOG_STREAK_BEST = "log_streak_best"
         private const val KEY_PAYDAY_DAY = "payday_day_of_month"
+        private const val KEY_FAMILY_MODE_ENABLED = "family_mode_enabled"
     }
 }

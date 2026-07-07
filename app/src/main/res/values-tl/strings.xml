@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker</string>
+    <string name="app_name">Expense Tracker - Budget Manager</string>
     <string name="dashboard_subtitle">Itala ang mga gastusin, subaybayan ang mga kategorya, at tingnan ang mga trend sa paglipas ng panahon.</string>
     <string name="manage_categories">Pamahalaan ang mga Kategorya</string>
     <string name="reset_data">I-reset ang Data</string>
@@ -9,7 +9,7 @@
     <string name="your_name_hint">hal. Mohammad</string>
     <string name="your_name_note">Ginagamit lamang para i-personalize ang pagbati sa dashboard. Hindi ipinapadala kahit saan.</string>
 
-    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_dashboard">Home</string>
     <string name="nav_categories">Mga Kategorya</string>
     <string name="nav_settings">Mga Setting</string>
     <string name="nav_debts">Mga Utang</string>
@@ -101,6 +101,16 @@
     <string name="tour_step4_body">Gamitin ang Debts tab para subaybayan ang iyong mga utang o pautang, kasama ang awtomatikong pagtataya ng pagbabayad.</string>
     <string name="tour_step5_title">Tuklasin ang Higit Pa</string>
     <string name="tour_step5_body">Tinutuklasan ng Khata ang credit sa tindahan. Sa Settings, ma-export ang mga ulat, mag-backup ng data, at mag-set ng pang-araw-araw na paalala.</string>
+    <string name="tour_step6_title">📷 I-scan ang Resibo</string>
+    <string name="tour_step6_body">Itutok ang camera sa anumang bill o resibo. Mababasa ng app ang halaga at agad na itatala ang gastos — walang typing.</string>
+    <string name="tour_step7_title">🎤 Voice Input</string>
+    <string name="tour_step7_body">Sabihin lang na «gastos 50 sa pagkain» at itatala na ito. Hands-free na pagsubaybay ng gastos kahit saan ka man naroroon.</string>
+    <string name="tour_step8_title">👥 Hatiin ang Bill</string>
+    <string name="tour_step8_body">Gumawa ng grupo, magdagdag ng shared expenses, at hayaan ang app na kalkulahin kung sino ang may utang. Mag-settle gamit ang isang WhatsApp message.</string>
+    <string name="tour_step9_title">📒 Khata / Ledger</string>
+    <string name="tour_step9_body">Subaybayan kung sino ang may utang sa iyo at kung sino kang may utang. Magpadala ng payment reminder sa WhatsApp sa isang tap.</string>
+    <string name="tour_step10_title">🎯 Mga Layunin at Streak</string>
+    <string name="tour_step10_body">Magtakda ng savings goals at subaybayan ang progreso. Bumuo ng araw-araw na gawi sa pagtatala at panatilihin ang iyong streak!</string>
     <string name="tour_next">Susunod</string>
     <string name="tour_done">Magsimula na!</string>
     <string name="tour_skip">Laktawan</string>
@@ -472,4 +482,149 @@ Gamitin anumang oras!
     <string name="digest_body_less">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mababa kaysa noong nakaraang linggo 🎉</string>
     <string name="digest_body_more">Ngayong linggo ay gumastos ka ng %1$s — %2$d%% mas mataas kaysa noong nakaraang linggo</string>
     <string name="digest_body_same">Ngayong linggo ay gumastos ka ng %1$s — halos katulad ng nakaraang linggo</string>
+
+    <!-- ── Card ng Spending Personality ── -->
+    <string name="personality_card_title">Ngayong Buwan Ikaw ay isang</string>
+    <string name="personality_share_hint">%1$d%% ginastos sa %2$s</string>
+    <string name="personality_foodie">Mahilig sa Pagkain</string>
+    <string name="personality_commuter">Manlalakbay</string>
+    <string name="personality_homebody">Mahilig sa Bahay</string>
+    <string name="personality_bill_payer">Nagbabayad ng Bayarin</string>
+    <string name="personality_entertainer">Mahilig sa Libangan</string>
+    <string name="personality_health_first">Kalusugan Muna</string>
+    <string name="personality_shopaholic">Mahilig Mamili</string>
+    <string name="personality_tech_buff">Tech Enthusiast</string>
+    <string name="personality_saver">Nagtitipid</string>
+    <string name="personality_road_warrior">Mandirigma sa Daan</string>
+    <string name="personality_scholar">Iskolar</string>
+    <string name="personality_connected">Laging Konektado</string>
+    <string name="personality_power_user">Mataas na Gumagamit ng Kuryente</string>
+    <string name="personality_farmer">Magsasaka</string>
+    <string name="personality_trader">Mangangalakal</string>
+    <string name="personality_debt_crusher">Tagapawi ng Utang</string>
+    <string name="personality_versatile">Maraming Klase ng Gumagastos</string>
+
+    <!-- ── Pagpasok ng gastos sa pamamagitan ng boses ── -->
+    <string name="voice_listening">Nakikinig…</string>
+    <string name="voice_tap_to_speak">Sabihin ang iyong gastos — hal. "Gumastos ng 200 sa tanghalian"</string>
+    <string name="voice_result_title">Ito ang narinig ko</string>
+    <string name="voice_confirm">Kumpirmahin at Idagdag ang Gastos</string>
+    <string name="voice_try_again">Subukan Muli</string>
+    <string name="voice_no_speech">Walang narinig na salita. Subukan muli.</string>
+    <string name="voice_not_detected">Hindi natukoy</string>
+    <string name="voice_field_amount">Halaga</string>
+    <string name="voice_field_description">Paglalarawan</string>
+    <string name="voice_field_category">Kategorya</string>
+    <string name="voice_permission_denied">Kailangan ang pahintulot sa mikropono para sa pagpasok ng boses</string>
+
+    <!-- Receipt / Bill Camera Scan -->
+    <string name="receipt_scan_title">I-scan ang Resibo / Bill</string>
+    <string name="receipt_scan_hint">Ituro ang camera sa resibo o bill. Awtomatiko naming mababasa ang kabuuang halaga.</string>
+    <string name="receipt_open_camera">Buksan ang Camera</string>
+    <string name="receipt_scanning">Binabasa ang resibo…</string>
+    <string name="receipt_amount_found">Nahanap ang halaga</string>
+    <string name="receipt_use_amount">Gamitin ang halagang ito</string>
+    <string name="receipt_edit_hint">Pindutin ang halaga sa itaas para itama kung kinakailangan</string>
+    <string name="receipt_rescan">I-scan muli</string>
+    <string name="receipt_no_amount_title">Hindi mabasa ang halaga</string>
+    <string name="receipt_no_amount_body">Walang malinaw na kabuuan na nahanap sa scan. Subukan muli sa mas magandang ilaw, o manual na ilagay ang halaga.</string>
+    <string name="receipt_enter_manually">Manual na ilagay</string>
+    <string name="receipt_error_title">May nangyaring mali</string>
+    <string name="receipt_retry">Subukan muli</string>
+    <string name="receipt_close">Isara</string>
+    <string name="receipt_camera_permission_denied">Kailangan ang pahintulot sa camera para mag-scan ng resibo</string>
+
+
+    <!-- Family / Couple Mode -->
+    <string name="family_mode_title">Family Mode</string>
+    <string name="family_mode_subtitle">Pinagsamang badyet para sa pamilya — lahat ng data nasa telepono.</string>
+    <string name="family_mode_toggle_label">I-on ang Family Mode</string>
+    <string name="family_mode_description">Subaybayan ang gastos ng bawat miyembro ng pamilya. Magbahagi ng invite code sa iyong partner.</string>
+    <string name="family_setup_members">Pamahalaan ang Mga Miyembro (%d)</string>
+    <string name="family_setup">I-setup ang Family Mode</string>
+    <string name="family_add_member">Dagdagan ang Miyembro</string>
+    <string name="family_edit_member">I-edit ang miyembro</string>
+    <string name="family_delete_member">Tanggalin ang miyembro</string>
+    <string name="family_me_label">· Ako</string>
+    <string name="family_member_name_hint">Pangalan (hal. Sara)</string>
+    <string name="family_member_emoji_hint">Emoji avatar (opsyonal)</string>
+    <string name="family_pick_color">Pumili ng kulay</string>
+    <string name="family_shared">Shared</string>
+    <string name="family_share_code_title">Ibahagi sa partner o pamilya</string>
+    <string name="family_share_code_desc">Gumawa ng code para sa iyong partner. Ang mga pangalan lamang ang ibinabahagi — hindi ang datos ng gastos.</string>
+    <string name="family_generate_code">Gumawa ng Invite Code</string>
+    <string name="family_join_code_title">Sumali sa pamilya</string>
+    <string name="family_join_with_code">Ilagay ang invite code</string>
+    <string name="family_enter_code_hint">I-paste o i-type ang code</string>
+    <string name="family_join">I-import ang Mga Miyembro</string>
+    <string name="family_disable">I-off ang Family Mode</string>
+    <string name="family_disable_confirm_title">I-off ang Family Mode?</string>
+    <string name="family_disable_confirm_body">Mabubura ang lahat ng profile. Hindi maaapektuhan ang kasaysayan ng gastos.</string>
+    <string name="family_delete_confirm_title">Tanggalin ang miyembro?</string>
+    <string name="family_delete_confirm_body">Tatanggalin si %s sa pamilya? Ang nakaraang gastos ay makikita bilang Shared.</string>
+    <string name="family_invite_code_title">Iyong Invite Code</string>
+    <string name="family_invite_code_desc">Ibahagi ang code na ito sa iyong partner o miyembro ng pamilya.</string>
+    <string name="family_copy_code">Kopyahin ang Code</string>
+    <string name="family_no_members_hint">Wala pang miyembro — pindutin ang settings para mag-setup.</string>
+    <string name="family_expense_assigned_to">Para kay</string>
+    <string name="family_total_spent">Kabuuan: %1$s%2$.2f ngayong buwan</string>
+
+    <!-- family_import (missing) -->
+    <string name="family_import_up_to_date">Napapanahon na</string>
+    <string name="family_import_added">Naidagdag: %s</string>
+    <!-- Splits -->
+    <string name="nav_splits">Splits</string>
+    <string name="split_screen_title">Splits</string>
+    <string name="split_screen_subtitle">Paghati ng gastos sa grupo</string>
+    <string name="split_empty_title">Walang grupo pa</string>
+    <string name="split_empty_subtitle">Gumawa ng grupo para hatiin ang gastos</string>
+    <string name="split_create_group">Gumawa ng Grupo</string>
+    <string name="split_new_group">Bagong Grupo</string>
+    <string name="split_new_group_subtitle">Pangalan, emoji, at mga miyembro</string>
+    <string name="split_group_emoji">Emoji</string>
+    <string name="split_group_name_hint">Pangalan ng grupo (hal. Dubai Trip)</string>
+    <string name="split_members_label">Mga Miyembro</string>
+    <string name="split_add_member_hint">Idagdag ang miyembro</string>
+    <string name="split_member_count">%d miyembro</string>
+    <string name="split_settled">Nayos na ✓</string>
+    <string name="split_you_owe">May utang ka ng %1$s%2$.2f</string>
+    <string name="split_you_get">Matatanggap mo %1$s%2$.2f</string>
+    <string name="split_settle_up">Ayusin ang Utang</string>
+    <string name="split_member_balances">Balanse ng Miyembro</string>
+    <string name="split_expenses_label">Mga Gastos</string>
+    <string name="split_expense_count">%d gastos</string>
+    <string name="split_no_expenses">Walang gastos pa — pindutin ang +</string>
+    <string name="split_add_expense">Magdagdag ng Gastos</string>
+    <string name="split_expense_description">Para saan ito?</string>
+    <string name="split_expense_amount">Halaga</string>
+    <string name="split_paid_by">Binayaran ni</string>
+    <string name="split_paid_by_member">Binayaran ni %s</string>
+    <string name="split_split_among">Hatiin sa</string>
+    <string name="split_split_among_hint">Piliin ang maghahatiin nang pantay</string>
+    <string name="split_save_expense">I-save ang Gastos</string>
+    <string name="split_delete_expense">Burahin ang Gastos?</string>
+    <string name="split_delete_expense_confirm">Burahin ang "%s"? Hindi na mababawi.</string>
+    <string name="split_delete_group">Burahin ang Grupo</string>
+    <string name="split_delete_group_confirm">Burahin ang "%s" at lahat ng gastos?</string>
+    <string name="split_all_settled">Nayos na lahat! 🎉</string>
+    <string name="split_all_settled_subtitle">Pantay na ang lahat. Walang bayad na kailangan.</string>
+    <string name="split_transfers_needed">%d bayad na kailangan</string>
+    <string name="split_mark_paid">Nabayaran na</string>
+    <string name="split_share_whatsapp">I-share sa WhatsApp</string>
+    <string name="split_more_options">Higit pang opsyon</string>
+
+    <!-- WhatsApp split summary labels -->
+    <string name="split_wa_header">Buod ng Gastos</string>
+    <string name="split_wa_expenses">Mga Gastos (%d)</string>
+    <string name="split_wa_paid_by">Binayaran ni: %s</string>
+    <string name="split_wa_total">Kabuuan: %s</string>
+    <string name="split_wa_balances">Mga Balanse</string>
+    <string name="split_wa_gets">matatanggap</string>
+    <string name="split_wa_owes">dapat bayaran</string>
+    <string name="split_wa_member_settled">Naisaayos na</string>
+    <string name="split_wa_to_pay">Babayaran</string>
+    <string name="split_wa_all_settled">Lahat ay naisaayos na! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
+    <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
 </resources>

@@ -32,5 +32,7 @@ data class ExpenseEntity(
     val monthKey: String,
     val isRecurring: Boolean = false,
     val recurringPeriod: String? = null,   // "MONTHLY" when isRecurring = true
-    val recurringSourceId: Long? = null    // non-null on auto-created copies
+    val recurringSourceId: Long? = null,   // non-null on auto-created copies
+    // Family / Couple Mode — null when family mode is off or expense is "shared household".
+    val memberId: Long? = null
 )

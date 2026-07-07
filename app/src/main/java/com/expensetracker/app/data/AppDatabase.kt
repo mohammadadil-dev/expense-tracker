@@ -17,9 +17,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         CategoryEntity::class, ExpenseEntity::class, PendingSmsExpense::class,
         BudgetEntity::class, DebtEntity::class, DebtPaymentEntity::class,
         KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class,
-        GoalEntity::class
+        GoalEntity::class, FamilyMemberEntity::class,
+        SplitGroupEntity::class, SplitMemberEntity::class,
+        SplitExpenseEntity::class, SplitExpenseShareEntity::class
     ],
-    version = 12,
+    version = 14,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -33,6 +35,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun khataDao(): KhataDao
     abstract fun incomeDao(): IncomeDao
     abstract fun goalDao(): GoalDao
+    abstract fun familyMemberDao(): FamilyMemberDao
+    abstract fun splitGroupDao(): SplitGroupDao
+    abstract fun splitMemberDao(): SplitMemberDao
+    abstract fun splitExpenseDao(): SplitExpenseDao
+    abstract fun splitExpenseShareDao(): SplitExpenseShareDao
 
     companion object {
         @Volatile
@@ -363,6 +370,80 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v13 -> v14: Splits / Group Expense Tracker feature.
+        //   split_groups        — a named group (trip, flat mates, etc.)
+        //   split_members       — people in that group; isMe=1 for the device owner
+        //   split_expenses      — expenses logged inside a group (who paid, how much)
+        //   split_expense_shares— per-member share breakdown for each expense
+        private val MIGRATION_13_14 = object : Migration(13, 14) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_groups` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `emoji` TEXT NOT NULL DEFAULT '🤝',
+                        `createdDate` TEXT NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `groupId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `colorHex` TEXT NOT NULL DEFAULT '#4CAF50',
+                        `emoji` TEXT NOT NULL DEFAULT '',
+                        `isMe` INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expenses` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `groupId` INTEGER NOT NULL,
+                        `description` TEXT NOT NULL,
+                        `amount` REAL NOT NULL,
+                        `paidByMemberId` INTEGER NOT NULL,
+                        `date` TEXT NOT NULL,
+                        `note` TEXT NOT NULL DEFAULT '',
+                        `isSettlement` INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expense_shares` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `expenseId` INTEGER NOT NULL,
+                        `memberId` INTEGER NOT NULL,
+                        `shareAmount` REAL NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_members_groupId` ON `split_members` (`groupId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_expenses_groupId` ON `split_expenses` (`groupId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_shares_expenseId` ON `split_expense_shares` (`expenseId`)")
+            }
+        }
+
+        // v12 -> v13: Family / Couple Mode.
+        //   family_members — named household profiles (owner + up to 4 partners).
+        //   expenses.memberId — nullable FK tagging each expense to a member;
+        //                       NULL = shared / unassigned (backwards-compatible).
+        private val MIGRATION_12_13 = object : Migration(12, 13) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `family_members` (
+                        `id`        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name`      TEXT NOT NULL,
+                        `colorHex`  TEXT NOT NULL DEFAULT '#4CAF50',
+                        `emoji`     TEXT NOT NULL DEFAULT '',
+                        `isMe`      INTEGER NOT NULL DEFAULT 0,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                // memberId = NULL on all existing rows — they predate family mode.
+                db.execSQL("ALTER TABLE expenses ADD COLUMN memberId INTEGER")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -372,7 +453,8 @@ abstract class AppDatabase : RoomDatabase() {
                 ).addMigrations(
                     MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
-                    MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12
+                    MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
+                    MIGRATION_13_14
                 ).build().also { INSTANCE = it }
             }
         }

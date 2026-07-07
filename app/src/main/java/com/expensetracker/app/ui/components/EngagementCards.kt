@@ -33,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +53,8 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.ui.theme.StreakOrange
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.SpendingPersonalityEngine
+import androidx.compose.ui.platform.LocalContext
 
 // ── Streak Card ───────────────────────────────────────────────────────────────
 
@@ -535,6 +538,98 @@ private fun GoalProgressRow(
                 style = MaterialTheme.typography.labelSmall,
                 color = TextMuted
             )
+        }
+    }
+}
+
+// ── Spending Personality Card ─────────────────────────────────────────────────
+
+/**
+ * Full-width card that shows the user's top spending personality for the month.
+ * Hidden when there are fewer than 3 expenses (no meaningful pattern yet).
+ *
+ * Example: "This Month You're a 🍔 Foodie — 42% on Food & Dining"
+ *
+ * @param personality  Derived by [SpendingPersonalityEngine.compute].
+ */
+@Composable
+fun SpendingPersonalityCard(
+    personality: SpendingPersonalityEngine.Personality,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+
+    // Resolve the personality label string (e.g. "Foodie")
+    val labelResId = remember(personality.labelKey) {
+        context.resources.getIdentifier(personality.labelKey, "string", context.packageName)
+    }
+    val label = if (labelResId != 0) stringResource(labelResId) else personality.labelKey
+
+    // Resolve the category display name (e.g. "Food & Dining")
+    val catResId = remember(personality.categoryNameKey) {
+        context.resources.getIdentifier(personality.categoryNameKey, "string", context.packageName)
+    }
+    val catName = if (catResId != 0) stringResource(catResId) else personality.categoryNameKey
+
+    val accentColor = Color(personality.color)
+
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape    = RoundedCornerShape(20.dp),
+        colors   = CardDefaults.cardColors(containerColor = accentColor.copy(alpha = 0.07f)),
+        border   = BorderStroke(1.dp, accentColor.copy(alpha = 0.25f)),
+        elevation = CardDefaults.cardElevation(0.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            // Emoji circle
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .background(accentColor.copy(alpha = 0.15f), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text     = personality.emoji,
+                    fontSize = 26.sp
+                )
+            }
+
+            // Text column
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                // "This Month You're a"
+                Text(
+                    text  = stringResource(R.string.personality_card_title),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextMuted,
+                    maxLines = 1
+                )
+                // Personality name — bold, large
+                Text(
+                    text       = label,
+                    style      = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.ExtraBold,
+                    color      = accentColor,
+                    maxLines   = 1,
+                    overflow   = TextOverflow.Ellipsis
+                )
+                // Sub-line: "42% on Food & Dining"
+                Text(
+                    text  = stringResource(R.string.personality_share_hint, personality.sharePercent, catName),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

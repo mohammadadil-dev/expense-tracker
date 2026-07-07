@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">খরচ ট্র্যাকার</string>
+    <string name="app_name">খরচ ট্র্যাকার - বাজেট ম্যানেজার</string>
     <string name="dashboard_subtitle">খরচ লিখুন, বিভাগ ট্র্যাক করুন এবং সময়ের সাথে প্রবণতা দেখুন।</string>
     <string name="manage_categories">বিভাগ পরিচালনা করুন</string>
     <string name="reset_data">ডেটা রিসেট করুন</string>
@@ -9,7 +9,7 @@
     <string name="your_name_hint">যেমন: মোহাম্মদ</string>
     <string name="your_name_note">শুধুমাত্র ড্যাশবোর্ড অভিবাদন ব্যক্তিগত করতে ব্যবহৃত। কোথাও পাঠানো হয় না।</string>
 
-    <string name="nav_dashboard">ড্যাশবোর্ড</string>
+    <string name="nav_dashboard">হোম</string>
     <string name="nav_categories">বিভাগ</string>
     <string name="nav_settings">সেটিংস</string>
     <string name="nav_debts">ঋণ</string>
@@ -101,6 +101,16 @@
     <string name="tour_step4_body">ঋণ ট্যাব ব্যবহার করে ট্র্যাক করুন আপনি কতটুকু পাওনা বা দেনা আছেন, স্বয়ংক্রিয় পরিশোধ অনুমানসহ।</string>
     <string name="tour_step5_title">আরও অন্বেষণ করুন</string>
     <string name="tour_step5_body">খাতা দোকানের বাকি ট্র্যাক করে। সেটিংসে রিপোর্ট এক্সপোর্ট, ব্যাকআপ ও দৈনিক রিমাইন্ডার সেট করুন।</string>
+    <string name="tour_step6_title">📷 রিসিট স্ক্যান করুন</string>
+    <string name="tour_step6_body">যেকোনো বিল বা রিসিটে ক্যামেরা ধরুন। অ্যাপ পরিমাণ পড়ে তাৎক্ষণিক খরচ নথিভুক্ত করবে — টাইপ করার দরকার নেই।</string>
+    <string name="tour_step7_title">🎤 ভয়েস ইনপুট</string>
+    <string name="tour_step7_body">শুধু বলুন «খাবারে ৫০ খরচ করলাম» এবং এটি নথিভুক্ত হয়ে যাবে। চলতে চলতে হাতমুক্ত খরচ ট্র্যাকিং।</string>
+    <string name="tour_step8_title">👥 বিল ভাগ করুন</string>
+    <string name="tour_step8_body">গ্রুপ তৈরি করুন, শেয়ার্ড খরচ যোগ করুন এবং অ্যাপকে হিসাব করতে দিন। একটি WhatsApp বার্তায় হিসাব মেটান।</string>
+    <string name="tour_step9_title">📒 খাতা / লেজার</string>
+    <string name="tour_step9_body">ট্র্যাক করুন কে আপনাকে পাওনা এবং আপনি কাকে পাওনা। এক ট্যাপে WhatsApp-এ পেমেন্ট রিমাইন্ডার পাঠান।</string>
+    <string name="tour_step10_title">🎯 লক্ষ্য ও স্ট্রিক</string>
+    <string name="tour_step10_body">সঞ্চয়ের লক্ষ্য নির্ধারণ করুন এবং অগ্রগতি ট্র্যাক করুন। প্রতিদিন নথিভুক্ত করার অভ্যাস গড়ুন এবং স্ট্রিক বজায় রাখুন!</string>
     <string name="tour_next">পরবর্তী</string>
     <string name="tour_done">শুরু করি!</string>
     <string name="tour_skip">বাদ দিন</string>
@@ -476,4 +486,149 @@
     <string name="digest_body_less">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% কম 🎉</string>
     <string name="digest_body_more">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের চেয়ে %2$d%% বেশি</string>
     <string name="digest_body_same">এই সপ্তাহে আপনি %1$s খরচ করেছেন — গত সপ্তাহের মতোই</string>
+
+    <!-- ── ব্যয় ব্যক্তিত্ব কার্ড ── -->
+    <string name="personality_card_title">এই মাসে আপনি একজন</string>
+    <string name="personality_share_hint">%1$d%% ব্যয় %2$s-এ</string>
+    <string name="personality_foodie">খাদ্যপ্রেমী</string>
+    <string name="personality_commuter">নিত্যযাত্রী</string>
+    <string name="personality_homebody">গৃহপ্রিয়</string>
+    <string name="personality_bill_payer">বিল পরিশোধকারী</string>
+    <string name="personality_entertainer">বিনোদনপ্রিয়</string>
+    <string name="personality_health_first">স্বাস্থ্য-প্রথম</string>
+    <string name="personality_shopaholic">কেনাকাটার পাগল</string>
+    <string name="personality_tech_buff">প্রযুক্তি-প্রেমী</string>
+    <string name="personality_saver">সঞ্চয়কারী</string>
+    <string name="personality_road_warrior">পথের যোদ্ধা</string>
+    <string name="personality_scholar">জ্ঞানপিপাসু</string>
+    <string name="personality_connected">সর্বদা সংযুক্ত</string>
+    <string name="personality_power_user">বিদ্যুৎ ব্যবহারকারী</string>
+    <string name="personality_farmer">কৃষক</string>
+    <string name="personality_trader">ব্যবসায়ী</string>
+    <string name="personality_debt_crusher">ঋণ মুক্তিদাতা</string>
+    <string name="personality_versatile">বহুমুখী ব্যয়কারী</string>
+
+    <!-- ── ভয়েস দিয়ে খরচ লিখুন ── -->
+    <string name="voice_listening">শোনা হচ্ছে…</string>
+    <string name="voice_tap_to_speak">আপনার খরচ বলুন — যেমন "দুপুরের খাবারে ২০০ খরচ হয়েছে"</string>
+    <string name="voice_result_title">আমি যা শুনেছি</string>
+    <string name="voice_confirm">নিশ্চিত করুন এবং খরচ যোগ করুন</string>
+    <string name="voice_try_again">আবার চেষ্টা করুন</string>
+    <string name="voice_no_speech">কোনো কথা পাওয়া যায়নি। আবার চেষ্টা করুন।</string>
+    <string name="voice_not_detected">শনাক্ত হয়নি</string>
+    <string name="voice_field_amount">পরিমাণ</string>
+    <string name="voice_field_description">বিবরণ</string>
+    <string name="voice_field_category">বিভাগ</string>
+    <string name="voice_permission_denied">ভয়েস এন্ট্রির জন্য মাইক্রোফোন অনুমতি প্রয়োজন</string>
+
+    <!-- Receipt / Bill Camera Scan -->
+    <string name="receipt_scan_title">রসিদ / বিল স্ক্যান করুন</string>
+    <string name="receipt_scan_hint">ক্যামেরাটি রসিদ বা বিলের দিকে ধরুন। আমরা মোট পরিমাণ স্বয়ংক্রিয়ভাবে পড়ব।</string>
+    <string name="receipt_open_camera">ক্যামেরা খুলুন</string>
+    <string name="receipt_scanning">রসিদ পড়া হচ্ছে…</string>
+    <string name="receipt_amount_found">পরিমাণ পাওয়া গেছে</string>
+    <string name="receipt_use_amount">এই পরিমাণ ব্যবহার করুন</string>
+    <string name="receipt_edit_hint">প্রয়োজন হলে উপরের পরিমাণ সংশোধন করুন</string>
+    <string name="receipt_rescan">আবার স্ক্যান করুন</string>
+    <string name="receipt_no_amount_title">পরিমাণ পড়া যায়নি</string>
+    <string name="receipt_no_amount_body">স্ক্যানে কোনো স্পষ্ট মোট পাওয়া যায়নি। ভালো আলোতে আবার চেষ্টা করুন, অথবা পরিমাণ ম্যানুয়ালি লিখুন।</string>
+    <string name="receipt_enter_manually">ম্যানুয়ালি লিখুন</string>
+    <string name="receipt_error_title">কিছু ভুল হয়েছে</string>
+    <string name="receipt_retry">আবার চেষ্টা করুন</string>
+    <string name="receipt_close">বন্ধ করুন</string>
+    <string name="receipt_camera_permission_denied">রসিদ স্ক্যান করতে ক্যামেরার অনুমতি প্রয়োজন</string>
+
+
+    <!-- Family / Couple Mode -->
+    <string name="family_mode_title">ফ্যামিলি মোড</string>
+    <string name="family_mode_subtitle">পরিবারের সাথে ভাগ করা বাজেট — সমস্ত ডেটা ডিভাইসে।</string>
+    <string name="family_mode_toggle_label">ফ্যামিলি মোড চালু করুন</string>
+    <string name="family_mode_description">প্রতিটি পরিবারের সদস্যের খরচ ট্র্যাক করুন। সঙ্গীকে আমন্ত্রণ কোড শেয়ার করুন।</string>
+    <string name="family_setup_members">সদস্য পরিচালনা করুন (%d)</string>
+    <string name="family_setup">ফ্যামিলি মোড সেটআপ</string>
+    <string name="family_add_member">সদস্য যোগ করুন</string>
+    <string name="family_edit_member">সদস্য সম্পাদনা</string>
+    <string name="family_delete_member">সদস্য মুছুন</string>
+    <string name="family_me_label">· আমি</string>
+    <string name="family_member_name_hint">নাম (যেমন সারা)</string>
+    <string name="family_member_emoji_hint">ইমোজি অবতার (ঐচ্ছিক)</string>
+    <string name="family_pick_color">রঙ বেছে নিন</string>
+    <string name="family_shared">ভাগ করা</string>
+    <string name="family_share_code_title">সঙ্গী বা পরিবারের সাথে শেয়ার করুন</string>
+    <string name="family_share_code_desc">একটি কোড তৈরি করুন যা আপনার সঙ্গী তাদের ফোনে প্রবেশ করতে পারবে।</string>
+    <string name="family_generate_code">আমন্ত্রণ কোড তৈরি করুন</string>
+    <string name="family_join_code_title">পরিবারে যোগ দিন</string>
+    <string name="family_join_with_code">আমন্ত্রণ কোড দিন</string>
+    <string name="family_enter_code_hint">কোড পেস্ট বা টাইপ করুন</string>
+    <string name="family_join">সদস্য আমদানি করুন</string>
+    <string name="family_disable">ফ্যামিলি মোড বন্ধ করুন</string>
+    <string name="family_disable_confirm_title">ফ্যামিলি মোড বন্ধ করবেন?</string>
+    <string name="family_disable_confirm_body">সমস্ত সদস্য প্রোফাইল মুছে যাবে। আপনার খরচের ইতিহাস অক্ষুণ্ণ থাকবে।</string>
+    <string name="family_delete_confirm_title">সদস্য সরাবেন?</string>
+    <string name="family_delete_confirm_body">%s কে পরিবার থেকে সরাবেন? তাদের পুরনো খরচ ভাগ করা হিসেবে দেখাবে।</string>
+    <string name="family_invite_code_title">আপনার আমন্ত্রণ কোড</string>
+    <string name="family_invite_code_desc">এই কোড আপনার সঙ্গী বা পরিবারের সদস্যকে শেয়ার করুন।</string>
+    <string name="family_copy_code">কোড কপি করুন</string>
+    <string name="family_no_members_hint">এখনো কোনো সদস্য নেই — সেটিংস আইকন ট্যাপ করুন।</string>
+    <string name="family_expense_assigned_to">যার জন্য</string>
+    <string name="family_total_spent">মোট: %1$s%2$.2f এই মাসে</string>
+
+    <!-- family_import (missing) -->
+    <string name="family_import_up_to_date">ইতিমধ্যে আপডেট</string>
+    <string name="family_import_added">যোগ করা হয়েছে: %s</string>
+    <!-- Splits -->
+    <string name="nav_splits">বিভাজন</string>
+    <string name="split_screen_title">বিভাজন</string>
+    <string name="split_screen_subtitle">গ্রুপ খরচ ভাগ করা</string>
+    <string name="split_empty_title">কোনো গ্রুপ নেই</string>
+    <string name="split_empty_subtitle">বন্ধু বা পরিবারের সাথে খরচ ভাগ করতে গ্রুপ তৈরি করুন</string>
+    <string name="split_create_group">গ্রুপ তৈরি করুন</string>
+    <string name="split_new_group">নতুন গ্রুপ</string>
+    <string name="split_new_group_subtitle">নাম দিন, ইমোজি বেছে নিন, সদস্য যোগ করুন</string>
+    <string name="split_group_emoji">ইমোজি</string>
+    <string name="split_group_name_hint">গ্রুপের নাম (যেমন: দুবাই ট্রিপ)</string>
+    <string name="split_members_label">সদস্যরা</string>
+    <string name="split_add_member_hint">সদস্যের নাম যোগ করুন</string>
+    <string name="split_member_count">%d সদস্য</string>
+    <string name="split_settled">মিটিয়ে দেওয়া ✓</string>
+    <string name="split_you_owe">আপনি বাকি আছেন %1$s%2$.2f</string>
+    <string name="split_you_get">আপনি পাবেন %1$s%2$.2f</string>
+    <string name="split_settle_up">হিসাব মেটান</string>
+    <string name="split_member_balances">সদস্যদের ব্যালেন্স</string>
+    <string name="split_expenses_label">খরচ</string>
+    <string name="split_expense_count">%d খরচ</string>
+    <string name="split_no_expenses">এখনো কোনো খরচ নেই — + চাপুন</string>
+    <string name="split_add_expense">খরচ যোগ করুন</string>
+    <string name="split_expense_description">এটা কীসের জন্য?</string>
+    <string name="split_expense_amount">পরিমাণ</string>
+    <string name="split_paid_by">কে দিয়েছে</string>
+    <string name="split_paid_by_member">%s দিয়েছে</string>
+    <string name="split_split_among">কারা ভাগ করবে</string>
+    <string name="split_split_among_hint">এই খরচ সমানভাবে ভাগ করতে নির্বাচন করুন</string>
+    <string name="split_save_expense">খরচ সংরক্ষণ করুন</string>
+    <string name="split_delete_expense">খরচ মুছুন?</string>
+    <string name="split_delete_expense_confirm">"%s" মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
+    <string name="split_delete_group">গ্রুপ মুছুন</string>
+    <string name="split_delete_group_confirm">"%s" এবং সব খরচ মুছবেন?</string>
+    <string name="split_all_settled">সব মিটে গেছে! 🎉</string>
+    <string name="split_all_settled_subtitle">সবাই সমান। কোনো লেনদেন দরকার নেই।</string>
+    <string name="split_transfers_needed">%d লেনদেন প্রয়োজন</string>
+    <string name="split_mark_paid">পরিশোধ হয়েছে</string>
+    <string name="split_share_whatsapp">WhatsApp-এ শেয়ার করুন</string>
+    <string name="split_more_options">আরো বিকল্প</string>
+
+    <!-- WhatsApp split summary labels -->
+    <string name="split_wa_header">খরচের সারাংশ</string>
+    <string name="split_wa_expenses">খরচ (%d)</string>
+    <string name="split_wa_paid_by">পরিশোধ করেছেন: %s</string>
+    <string name="split_wa_total">মোট: %s</string>
+    <string name="split_wa_balances">ব্যালেন্স</string>
+    <string name="split_wa_gets">পাবেন</string>
+    <string name="split_wa_owes">দেবেন</string>
+    <string name="split_wa_member_settled">মিটে গেছে</string>
+    <string name="split_wa_to_pay">পরিশোধ করুন</string>
+    <string name="split_wa_all_settled">সবার হিসাব মিটে গেছে! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">টিপস: প্রতিদিন লগ করলে বাজেটে থাকা সহজ হয় 📊</string>
+    <string name="reminder_action_add_expense">খরচ যোগ করুন</string>
 </resources>

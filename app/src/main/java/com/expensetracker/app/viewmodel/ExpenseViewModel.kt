@@ -10,6 +10,7 @@ import com.expensetracker.app.data.DebtEntity
 import com.expensetracker.app.data.DebtPaymentEntity
 import com.expensetracker.app.data.DeleteCategoryResult
 import com.expensetracker.app.data.ExpenseEntity
+import com.expensetracker.app.data.FamilyMemberEntity
 import com.expensetracker.app.data.IncomeEntity
 import com.expensetracker.app.data.PendingSmsExpense
 import android.net.Uri
@@ -43,6 +44,7 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     private val app = application as ExpenseApp
     private val repository = app.repository
+    private val familyRepository = app.familyRepository
     private val settings = app.settings
 
     private val _currentMonthKey = MutableStateFlow(DateUtils.currentMonthKey())
@@ -100,6 +102,12 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     var debtsNavBounds by mutableStateOf<Rect?>(null)
     /** Bounds of the Ledger (Khata) bottom-nav tab — spotlight for step 5. */
     var ledgerNavBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the receipt-scan FAB — spotlight for step 6. */
+    var receiptScanBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the mic FAB — spotlight for step 7. */
+    var micButtonBounds by mutableStateOf<Rect?>(null)
+    /** Bounds of the Splits bottom-nav tab — spotlight for step 8. */
+    var splitsNavBounds by mutableStateOf<Rect?>(null)
 
     // ── Screenshot mode ───────────────────────────────────────────────────────
     /** When true the banner ad is hidden so Play Store screenshots look clean.
@@ -167,6 +175,58 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _paydayDayOfMonth = MutableStateFlow(settings.paydayDayOfMonth)
     val paydayDayOfMonth: StateFlow<Int> = _paydayDayOfMonth
 
+    // ── Family / Couple Mode ──────────────────────────────────────────────────
+    private val _familyModeEnabled = MutableStateFlow(settings.familyModeEnabled)
+    val familyModeEnabled: StateFlow<Boolean> = _familyModeEnabled
+
+    val familyMembers: StateFlow<List<FamilyMemberEntity>> = familyRepository.allMembers
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun setFamilyModeEnabled(enabled: Boolean) {
+        settings.familyModeEnabled = enabled
+        _familyModeEnabled.value = enabled
+        if (enabled) {
+            viewModelScope.launch {
+                familyRepository.ensureOwnerProfile(settings.displayName)
+            }
+        }
+    }
+
+    fun disableFamilyMode() {
+        viewModelScope.launch {
+            familyRepository.reset()
+            settings.familyModeEnabled = false
+            _familyModeEnabled.value = false
+        }
+    }
+
+    fun addFamilyMember(name: String, colorHex: String, emoji: String = "") {
+        viewModelScope.launch { familyRepository.addMember(name, colorHex, emoji) }
+    }
+
+    fun updateFamilyMember(member: FamilyMemberEntity) {
+        viewModelScope.launch { familyRepository.updateMember(member) }
+    }
+
+    fun deleteFamilyMember(member: FamilyMemberEntity) {
+        viewModelScope.launch { familyRepository.deleteMember(member) }
+    }
+
+    fun generateFamilyInviteCode(onResult: (String) -> Unit) {
+        viewModelScope.launch { onResult(familyRepository.generateInviteCode()) }
+    }
+
+    fun importFamilyCode(code: String, onSuccess: (List<String>) -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val imported = familyRepository.importFromCode(code)
+                onSuccess(imported)
+            } catch (e: Exception) {
+                onError(e.localizedMessage ?: "Invalid code")
+            }
+        }
+    }
+
     val pendingSmsExpenses: StateFlow<List<PendingSmsExpense>> = repository.pendingSmsExpenses
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -217,10 +277,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         amount: Double,
         date: String,
         isRecurring: Boolean = false,
+        memberId: Long? = null,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring)
+            repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring, memberId = memberId)
             // Update logging streak only for new expenses, not edits.
             if (id == null) updateLogStreak(date)
             val monthKey = DateUtils.monthKeyFromDate(date)

@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ContentCopy
+// import androidx.compose.material.icons.filled.FamilyRestroom  // reserved for Family Mode re-enable
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
@@ -58,6 +59,7 @@ import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -98,6 +100,7 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
+// import com.expensetracker.app.ui.components.FamilySetupSheet  // reserved for Family Mode re-enable
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.AccentIndigoLight
@@ -110,8 +113,11 @@ import com.expensetracker.app.ui.theme.OnAccent
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextSecondary
 import android.app.Activity
+import android.provider.Settings
+import androidx.core.app.NotificationManagerCompat
 import com.expensetracker.app.util.BackupManager
 import com.expensetracker.app.util.DriveBackupManager
+import com.expensetracker.app.util.ReminderReceiver
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -162,6 +168,8 @@ fun SettingsScreen(
     val reminderEnabled by viewModel.reminderEnabled.collectAsState()
     val reminderHour by viewModel.reminderHour.collectAsState()
     val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
+    @Suppress("UNUSED_VARIABLE") val familyModeEnabled by viewModel.familyModeEnabled.collectAsState()  // reserved for Family Mode re-enable
+    @Suppress("UNUSED_VARIABLE") val familyMembers by viewModel.familyMembers.collectAsState()          // reserved for Family Mode re-enable
     val allExpenses by viewModel.allExpenses.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
@@ -571,6 +579,7 @@ fun SettingsScreen(
                                     color = AccentIndigo
                                 )
                             }
+                            // Test notification button — hidden for now
                         }
                         // Payday picker — always visible
                         Spacer(Modifier.height(12.dp))
@@ -640,6 +649,10 @@ fun SettingsScreen(
                     }
                 }
             }
+
+            // Family Mode — hidden (feature not yet ready for release)
+            // To re-enable: uncomment the block between the markers below.
+            // BEGIN_FAMILY_MODE_UI …  END_FAMILY_MODE_UI
 
             Spacer(Modifier.height(24.dp))
 
