@@ -165,6 +165,13 @@
     <string name="language_urdu">Urdu (اردو)</string>
     <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
     <string name="currency_label">Currency</string>
     <string name="currency_custom_hint">Custom symbol</string>
     <string name="convert_currency_title">Convert Currency</string>

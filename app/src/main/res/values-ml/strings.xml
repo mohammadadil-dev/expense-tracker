@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ചെലവ് ട്രാക്കർ - ബജറ്റ് മാനേജർ</string>
+    <string name="dashboard_subtitle">ചെലവുകൾ രേഖപ്പെടുത്തൂ, വിഭാഗങ്ങൾ ട്രാക്ക് ചെയ്യൂ, ട്രെൻഡുകൾ കാണൂ.</string>
+    <string name="manage_categories">വിഭാഗങ്ങൾ നിയന്ത്രിക്കൂ</string>
+    <string name="reset_data">ഡേറ്റ പുനഃസ്ഥാപിക്കൂ</string>
+
+    <string name="your_name_label">നിങ്ങളുടെ പേര്</string>
+    <string name="your_name_hint">ഉദാ. Mohammad</string>
+    <string name="your_name_note">ഡാഷ്‌ബോർഡ് ഗ്രീറ്റിംഗ് വ്യക്തിഗതമാക്കാൻ മാത്രം ഉപയോഗിക്കുന്നു. ഒരിടത്തും അയക്കുന്നില്ല.</string>
+
+    <string name="nav_dashboard">ഹോം</string>
+    <string name="nav_categories">വിഭാഗങ്ങൾ</string>
+    <string name="nav_settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="nav_debts">കടങ്ങൾ</string>
+
+    <string name="stat_total_spent">മൊത്തം ചെലവ്</string>
+    <string name="stat_transactions">ഇടപാടുകൾ</string>
+    <string name="stat_top_category">മുൻനിര വിഭാഗം</string>
+    <string name="stat_daily_average">ദൈനംദിന ശരാശരി</string>
+    <string name="stat_this_month">ഈ മാസം</string>
+    <string name="stat_per_day">ഈ മാസം ദിവസം പ്രതി</string>
+    <string name="stat_no_prior_data">കഴിഞ്ഞ മാസം ഡേറ്റ ഇല്ല</string>
+    <string name="stat_vs_last_month">കഴിഞ്ഞ മാസവുമായി താരതമ്യം</string>
+    <string name="stat_same_as_last_month">കഴിഞ്ഞ മാസത്തെ പോലെ</string>
+    <string name="stat_up_from_zero">കഴിഞ്ഞ മാസം %1$s-ൽ നിന്ന് കൂടി</string>
+
+    <string name="greeting_morning">ശുഭ പ്രഭാതം</string>
+    <string name="greeting_afternoon">ശുഭ ഉച്ചക്ക്</string>
+    <string name="greeting_evening">ശുഭ സന്ധ്യ</string>
+    <string name="greeting_morning_named">ശുഭ പ്രഭാതം, %1$s</string>
+    <string name="greeting_afternoon_named">ശുഭ ഉച്ചക്ക്, %1$s</string>
+    <string name="greeting_evening_named">ശുഭ സന്ധ്യ, %1$s</string>
+    <string name="greeting_hello">ഹലോ 👋</string>
+    <string name="greeting_hello_named">ഹലോ, %1$s 👋</string>
+
+    <string name="health_band_excellent">അത്യുത്തമം</string>
+    <string name="health_band_good">നല്ലത്</string>
+    <string name="health_band_fair">തൃപ്തികരം</string>
+    <string name="health_band_needs_attention">ശ്രദ്ധ വേണം</string>
+    <string name="health_sub_budget">ബജറ്റ്</string>
+    <string name="health_sub_trend">ട്രെൻഡ്</string>
+    <string name="health_sub_consistency">സ്ഥിരത</string>
+    <string name="health_sub_subscriptions">സബ്‌സ്‌ക്രിപ്ഷനുകൾ</string>
+
+    <string name="bento_monthly_spending">മാസ ചെലവ്</string>
+    <string name="bento_budget_remaining">ബജറ്റ് ബാക്കി</string>
+    <string name="bento_budget_no_target">ബജറ്റ് ഇല്ല</string>
+    <string name="bento_budget_remaining_subtitle">%1$s ബജറ്റിൽ</string>
+    <string name="bento_savings_goal">സേവിംഗ്‌സ് ലക്ഷ്യം</string>
+    <string name="bento_savings_goal_subtitle">%1$s ലക്ഷ്യത്തിലേക്ക്</string>
+    <string name="bento_savings_goal_no_data">ചില ആഴ്ച ട്രാക്ക് ചെയ്ത് അൺലോക്ക് ആക്കൂ</string>
+    <string name="bento_subscription_cost">സബ്‌സ്‌ക്രിപ്ഷൻ ചെലവ്</string>
+    <string name="bento_subscription_subtitle">മാസ ചെലവിന്റെ %1$s</string>
+
+    <string name="ai_insights_feed_title">AI ഇൻസൈറ്റ്‌സ്</string>
+    <string name="insight_trend_down">നിങ്ങളുടെ ചെലവ് കഴിഞ്ഞ ആഴ്ചയേക്കാൾ %1$s കുറഞ്ഞു.</string>
+    <string name="insight_trend_up">നിങ്ങളുടെ ചെലവ് കഴിഞ്ഞ ആഴ്ചയേക്കാൾ %1$s കൂടി.</string>
+    <string name="insight_trend_flat">നിങ്ങളുടെ ചെലവ് കഴിഞ്ഞ ആഴ്ചയോളം തന്നെ.</string>
+    <string name="insight_category_increase">%1$s-ൽ ചെലവ് ഈ മാസം %2$s കൂടി.</string>
+    <string name="insight_category_decrease">%1$s-ൽ ചെലവ് ഈ മാസം %2$s കുറഞ്ഞു.</string>
+    <string name="insight_projected_savings">ഈ വേഗത്തിൽ കഴിഞ്ഞ മാസത്തേക്കാൾ %1$s ലാഭിക്കും.</string>
+    <string name="insight_projected_overspend">ഈ വേഗത്തിൽ കഴിഞ്ഞ മാസത്തേക്കാൾ %1$s അധികം ചെലവാകും.</string>
+    <string name="insight_strongest_day">%1$s-ൽ നിങ്ങൾ ഏറ്റവും കുറവ് ചെലവ് ചെയ്യുന്നു.</string>
+    <string name="insight_subscription_load">സബ്‌സ്‌ക്രിപ്ഷനുകൾ ഈ മാസത്തെ %1$s ചെലവ് കൊണ്ടുപോകുന്നു.</string>
+    <string name="insight_daily_average">ഈ മാസം നിങ്ങൾ ദിവസം ശരാശരി %1$s ചെലവ് ചെയ്യുന്നു.</string>
+    <string name="insight_not_enough_data">വ്യക്തിഗത ഇൻസൈറ്റ്‌സ് അൺലോക്ക് ചെയ്യാൻ ചില ചെലവുകൾ ചേർക്കൂ.</string>
+
+    <string name="breakdown_title">വിഭാഗം അനുസരിച്ച് ബ്രേക്ക്‌ഡൗൺ</string>
+    <string name="no_expenses_breakdown">ഇനി ബ്രേക്ക്‌ഡൗണിന് ചെലവുകൾ ഇല്ല.</string>
+    <string name="trend_title">മാസ ട്രെൻഡ് (കഴിഞ്ഞ 12 മാസം)</string>
+
+    <string name="add_expense">ചെലവ് ചേർക്കൂ</string>
+    <string name="edit_expense">ചെലവ് തിരുത്തൂ</string>
+    <string name="category_label">വിഭാഗം</string>
+    <string name="description_label">വിവരണം</string>
+    <string name="description_hint">ഉദാ. സൂപ്പർമാർക്കറ്റിൽ നിന്ന് പലചരക്ക്</string>
+    <string name="amount_label">തുക</string>
+    <string name="date_label">തീയതി</string>
+    <string name="add">ചേർക്കൂ</string>
+    <string name="update">അപ്ഡേറ്റ് ചെയ്യൂ</string>
+    <string name="cancel">റദ്ദ് ചെയ്യൂ</string>
+    <string name="save">സേവ് ചെയ്യൂ</string>
+
+    <string name="expenses_this_month">ഈ മാസത്തെ ചെലവുകൾ</string>
+    <string name="no_expenses_this_month">ഈ മാസം ഇനി ചെലവുകൾ ഇല്ല.</string>
+    <string name="edit">തിരുത്തൂ</string>
+    <string name="delete">ഡിലീറ്റ് ചെയ്യൂ</string>
+    <string name="delete_expense_confirm">ഈ ചെലവ് ഡിലീറ്റ് ചെയ്യണോ?</string>
+    <string name="delete_payment_confirm">ഈ പേയ്‌മെന്റ് ഡിലീറ്റ് ചെയ്യണോ?</string>
+    <string name="delete_income_confirm">ഈ വരുമാന എൻട്രി ഡിലീറ്റ് ചെയ്യണോ?</string>
+    <string name="delete_income_recurring_confirm">ഇത് ആവർത്തന വരുമാന ടെംപ്ലേറ്റ് ആണ്. ഡിലീറ്റ് ചെയ്താൽ ഭാവിയിൽ സ്വയം-എൻട്രി നിൽക്കും. പഴയ കോപ്പികൾ നിൽക്കും.</string>
+    <string name="income_recurring_badge">മാസ ആവർത്തനം</string>
+
+    <string name="tour_step1_title">ചെലവ് രേഖപ്പെടുത്തൂ</string>
+    <string name="tour_step1_body">ഏതു ചെലവും രേഖപ്പെടുത്താൻ + ബട്ടൺ ഞെക്കൂ. തുക നൽകൂ, വിഭാഗം തിരഞ്ഞെടുക്കൂ, തീയതി തിരഞ്ഞെടുക്കൂ, സേവ് ചെയ്യൂ.</string>
+    <string name="tour_step2_title">മാസ അവലോകനം</string>
+    <string name="tour_step2_body">ചെലവ് vs ബജറ്റ് ഒറ്റ നോട്ടത്തിൽ. മുൻ മാസങ്ങളിലേക്ക് ‹ › ഞെക്കൂ.</string>
+    <string name="tour_step3_title">വരുമാനം ട്രാക്ക് ചെയ്യൂ</string>
+    <string name="tour_step3_body">ഈ മാസം എത്ര സമ്പാദിച്ചെന്ന് കാണാൻ വരുമാന കാർഡ് ഞെക്കൂ.</string>
+    <string name="tour_step4_title">കടങ്ങൾ &amp; ബാക്കിയുള്ളത്</string>
+    <string name="tour_step4_body">നൽകേണ്ടതോ സ്വീകരിക്കേണ്ടതോ ആയ തുക ട്രാക്ക് ചെയ്യാൻ കടങ്ങൾ ടാബ് ഉപയോഗിക്കൂ.</string>
+    <string name="tour_step5_title">കൂടുതൽ അന്വേഷിക്കൂ</string>
+    <string name="tour_step5_body">ലെഡ്ജർ കടം ട്രാക്ക് ചെയ്യുന്നു. ക്രമീകരണങ്ങളിൽ റിപ്പോർട്ട് എക്‌സ്‌പോർട്ട് ചെയ്യാം.</string>
+    <string name="tour_step6_title">📷 രസീതുകൾ സ്‌കാൻ ചെയ്യൂ</string>
+    <string name="tour_step6_body">ഏതു ബിൽ അല്ലെങ്കിൽ രസീതിന് മുകളിൽ ക്യാമറ പിടിക്കൂ. ആപ്പ് തുക വായിച്ച് ഉടൻ രേഖപ്പെടുത്തും — ടൈപ്പ് ചെയ്യേണ്ട.</string>
+    <string name="tour_step7_title">🎤 വോയ്‌സ് ഇൻപുട്ട്</string>
+    <string name="tour_step7_body">"ഊണിന് 50 ചെലവായി" എന്ന് പറഞ്ഞാൽ രേഖപ്പെടുത്തും. ഹാൻഡ്‌സ്-ഫ്രീ ചെലവ് ട്രാക്കിംഗ്.</string>
+    <string name="tour_step8_title">👥 ബില്ലുകൾ പങ്കിടൂ</string>
+    <string name="tour_step8_body">ഗ്രൂപ്പുകൾ ഉണ്ടാക്കൂ, ചെലവ് ചേർക്കൂ, ആര് എത്ര നൽകണമെന്ന് ആപ്പ് കണക്കാക്കട്ടെ. ഒറ്റ WhatsApp സന്ദേശത്തിൽ തീർക്കൂ.</string>
+    <string name="tour_step9_title">📒 ഖാതാ / ലെഡ്ജർ</string>
+    <string name="tour_step9_body">ആര് നിങ്ങൾക്ക് നൽകണം, നിങ്ങൾ ആർക്ക് നൽകണം ട്രാക്ക് ചെയ്യൂ. ഒറ്റ ഞെക്കലിൽ WhatsApp റിമൈൻഡർ അയക്കൂ.</string>
+    <string name="tour_step10_title">🎯 ലക്ഷ്യങ്ങൾ &amp; സ്‌ട്രീക്ക്</string>
+    <string name="tour_step10_body">സേവിംഗ്‌സ് ലക്ഷ്യങ്ങൾ നിശ്ചയിക്കൂ, പ്രഗതി ട്രാക്ക് ചെയ്യൂ. ദൈനംദിനം രേഖപ്പെടുത്തുന്ന ശീലം വളർത്തൂ!</string>
+    <string name="tour_next">അടുത്തത്</string>
+    <string name="tour_done">തുടങ്ങാം!</string>
+    <string name="tour_skip">ഒഴിവാക്കൂ</string>
+
+    <string name="onboard_currency_title">നിങ്ങളുടെ കറൻസി തിരഞ്ഞെടുക്കൂ</string>
+    <string name="onboard_currency_body">എല്ലാ തുകകളും നിങ്ങളുടെ പ്രാദേശിക കറൻസിയിൽ കാണിക്കും.</string>
+    <string name="onboard_finances_title">നിങ്ങളുടെ ഫിനാൻഷ്യൽ വിശദാംശങ്ങൾ ക്രമീകരിക്കൂ</string>
+    <string name="onboard_finances_body">രണ്ടും ഓപ്ഷണൽ — പിന്നീട് ക്രമീകരണങ്ങളിൽ പൂരിപ്പിക്കാം.</string>
+    <string name="onboard_income_label">മാസ വരുമാനം</string>
+    <string name="onboard_budget_label">മാസ ബജറ്റ്</string>
+    <string name="onboard_reminder_title">ദൈനംദിന റിമൈൻഡർ</string>
+    <string name="onboard_reminder_body">ചെലവുകൾ ദിവസം രേഖപ്പെടുത്താൻ ഒരു ചെറിയ ഓർമ്മപ്പെടുത്തൽ.</string>
+    <string name="onboard_reminder_toggle">ദൈനംദിന റിമൈൻഡർ സജ്ജമാക്കൂ</string>
+    <string name="onboard_reminder_time">റിമൈൻഡർ സമയം: %s</string>
+    <string name="onboard_all_set_title">നിങ്ങൾ തയ്യാർ!</string>
+    <string name="onboard_all_set_body">ചെലവ് ട്രാക്ക് ചെയ്യാൻ \'തുടങ്ങാം\' ഞെക്കൂ.</string>
+    <string name="onboard_continue">തുടരൂ</string>
+    <string name="onboard_get_started">തുടങ്ങാം</string>
+    <string name="onboard_back">മടങ്ങൂ</string>
+    <string name="onboard_skip">ഒഴിവാക്കൂ</string>
+
+    <string name="delete_recurring_confirm">ഇത് ആവർത്തന ചെലവ് ടെംപ്ലേറ്റ് ആണ്. ഡിലീറ്റ് ചെയ്താൽ ഭാവിയിൽ സ്വയം-എൻട്രി നിൽക്കും. പഴയ കോപ്പികൾ നിൽക്കും.</string>
+    <string name="delete_recurring_stop_future">ആവർത്തനം നിർത്തൂ</string>
+    <string name="today">ഇന്ന്</string>
+    <string name="yesterday">ഇന്നലെ</string>
+    <string name="view_mode_day">ദിവസം അനുസരിച്ച്</string>
+    <string name="view_mode_category">വിഭാഗം അനുസരിച്ച്</string>
+    <string name="view_mode_grid">ഗ്രിഡ്</string>
+    <string name="view_mode_calendar">കലണ്ടർ</string>
+    <string name="calendar_tap_hint">ചെലവുകൾ കാണാൻ ഒരു ദിവസം ഞെക്കൂ</string>
+    <string name="no_expenses_this_day">ഈ ദിവസം ചെലവുകൾ ഇല്ല.</string>
+    <string name="export_pdf">PDF എക്‌സ്‌പോർട്ട്</string>
+    <string name="export_pdf_chooser_title">നിങ്ങളുടെ റിപ്പോർട്ട് സേവ് ചെയ്യൂ അല്ലെങ്കിൽ ഷെയർ ചെയ്യൂ</string>
+    <string name="export_report_title">മാസ ചെലവ് റിപ്പോർട്ട്</string>
+    <string name="export_total_label">മൊത്തം</string>
+    <string name="export_customer_id_label">ഉപഭോക്തൃ ID: %1$s</string>
+    <string name="export_started">നിങ്ങളുടെ PDF റിപ്പോർട്ട് തയ്യാറാക്കുന്നു…</string>
+
+    <string name="add_category">വിഭാഗം ചേർക്കൂ</string>
+    <string name="new_category_hint">പുതിയ വിഭാഗ നാമം</string>
+    <string name="delete_category_confirm">ഈ വിഭാഗം ഉപയോഗിക്കുന്ന ചെലവുകൾ ആദ്യ ബാക്കി വിഭാഗത്തിലേക്ക് പോകും. തുടരണോ?</string>
+    <string name="keep_one_category_warning">കുറഞ്ഞത് ഒരു വിഭാഗം സൂക്ഷിക്കണം.</string>
+    <string name="enter_category_name">ഒരു വിഭാഗ നാമം നൽകൂ.</string>
+
+    <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
+    <string name="language_label">ഭാഷ</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
+    <string name="currency_label">കറൻസി</string>
+    <string name="currency_custom_hint">കസ്‌റ്റം ചിഹ്നം</string>
+    <string name="convert_currency_title">കറൻസി മാറ്റൂ</string>
+    <string name="convert_currency_message">നിലവിലെ ചെലവുകൾ %1$s-ൽ നിന്ന് %2$s-ലേക്ക് മാറ്റാൻ വിനിമയ നിരക്ക് നൽകൂ (1 %1$s = ? %2$s).</string>
+    <string name="convert_currency_rate_hint">വിനിമയ നിരക്ക്</string>
+    <string name="convert">മാറ്റൂ</string>
+    <string name="error_invalid_rate">0-ൽ കൂടുതൽ ഒരു സാധുവായ നിരക്ക് നൽകൂ.</string>
+    <string name="reset_all_data">എല്ലാ ഡേറ്റ പുനഃസ്ഥാപിക്കൂ</string>
+    <string name="reset_confirm_1">ഇത് ഈ ഉപകരണത്തിലെ എല്ലാ ചെലവുകളും കസ്‌റ്റം വിഭാഗങ്ങളും സ്ഥിരമായി ഡിലീറ്റ് ചെയ്യും. തുടരണോ?</string>
+    <string name="reset_confirm_2">നിങ്ങൾ പൂർണ്ണ ഉറപ്പോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+    <string name="data_local_note">നിങ്ങളുടെ എല്ലാ ഡേറ്റ ഈ ഉപകരണത്തിൽ തന്നെ നിൽക്കും. ഒരു സെർവറിലേക്കും അപ്‌ലോഡ് ഇല്ല.</string>
+    <string name="detected_region_note">നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് കണ്ടെത്തി: %1$s</string>
+    <string name="more_section_title">കൂടുതൽ</string>
+    <string name="share_app">ഈ ആപ്പ് ഷെയർ ചെയ്യൂ</string>
+    <string name="share_app_message">%1$s നോക്കൂ — ചെലവ് ട്രാക്ക് ചെയ്യാൻ ഞാൻ ഉപയോഗിക്കുന്ന ആപ്പ്: %2$s</string>
+    <string name="rate_us">ഞങ്ങളെ റേറ്റ് ചെയ്യൂ</string>
+    <string name="about_section_title">കുറിച്ച്</string>
+    <string name="customer_id_label">ഉപഭോക്തൃ ID</string>
+    <string name="customer_id_copied">ഉപഭോക്തൃ ID കോപ്പി ചെയ്തു</string>
+    <string name="powered_by_footer">AG Tech-ൽ നിന്ന്</string>
+    <string name="app_version_label">പതിപ്പ് 1.0</string>
+
+    <string name="sms_detection_title">SMS കണ്ടെത്തൽ</string>
+    <string name="sms_detection_toggle_label">SMS-ൽ നിന്ന് ഇടപാടുകൾ കണ്ടെത്തൂ</string>
+    <string name="sms_detection_description">ഒരു ബാങ്ക്, UPI, അല്ലെങ്കിൽ കാർഡ് SMS വരുമ്പോൾ, ആ ഒറ്റ SMS മാത്രം വായിക്കാൻ ആപ്പ് അനുവാദം ചോദിക്കും, തുടർന്ന് പരിശോധനാ ലിസ്റ്റിലേക്ക് ചേർക്കും.</string>
+    <string name="sms_pending_banner">SMS-ൽ നിന്ന് %1$d ഇടപാട് (ഇടപാടുകൾ) കണ്ടെത്തി — പരിശോധിക്കാൻ ഞെക്കൂ</string>
+    <string name="sms_review_title">%1$d ഇടപാട് (ഇടപാടുകൾ) പരിശോധന</string>
+    <string name="sms_review_subtitle">ചെലവായി സേവ് ചെയ്യുന്നതിന് മുമ്പ് ഓരോന്നും സ്ഥിരീകരിക്കൂ അല്ലെങ്കിൽ തിരുത്തൂ.</string>
+    <string name="sms_accept">സ്വീകരിക്കൂ</string>
+    <string name="sms_dismiss">നിരാകരിക്കൂ</string>
+
+    <string name="toast_expense_added">ചെലവ് ചേർത്തു.</string>
+    <string name="toast_expense_updated">ചെലവ് അപ്ഡേറ്റ് ചെയ്തു.</string>
+    <string name="toast_expense_deleted">ചെലവ് ഡിലീറ്റ് ചെയ്തു.</string>
+    <string name="toast_all_reset">എല്ലാ ഡേറ്റ പുനഃസ്ഥാപിച്ചു.</string>
+    <string name="error_invalid_amount">0-ൽ കൂടുതൽ ഒരു സാധുവായ തുക നൽകൂ.</string>
+    <string name="error_invalid_date">YYYY-MM-DD ഫോർമാറ്റിൽ ഒരു സാധുവായ തീയതി നൽകൂ.</string>
+    <string name="error_select_date">ദയവായി ഒരു തീയതി തിരഞ്ഞെടുക്കൂ.</string>
+
+    <string name="done">ചെയ്തു</string>
+    <string name="close">അടയ്ക്കൂ</string>
+    <string name="ok">ശരി</string>
+    <string name="select_date">തീയതി തിരഞ്ഞെടുക്കൂ</string>
+    <string name="cd_previous_month">കഴിഞ്ഞ മാസം</string>
+    <string name="cd_next_month">അടുത്ത മാസം</string>
+    <string name="cd_clear_search">തിരയൽ മായ്ക്കൂ</string>
+    <string name="splash_tagline">ഓരോ ചെലവും എളുപ്പത്തിൽ ട്രാക്ക് ചെയ്യൂ</string>
+    <string name="calendar_picker_title">കലണ്ടർ</string>
+
+    <string name="cat_housing">ഭവനം</string>
+    <string name="cat_food">ഭക്ഷണം &amp; പലചരക്ക്</string>
+    <string name="cat_transport">ഗതാഗതം</string>
+    <string name="cat_utilities">യൂട്ടിലിറ്റി ബില്ലുകൾ</string>
+    <string name="cat_entertainment">വിനോദം</string>
+    <string name="cat_healthcare">ആരോഗ്യ സേവനം</string>
+    <string name="cat_shopping">ഷോപ്പിംഗ്</string>
+    <string name="cat_subscriptions">സബ്‌സ്‌ക്രിപ്ഷനുകൾ</string>
+    <string name="cat_savings">സേവിംഗ്‌സ് &amp; നിക്ഷേപം</string>
+    <string name="cat_other">മറ്റൊന്ന്</string>
+    <string name="cat_debt_payments">കടം തിരിച്ചടവ്</string>
+    <string name="cat_mobile_recharge">മൊബൈൽ റീചാർജ്</string>
+    <string name="cat_electricity">വൈദ്യുതി</string>
+    <string name="cat_fuel">ഇന്ധനം</string>
+    <string name="cat_farming">കൃഷി</string>
+    <string name="cat_khata">ഖാതാ</string>
+    <string name="cat_education">വിദ്യാഭ്യാസം</string>
+    <string name="khata_delete_party_title">പാർട്ടി ഡിലീറ്റ് ചെയ്യണോ?</string>
+    <string name="khata_delete_party_confirm">%1$s-ഉം അവരുടെ എല്ലാ എൻട്രികളും സ്ഥിരമായി ഡിലീറ്റ് ചെയ്യും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+
+    <string name="budget_title">ബജറ്റ്</string>
+    <string name="manage_budget">ബജറ്റ് നിയന്ത്രിക്കൂ</string>
+    <string name="budget_set_prompt">നിങ്ങളുടെ ചെലവ് അളക്കാൻ ഒരു മാസ ബജറ്റ് ക്രമീകരിക്കൂ.</string>
+    <string name="budget_set_cta">ബജറ്റ് ക്രമീകരിക്കൂ</string>
+    <string name="budget_spent_of">%2$s-ൽ %1$s</string>
+    <string name="budget_left">%1$s ബാക്കി</string>
+    <string name="budget_over_by">ബജറ്റ് %1$s കഴിഞ്ഞു</string>
+    <string name="budget_pacing_hint">%2$d ദിവസങ്ങൾക്ക് %1$s/ദിവസം</string>
+    <string name="budget_manage_sheet_title">ബജറ്റ് നിയന്ത്രിക്കൂ</string>
+    <string name="budget_overall_label">മൊത്തം മാസ ബജറ്റ്</string>
+    <string name="budget_overall_hint">ഉദാ. 30000</string>
+    <string name="error_invalid_budget_amount">ഒരു സാധുവായ തുക നൽകൂ, അല്ലെങ്കിൽ ബജറ്റ് നീക്കാൻ ശൂന്യം ആക്കൂ.</string>
+
+    <string name="debts_title">കടങ്ങൾ &amp; ബാക്കിയുള്ളത്</string>
+    <string name="bento_debts_title">കടങ്ങൾ &amp; ബാക്കിയുള്ളത്</string>
+    <string name="debts_net_title">നെറ്റ് നില</string>
+    <string name="debts_net_owed_to_you">നിങ്ങൾക്ക് ലഭിക്കാനുള്ളത്</string>
+    <string name="debts_net_you_owe">നിങ്ങൾ നൽകാനുള്ളത്</string>
+    <string name="debts_net_settled">എല്ലാം തീർന്നു</string>
+    <string name="debts_section_you_owe">നിങ്ങൾ നൽകാനുള്ളത്</string>
+    <string name="debts_section_owed_to_you">നിങ്ങൾക്ക് ലഭിക്കാനുള്ളത്</string>
+    <string name="debts_section_settled">തീർന്നു</string>
+    <string name="debts_empty_title">ഇനി കടങ്ങൾ ഇല്ല</string>
+    <string name="debts_empty_subtitle">നൽകാനുള്ളതും ലഭിക്കാനുള്ളതും ട്രാക്ക് ചെയ്യൂ.</string>
+    <string name="delete_debt_confirm">ഈ കടവും അതിന്റെ മുഴുവൻ പേയ്‌മെന്റ് ചരിത്രവും ഡിലീറ്റ് ചെയ്യണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+
+    <string name="debt_add_title">കടം ചേർക്കൂ</string>
+    <string name="debt_edit_title">കടം തിരുത്തൂ</string>
+    <string name="debt_loan_type_label">ലോൺ തരം (ഓപ്ഷണൽ)</string>
+    <string name="loan_type_personal">വ്യക്തിഗത ലോൺ</string>
+    <string name="loan_type_home">ഭവന ലോൺ</string>
+    <string name="loan_type_car">കാർ ലോൺ</string>
+    <string name="loan_type_education">വിദ്യാഭ്യാസ ലോൺ</string>
+    <string name="loan_type_gold">സ്വർണ ലോൺ</string>
+    <string name="loan_type_business">ബിസിനസ് ലോൺ</string>
+    <string name="loan_type_informal">വ്യക്തിയിൽ നിന്ന് കടം</string>
+    <string name="loan_type_other">മറ്റൊന്ന്</string>
+    <string name="loan_type_none">ഒന്നുമില്ല (ഓപ്ഷണൽ)</string>
+    <string name="loan_type_other_name_label">ലോൺ തരം വ്യക്തമാക്കൂ</string>
+    <string name="loan_type_other_name_hint">ഉദാ. വാഹന ലോൺ, വിദ്യാർഥി ലോൺ…</string>
+    <string name="loan_type_select_hint">ലോൺ തരം തിരഞ്ഞെടുക്കൂ</string>
+    <string name="error_loan_type_required">ലോൺ തരം തിരഞ്ഞെടുക്കൂ</string>
+    <string name="test_reminder_button">ടെസ്‌റ്റ് അറിയിപ്പ് അയക്കൂ</string>
+
+    <string name="repeat_monthly_label">ഓരോ മാസവും ആവർത്തിക്കൂ</string>
+    <string name="repeat_monthly_hint">ഓരോ മാസത്തിന്റെ 1-ന് ഒരു കോപ്പി സ്വയം ചേർക്കും</string>
+
+    <string name="debt_direction_label">ദിശ</string>
+    <string name="debt_direction_owe">ഞാൻ നൽകണം</string>
+    <string name="debt_direction_owed">എനിക്ക് ലഭിക്കണം</string>
+    <string name="debt_name_label">പേര്</string>
+    <string name="debt_name_hint">ഉദാ. കാർ ലോൺ, സുഹൃത്തിനുള്ള വ്യക്തിഗത കടം</string>
+    <string name="error_debt_name_required">ഈ കടത്തിന് ഒരു പേര് നൽകൂ.</string>
+    <string name="debt_principal_label">മൂലധനം</string>
+    <string name="debt_principal_hint">എടുത്തതോ കൊടുത്തതോ ആയ മൊത്തം തുക</string>
+    <string name="debt_rate_label">പലിശ നിരക്ക് (% വർഷം)</string>
+    <string name="debt_rate_hint">ഉദാ. 12 (പലിശ ഇല്ലെങ്കിൽ 0 നൽകൂ)</string>
+    <string name="error_debt_rate_invalid">0 അല്ലെങ്കിൽ കൂടുതൽ ഒരു സാധുവായ നിരക്ക് നൽകൂ.</string>
+    <string name="debt_payment_label">മാസ പേയ്‌മെന്റ് (EMI)</string>
+    <string name="debt_payment_hint">ഉദാ. 5000 (നിശ്ചിത ഷെഡ്യൂൾ ഇല്ലെങ്കിൽ 0 ബ്ലാൻക്ക് ആക്കൂ)</string>
+    <string name="error_debt_payment_invalid">0 അല്ലെങ്കിൽ കൂടുതൽ ഒരു സാധുവായ തുക നൽകൂ.</string>
+    <string name="debt_start_date_label">ആരംഭ തീയതി</string>
+    <string name="debt_notes_label">കുറിപ്പുകൾ (ഓപ്ഷണൽ)</string>
+    <string name="debt_notes_hint">ഉദാ. ലോൺ ദാതാവിന്റെ പേര്, ഉദ്ദേശ്യം</string>
+
+    <string name="debt_paid_of_principal">%2$s-ൽ %1$s അടച്ചു</string>
+    <string name="debt_settled_badge">തീർന്നു</string>
+    <string name="debt_payoff_projection">%1$s-ഓടെ തീർക്കും (%2$d മാ.)</string>
+    <string name="debt_insight_accelerate">%2$s/മാസം കൂട്ടി %1$d മാസം മുൻകൂർ തീർക്കൂ.</string>
+    <string name="debt_no_emi_hint">കണക്കുകൂട്ടൽ കാണാൻ ഒരു മാസ പേയ്‌മെന്റ് ചേർക്കൂ.</string>
+    <string name="debt_reopen">വീണ്ടും തുറക്കൂ</string>
+    <string name="debt_mark_settled">തീർന്നതായി അടയാളപ്പെടുത്തൂ</string>
+    <string name="debt_history_title">പേയ്‌മെന്റ് ചരിത്രം</string>
+    <string name="debt_no_payments">ഇനി പേയ്‌മെന്റുകൾ ഇല്ല.</string>
+    <string name="debt_record_payment">പേയ്‌മെന്റ് രേഖപ്പെടുത്തൂ</string>
+
+    <string name="payment_note_label">കുറിപ്പ് (ഓപ്ഷണൽ)</string>
+    <string name="payment_note_hint">ഉദാ. ഭാഗിക പേയ്‌മെന്റ്, കാശ് ആയി അടച്ചു</string>
+
+    <string name="salary_label">ശമ്പളം</string>
+    <string name="budget_cap_label">ബജറ്റ് പരിധി</string>
+    <string name="spending_by_category">വിഭാഗം അനുസരിച്ച് ചെലവ്</string>
+    <string name="recent_transactions_label">സമീപകാല ഇടപാടുകൾ</string>
+    <string name="view_all_label">എല്ലാം കാണൂ</string>
+    <string name="load_more">കൂടുതൽ ലോഡ് ചെയ്യൂ</string>
+    <string name="salary_set_title">മാസ വരുമാനം ക്രമീകരിക്കൂ</string>
+    <string name="salary_set_label">മാസ ടേക്ക്-ഹോം ശമ്പളം</string>
+    <string name="salary_set_hint">ഉദാ. 50000</string>
+    <string name="add_income">വരുമാനം ചേർക്കൂ</string>
+    <string name="income_source_hint">ഉറവിടം</string>
+    <string name="income_source_placeholder">ഉദാ. ശമ്പളം, ഫ്രീലാൻസ്, ബോണസ്</string>
+    <string name="income_note_hint">കുറിപ്പ് (ഓപ്ഷണൽ)</string>
+    <string name="income_recurring_label">മാസ ആവർത്തനം</string>
+    <string name="income_recurring_hint">ഓരോ മാസവും ഒരു കോപ്പി സ്വയം ചേർക്കും.</string>
+    <string name="income_history_title">ഈ മാസത്തെ വരുമാനം</string>
+    <string name="no_income_this_month">ഇനി വരുമാനം രേഖപ്പെടുത്തിയിട്ടില്ല</string>
+    <string name="income_total_label">മൊത്തം വരുമാനം</string>
+    <string name="stat_spent_label">ചെലവ്</string>
+    <string name="stat_remaining_label">ബാക്കി</string>
+    <string name="months_budget_label">%1$s ബജറ്റ്</string>
+
+    <string name="reminder_section_title">ദൈനംദിന റിമൈൻഡർ</string>
+    <string name="reminder_toggle_label">വൈകുന്നേര ചെലവ് റിമൈൻഡർ</string>
+    <string name="reminder_toggle_desc">ചെലവുകൾ ലോഗ് ചെയ്യാൻ ദിവസം ഒരു ഓർമ്മ ലഭിക്കൂ</string>
+    <string name="reminder_time_label">റിമൈൻഡർ സമയം</string>
+    <string name="reminder_notification_title">ഇന്നത്തെ ചെലവുകൾ ലോഗ് ചെയ്തോ? 💸</string>
+    <string name="reminder_notification_body">ഇന്ന് ഒരു ചെലവും വിട്ടുപോകാതിരിക്കാൻ ഞെക്കൂ.</string>
+
+    <string name="khata_tab_label">ഖാതാ</string>
+    <string name="khata_screen_title">ഖാതാ</string>
+    <string name="khata_i_owe">ഞാൻ നൽകണം</string>
+    <string name="khata_they_owe">എനിക്ക് ലഭിക്കണം</string>
+    <string name="khata_total_i_owe">ഞാൻ നൽകേണ്ട മൊത്തം</string>
+    <string name="khata_total_they_owe">ലഭിക്കേണ്ട മൊത്തം</string>
+    <string name="khata_add_party">പാർട്ടി ചേർക്കൂ</string>
+    <string name="khata_edit_party">പാർട്ടി തിരുത്തൂ</string>
+    <string name="khata_party_name_hint">പേര് (കട അല്ലെങ്കിൽ വ്യക്തി)</string>
+    <string name="khata_party_phone_hint">ഫോൺ നമ്പർ (WhatsApp-ൽ)</string>
+    <string name="khata_party_phone_optional">ഓപ്ഷണൽ — WhatsApp റിമൈൻഡർ മാത്രം</string>
+    <string name="khata_save_party">സേവ് ചെയ്യൂ</string>
+    <string name="khata_delete_party">പാർട്ടി ഡിലീറ്റ് ചെയ്യൂ</string>
+    <string name="khata_no_parties_i_owe">ഇനി കടകൾ ഇല്ല.\nകടം ഉള്ള ഒരു കട ചേർക്കൂ + ഞെക്കൂ.</string>
+    <string name="khata_no_parties_they_owe">ഇനി ഉപഭോക്താക്കൾ ഇല്ല.\nനൽകേണ്ടവരെ ചേർക്കൂ + ഞെക്കൂ.</string>
+    <string name="khata_outstanding">ബാക്കി</string>
+    <string name="khata_settled">തീർന്നു ✓</string>
+    <string name="khata_add_entry">എൻട്രി ചേർക്കൂ</string>
+    <string name="khata_credit_label">ക്രെഡിറ്റ് (കടം)</string>
+    <string name="khata_payment_label">പേയ്‌മെന്റ് (തീർന്നു)</string>
+    <string name="khata_amount_hint">തുക</string>
+    <string name="khata_note_hint">കുറിപ്പ് (ഓപ്ഷണൽ)</string>
+    <string name="khata_entry_date">തീയതി</string>
+    <string name="khata_no_entries">ഇനി എൻട്രികൾ ഇല്ല. ക്രെഡിറ്റ് അല്ലെങ്കിൽ പേയ്‌മെന്റ് ചേർക്കൂ + ഞെക്കൂ.</string>
+    <string name="khata_delete_entry">എൻട്രി ഡിലീറ്റ് ചെയ്യൂ</string>
+    <string name="khata_whatsapp_reminder">റിമൈൻഡർ അയക്കൂ</string>
+    <string name="khata_whatsapp_not_installed">WhatsApp ഇൻസ്‌റ്റോൾ ചെയ്തിട്ടില്ല.</string>
+    <string name="khata_reminder_msg_owe">ഹലോ %1$s 👋
+
+ഒരു സൗഹൃദ ഓർമ്മപ്പെടുത്തൽ — നിങ്ങൾക്ക് %2$s ബാക്കിയുണ്ട്.
+
+സൗകര്യമുള്ളപ്പോൾ തീർക്കൂ 🙏
+
+— %3$s</string>
+    <string name="khata_reminder_msg_credit">ഹലോ %1$s 👋
+
+ഒരു കുറിപ്പ് — എന്റെ കടയിൽ നിങ്ങൾക്ക് %2$s ക്രെഡിറ്റ് ഉണ്ട്.
+
+ഏപ്പോൾ വേണമെങ്കിലും ഉപയോഗിക്കൂ!
+
+— %3$s</string>
+    <string name="khata_direction_i_owe_label">ഞാൻ ഈ പാർട്ടിക്ക് നൽകണം</string>
+    <string name="khata_direction_they_owe_label">ഈ പാർട്ടി എനിക്ക് നൽകണം</string>
+    <string name="khata_initial_amount_label">ആദ്യ തുക (ഓപ്ഷണൽ)</string>
+
+    <string name="budget_alert_warning">⚠️ മാസ ബജറ്റിന്റെ 80% ഉപയോഗിച്ചു</string>
+    <string name="budget_alert_exceeded">🚨 മാസ ബജറ്റ് കഴിഞ്ഞു!</string>
+
+    <string name="export_csv">CSV എക്‌സ്‌പോർട്ട്</string>
+    <string name="export_csv_chooser_title">CSV സേവ് ചെയ്യൂ അല്ലെങ്കിൽ ഷെയർ ചെയ്യൂ</string>
+
+    <string name="search_expenses_hint">ചെലവ് തിരയൂ…</string>
+
+    <string name="security_section_title">സുരക്ഷ</string>
+    <string name="biometric_lock_title">ചെലവ് ട്രാക്കർ തുറക്കൂ</string>
+    <string name="biometric_lock_subtitle">ആപ്പ് തുറക്കാൻ ബയോമെട്രിക്‌സ് അല്ലെങ്കിൽ PIN ഉപയോഗിക്കൂ</string>
+    <string name="biometric_lock_toggle_label">ആപ്പ് ലോക്ക്</string>
+    <string name="biometric_lock_description">ഓരോ ആപ്പ് തുറക്കുമ്പോഴും ബയോമെട്രിക്‌സ് അല്ലെങ്കിൽ PIN ആവശ്യം</string>
+
+    <string name="backup_section_title">ഡേറ്റ ബാക്കപ്പ്</string>
+    <string name="backup_export_label">ബാക്കപ്പ് എക്‌സ്‌പോർട്ട്</string>
+    <string name="backup_import_label">ബാക്കപ്പ് ഇമ്പോർട്ട്</string>
+    <string name="backup_scope_note">ചെലവുകൾ, വിഭാഗങ്ങൾ, ബജറ്റ്, ഖാതാ, കടങ്ങൾ ഉൾപ്പെടുന്നു</string>
+    <string name="backup_chooser_title">ബാക്കപ്പ് സേവ് ചെയ്യൂ അല്ലെങ്കിൽ ഷെയർ ചെയ്യൂ</string>
+    <string name="backup_success">ബാക്കപ്പ് എക്‌സ്‌പോർട്ട് ചെയ്തു</string>
+    <string name="backup_error">ബാക്കപ്പ് പരാജയം</string>
+    <string name="restore_success">പുനഃസ്ഥാപനം പൂർണ്ണം</string>
+    <string name="restore_error">പുനഃസ്ഥാപനം പരാജയം</string>
+
+    <string name="drive_backup_section_title">Google Drive ബാക്കപ്പ്</string>
+    <string name="drive_backup_scope_note">നിങ്ങളുടെ Google Drive ആപ്പ് ഫോൾഡറിൽ സ്വകാര്യമായി സൂക്ഷിക്കും</string>
+    <string name="drive_backup_sign_in">Google-ൽ സൈൻ ഇൻ ചെയ്യൂ</string>
+    <string name="drive_backup_signed_in_as">%1$s ആയി സൈൻ ഇൻ ആണ്</string>
+    <string name="drive_backup_save">Drive-ൽ സേവ് ചെയ്യൂ</string>
+    <string name="drive_backup_restore">Drive-ൽ നിന്ന് പുനഃസ്ഥാപിക്കൂ</string>
+    <string name="drive_backup_sign_out">Google-ൽ നിന്ന് സൈൻ ഔട്ട് ചെയ്യൂ</string>
+    <string name="drive_backup_success">Google Drive-ൽ ബാക്കപ്പ് സേവ് ചെയ്തു</string>
+    <string name="drive_restore_success">Google Drive-ൽ നിന്ന് ഡേറ്റ പുനഃസ്ഥാപിച്ചു</string>
+    <string name="drive_no_backup">Drive-ൽ ഇനി ബാക്കപ്പ് ഇല്ല</string>
+    <string name="drive_backup_error">Google Drive പിശക്</string>
+    <string name="khata_label_all_cleared">%1$s-യുമായി എല്ലാം തീർന്നു ✓</string>
+    <string name="khata_label_i_owe">നിങ്ങൾ %1$s-ക്ക് നൽകണം</string>
+    <string name="khata_label_they_owe">%1$s നിങ്ങൾക്ക് നൽകണം</string>
+    <string name="khata_sender_name_default">ഞാൻ</string>
+
+    <string name="khata_subtitle">നിങ്ങളുടെ കോൺടാക്ടുകളുമായി കടം കൊടുക്കൽ ട്രാക്ക് ചെയ്യൂ</string>
+    <string name="debts_subtitle">നൽകേണ്ടതും ലഭിക്കേണ്ടതും ട്രാക്ക് ചെയ്യൂ</string>
+    <string name="net_all_settled">എല്ലാം തീർന്നു ✓</string>
+    <string name="net_in_favour">നെറ്റ് +%1$s നിങ്ങൾക്ക് അനുകൂലം</string>
+    <string name="net_you_owe_net">നെറ്റ് −%1$s നിങ്ങൾ നൽകണം</string>
+    <string name="label_party_singular">പാർട്ടി</string>
+    <string name="label_party_plural">പാർട്ടികൾ</string>
+    <string name="label_debt_singular">കടം</string>
+    <string name="label_debt_plural">കടങ്ങൾ</string>
+    <string name="screenshot_mode_on">സ്‌ക്രീൻഷോട്ട് മോഡ് ഓൺ — പരസ്യങ്ങൾ മറഞ്ഞിരിക്കുന്നു</string>
+    <string name="screenshot_mode_off">സ്‌ക്രീൻഷോട്ട് മോഡ് ഓഫ് — പരസ്യങ്ങൾ ദൃശ്യമാണ്</string>
+    <string name="select_country_code">രാജ്യ കോഡ് തിരഞ്ഞെടുക്കൂ</string>
+
+    <string name="streak_label">ലോഗിംഗ് സ്‌ട്രീക്ക്</string>
+    <string name="streak_days_suffix">ദിവസങ്ങൾ</string>
+    <string name="streak_best_label">ഏറ്റവും മികച്ചത്</string>
+    <string name="payday_title">ശമ്പള ദിനം</string>
+    <string name="payday_not_set">ശമ്പള ദിനം ക്രമീകരിക്കൂ</string>
+    <string name="payday_days_away">ദിവസങ്ങൾ ബാക്കി</string>
+    <string name="payday_per_day">ദിവസം</string>
+    <string name="payday_day_label">ദിവസം %1$d</string>
+    <string name="payday_picker_hint">നിങ്ങളുടെ മാസ ശമ്പള ദിനം</string>
+
+    <string name="goals_section_title">സേവിംഗ്‌സ് ലക്ഷ്യങ്ങൾ</string>
+    <string name="goals_add">ലക്ഷ്യം ചേർക്കൂ</string>
+    <string name="goals_edit">ലക്ഷ്യം തിരുത്തൂ</string>
+    <string name="goals_empty_hint">ആദ്യ സേവിംഗ്‌സ് ലക്ഷ്യം ചേർക്കൂ + ഞെക്കൂ</string>
+    <string name="goals_sheet_subtitle">നിങ്ങൾ എന്തിനാണ് ലാഭിക്കുന്നത് ട്രാക്ക് ചെയ്യൂ</string>
+    <string name="goals_emoji_label">ഇമോജി തിരഞ്ഞെടുക്കൂ</string>
+    <string name="goals_name_label">ലക്ഷ്യ നാമം</string>
+    <string name="goals_name_hint">ഉദാ. പുതിയ ഫോൺ, അവധി…</string>
+    <string name="goals_name_error">ഒരു ലക്ഷ്യ നാമം നൽകൂ</string>
+    <string name="goals_target_label">ലക്ഷ്യ തുക</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">ഒരു സാധുവായ തുക നൽകൂ</string>
+    <string name="goals_date_label">ലക്ഷ്യ തീയതി</string>
+    <string name="goals_date_optional">(ഓപ്ഷണൽ)</string>
+
+    <string name="digest_title">ആഴ്ച സംഗ്രഹം 📊</string>
+    <string name="digest_body_first_week">ഈ ആഴ്ച %1$s ചെലവായി — ട്രാക്ക് ചെയ്ത് തുടരൂ!</string>
+    <string name="digest_body_no_spend">ഒരു അദ്ഭുത ആഴ്ച — ചെലവൊന്നും ഇല്ല! 🎉</string>
+    <string name="digest_body_less">ഈ ആഴ്ച %1$s ചെലവായി — കഴിഞ്ഞ ആഴ്ചയേക്കാൾ %2$d%% കുറവ് 🎉</string>
+    <string name="digest_body_more">ഈ ആഴ്ച %1$s ചെലവായി — കഴിഞ്ഞ ആഴ്ചയേക്കാൾ %2$d%% കൂടുതൽ</string>
+    <string name="digest_body_same">ഈ ആഴ്ച %1$s ചെലവായി — കഴിഞ്ഞ ആഴ്ചയോളം</string>
+
+    <string name="personality_card_title">ഈ മാസം നിങ്ങൾ ഒരു</string>
+    <string name="personality_share_hint">%1$d%% %2$s-ൽ ചെലവായി</string>
+    <string name="personality_foodie">ഭക്ഷണ പ്രേമി</string>
+    <string name="personality_commuter">യാത്രക്കാരൻ</string>
+    <string name="personality_homebody">ഗൃഹ ഇഷ്ടൻ</string>
+    <string name="personality_bill_payer">ബിൽ അടക്കുന്നവൻ</string>
+    <string name="personality_entertainer">വിനോദ പ്രേമി</string>
+    <string name="personality_health_first">ആരോഗ്യം ആദ്യം</string>
+    <string name="personality_shopaholic">ഷോപ്പിംഗ് ഭ്രാന്തൻ</string>
+    <string name="personality_tech_buff">ടെക് പ്രേമി</string>
+    <string name="personality_saver">ലാഭക്കാരൻ</string>
+    <string name="personality_road_warrior">റോഡ് യോദ്ധാവ്</string>
+    <string name="personality_scholar">പണ്ഡിതൻ</string>
+    <string name="personality_connected">എപ്പോഴും ബന്ധിതൻ</string>
+    <string name="personality_power_user">പവർ യൂസർ</string>
+    <string name="personality_farmer">കർഷകൻ</string>
+    <string name="personality_trader">വ്യാപാരി</string>
+    <string name="personality_debt_crusher">കടം ഇല്ലാതാക്കുന്നവൻ</string>
+    <string name="personality_versatile">വൈവിദ്ധ്യ ചെലവ് ചെയ്യുന്നവൻ</string>
+
+    <string name="voice_listening">ശ്രദ്ധിക്കുന്നു…</string>
+    <string name="voice_tap_to_speak">ചെലവ് പറഞ്ഞോ — ഉദാ. "ഊണിന് 200 ചെലവായി"</string>
+    <string name="voice_result_title">ഞാൻ കേട്ടത്</string>
+    <string name="voice_confirm">സ്ഥിരീകരിക്കൂ &amp; ചെലവ് ചേർക്കൂ</string>
+    <string name="voice_try_again">വീണ്ടും ശ്രമിക്കൂ</string>
+    <string name="voice_no_speech">സംഭാഷണം കണ്ടെത്തിയില്ല. വീണ്ടും ശ്രമിക്കൂ.</string>
+    <string name="voice_not_detected">കണ്ടെത്തിയില്ല</string>
+    <string name="voice_field_amount">തുക</string>
+    <string name="voice_field_description">വിവരണം</string>
+    <string name="voice_field_category">വിഭാഗം</string>
+    <string name="voice_permission_denied">വോയ്‌സ് ഇൻപുട്ടിന് മൈക്രോഫോൺ അനുവാദം ആവശ്യം</string>
+
+    <string name="receipt_scan_title">രസീത് / ബിൽ സ്‌കാൻ</string>
+    <string name="receipt_scan_hint">ക്യാമറ ഒരു രസീതിനോ ബില്ലിനോ മുകളിൽ പിടിക്കൂ. മൊത്തം തുക സ്വയം വായിക്കും.</string>
+    <string name="receipt_open_camera">ക്യാമറ തുറക്കൂ</string>
+    <string name="receipt_scanning">രസീത് വായിക്കുന്നു…</string>
+    <string name="receipt_amount_found">തുക കണ്ടെത്തി</string>
+    <string name="receipt_use_amount">ഈ തുക ഉപയോഗിക്കൂ</string>
+    <string name="receipt_edit_hint">ആവശ്യമെങ്കിൽ മുകളിലെ തുക തിരുത്തൂ</string>
+    <string name="receipt_rescan">വീണ്ടും സ്‌കാൻ</string>
+    <string name="receipt_no_amount_title">തുക വായിക്കാൻ കഴിഞ്ഞില്ല</string>
+    <string name="receipt_no_amount_body">സ്‌കാനിൽ വ്യക്തമായ ഒരു മൊത്തം കണ്ടെത്തിയില്ല. നല്ല വെളിച്ചത്തിൽ വീണ്ടും ശ്രമിക്കൂ, അല്ലെങ്കിൽ തുക കൈകൊണ്ട് നൽകൂ.</string>
+    <string name="receipt_enter_manually">കൈകൊണ്ട് നൽകൂ</string>
+    <string name="receipt_error_title">എന്തോ തെറ്റ് സംഭവിച്ചു</string>
+    <string name="receipt_retry">വീണ്ടും ശ്രമിക്കൂ</string>
+    <string name="receipt_close">അടയ്ക്കൂ</string>
+    <string name="receipt_camera_permission_denied">രസീത് സ്‌കാൻ ചെയ്യാൻ ക്യാമറ അനുവാദം ആവശ്യം</string>
+
+    <string name="family_mode_title">കുടുംബ മോഡ്</string>
+    <string name="family_mode_subtitle">നിങ്ങളുടെ കുടുംബവുമായി ഷെയർ ചെയ്ത ബജറ്റ് — എല്ലാ ഡേറ്റ ഉപകരണത്തിൽ.</string>
+    <string name="family_mode_toggle_label">കുടുംബ മോഡ് സജ്ജമാക്കൂ</string>
+    <string name="family_mode_description">കുടുംബ അംഗങ്ങളുടെ ചെലവ് ട്രാക്ക് ചെയ്യൂ. ജീവിതപങ്കാളിക്ക് ചേരാൻ ഒരു കോഡ് ഷെയർ ചെയ്യൂ.</string>
+    <string name="family_setup_members">അംഗങ്ങൾ നിയന്ത്രിക്കൂ (%d)</string>
+    <string name="family_setup">കുടുംബ മോഡ് ക്രമീകരിക്കൂ</string>
+    <string name="family_add_member">അംഗം ചേർക്കൂ</string>
+    <string name="family_edit_member">അംഗം തിരുത്തൂ</string>
+    <string name="family_delete_member">അംഗത്തെ നീക്കൂ</string>
+    <string name="family_me_label">· ഞാൻ</string>
+    <string name="family_member_name_hint">പേര് (ഉദാ. സാറ)</string>
+    <string name="family_member_emoji_hint">ഇമോജി അവതാർ (ഓപ്ഷണൽ)</string>
+    <string name="family_pick_color">നിറം തിരഞ്ഞെടുക്കൂ</string>
+    <string name="family_shared">ഷെയർ ചെയ്തു</string>
+    <string name="family_share_code_title">ജീവിതപങ്കാളിയുടെ അല്ലെങ്കിൽ കുടുംബത്തോട് ഷെയർ ചെയ്യൂ</string>
+    <string name="family_share_code_desc">ജീവിതപങ്കാളി തങ്ങളുടെ ഫോണിൽ നൽകാൻ ഒരു കോഡ് ഉണ്ടാക്കൂ.</string>
+    <string name="family_generate_code">ക്ഷണ കോഡ് ഉണ്ടാക്കൂ</string>
+    <string name="family_join_code_title">കുടുംബത്തിൽ ചേരൂ</string>
+    <string name="family_join_with_code">ക്ഷണ കോഡ് നൽകൂ</string>
+    <string name="family_enter_code_hint">കോഡ് ഒട്ടിക്കൂ അല്ലെങ്കിൽ ടൈപ്പ് ചെയ്യൂ</string>
+    <string name="family_join">അംഗങ്ങൾ ഇമ്പോർട്ട് ചെയ്യൂ</string>
+    <string name="family_disable">കുടുംബ മോഡ് ഓഫ്</string>
+    <string name="family_disable_confirm_title">കുടുംബ മോഡ് ഓഫ് ചെയ്യണോ?</string>
+    <string name="family_disable_confirm_body">എല്ലാ അംഗ പ്രൊഫൈലുകളും ഡിലീറ്റ് ചെയ്യും. നിങ്ങളുടെ ചെലവ് ചരിത്രം നിൽക്കും.</string>
+    <string name="family_delete_confirm_title">അംഗത്തെ നീക്കണോ?</string>
+    <string name="family_delete_confirm_body">%s-നെ നിങ്ങളുടെ കുടുംബത്തിൽ നിന്ന് നീക്കണോ? അവരുടെ മുൻ ചെലവുകൾ ഷെയർ ചെയ്ത നിലയിൽ തോന്നും.</string>
+    <string name="family_invite_code_title">നിങ്ങളുടെ ക്ഷണ കോഡ്</string>
+    <string name="family_invite_code_desc">ഈ കോഡ് ജീവിതപങ്കാളിയുമായോ കുടുംബ അംഗത്തിനോ ഷെയർ ചെയ്യൂ.</string>
+    <string name="family_copy_code">കോഡ് കോപ്പി ചെയ്യൂ</string>
+    <string name="family_no_members_hint">ഇനി അംഗങ്ങൾ ഇല്ല — കുടുംബം ക്രമീകരിക്കൂ ക്രമീകരണ ഐക്കൺ ഞെക്കൂ.</string>
+    <string name="family_expense_assigned_to">നിയോഗിതൻ</string>
+    <string name="family_total_spent">മൊത്തം: %1$s%2$.2f ഈ മാസം</string>
+    <string name="family_import_up_to_date">ഇതിനകം അപ്ഡേറ്റ്</string>
+    <string name="family_import_added">ചേർത്തു: %s</string>
+
+    <string name="nav_splits">സ്‌പ്ലിറ്റ്‌സ്</string>
+    <string name="split_screen_title">സ്‌പ്ലിറ്റ്‌സ്</string>
+    <string name="split_screen_subtitle">ഗ്രൂപ്പ് ചെലവ് വിഭജനം</string>
+    <string name="split_empty_title">ഇനി ഗ്രൂപ്പുകൾ ഇല്ല</string>
+    <string name="split_empty_subtitle">സുഹൃത്തുക്കളോടോ കുടുംബത്തോടോ ചെലവ് പങ്കിടാൻ ഒരു ഗ്രൂപ്പ് ഉണ്ടാക്കൂ</string>
+    <string name="split_create_group">ഗ്രൂപ്പ് ഉണ്ടാക്കൂ</string>
+    <string name="split_new_group">പുതിയ ഗ്രൂപ്പ്</string>
+    <string name="split_new_group_subtitle">പേര് നൽകൂ, ഇമോജി തിരഞ്ഞെടുക്കൂ, അംഗങ്ങൾ ചേർക്കൂ</string>
+    <string name="split_group_emoji">ഇമോജി</string>
+    <string name="split_group_name_hint">ഗ്രൂപ്പ് നാമം (ഉദാ. ദുബൈ യാത്ര)</string>
+    <string name="split_members_label">അംഗങ്ങൾ</string>
+    <string name="split_add_member_hint">അംഗ നാമം ചേർക്കൂ</string>
+    <string name="split_member_count">%d അംഗങ്ങൾ</string>
+    <string name="split_settled">തീർന്നു ✓</string>
+    <string name="split_you_owe">നിങ്ങൾ %1$s%2$.2f നൽകണം</string>
+    <string name="split_you_get">നിങ്ങൾക്ക് %1$s%2$.2f ലഭിക്കും</string>
+    <string name="split_settle_up">കണക്ക് തീർക്കൂ</string>
+    <string name="split_member_balances">അംഗ ബ്യാലൻസുകൾ</string>
+    <string name="split_expenses_label">ചെലവുകൾ</string>
+    <string name="split_expense_count">%d ചെലവുകൾ</string>
+    <string name="split_no_expenses">ഇനി ചെലവുകൾ ഇല്ല — + ഞെക്കൂ</string>
+    <string name="split_add_expense">ചെലവ് ചേർക്കൂ</string>
+    <string name="split_expense_description">ഇത് എന്തിനാണ്?</string>
+    <string name="split_expense_amount">തുക</string>
+    <string name="split_paid_by">ആർ പണം കൊടുത്തു</string>
+    <string name="split_paid_by_member">%s അടച്ചു</string>
+    <string name="split_split_among">ആർക്കിടയിൽ വിഭജിക്കും</string>
+    <string name="split_split_among_hint">ഈ ചെലവ് തുല്യമായി ഷെയർ ചെയ്യുന്നവരെ തിരഞ്ഞെടുക്കൂ</string>
+    <string name="split_save_expense">ചെലവ് സേവ് ചെയ്യൂ</string>
+    <string name="split_delete_expense">ചെലവ് ഡിലീറ്റ് ചെയ്യണോ?</string>
+    <string name="split_delete_expense_confirm">"%s" ഡിലീറ്റ് ചെയ്യണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+    <string name="split_delete_group">ഗ്രൂപ്പ് ഡിലീറ്റ് ചെയ്യൂ</string>
+    <string name="split_delete_group_confirm">"%s"-ഉം അതിന്റെ എല്ലാ ചെലവുകളും ഡിലീറ്റ് ചെയ്യണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+    <string name="split_all_settled">എല്ലാം തീർന്നു! 🎉</string>
+    <string name="split_all_settled_subtitle">എല്ലാവരും സമം. കൈമാറ്റം ആവശ്യമില്ല.</string>
+    <string name="split_transfers_needed">%d കൈമാറ്റം (കൈമാറ്റങ്ങൾ) ആവശ്യം</string>
+    <string name="split_mark_paid">അടച്ചതായി അടയാളപ്പെടുത്തൂ</string>
+    <string name="split_share_whatsapp">WhatsApp-ൽ ഷെയർ ചെയ്യൂ</string>
+    <string name="split_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+    <string name="split_wa_header">ചെലവ് സംഗ്രഹം</string>
+    <string name="split_wa_expenses">ചെലവുകൾ (%d)</string>
+    <string name="split_wa_paid_by">അടച്ചത്: %s</string>
+    <string name="split_wa_total">മൊത്തം: %s</string>
+    <string name="split_wa_balances">ബ്യാലൻസുകൾ</string>
+    <string name="split_wa_gets">ലഭിക്കും</string>
+    <string name="split_wa_owes">നൽകണം</string>
+    <string name="split_wa_member_settled">തീർന്നു</string>
+    <string name="split_wa_to_pay">നൽകൂ</string>
+    <string name="split_wa_all_settled">എല്ലാവരും തീർന്നു! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">നുറുങ്ങ്: ദിവസം ലോഗ് ചെയ്യുന്നത് ബജറ്റ് നിയന്ത്രണം സഹായിക്കും 📊</string>
+    <string name="reminder_action_add_expense">ചെലവ് ചേർക്കൂ</string>
+</resources>

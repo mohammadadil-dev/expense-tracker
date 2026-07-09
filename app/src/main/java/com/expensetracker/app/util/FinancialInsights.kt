@@ -171,11 +171,17 @@ object FinancialInsights {
             }
         }
 
-        // 3. Forward-looking savings projection vs an auto-suggested target.
-        // Requires at least 7 days of data — projecting from 1–6 days amplifies noise badly
-        // (e.g. one big purchase on day 1 inflates the whole-month projection wildly).
+        // 3. Forward-looking savings projection vs last month's actual spend.
+        //
+        // Guards before showing any projection:
+        //   a) At least 7 days elapsed (projecting from day 1–6 amplifies noise badly)
+        //   b) At least 3 expense entries this month (a single big entry on day 1 skews everything)
+        //   c) lastMonthSpend > 0 — we need a real "last month" baseline to compare against.
+        //      Without it, a new user with only a budget set would see "₹X more than last month"
+        //      which is misleading because there is no last month to compare to.
+        val hasLastMonthData = lastMonthSpend > 0.0
         val savingsGoal = computeSavingsGoal(overallBudget, lastMonthSpend, projectedTotal)
-        if (savingsGoal.hasEnoughData && daysElapsed >= 7) {
+        if (savingsGoal.hasEnoughData && daysElapsed >= 7 && monthExpenses.size >= 3 && hasLastMonthData) {
             insights += if (savingsGoal.projectedSavings > 1.0) {
                 Insight(
                     InsightTemplate.PROJECTED_SAVINGS, InsightKind.POSITIVE, "💰",
@@ -195,7 +201,8 @@ object FinancialInsights {
                 }
             }
         } else if (monthExpenses.isNotEmpty()) {
-            // Too early in the month to project reliably — just show the daily average.
+            // New user, or too early in the month, or no last-month baseline yet —
+            // show the daily average instead of a potentially misleading projection.
             insights += Insight(
                 InsightTemplate.DAILY_AVERAGE, InsightKind.NEUTRAL, "📊",
                 args = listOf(Formatters.money(dailyAverage, currencySymbol))

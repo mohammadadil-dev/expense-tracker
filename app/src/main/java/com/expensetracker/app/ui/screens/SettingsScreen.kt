@@ -387,6 +387,13 @@ fun SettingsScreen(
                     "ur" to stringResource(R.string.language_urdu),
                     "tl" to stringResource(R.string.language_tagalog),
                     "bn" to stringResource(R.string.language_bengali),
+                    "ta" to stringResource(R.string.language_tamil),
+                    "te" to stringResource(R.string.language_telugu),
+                    "kn" to stringResource(R.string.language_kannada),
+                    "ml" to stringResource(R.string.language_malayalam),
+                    "mr" to stringResource(R.string.language_marathi),
+                    "gu" to stringResource(R.string.language_gujarati),
+                    "pa" to stringResource(R.string.language_punjabi),
                 )
                 val currentLangLabel = langOptions.firstOrNull { it.first == languagePref }?.second ?: "English"
                 ExposedDropdownMenuBox(

@@ -3,12 +3,16 @@ package com.expensetracker.app.ui.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -27,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -266,15 +271,16 @@ private fun SplitsHeroHeader(
 
         Spacer(Modifier.height(16.dp))
 
-        // Two stat cards side by side (mirrors DebtStatCard style)
+        // Two identical stat cards side by side
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SplitStatCard(
                 label = "You owe",
                 amount = totalYouOwe,
-                count = if (groupCount == 0) 0 else null,   // null = don't show badge
                 currencySymbol = currencySymbol,
                 amountColor = if (totalYouOwe < 0.01) TextMuted else DangerRed,
                 modifier = Modifier.weight(1f)
@@ -282,7 +288,6 @@ private fun SplitsHeroHeader(
             SplitStatCard(
                 label = "You get back",
                 amount = totalYouGetBack,
-                count = null,
                 currencySymbol = currencySymbol,
                 amountColor = if (totalYouGetBack < 0.01) TextMuted else SuccessGreen,
                 modifier = Modifier.weight(1f)
@@ -343,43 +348,52 @@ private fun SplitsHeroHeader(
 private fun SplitStatCard(
     label: String,
     amount: Double,
-    count: Int?,
     currencySymbol: String,
     amountColor: Color,
     modifier: Modifier = Modifier
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.94f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness    = Spring.StiffnessMedium
+        ),
+        label = "statCardScale"
+    )
+    val elevation by animateDpAsState(
+        targetValue = if (isPressed) 6.dp else 0.dp,
+        animationSpec = tween(120),
+        label = "statCardElevation"
+    )
+
     Card(
         colors    = CardDefaults.cardColors(containerColor = CardWhite),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         modifier  = modifier
+            .fillMaxHeight()
+            .graphicsLayer { scaleX = scale; scaleY = scale }
+            .clickable(interactionSource = interactionSource, indication = null) {}
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 14.dp, horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .padding(vertical = 16.dp, horizontal = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(label, style = MaterialTheme.typography.labelSmall, color = TextSecondary)
-            Spacer(Modifier.height(4.dp))
+            Text(
+                text  = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = TextSecondary
+            )
+            Spacer(Modifier.height(6.dp))
             MoneyText(
                 formatted = "$currencySymbol${"%.2f".format(amount)}",
                 style     = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 color     = amountColor
             )
-            if (count != null) {
-                Spacer(Modifier.height(4.dp))
-                Surface(
-                    shape = RoundedCornerShape(50),
-                    color = amountColor.copy(alpha = 0.10f)
-                ) {
-                    Text(
-                        "$count groups",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = amountColor,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
-                    )
-                }
-            }
         }
     }
 }

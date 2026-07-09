@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">खर्च ट्रॅकर - बजेट मॅनेजर</string>
+    <string name="dashboard_subtitle">खर्च नोंदवा, श्रेण्या ट्रॅक करा, ट्रेंड पहा.</string>
+    <string name="manage_categories">श्रेण्या व्यवस्थापित करा</string>
+    <string name="reset_data">डेटा रीसेट करा</string>
+
+    <string name="your_name_label">तुमचे नाव</string>
+    <string name="your_name_hint">उदा. Mohammad</string>
+    <string name="your_name_note">फक्त डॅशबोर्ड अभिवादन वैयक्तिक करण्यासाठी वापरले जाते. कुठेही पाठवले जात नाही.</string>
+
+    <string name="nav_dashboard">होम</string>
+    <string name="nav_categories">श्रेण्या</string>
+    <string name="nav_settings">सेटिंग्ज</string>
+    <string name="nav_debts">कर्जे</string>
+
+    <string name="stat_total_spent">एकूण खर्च</string>
+    <string name="stat_transactions">व्यवहार</string>
+    <string name="stat_top_category">शीर्ष श्रेणी</string>
+    <string name="stat_daily_average">दैनिक सरासरी</string>
+    <string name="stat_this_month">या महिन्यात</string>
+    <string name="stat_per_day">या महिन्यात प्रतिदिन</string>
+    <string name="stat_no_prior_data">मागील महिन्याचा डेटा नाही</string>
+    <string name="stat_vs_last_month">मागील महिन्याशी तुलना</string>
+    <string name="stat_same_as_last_month">मागील महिन्यासारखेच</string>
+    <string name="stat_up_from_zero">मागील महिन्यातील %1$s पासून वाढ</string>
+
+    <string name="greeting_morning">सुप्रभात</string>
+    <string name="greeting_afternoon">शुभ दुपार</string>
+    <string name="greeting_evening">शुभ संध्याकाळ</string>
+    <string name="greeting_morning_named">सुप्रभात, %1$s</string>
+    <string name="greeting_afternoon_named">शुभ दुपार, %1$s</string>
+    <string name="greeting_evening_named">शुभ संध्याकाळ, %1$s</string>
+    <string name="greeting_hello">नमस्कार 👋</string>
+    <string name="greeting_hello_named">नमस्कार, %1$s 👋</string>
+
+    <string name="health_band_excellent">उत्कृष्ट</string>
+    <string name="health_band_good">चांगले</string>
+    <string name="health_band_fair">ठीक</string>
+    <string name="health_band_needs_attention">लक्ष हवे</string>
+    <string name="health_sub_budget">बजेट</string>
+    <string name="health_sub_trend">ट्रेंड</string>
+    <string name="health_sub_consistency">सातत्य</string>
+    <string name="health_sub_subscriptions">सदस्यता</string>
+
+    <string name="bento_monthly_spending">मासिक खर्च</string>
+    <string name="bento_budget_remaining">बजेट शिल्लक</string>
+    <string name="bento_budget_no_target">बजेट नाही</string>
+    <string name="bento_budget_remaining_subtitle">%1$s बजेटपैकी</string>
+    <string name="bento_savings_goal">बचत लक्ष्य</string>
+    <string name="bento_savings_goal_subtitle">%1$s लक्ष्याकडे</string>
+    <string name="bento_savings_goal_no_data">अनलॉक करण्यासाठी काही आठवडे ट्रॅक करा</string>
+    <string name="bento_subscription_cost">सदस्यता खर्च</string>
+    <string name="bento_subscription_subtitle">मासिक खर्चाचे %1$s</string>
+
+    <string name="ai_insights_feed_title">AI अंतर्दृष्टी</string>
+    <string name="insight_trend_down">तुमचा खर्च मागील आठवड्यापेक्षा %1$s कमी आहे.</string>
+    <string name="insight_trend_up">तुमचा खर्च मागील आठवड्यापेक्षा %1$s जास्त आहे.</string>
+    <string name="insight_trend_flat">तुमचा खर्च मागील आठवड्यासारखाच आहे.</string>
+    <string name="insight_category_increase">%1$s मधील खर्च या महिन्यात %2$s वाढला.</string>
+    <string name="insight_category_decrease">%1$s मधील खर्च या महिन्यात %2$s कमी झाला.</string>
+    <string name="insight_projected_savings">या वेगाने मागील महिन्यापेक्षा %1$s अधिक बचत होईल.</string>
+    <string name="insight_projected_overspend">या वेगाने मागील महिन्यापेक्षा %1$s जास्त खर्च होईल.</string>
+    <string name="insight_strongest_day">तुम्ही %1$s दिवशी सर्वात कमी खर्च करता.</string>
+    <string name="insight_subscription_load">सदस्यता या महिन्यातील %1$s खर्च घेते.</string>
+    <string name="insight_daily_average">या महिन्यात तुम्ही दररोज सरासरी %1$s खर्च करत आहात.</string>
+    <string name="insight_not_enough_data">वैयक्तिक अंतर्दृष्टी अनलॉक करण्यासाठी काही खर्च जोडा.</string>
+
+    <string name="breakdown_title">श्रेणीनुसार विश्लेषण</string>
+    <string name="no_expenses_breakdown">विश्लेषणासाठी अजून खर्च नाही.</string>
+    <string name="trend_title">मासिक ट्रेंड (मागील 12 महिने)</string>
+
+    <string name="add_expense">खर्च जोडा</string>
+    <string name="edit_expense">खर्च संपादित करा</string>
+    <string name="category_label">श्रेणी</string>
+    <string name="description_label">वर्णन</string>
+    <string name="description_hint">उदा. सुपरमार्केटमध्ये किराणा</string>
+    <string name="amount_label">रक्कम</string>
+    <string name="date_label">तारीख</string>
+    <string name="add">जोडा</string>
+    <string name="update">अपडेट करा</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="save">जतन करा</string>
+
+    <string name="expenses_this_month">या महिन्यातील खर्च</string>
+    <string name="no_expenses_this_month">या महिन्यात अजून खर्च नाही.</string>
+    <string name="edit">संपादित करा</string>
+    <string name="delete">हटवा</string>
+    <string name="delete_expense_confirm">हा खर्च हटवायचा का?</string>
+    <string name="delete_payment_confirm">ही देयता हटवायची का?</string>
+    <string name="delete_income_confirm">ही उत्पन्न नोंद हटवायची का?</string>
+    <string name="delete_income_recurring_confirm">हे वारंवारित उत्पन्न टेम्पलेट आहे. हटवल्यास भविष्यातील स्वयं-नोंदी थांबतील. जुन्या प्रती राहतील.</string>
+    <string name="income_recurring_badge">मासिक पुनरावृत्ती</string>
+
+    <string name="tour_step1_title">खर्च नोंदवा</string>
+    <string name="tour_step1_body">कोणताही खर्च नोंदवण्यासाठी + बटण दाबा. रक्कम टाका, श्रेणी निवडा, तारीख निवडा, जतन करा.</string>
+    <string name="tour_step2_title">मासिक आढावा</string>
+    <string name="tour_step2_body">खर्च vs बजेट एका दृष्टीत. मागील महिन्यांसाठी ‹ › दाबा.</string>
+    <string name="tour_step3_title">उत्पन्न ट्रॅक करा</string>
+    <string name="tour_step3_body">या महिन्यात किती कमावले ते पाहण्यासाठी उत्पन्न कार्ड दाबा.</string>
+    <string name="tour_step4_title">कर्जे &amp; देणी</string>
+    <string name="tour_step4_body">द्यायची किंवा घ्यायची रक्कम ट्रॅक करण्यासाठी कर्जे टॅब वापरा.</string>
+    <string name="tour_step5_title">अधिक एक्सप्लोर करा</string>
+    <string name="tour_step5_body">लेजर दुकान कर्ज ट्रॅक करते. सेटिंग्जमध्ये रिपोर्ट निर्यात करता येते.</string>
+    <string name="tour_step6_title">📷 पावत्या स्कॅन करा</string>
+    <string name="tour_step6_body">कोणत्याही बिल किंवा पावतीवर कॅमेरा धरा. ॲप रक्कम वाचून लगेच नोंदवते — टाइप करण्याची गरज नाही.</string>
+    <string name="tour_step7_title">🎤 आवाज इनपुट</string>
+    <string name="tour_step7_body">"जेवणावर 50 खर्च झाले" असे सांगा, नोंद होईल. हात-मुक्त खर्च ट्रॅकिंग.</string>
+    <string name="tour_step8_title">👥 बिल शेअर करा</string>
+    <string name="tour_step8_body">गट तयार करा, शेअर खर्च जोडा, कोण किती द्यायचे ते ॲप मोजू दे. एका WhatsApp संदेशात निपटवा.</string>
+    <string name="tour_step9_title">📒 खाता / लेजर</string>
+    <string name="tour_step9_body">कोण तुम्हाला द्यायचे, तुम्ही कोणाला द्यायचे ट्रॅक करा. एका टॅपमध्ये WhatsApp रिमाइंडर पाठवा.</string>
+    <string name="tour_step10_title">🎯 लक्ष्ये &amp; स्ट्रीक</string>
+    <string name="tour_step10_body">बचत लक्ष्ये ठरवा आणि प्रगती ट्रॅक करा. दैनिक नोंद करण्याची सवय विकसित करा!</string>
+    <string name="tour_next">पुढे</string>
+    <string name="tour_done">सुरू करूया!</string>
+    <string name="tour_skip">वगळा</string>
+
+    <string name="onboard_currency_title">तुमचे चलन निवडा</string>
+    <string name="onboard_currency_body">सर्व रक्कम तुमच्या स्थानिक चलनात दाखवल्या जातील.</string>
+    <string name="onboard_finances_title">तुमचे आर्थिक तपशील सेट करा</string>
+    <string name="onboard_finances_body">दोन्ही वैकल्पिक — नंतर सेटिंग्जमध्ये भरता येते.</string>
+    <string name="onboard_income_label">मासिक उत्पन्न</string>
+    <string name="onboard_budget_label">मासिक बजेट</string>
+    <string name="onboard_reminder_title">दैनिक स्मरण</string>
+    <string name="onboard_reminder_body">दररोज खर्च नोंदवण्यासाठी एक मृदु संकेत.</string>
+    <string name="onboard_reminder_toggle">दैनिक स्मरण सक्रिय करा</string>
+    <string name="onboard_reminder_time">स्मरण वेळ: %s</string>
+    <string name="onboard_all_set_title">तुम्ही तयार आहात!</string>
+    <string name="onboard_all_set_body">खर्च ट्रॅक करण्यासाठी \'सुरू करूया\' दाबा.</string>
+    <string name="onboard_continue">पुढे जा</string>
+    <string name="onboard_get_started">सुरू करूया</string>
+    <string name="onboard_back">मागे</string>
+    <string name="onboard_skip">वगळा</string>
+
+    <string name="delete_recurring_confirm">हे वारंवारित खर्च टेम्पलेट आहे. हटवल्यास भविष्यातील स्वयं-नोंदी थांबतील. जुन्या प्रती राहतील.</string>
+    <string name="delete_recurring_stop_future">पुनरावृत्ती थांबवा</string>
+    <string name="today">आज</string>
+    <string name="yesterday">काल</string>
+    <string name="view_mode_day">दिवसानुसार</string>
+    <string name="view_mode_category">श्रेणीनुसार</string>
+    <string name="view_mode_grid">ग्रिड</string>
+    <string name="view_mode_calendar">दिनदर्शिका</string>
+    <string name="calendar_tap_hint">खर्च पाहण्यासाठी एक दिवस दाबा</string>
+    <string name="no_expenses_this_day">या दिवशी खर्च नाही.</string>
+    <string name="export_pdf">PDF निर्यात</string>
+    <string name="export_pdf_chooser_title">तुमचा रिपोर्ट जतन करा किंवा शेअर करा</string>
+    <string name="export_report_title">मासिक खर्च रिपोर्ट</string>
+    <string name="export_total_label">एकूण</string>
+    <string name="export_customer_id_label">ग्राहक ID: %1$s</string>
+    <string name="export_started">तुमचा PDF रिपोर्ट तयार केला जात आहे…</string>
+
+    <string name="add_category">श्रेणी जोडा</string>
+    <string name="new_category_hint">नवीन श्रेणीचे नाव</string>
+    <string name="delete_category_confirm">या श्रेणीचा वापर करणारे खर्च पहिल्या उरलेल्या श्रेणीत जातील. सुरू ठेवायचे का?</string>
+    <string name="keep_one_category_warning">किमान एक श्रेणी ठेवणे आवश्यक आहे.</string>
+    <string name="enter_category_name">श्रेणीचे नाव प्रविष्ट करा.</string>
+
+    <string name="settings_title">सेटिंग्ज</string>
+    <string name="language_label">भाषा</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
+    <string name="currency_label">चलन</string>
+    <string name="currency_custom_hint">कस्टम चिन्ह</string>
+    <string name="convert_currency_title">चलन बदला</string>
+    <string name="convert_currency_message">सध्याचे खर्च %1$s वरून %2$s मध्ये रूपांतरित करण्यासाठी विनिमय दर प्रविष्ट करा (1 %1$s = ? %2$s).</string>
+    <string name="convert_currency_rate_hint">विनिमय दर</string>
+    <string name="convert">रूपांतरित करा</string>
+    <string name="error_invalid_rate">0 पेक्षा जास्त वैध दर प्रविष्ट करा.</string>
+    <string name="reset_all_data">सर्व डेटा रीसेट करा</string>
+    <string name="reset_confirm_1">यामुळे या डिव्हाइसवरील सर्व खर्च आणि कस्टम श्रेण्या कायमस्वरूपी हटवल्या जातील. सुरू ठेवायचे का?</string>
+    <string name="reset_confirm_2">तुम्हाला खात्री आहे का? हे पूर्ववत केले जाऊ शकत नाही.</string>
+    <string name="data_local_note">तुमचा सर्व डेटा या डिव्हाइसवरच राहतो. कोणत्याही सर्व्हरवर अपलोड केला जात नाही.</string>
+    <string name="detected_region_note">तुमच्या डिव्हाइसवरून आढळले: %1$s</string>
+    <string name="more_section_title">अधिक</string>
+    <string name="share_app">हे ॲप शेअर करा</string>
+    <string name="share_app_message">%1$s पाहा — खर्च ट्रॅक करण्यासाठी मी वापरतो ते ॲप: %2$s</string>
+    <string name="rate_us">आम्हाला रेट करा</string>
+    <string name="about_section_title">बद्दल</string>
+    <string name="customer_id_label">ग्राहक ID</string>
+    <string name="customer_id_copied">ग्राहक ID कॉपी केला</string>
+    <string name="powered_by_footer">AG Tech द्वारे</string>
+    <string name="app_version_label">आवृत्ती 1.0</string>
+
+    <string name="sms_detection_title">SMS शोध</string>
+    <string name="sms_detection_toggle_label">SMS मधून व्यवहार शोधा</string>
+    <string name="sms_detection_description">बँक, UPI किंवा कार्ड SMS आल्यावर, ॲप फक्त त्या एका SMS ला परवानगी मागते, नंतर पुनरावलोकन यादीत जोडते.</string>
+    <string name="sms_pending_banner">SMS मधून %1$d व्यवहार आढळले — पुनरावलोकनासाठी दाबा</string>
+    <string name="sms_review_title">%1$d व्यवहारांचे पुनरावलोकन</string>
+    <string name="sms_review_subtitle">खर्च म्हणून जतन करण्यापूर्वी प्रत्येक एक पुष्टी करा किंवा संपादित करा.</string>
+    <string name="sms_accept">स्वीकारा</string>
+    <string name="sms_dismiss">नाकारा</string>
+
+    <string name="toast_expense_added">खर्च जोडला.</string>
+    <string name="toast_expense_updated">खर्च अपडेट केला.</string>
+    <string name="toast_expense_deleted">खर्च हटवला.</string>
+    <string name="toast_all_reset">सर्व डेटा रीसेट केला.</string>
+    <string name="error_invalid_amount">0 पेक्षा जास्त वैध रक्कम प्रविष्ट करा.</string>
+    <string name="error_invalid_date">YYYY-MM-DD स्वरूपात वैध तारीख प्रविष्ट करा.</string>
+    <string name="error_select_date">कृपया एक तारीख निवडा.</string>
+
+    <string name="done">झाले</string>
+    <string name="close">बंद करा</string>
+    <string name="ok">ठीक</string>
+    <string name="select_date">तारीख निवडा</string>
+    <string name="cd_previous_month">मागील महिना</string>
+    <string name="cd_next_month">पुढील महिना</string>
+    <string name="cd_clear_search">शोध साफ करा</string>
+    <string name="splash_tagline">प्रत्येक खर्च सहजपणे ट्रॅक करा</string>
+    <string name="calendar_picker_title">दिनदर्शिका</string>
+
+    <string name="cat_housing">घर</string>
+    <string name="cat_food">अन्न &amp; किराणा</string>
+    <string name="cat_transport">वाहतूक</string>
+    <string name="cat_utilities">उपयोगिता बिले</string>
+    <string name="cat_entertainment">मनोरंजन</string>
+    <string name="cat_healthcare">आरोग्यसेवा</string>
+    <string name="cat_shopping">खरेदी</string>
+    <string name="cat_subscriptions">सदस्यता</string>
+    <string name="cat_savings">बचत &amp; गुंतवणूक</string>
+    <string name="cat_other">इतर</string>
+    <string name="cat_debt_payments">कर्ज परतफेड</string>
+    <string name="cat_mobile_recharge">मोबाइल रिचार्ज</string>
+    <string name="cat_electricity">वीज</string>
+    <string name="cat_fuel">इंधन</string>
+    <string name="cat_farming">शेती</string>
+    <string name="cat_khata">खाता</string>
+    <string name="cat_education">शिक्षण</string>
+    <string name="khata_delete_party_title">पार्टी हटवायची का?</string>
+    <string name="khata_delete_party_confirm">%1$s आणि त्यांच्या सर्व नोंदी कायमस्वरूपी हटवल्या जातील. हे पूर्ववत केले जाऊ शकत नाही.</string>
+
+    <string name="budget_title">बजेट</string>
+    <string name="manage_budget">बजेट व्यवस्थापित करा</string>
+    <string name="budget_set_prompt">तुमचा खर्च मोजण्यासाठी मासिक बजेट सेट करा.</string>
+    <string name="budget_set_cta">बजेट सेट करा</string>
+    <string name="budget_spent_of">%2$s पैकी %1$s</string>
+    <string name="budget_left">%1$s शिल्लक</string>
+    <string name="budget_over_by">बजेट %1$s ने ओलांडले</string>
+    <string name="budget_pacing_hint">%2$d दिवसांसाठी %1$s/दिवस</string>
+    <string name="budget_manage_sheet_title">बजेट व्यवस्थापित करा</string>
+    <string name="budget_overall_label">एकूण मासिक बजेट</string>
+    <string name="budget_overall_hint">उदा. 30000</string>
+    <string name="error_invalid_budget_amount">वैध रक्कम प्रविष्ट करा, किंवा बजेट काढण्यासाठी रिकामे ठेवा.</string>
+
+    <string name="debts_title">कर्जे &amp; देणी</string>
+    <string name="bento_debts_title">कर्जे &amp; देणी</string>
+    <string name="debts_net_title">निव्वळ स्थिती</string>
+    <string name="debts_net_owed_to_you">तुम्हाला मिळायचे</string>
+    <string name="debts_net_you_owe">तुम्ही द्यायचे</string>
+    <string name="debts_net_settled">सर्व निपटले</string>
+    <string name="debts_section_you_owe">तुम्ही द्यायचे</string>
+    <string name="debts_section_owed_to_you">तुम्हाला मिळायचे</string>
+    <string name="debts_section_settled">निपटले</string>
+    <string name="debts_empty_title">अजून कर्जे नाहीत</string>
+    <string name="debts_empty_subtitle">द्यायची आणि घ्यायची रक्कम ट्रॅक करा.</string>
+    <string name="delete_debt_confirm">हे कर्ज आणि त्याचा संपूर्ण देयता इतिहास हटवायचा का? हे पूर्ववत केले जाऊ शकत नाही.</string>
+
+    <string name="debt_add_title">कर्ज जोडा</string>
+    <string name="debt_edit_title">कर्ज संपादित करा</string>
+    <string name="debt_loan_type_label">कर्जाचा प्रकार (वैकल्पिक)</string>
+    <string name="loan_type_personal">वैयक्तिक कर्ज</string>
+    <string name="loan_type_home">गृह कर्ज</string>
+    <string name="loan_type_car">कार कर्ज</string>
+    <string name="loan_type_education">शैक्षणिक कर्ज</string>
+    <string name="loan_type_gold">सोने कर्ज</string>
+    <string name="loan_type_business">व्यवसाय कर्ज</string>
+    <string name="loan_type_informal">व्यक्तीकडून उधार</string>
+    <string name="loan_type_other">इतर</string>
+    <string name="loan_type_none">काहीही नाही (वैकल्पिक)</string>
+    <string name="loan_type_other_name_label">कर्जाचा प्रकार निर्दिष्ट करा</string>
+    <string name="loan_type_other_name_hint">उदा. वाहन कर्ज, विद्यार्थी कर्ज…</string>
+    <string name="loan_type_select_hint">कर्जाचा प्रकार निवडा</string>
+    <string name="error_loan_type_required">कर्जाचा प्रकार निवडा</string>
+    <string name="test_reminder_button">चाचणी सूचना पाठवा</string>
+
+    <string name="repeat_monthly_label">दर महिन्याला पुनरावृत्ती करा</string>
+    <string name="repeat_monthly_hint">दर महिन्याच्या 1 तारखेला एक प्रत आपोआप जोडली जाईल</string>
+
+    <string name="debt_direction_label">दिशा</string>
+    <string name="debt_direction_owe">मला द्यायचे</string>
+    <string name="debt_direction_owed">मला मिळायचे</string>
+    <string name="debt_name_label">नाव</string>
+    <string name="debt_name_hint">उदा. कार कर्ज, मित्राला वैयक्तिक उधार</string>
+    <string name="error_debt_name_required">या कर्जासाठी नाव प्रविष्ट करा.</string>
+    <string name="debt_principal_label">मूळ रक्कम</string>
+    <string name="debt_principal_hint">घेतलेली किंवा दिलेली एकूण रक्कम</string>
+    <string name="debt_rate_label">व्याजदर (% वार्षिक)</string>
+    <string name="debt_rate_hint">उदा. 12 (व्याज नसल्यास 0 प्रविष्ट करा)</string>
+    <string name="error_debt_rate_invalid">0 किंवा त्यापेक्षा जास्त वैध दर प्रविष्ट करा.</string>
+    <string name="debt_payment_label">मासिक देयता (EMI)</string>
+    <string name="debt_payment_hint">उदा. 5000 (निश्चित वेळापत्रक नसल्यास 0 सोडा)</string>
+    <string name="error_debt_payment_invalid">0 किंवा त्यापेक्षा जास्त वैध रक्कम प्रविष्ट करा.</string>
+    <string name="debt_start_date_label">प्रारंभ तारीख</string>
+    <string name="debt_notes_label">नोट्स (वैकल्पिक)</string>
+    <string name="debt_notes_hint">उदा. सावकाराचे नाव, उद्देश</string>
+
+    <string name="debt_paid_of_principal">%2$s पैकी %1$s दिले</string>
+    <string name="debt_settled_badge">निपटले</string>
+    <string name="debt_payoff_projection">%1$s पर्यंत निपटेल (%2$d म.)</string>
+    <string name="debt_insight_accelerate">%2$s/महिना वाढवून %1$d महिने आधी निपटवा.</string>
+    <string name="debt_no_emi_hint">अंदाज पाहण्यासाठी मासिक देयता जोडा.</string>
+    <string name="debt_reopen">पुन्हा उघडा</string>
+    <string name="debt_mark_settled">निपटले म्हणून चिन्हांकित करा</string>
+    <string name="debt_history_title">देयता इतिहास</string>
+    <string name="debt_no_payments">अजून देयता नाही.</string>
+    <string name="debt_record_payment">देयता नोंदवा</string>
+
+    <string name="payment_note_label">नोट (वैकल्पिक)</string>
+    <string name="payment_note_hint">उदा. आंशिक देयता, रोखीने दिले</string>
+
+    <string name="salary_label">पगार</string>
+    <string name="budget_cap_label">बजेट मर्यादा</string>
+    <string name="spending_by_category">श्रेणीनुसार खर्च</string>
+    <string name="recent_transactions_label">अलीकडील व्यवहार</string>
+    <string name="view_all_label">सर्व पाहा</string>
+    <string name="load_more">अधिक लोड करा</string>
+    <string name="salary_set_title">मासिक उत्पन्न सेट करा</string>
+    <string name="salary_set_label">मासिक टेक-होम पगार</string>
+    <string name="salary_set_hint">उदा. 50000</string>
+    <string name="add_income">उत्पन्न जोडा</string>
+    <string name="income_source_hint">स्रोत</string>
+    <string name="income_source_placeholder">उदा. पगार, फ्रीलांस, बोनस</string>
+    <string name="income_note_hint">नोट (वैकल्पिक)</string>
+    <string name="income_recurring_label">मासिक पुनरावृत्ती</string>
+    <string name="income_recurring_hint">दर महिन्याला एक प्रत आपोआप जोडली जाईल.</string>
+    <string name="income_history_title">या महिन्यातील उत्पन्न</string>
+    <string name="no_income_this_month">अजून उत्पन्न नोंदवले नाही</string>
+    <string name="income_total_label">एकूण उत्पन्न</string>
+    <string name="stat_spent_label">खर्च</string>
+    <string name="stat_remaining_label">शिल्लक</string>
+    <string name="months_budget_label">%1$s बजेट</string>
+
+    <string name="reminder_section_title">दैनिक स्मरण</string>
+    <string name="reminder_toggle_label">संध्याकाळ खर्च स्मरण</string>
+    <string name="reminder_toggle_desc">खर्च नोंदवण्यासाठी रोज आठवण मिळवा</string>
+    <string name="reminder_time_label">स्मरण वेळ</string>
+    <string name="reminder_notification_title">आजचे खर्च नोंदवले का? 💸</string>
+    <string name="reminder_notification_body">आज काही सुटले नाहीत याची खात्री करण्यासाठी दाबा.</string>
+
+    <string name="khata_tab_label">खाता</string>
+    <string name="khata_screen_title">खाता</string>
+    <string name="khata_i_owe">मला द्यायचे</string>
+    <string name="khata_they_owe">मला मिळायचे</string>
+    <string name="khata_total_i_owe">एकूण द्यायचे</string>
+    <string name="khata_total_they_owe">एकूण मिळायचे</string>
+    <string name="khata_add_party">पार्टी जोडा</string>
+    <string name="khata_edit_party">पार्टी संपादित करा</string>
+    <string name="khata_party_name_hint">नाव (दुकान किंवा व्यक्ती)</string>
+    <string name="khata_party_phone_hint">फोन नंबर (WhatsApp साठी)</string>
+    <string name="khata_party_phone_optional">वैकल्पिक — फक्त WhatsApp स्मरणासाठी हवे</string>
+    <string name="khata_save_party">जतन करा</string>
+    <string name="khata_delete_party">पार्टी हटवा</string>
+    <string name="khata_no_parties_i_owe">अजून दुकाने नाहीत.\nउधार असलेले दुकान जोडण्यासाठी + दाबा.</string>
+    <string name="khata_no_parties_they_owe">अजून ग्राहक नाहीत.\nज्यांनी द्यायचे त्यांना जोडण्यासाठी + दाबा.</string>
+    <string name="khata_outstanding">बाकी</string>
+    <string name="khata_settled">निपटले ✓</string>
+    <string name="khata_add_entry">नोंद जोडा</string>
+    <string name="khata_credit_label">क्रेडिट (उधार)</string>
+    <string name="khata_payment_label">देयता (निपटले)</string>
+    <string name="khata_amount_hint">रक्कम</string>
+    <string name="khata_note_hint">नोट (वैकल्पिक)</string>
+    <string name="khata_entry_date">तारीख</string>
+    <string name="khata_no_entries">अजून नोंदी नाहीत. क्रेडिट किंवा देयता नोंदवण्यासाठी + दाबा.</string>
+    <string name="khata_delete_entry">नोंद हटवा</string>
+    <string name="khata_whatsapp_reminder">स्मरण पाठवा</string>
+    <string name="khata_whatsapp_not_installed">WhatsApp इंस्टॉल नाही.</string>
+    <string name="khata_reminder_msg_owe">नमस्कार %1$s 👋
+
+एक मैत्रीपूर्ण आठवण — तुमची %2$s बाकी आहे.
+
+सोयीस्कर असेल तेव्हा निपटवा 🙏
+
+— %3$s</string>
+    <string name="khata_reminder_msg_credit">नमस्कार %1$s 👋
+
+एक नोट — माझ्या दुकानात तुमचे %2$s क्रेडिट आहे.
+
+केव्हाही वापरा!
+
+— %3$s</string>
+    <string name="khata_direction_i_owe_label">मी या पार्टीला द्यायचे</string>
+    <string name="khata_direction_they_owe_label">ही पार्टी मला द्यायची</string>
+    <string name="khata_initial_amount_label">प्रारंभिक रक्कम (वैकल्पिक)</string>
+
+    <string name="budget_alert_warning">⚠️ मासिक बजेटचे 80% वापरले</string>
+    <string name="budget_alert_exceeded">🚨 मासिक बजेट ओलांडले!</string>
+
+    <string name="export_csv">CSV निर्यात</string>
+    <string name="export_csv_chooser_title">CSV जतन करा किंवा शेअर करा</string>
+
+    <string name="search_expenses_hint">खर्च शोधा…</string>
+
+    <string name="security_section_title">सुरक्षा</string>
+    <string name="biometric_lock_title">खर्च ट्रॅकर उघडा</string>
+    <string name="biometric_lock_subtitle">ॲप उघडण्यासाठी बायोमेट्रिक्स किंवा PIN वापरा</string>
+    <string name="biometric_lock_toggle_label">ॲप लॉक</string>
+    <string name="biometric_lock_description">प्रत्येक ॲप उघडण्यावेळी बायोमेट्रिक्स किंवा PIN आवश्यक</string>
+
+    <string name="backup_section_title">डेटा बॅकअप</string>
+    <string name="backup_export_label">बॅकअप निर्यात</string>
+    <string name="backup_import_label">बॅकअप आयात</string>
+    <string name="backup_scope_note">खर्च, श्रेण्या, बजेट, खाता, कर्जे समाविष्ट</string>
+    <string name="backup_chooser_title">बॅकअप जतन करा किंवा शेअर करा</string>
+    <string name="backup_success">बॅकअप निर्यात झाला</string>
+    <string name="backup_error">बॅकअप अयशस्वी</string>
+    <string name="restore_success">पुनर्संचयित पूर्ण</string>
+    <string name="restore_error">पुनर्संचयित अयशस्वी</string>
+
+    <string name="drive_backup_section_title">Google Drive बॅकअप</string>
+    <string name="drive_backup_scope_note">तुमच्या Google Drive ॲप फोल्डरमध्ये खाजगीपणे साठवले</string>
+    <string name="drive_backup_sign_in">Google सह साइन इन करा</string>
+    <string name="drive_backup_signed_in_as">%1$s म्हणून साइन इन</string>
+    <string name="drive_backup_save">Drive ला जतन करा</string>
+    <string name="drive_backup_restore">Drive वरून पुनर्संचयित करा</string>
+    <string name="drive_backup_sign_out">Google वरून साइन आउट करा</string>
+    <string name="drive_backup_success">Google Drive ला बॅकअप जतन केला</string>
+    <string name="drive_restore_success">Google Drive वरून डेटा पुनर्संचयित केला</string>
+    <string name="drive_no_backup">Drive वर अजून बॅकअप नाही</string>
+    <string name="drive_backup_error">Google Drive त्रुटी</string>
+    <string name="khata_label_all_cleared">%1$s सोबत सर्व निपटले ✓</string>
+    <string name="khata_label_i_owe">तुम्ही %1$s ला द्यायचे</string>
+    <string name="khata_label_they_owe">%1$s तुम्हाला द्यायचे</string>
+    <string name="khata_sender_name_default">मी</string>
+
+    <string name="khata_subtitle">तुमच्या संपर्कांसोबत उधार व्यवहार ट्रॅक करा</string>
+    <string name="debts_subtitle">द्यायची आणि घ्यायची रक्कम ट्रॅक करा</string>
+    <string name="net_all_settled">सर्व निपटले ✓</string>
+    <string name="net_in_favour">निव्वळ +%1$s तुमच्या बाजूने</string>
+    <string name="net_you_owe_net">निव्वळ −%1$s तुम्ही द्यायचे</string>
+    <string name="label_party_singular">पार्टी</string>
+    <string name="label_party_plural">पार्ट्या</string>
+    <string name="label_debt_singular">कर्ज</string>
+    <string name="label_debt_plural">कर्जे</string>
+    <string name="screenshot_mode_on">स्क्रीनशॉट मोड चालू — जाहिराती लपवल्या</string>
+    <string name="screenshot_mode_off">स्क्रीनशॉट मोड बंद — जाहिराती दिसत आहेत</string>
+    <string name="select_country_code">देश कोड निवडा</string>
+
+    <string name="streak_label">लॉगिंग स्ट्रीक</string>
+    <string name="streak_days_suffix">दिवस</string>
+    <string name="streak_best_label">सर्वोत्तम</string>
+    <string name="payday_title">पगार दिन</string>
+    <string name="payday_not_set">पगार दिन सेट करण्यासाठी दाबा</string>
+    <string name="payday_days_away">दिवस शिल्लक</string>
+    <string name="payday_per_day">प्रतिदिन</string>
+    <string name="payday_day_label">दिवस %1$d</string>
+    <string name="payday_picker_hint">तुमची मासिक पगार तारीख</string>
+
+    <string name="goals_section_title">बचत लक्ष्ये</string>
+    <string name="goals_add">लक्ष्य जोडा</string>
+    <string name="goals_edit">लक्ष्य संपादित करा</string>
+    <string name="goals_empty_hint">पहिले बचत लक्ष्य जोडण्यासाठी + दाबा</string>
+    <string name="goals_sheet_subtitle">तुम्ही कशासाठी बचत करत आहात ते ट्रॅक करा</string>
+    <string name="goals_emoji_label">इमोजी निवडा</string>
+    <string name="goals_name_label">लक्ष्याचे नाव</string>
+    <string name="goals_name_hint">उदा. नवीन फोन, सुट्टी…</string>
+    <string name="goals_name_error">लक्ष्याचे नाव प्रविष्ट करा</string>
+    <string name="goals_target_label">लक्ष्य रक्कम</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">वैध रक्कम प्रविष्ट करा</string>
+    <string name="goals_date_label">लक्ष्य तारीख</string>
+    <string name="goals_date_optional">(वैकल्पिक)</string>
+
+    <string name="digest_title">साप्ताहिक सारांश 📊</string>
+    <string name="digest_body_first_week">या आठवड्यात %1$s खर्च झाले — ट्रॅक करत राहा!</string>
+    <string name="digest_body_no_spend">अप्रतिम आठवडा — कोणताही खर्च नाही! 🎉</string>
+    <string name="digest_body_less">या आठवड्यात %1$s खर्च झाले — मागील आठवड्यापेक्षा %2$d%% कमी 🎉</string>
+    <string name="digest_body_more">या आठवड्यात %1$s खर्च झाले — मागील आठवड्यापेक्षा %2$d%% जास्त</string>
+    <string name="digest_body_same">या आठवड्यात %1$s खर्च झाले — मागील आठवड्यासारखेच</string>
+
+    <string name="personality_card_title">या महिन्यात तुम्ही एक</string>
+    <string name="personality_share_hint">%1$d%% %2$s वर खर्च झाले</string>
+    <string name="personality_foodie">खाद्यप्रेमी</string>
+    <string name="personality_commuter">प्रवासी</string>
+    <string name="personality_homebody">घरप्रिय</string>
+    <string name="personality_bill_payer">बिल भरणारा</string>
+    <string name="personality_entertainer">मनोरंजन प्रेमी</string>
+    <string name="personality_health_first">आरोग्य प्रथम</string>
+    <string name="personality_shopaholic">खरेदी व्यसनी</string>
+    <string name="personality_tech_buff">तंत्रज्ञान प्रेमी</string>
+    <string name="personality_saver">बचत करणारा</string>
+    <string name="personality_road_warrior">रस्ता योद्धा</string>
+    <string name="personality_scholar">विद्वान</string>
+    <string name="personality_connected">नेहमी जोडलेला</string>
+    <string name="personality_power_user">पॉवर यूजर</string>
+    <string name="personality_farmer">शेतकरी</string>
+    <string name="personality_trader">व्यापारी</string>
+    <string name="personality_debt_crusher">कर्ज नाशक</string>
+    <string name="personality_versatile">विविध खर्च करणारा</string>
+
+    <string name="voice_listening">ऐकत आहे…</string>
+    <string name="voice_tap_to_speak">तुमचा खर्च सांगा — उदा. "जेवणावर 200 खर्च झाले"</string>
+    <string name="voice_result_title">मी ऐकले</string>
+    <string name="voice_confirm">पुष्टी करा &amp; खर्च जोडा</string>
+    <string name="voice_try_again">पुन्हा प्रयत्न करा</string>
+    <string name="voice_no_speech">भाषण आढळले नाही. पुन्हा प्रयत्न करा.</string>
+    <string name="voice_not_detected">आढळले नाही</string>
+    <string name="voice_field_amount">रक्कम</string>
+    <string name="voice_field_description">वर्णन</string>
+    <string name="voice_field_category">श्रेणी</string>
+    <string name="voice_permission_denied">आवाज इनपुटसाठी मायक्रोफोन परवानगी आवश्यक</string>
+
+    <string name="receipt_scan_title">पावती / बिल स्कॅन</string>
+    <string name="receipt_scan_hint">कॅमेरा पावती किंवा बिलावर धरा. एकूण रक्कम आपोआप वाचली जाईल.</string>
+    <string name="receipt_open_camera">कॅमेरा उघडा</string>
+    <string name="receipt_scanning">पावती वाचत आहे…</string>
+    <string name="receipt_amount_found">रक्कम सापडली</string>
+    <string name="receipt_use_amount">ही रक्कम वापरा</string>
+    <string name="receipt_edit_hint">आवश्यक असल्यास वरील रक्कम संपादित करा</string>
+    <string name="receipt_rescan">पुन्हा स्कॅन</string>
+    <string name="receipt_no_amount_title">रक्कम वाचता आली नाही</string>
+    <string name="receipt_no_amount_body">स्कॅनमध्ये स्पष्ट एकूण आढळले नाही. चांगल्या प्रकाशात पुन्हा प्रयत्न करा, किंवा रक्कम स्वतः प्रविष्ट करा.</string>
+    <string name="receipt_enter_manually">स्वतः प्रविष्ट करा</string>
+    <string name="receipt_error_title">काहीतरी चुकले</string>
+    <string name="receipt_retry">पुन्हा प्रयत्न करा</string>
+    <string name="receipt_close">बंद करा</string>
+    <string name="receipt_camera_permission_denied">पावती स्कॅन करण्यासाठी कॅमेरा परवानगी आवश्यक</string>
+
+    <string name="family_mode_title">कुटुंब मोड</string>
+    <string name="family_mode_subtitle">तुमच्या कुटुंबासोबत सामायिक बजेट — सर्व डेटा डिव्हाइसवर.</string>
+    <string name="family_mode_toggle_label">कुटुंब मोड सक्रिय करा</string>
+    <string name="family_mode_description">कुटुंब सदस्यांचे खर्च ट्रॅक करा. जोडीदाराला सामील होण्यासाठी कोड शेअर करा.</string>
+    <string name="family_setup_members">सदस्य व्यवस्थापित करा (%d)</string>
+    <string name="family_setup">कुटुंब मोड सेट करा</string>
+    <string name="family_add_member">सदस्य जोडा</string>
+    <string name="family_edit_member">सदस्य संपादित करा</string>
+    <string name="family_delete_member">सदस्य काढा</string>
+    <string name="family_me_label">· मी</string>
+    <string name="family_member_name_hint">नाव (उदा. Sara)</string>
+    <string name="family_member_emoji_hint">इमोजी अवतार (वैकल्पिक)</string>
+    <string name="family_pick_color">रंग निवडा</string>
+    <string name="family_shared">सामायिक</string>
+    <string name="family_share_code_title">जोडीदार किंवा कुटुंबासोबत शेअर करा</string>
+    <string name="family_share_code_desc">तुमचा जोडीदार त्यांच्या फोनवर प्रविष्ट करण्यासाठी कोड बनवा.</string>
+    <string name="family_generate_code">आमंत्रण कोड बनवा</string>
+    <string name="family_join_code_title">कुटुंबात सामील व्हा</string>
+    <string name="family_join_with_code">आमंत्रण कोड प्रविष्ट करा</string>
+    <string name="family_enter_code_hint">कोड पेस्ट करा किंवा टाइप करा</string>
+    <string name="family_join">सदस्य आयात करा</string>
+    <string name="family_disable">कुटुंब मोड बंद</string>
+    <string name="family_disable_confirm_title">कुटुंब मोड बंद करायचा का?</string>
+    <string name="family_disable_confirm_body">सर्व सदस्य प्रोफाइल हटवल्या जातील. तुमचा खर्च इतिहास राहील.</string>
+    <string name="family_delete_confirm_title">सदस्य काढायचा का?</string>
+    <string name="family_delete_confirm_body">%s ला तुमच्या कुटुंबातून काढायचे का? त्यांचे मागील खर्च सामायिक म्हणून दिसतील.</string>
+    <string name="family_invite_code_title">तुमचा आमंत्रण कोड</string>
+    <string name="family_invite_code_desc">हा कोड जोडीदार किंवा कुटुंब सदस्यासोबत शेअर करा.</string>
+    <string name="family_copy_code">कोड कॉपी करा</string>
+    <string name="family_no_members_hint">अजून सदस्य नाहीत — कुटुंब सेट करण्यासाठी सेटिंग आयकॉन दाबा.</string>
+    <string name="family_expense_assigned_to">नियुक्त</string>
+    <string name="family_total_spent">एकूण: %1$s%2$.2f या महिन्यात</string>
+    <string name="family_import_up_to_date">आधीच अपडेट</string>
+    <string name="family_import_added">जोडले: %s</string>
+
+    <string name="nav_splits">स्प्लिट्स</string>
+    <string name="split_screen_title">स्प्लिट्स</string>
+    <string name="split_screen_subtitle">गट खर्च विभाजन</string>
+    <string name="split_empty_title">अजून गट नाहीत</string>
+    <string name="split_empty_subtitle">मित्रांसोबत किंवा कुटुंबासोबत खर्च शेअर करण्यासाठी गट बनवा</string>
+    <string name="split_create_group">गट बनवा</string>
+    <string name="split_new_group">नवीन गट</string>
+    <string name="split_new_group_subtitle">नाव द्या, इमोजी निवडा, सदस्य जोडा</string>
+    <string name="split_group_emoji">इमोजी</string>
+    <string name="split_group_name_hint">गटाचे नाव (उदा. दुबई ट्रिप)</string>
+    <string name="split_members_label">सदस्य</string>
+    <string name="split_add_member_hint">सदस्याचे नाव जोडा</string>
+    <string name="split_member_count">%d सदस्य</string>
+    <string name="split_settled">निपटले ✓</string>
+    <string name="split_you_owe">तुम्ही %1$s%2$.2f द्यायचे</string>
+    <string name="split_you_get">तुम्हाला %1$s%2$.2f मिळेल</string>
+    <string name="split_settle_up">हिशेब चुकता करा</string>
+    <string name="split_member_balances">सदस्य शिल्लक</string>
+    <string name="split_expenses_label">खर्च</string>
+    <string name="split_expense_count">%d खर्च</string>
+    <string name="split_no_expenses">अजून खर्च नाही — + दाबा</string>
+    <string name="split_add_expense">खर्च जोडा</string>
+    <string name="split_expense_description">हे कशासाठी आहे?</string>
+    <string name="split_expense_amount">रक्कम</string>
+    <string name="split_paid_by">कोणी दिले</string>
+    <string name="split_paid_by_member">%s ने दिले</string>
+    <string name="split_split_among">कोणांमध्ये विभागायचे</string>
+    <string name="split_split_among_hint">हा खर्च समान रीतीने शेअर करणाऱ्यांना निवडा</string>
+    <string name="split_save_expense">खर्च जतन करा</string>
+    <string name="split_delete_expense">खर्च हटवायचा का?</string>
+    <string name="split_delete_expense_confirm">"%s" हटवायचे का? हे पूर्ववत केले जाऊ शकत नाही.</string>
+    <string name="split_delete_group">गट हटवा</string>
+    <string name="split_delete_group_confirm">"%s" आणि त्याचे सर्व खर्च हटवायचे का? हे पूर्ववत केले जाऊ शकत नाही.</string>
+    <string name="split_all_settled">सर्व निपटले! 🎉</string>
+    <string name="split_all_settled_subtitle">सर्व समान आहेत. हस्तांतरणाची गरज नाही.</string>
+    <string name="split_transfers_needed">%d हस्तांतरण आवश्यक</string>
+    <string name="split_mark_paid">दिले म्हणून चिन्हांकित करा</string>
+    <string name="split_share_whatsapp">WhatsApp वर शेअर करा</string>
+    <string name="split_more_options">अधिक पर्याय</string>
+    <string name="split_wa_header">खर्च सारांश</string>
+    <string name="split_wa_expenses">खर्च (%d)</string>
+    <string name="split_wa_paid_by">दिले: %s</string>
+    <string name="split_wa_total">एकूण: %s</string>
+    <string name="split_wa_balances">शिल्लक</string>
+    <string name="split_wa_gets">मिळेल</string>
+    <string name="split_wa_owes">द्यायचे</string>
+    <string name="split_wa_member_settled">निपटले</string>
+    <string name="split_wa_to_pay">द्या</string>
+    <string name="split_wa_all_settled">सर्वांनी निपटले! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">टिप: रोज नोंद केल्याने बजेट नियंत्रण मदत होते 📊</string>
+    <string name="reminder_action_add_expense">खर्च जोडा</string>
+</resources>

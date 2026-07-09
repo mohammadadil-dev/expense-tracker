@@ -79,6 +79,13 @@ private val ONBOARD_LANGUAGES = listOf(
     OnboardLanguage("ur", "Urdu",      "اردو",     "🇵🇰"),
     OnboardLanguage("bn", "Bengali",   "বাংলা",    "🇧🇩"),
     OnboardLanguage("tl", "Filipino",  "Filipino", "🇵🇭"),
+    OnboardLanguage("ta", "Tamil",     "தமிழ்",    "🇮🇳"),
+    OnboardLanguage("te", "Telugu",    "తెలుగు",   "🇮🇳"),
+    OnboardLanguage("kn", "Kannada",   "ಕನ್ನಡ",    "🇮🇳"),
+    OnboardLanguage("ml", "Malayalam", "മലയാളം",   "🇮🇳"),
+    OnboardLanguage("mr", "Marathi",   "मराठी",    "🇮🇳"),
+    OnboardLanguage("gu", "Gujarati",  "ગુજરાતી",  "🇮🇳"),
+    OnboardLanguage("pa", "Punjabi",   "ਪੰਜਾਬੀ",   "🇮🇳"),
 )
 
 // ─── Currency list ────────────────────────────────────────────────────────────

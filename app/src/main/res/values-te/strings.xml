@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ఖర్చు ట్రాకర్ - బడ్జెట్ మేనేజర్</string>
+    <string name="dashboard_subtitle">ఖర్చులు నమోదు చేయండి, వర్గాలను ట్రాక్ చేయండి, ట్రెండ్‌లను చూడండి.</string>
+    <string name="manage_categories">వర్గాలు నిర్వహించు</string>
+    <string name="reset_data">డేటా రీసెట్ చేయి</string>
+
+    <string name="your_name_label">మీ పేరు</string>
+    <string name="your_name_hint">ఉదా. Mohammad</string>
+    <string name="your_name_note">మీ డాష్‌బోర్డ్ శుభాకాంక్షలను వ్యక్తిగతీకరించడానికి మాత్రమే ఉపయోగించబడుతుంది. ఎక్కడికీ పంపబడదు.</string>
+
+    <string name="nav_dashboard">హోమ్</string>
+    <string name="nav_categories">వర్గాలు</string>
+    <string name="nav_settings">సెట్టింగ్‌లు</string>
+    <string name="nav_debts">అప్పులు</string>
+
+    <string name="stat_total_spent">మొత్తం ఖర్చు</string>
+    <string name="stat_transactions">లావాదేవీలు</string>
+    <string name="stat_top_category">అగ్ర వర్గం</string>
+    <string name="stat_daily_average">రోజువారీ సగటు</string>
+    <string name="stat_this_month">ఈ నెల</string>
+    <string name="stat_per_day">ఈ నెల రోజుకు</string>
+    <string name="stat_no_prior_data">గత నెల డేటా లేదు</string>
+    <string name="stat_vs_last_month">గత నెలతో పోలిస్తే</string>
+    <string name="stat_same_as_last_month">గత నెల అంతే</string>
+    <string name="stat_up_from_zero">గత నెల %1$s నుండి పెరిగింది</string>
+
+    <string name="greeting_morning">శుభోదయం</string>
+    <string name="greeting_afternoon">శుభ మధ్యాహ్నం</string>
+    <string name="greeting_evening">శుభ సాయంత్రం</string>
+    <string name="greeting_morning_named">శుభోదయం, %1$s</string>
+    <string name="greeting_afternoon_named">శుభ మధ్యాహ్నం, %1$s</string>
+    <string name="greeting_evening_named">శుభ సాయంత్రం, %1$s</string>
+    <string name="greeting_hello">హలో 👋</string>
+    <string name="greeting_hello_named">హలో, %1$s 👋</string>
+
+    <string name="health_band_excellent">అద్భుతం</string>
+    <string name="health_band_good">మంచిది</string>
+    <string name="health_band_fair">సరైనది</string>
+    <string name="health_band_needs_attention">శ్రద్ధ అవసరం</string>
+    <string name="health_sub_budget">బడ్జెట్</string>
+    <string name="health_sub_trend">ట్రెండ్</string>
+    <string name="health_sub_consistency">స్థిరత్వం</string>
+    <string name="health_sub_subscriptions">సబ్‌స్క్రిప్షన్‌లు</string>
+
+    <string name="bento_monthly_spending">నెలవారీ ఖర్చు</string>
+    <string name="bento_budget_remaining">బడ్జెట్ మిగిలింది</string>
+    <string name="bento_budget_no_target">బడ్జెట్ లేదు</string>
+    <string name="bento_budget_remaining_subtitle">%1$s బడ్జెట్‌లో</string>
+    <string name="bento_savings_goal">పొదుపు లక్ష్యం</string>
+    <string name="bento_savings_goal_subtitle">%1$s లక్ష్యానికి</string>
+    <string name="bento_savings_goal_no_data">కొన్ని వారాలు ట్రాక్ చేసి అన్‌లాక్ చేయండి</string>
+    <string name="bento_subscription_cost">సబ్‌స్క్రిప్షన్ ఖర్చు</string>
+    <string name="bento_subscription_subtitle">నెలవారీ ఖర్చులో %1$s</string>
+
+    <string name="ai_insights_feed_title">AI అంతర్దృష్టులు</string>
+    <string name="insight_trend_down">మీ ఖర్చు గత వారం కంటే %1$s తక్కువగా ఉంది.</string>
+    <string name="insight_trend_up">మీ ఖర్చు గత వారం కంటే %1$s ఎక్కువగా ఉంది.</string>
+    <string name="insight_trend_flat">మీ ఖర్చు గత వారంతో సమానంగా ఉంది.</string>
+    <string name="insight_category_increase">%1$s ఖర్చు ఈ నెల %2$s పెరిగింది.</string>
+    <string name="insight_category_decrease">%1$s ఖర్చు ఈ నెల %2$s తగ్గింది.</string>
+    <string name="insight_projected_savings">ఈ వేగంతో గత నెల కంటే %1$s ఆదా చేయవచ్చు.</string>
+    <string name="insight_projected_overspend">ఈ వేగంతో గత నెల కంటే %1$s ఎక్కువ ఖర్చు అవుతుంది.</string>
+    <string name="insight_strongest_day">మీరు %1$s రోజున తక్కువ ఖర్చు చేస్తారు.</string>
+    <string name="insight_subscription_load">సబ్‌స్క్రిప్షన్‌లు ఈ నెల %1$s ఖర్చు అవుతున్నాయి.</string>
+    <string name="insight_daily_average">ఈ నెల రోజూ సగటున %1$s ఖర్చు చేస్తున్నారు.</string>
+    <string name="insight_not_enough_data">వ్యక్తిగత అంతర్దృష్టులు అన్‌లాక్ చేయడానికి కొన్ని ఖర్చులు చేర్చండి.</string>
+
+    <string name="breakdown_title">వర్గం వారీ వివరణ</string>
+    <string name="no_expenses_breakdown">ఇంకా వివరించడానికి ఖర్చులు లేవు.</string>
+    <string name="trend_title">నెలవారీ ట్రెండ్ (గత 12 నెలలు)</string>
+
+    <string name="add_expense">ఖర్చు జోడించు</string>
+    <string name="edit_expense">ఖర్చు సవరించు</string>
+    <string name="category_label">వర్గం</string>
+    <string name="description_label">వివరణ</string>
+    <string name="description_hint">ఉదా. సూపర్ మార్కెట్‌లో కిరాణా</string>
+    <string name="amount_label">మొత్తం</string>
+    <string name="date_label">తేదీ</string>
+    <string name="add">జోడించు</string>
+    <string name="update">నవీకరించు</string>
+    <string name="cancel">రద్దు</string>
+    <string name="save">సేవ్ చేయి</string>
+
+    <string name="expenses_this_month">ఈ నెల ఖర్చులు</string>
+    <string name="no_expenses_this_month">ఈ నెల ఇంకా ఖర్చులు నమోదు కాలేదు.</string>
+    <string name="edit">సవరించు</string>
+    <string name="delete">తొలగించు</string>
+    <string name="delete_expense_confirm">ఈ ఖర్చు తొలగించాలా?</string>
+    <string name="delete_payment_confirm">ఈ చెల్లింపు తొలగించాలా?</string>
+    <string name="delete_income_confirm">ఈ ఆదాయ నమోదు తొలగించాలా?</string>
+    <string name="delete_income_recurring_confirm">ఇది పునరావృత ఆదాయ టెమ్ప్లేట్. దీన్ని తొలగిస్తే భవిష్యత్తులో ఆటో-నమోదులు ఆగిపోతాయి. పాత కాపీలు ఉండిపోతాయి.</string>
+    <string name="income_recurring_badge">నెలవారీ పునరావృతమవుతుంది</string>
+
+    <string name="tour_step1_title">ఖర్చు నమోదు చేయి</string>
+    <string name="tour_step1_body">ఏదైనా ఖర్చు నమోదు చేయడానికి + బటన్ నొక్కండి. మొత్తం నమోదు చేయండి, వర్గం ఎంచుకోండి, తేదీ ఎంచుకోండి, సేవ్ చేయండి.</string>
+    <string name="tour_step2_title">నెలవారీ అవలోకనం</string>
+    <string name="tour_step2_body">ఖర్చు vs బడ్జెట్ ఒకే చూపులో. గత నెలలకు ‹ › నొక్కండి.</string>
+    <string name="tour_step3_title">ఆదాయం ట్రాక్ చేయి</string>
+    <string name="tour_step3_body">ఈ నెల ఎంత సంపాదించారో చూడటానికి ఆదాయ కార్డ్ నొక్కండి.</string>
+    <string name="tour_step4_title">అప్పులు &amp; రుణాలు</string>
+    <string name="tour_step4_body">మీరు చెల్లించాల్సినవి ట్రాక్ చేయడానికి అప్పులు ట్యాబ్ ఉపయోగించండి.</string>
+    <string name="tour_step5_title">మరింత అన్వేషించండి</string>
+    <string name="tour_step5_body">లెడ్జర్ దుకాణ అప్పును ట్రాక్ చేస్తుంది. సెట్టింగ్‌లలో నివేదికలు ఎగుమతి చేయవచ్చు.</string>
+    <string name="tour_step6_title">📷 రసీదులు స్కాన్ చేయి</string>
+    <string name="tour_step6_body">ఏదైనా బిల్లు లేదా రసీదుపై కెమెరా పెట్టండి. యాప్ మొత్తాన్ని చదివి వెంటనే నమోదు చేస్తుంది — టైప్ చేయాల్సిన అవసరం లేదు.</string>
+    <string name="tour_step7_title">🎤 వాయిస్ ఇన్‌పుట్</string>
+    <string name="tour_step7_body">"ఆహారానికి 50 ఖర్చు చేశాను" అని చెప్పండి, నమోదవుతుంది. వెళ్తున్నప్పుడు హ్యాండ్స్-ఫ్రీ ఖర్చు ట్రాకింగ్.</string>
+    <string name="tour_step8_title">👥 బిల్లులు విభజించు</string>
+    <string name="tour_step8_body">గ్రూపులు తయారు చేయండి, పంచుకున్న ఖర్చులు జోడించండి, ఎవరు ఎంత ఇవ్వాలో యాప్ లెక్కిస్తుంది. ఒక WhatsApp సందేశంతో పరిష్కరించుకోండి.</string>
+    <string name="tour_step9_title">📒 ఖాతా / లెడ్జర్</string>
+    <string name="tour_step9_body">ఎవరు మీకు ఇవ్వాలి, మీరు ఎవరికి ఇవ్వాలి అని ట్రాక్ చేయండి. ఒక్క నొక్కుతో WhatsApp గుర్తుచేయడం పంపండి.</string>
+    <string name="tour_step10_title">🎯 లక్ష్యాలు &amp; స్ట్రీక్</string>
+    <string name="tour_step10_body">పొదుపు లక్ష్యాలు పెట్టుకుని పురోగతి ట్రాక్ చేయండి. రోజూ నమోదు చేసే అలవాటు పెంచుకోండి!</string>
+    <string name="tour_next">తదుపరి</string>
+    <string name="tour_done">ప్రారంభిద్దాం!</string>
+    <string name="tour_skip">దాటి వెళ్ళు</string>
+
+    <string name="onboard_currency_title">మీ కరెన్సీ ఎంచుకోండి</string>
+    <string name="onboard_currency_body">అన్ని మొత్తాలు మీ స్థానిక కరెన్సీలో చూపబడతాయి.</string>
+    <string name="onboard_finances_title">మీ ఆర్థిక వివరాలు అమర్చండి</string>
+    <string name="onboard_finances_body">రెండూ ఐచ్ఛికం — వాటిని తర్వాత సెట్టింగ్‌లలో నింపవచ్చు.</string>
+    <string name="onboard_income_label">నెలవారీ ఆదాయం</string>
+    <string name="onboard_budget_label">నెలవారీ బడ్జెట్</string>
+    <string name="onboard_reminder_title">రోజువారీ రిమైండర్</string>
+    <string name="onboard_reminder_body">ప్రతి సాయంత్రం ఖర్చులు నమోదు చేయడానికి మృదువైన హెచ్చరిక.</string>
+    <string name="onboard_reminder_toggle">రోజువారీ రిమైండర్ ప్రారంభించు</string>
+    <string name="onboard_reminder_time">రిమైండర్ సమయం: %s</string>
+    <string name="onboard_all_set_title">మీరు సిద్ధంగా ఉన్నారు!</string>
+    <string name="onboard_all_set_body">ఖర్చులు ట్రాక్ చేయడం ప్రారంభించడానికి \'ప్రారంభిద్దాం\' నొక్కండి.</string>
+    <string name="onboard_continue">కొనసాగు</string>
+    <string name="onboard_get_started">ప్రారంభిద్దాం</string>
+    <string name="onboard_back">వెనక్కు</string>
+    <string name="onboard_skip">దాటి వెళ్ళు</string>
+
+    <string name="delete_recurring_confirm">ఇది పునరావృత ఖర్చు టెమ్ప్లేట్. దీన్ని తొలగిస్తే భవిష్యత్తు ఆటో-నమోదులు ఆగిపోతాయి. పాత కాపీలు ఉంటాయి.</string>
+    <string name="delete_recurring_stop_future">పునరావృతాన్ని ఆపు</string>
+    <string name="today">ఈరోజు</string>
+    <string name="yesterday">నిన్న</string>
+    <string name="view_mode_day">రోజు వారీగా</string>
+    <string name="view_mode_category">వర్గం వారీగా</string>
+    <string name="view_mode_grid">గ్రిడ్</string>
+    <string name="view_mode_calendar">క్యాలెండర్</string>
+    <string name="calendar_tap_hint">ఖర్చులు చూడటానికి ఒక రోజు నొక్కండి</string>
+    <string name="no_expenses_this_day">ఈ రోజు ఖర్చులు లేవు.</string>
+    <string name="export_pdf">PDF ఎగుమతి</string>
+    <string name="export_pdf_chooser_title">మీ నివేదికను సేవ్ చేయి లేదా పంచుకో</string>
+    <string name="export_report_title">నెలవారీ ఖర్చు నివేదిక</string>
+    <string name="export_total_label">మొత్తం</string>
+    <string name="export_customer_id_label">కస్టమర్ ID: %1$s</string>
+    <string name="export_started">మీ PDF నివేదిక తయారవుతోంది…</string>
+
+    <string name="add_category">వర్గం జోడించు</string>
+    <string name="new_category_hint">కొత్త వర్గం పేరు</string>
+    <string name="delete_category_confirm">ఈ వర్గాన్ని ఉపయోగించే ఖర్చులు మొదటి మిగిలిన వర్గానికి మారుతాయి. కొనసాగించాలా?</string>
+    <string name="keep_one_category_warning">కనీసం ఒక వర్గం ఉండాలి.</string>
+    <string name="enter_category_name">వర్గం పేరు నమోదు చేయండి.</string>
+
+    <string name="settings_title">సెట్టింగ్‌లు</string>
+    <string name="language_label">భాష</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic (العربية)</string>
+    <string name="language_hindi">Hindi (हिन्दी)</string>
+    <string name="language_urdu">Urdu (اردو)</string>
+    <string name="language_bengali">Bengali (বাংলা)</string>
+    <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
+    <string name="currency_label">కరెన్సీ</string>
+    <string name="currency_custom_hint">కస్టమ్ చిహ్నం</string>
+    <string name="convert_currency_title">కరెన్సీ మార్చు</string>
+    <string name="convert_currency_message">మీ ప్రస్తుత ఖర్చులను %1$s నుండి %2$s కి మార్చడానికి మారకం రేటు నమోదు చేయండి (1 %1$s = ? %2$s). మీ నిల్వ చేసిన అన్ని మొత్తాలు ఈ రేటుతో హెచ్చించబడతాయి.</string>
+    <string name="convert_currency_rate_hint">మారకం రేటు</string>
+    <string name="convert">మార్చు</string>
+    <string name="error_invalid_rate">0 కంటే ఎక్కువ చెల్లుబాటు అయ్యే రేటు నమోదు చేయండి.</string>
+    <string name="reset_all_data">అన్ని డేటా రీసెట్ చేయి</string>
+    <string name="reset_confirm_1">ఇది ఈ పరికరంలోని అన్ని ఖర్చులు మరియు కస్టమ్ వర్గాలను శాశ్వతంగా తొలగిస్తుంది. కొనసాగించాలా?</string>
+    <string name="reset_confirm_2">మీరు పూర్తిగా నిశ్చితంగా ఉన్నారా? దీన్ని రద్దు చేయడం సాధ్యం కాదు.</string>
+    <string name="data_local_note">మీ అన్ని డేటా ఈ పరికరంలోనే ఉంటుంది. ఏ సర్వర్‌కు అప్‌లోడ్ చేయబడదు.</string>
+    <string name="detected_region_note">మీ పరికరం నుండి గుర్తించారు: %1$s</string>
+    <string name="more_section_title">మరిన్ని</string>
+    <string name="share_app">ఈ యాప్ పంచుకో</string>
+    <string name="share_app_message">%1$s చూడండి — నేను నా ఖర్చులు ట్రాక్ చేయడానికి ఉపయోగించే యాప్: %2$s</string>
+    <string name="rate_us">మాకు రేటింగ్ ఇవ్వండి</string>
+    <string name="about_section_title">గురించి</string>
+    <string name="customer_id_label">కస్టమర్ ID</string>
+    <string name="customer_id_copied">కస్టమర్ ID కాపీ అయింది</string>
+    <string name="powered_by_footer">AG Tech చేత నడపబడుతోంది</string>
+    <string name="app_version_label">వెర్షన్ 1.0</string>
+
+    <string name="sms_detection_title">SMS గుర్తింపు</string>
+    <string name="sms_detection_toggle_label">SMS నుండి లావాదేవీలు గుర్తించు</string>
+    <string name="sms_detection_description">బ్యాంక్, UPI లేదా కార్డ్ SMS వచ్చినప్పుడు, యాప్ ఆ ఒక్క సందేశాన్ని మాత్రమే చదవడానికి అనుమతి అడుగుతుంది, ఆపై సమీక్ష జాబితాలో జోడిస్తుంది — మీరు నిర్ధారించే వరకు ఏదీ సేవ్ కాదు.</string>
+    <string name="sms_pending_banner">SMS నుండి %1$d లావాదేవీ(లు) గుర్తించబడ్డాయి — సమీక్షించడానికి నొక్కండి</string>
+    <string name="sms_review_title">%1$d లావాదేవీ(లు) సమీక్ష</string>
+    <string name="sms_review_subtitle">ఖర్చుగా సేవ్ చేయడానికి ముందు ప్రతిదాన్ని నిర్ధారించండి లేదా సవరించండి.</string>
+    <string name="sms_accept">అంగీకరించు</string>
+    <string name="sms_dismiss">తిరస్కరించు</string>
+
+    <string name="toast_expense_added">ఖర్చు జోడించారు.</string>
+    <string name="toast_expense_updated">ఖర్చు నవీకరించారు.</string>
+    <string name="toast_expense_deleted">ఖర్చు తొలగించారు.</string>
+    <string name="toast_all_reset">అన్ని డేటా రీసెట్ అయింది.</string>
+    <string name="error_invalid_amount">0 కంటే ఎక్కువ చెల్లుబాటు అయ్యే మొత్తం నమోదు చేయండి.</string>
+    <string name="error_invalid_date">YYYY-MM-DD ఆకారంలో చెల్లుబాటు అయ్యే తేదీ నమోదు చేయండి.</string>
+    <string name="error_select_date">దయచేసి ఒక తేదీ ఎంచుకోండి.</string>
+
+    <string name="done">పూర్తయింది</string>
+    <string name="close">మూసివేయి</string>
+    <string name="ok">సరే</string>
+    <string name="select_date">తేదీ ఎంచుకో</string>
+    <string name="cd_previous_month">గత నెల</string>
+    <string name="cd_next_month">తదుపరి నెల</string>
+    <string name="cd_clear_search">శోధన తీసివేయి</string>
+    <string name="splash_tagline">ప్రతి ఖర్చు సులభంగా ట్రాక్ చేయండి</string>
+    <string name="calendar_picker_title">క్యాలెండర్</string>
+
+    <string name="cat_housing">నివాసం</string>
+    <string name="cat_food">ఆహారం &amp; కిరాణా</string>
+    <string name="cat_transport">రవాణా</string>
+    <string name="cat_utilities">యూటిలిటీ బిల్లులు</string>
+    <string name="cat_entertainment">వినోదం</string>
+    <string name="cat_healthcare">ఆరోగ్య సంరక్షణ</string>
+    <string name="cat_shopping">షాపింగ్</string>
+    <string name="cat_subscriptions">సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="cat_savings">పొదుపు &amp; పెట్టుబడి</string>
+    <string name="cat_other">ఇతర</string>
+    <string name="cat_debt_payments">అప్పు చెల్లింపులు</string>
+    <string name="cat_mobile_recharge">మొబైల్ రీచార్జ్</string>
+    <string name="cat_electricity">విద్యుత్</string>
+    <string name="cat_fuel">ఇంధనం</string>
+    <string name="cat_farming">వ్యవసాయం</string>
+    <string name="cat_khata">ఖాతా</string>
+    <string name="cat_education">విద్య</string>
+    <string name="khata_delete_party_title">పార్టీ తొలగించాలా?</string>
+    <string name="khata_delete_party_confirm">%1$s మరియు వారి అన్ని నమోదులు శాశ్వతంగా తొలగించబడతాయి. దీన్ని రద్దు చేయడం సాధ్యం కాదు.</string>
+
+    <string name="budget_title">బడ్జెట్</string>
+    <string name="manage_budget">బడ్జెట్ నిర్వహించు</string>
+    <string name="budget_set_prompt">మీ ఖర్చులు కొలవడానికి నెలవారీ బడ్జెట్ అమర్చండి.</string>
+    <string name="budget_set_cta">బడ్జెట్ అమర్చు</string>
+    <string name="budget_spent_of">%2$s లో %1$s</string>
+    <string name="budget_left">%1$s మిగిలింది</string>
+    <string name="budget_over_by">బడ్జెట్ కంటే %1$s ఎక్కువ</string>
+    <string name="budget_pacing_hint">%2$d రోజులకు %1$s/రోజు</string>
+    <string name="budget_manage_sheet_title">బడ్జెట్ నిర్వహించు</string>
+    <string name="budget_overall_label">మొత్తం నెలవారీ బడ్జెట్</string>
+    <string name="budget_overall_hint">ఉదా. 30000</string>
+    <string name="error_invalid_budget_amount">చెల్లుబాటు అయ్యే మొత్తం నమోదు చేయండి, లేదా బడ్జెట్ తీసివేయడానికి ఖాళీగా వదలండి.</string>
+
+    <string name="debts_title">అప్పులు &amp; రుణాలు</string>
+    <string name="bento_debts_title">అప్పులు &amp; రుణాలు</string>
+    <string name="debts_net_title">నికర స్థితి</string>
+    <string name="debts_net_owed_to_you">మీకు రావలసినది</string>
+    <string name="debts_net_you_owe">మీరు చెల్లించాల్సినది</string>
+    <string name="debts_net_settled">అన్నీ పరిష్కరించారు</string>
+    <string name="debts_section_you_owe">మీరు చెల్లించాల్సినది</string>
+    <string name="debts_section_owed_to_you">మీకు రావలసినది</string>
+    <string name="debts_section_settled">పరిష్కరించారు</string>
+    <string name="debts_empty_title">ఇంకా అప్పులు లేవు</string>
+    <string name="debts_empty_subtitle">మీరు చెల్లించాల్సిన లేదా మీకు రావలసిన మొత్తాలు ట్రాక్ చేయండి.</string>
+    <string name="delete_debt_confirm">ఈ అప్పు మరియు దాని మొత్తం చెల్లింపు చరిత్ర తొలగించాలా? దీన్ని రద్దు చేయడం సాధ్యం కాదు.</string>
+
+    <string name="debt_add_title">అప్పు జోడించు</string>
+    <string name="debt_edit_title">అప్పు సవరించు</string>
+    <string name="debt_loan_type_label">రుణ రకం (ఐచ్ఛికం)</string>
+    <string name="loan_type_personal">వ్యక్తిగత రుణం</string>
+    <string name="loan_type_home">గృహ రుణం</string>
+    <string name="loan_type_car">కార్ రుణం</string>
+    <string name="loan_type_education">విద్యా రుణం</string>
+    <string name="loan_type_gold">బంగారు రుణం</string>
+    <string name="loan_type_business">వ్యాపార రుణం</string>
+    <string name="loan_type_informal">వ్యక్తి నుండి అప్పు</string>
+    <string name="loan_type_other">ఇతర</string>
+    <string name="loan_type_none">ఏమీ లేదు (ఐచ్ఛికం)</string>
+    <string name="loan_type_other_name_label">రుణ రకం పేర్కొనండి</string>
+    <string name="loan_type_other_name_hint">ఉదా. వాహన రుణం, విద్యార్థి రుణం…</string>
+    <string name="loan_type_select_hint">రుణ రకం ఎంచుకో</string>
+    <string name="error_loan_type_required">రుణ రకం ఎంచుకోండి</string>
+    <string name="test_reminder_button">పరీక్ష నోటిఫికేషన్ పంపు</string>
+
+    <string name="repeat_monthly_label">ప్రతి నెలా పునరావృతం</string>
+    <string name="repeat_monthly_hint">ప్రతి నెల 1వ తేదీన ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది</string>
+
+    <string name="debt_direction_label">దిశ</string>
+    <string name="debt_direction_owe">నేను చెల్లించాల్సింది</string>
+    <string name="debt_direction_owed">నాకు రావలసింది</string>
+    <string name="debt_name_label">పేరు</string>
+    <string name="debt_name_hint">ఉదా. కార్ రుణం, స్నేహితుడికి వ్యక్తిగత రుణం</string>
+    <string name="error_debt_name_required">ఈ అప్పుకు పేరు నమోదు చేయండి.</string>
+    <string name="debt_principal_label">మూల మొత్తం</string>
+    <string name="debt_principal_hint">అప్పుగా తీసుకున్న లేదా ఇచ్చిన మొత్తం</string>
+    <string name="debt_rate_label">వడ్డీ రేటు (% సంవత్సరానికి)</string>
+    <string name="debt_rate_hint">ఉదా. 12 (వడ్డీ లేకుంటే 0 నమోదు చేయండి)</string>
+    <string name="error_debt_rate_invalid">0 లేదా ఎక్కువ చెల్లుబాటు అయ్యే రేటు నమోదు చేయండి.</string>
+    <string name="debt_payment_label">నెలవారీ చెల్లింపు (EMI)</string>
+    <string name="debt_payment_hint">ఉదా. 5000 (నిర్ణీత షెడ్యూల్ లేకుంటే 0 వదలండి)</string>
+    <string name="error_debt_payment_invalid">0 లేదా ఎక్కువ చెల్లుబాటు అయ్యే మొత్తం నమోదు చేయండి.</string>
+    <string name="debt_start_date_label">ప్రారంభ తేదీ</string>
+    <string name="debt_notes_label">గమనికలు (ఐచ్ఛికం)</string>
+    <string name="debt_notes_hint">ఉదా. రుణదాత పేరు, ప్రయోజనం</string>
+
+    <string name="debt_paid_of_principal">%2$s లో %1$s చెల్లించారు</string>
+    <string name="debt_settled_badge">పరిష్కరించారు</string>
+    <string name="debt_payoff_projection">%1$s నాటికి పరిష్కారం (%2$d నె.)</string>
+    <string name="debt_insight_accelerate">%2$s/నెల జోడించడం ద్వారా %1$d నెల ముందే పరిష్కరించుకోండి.</string>
+    <string name="debt_no_emi_hint">చెల్లింపు అంచనా చూడటానికి నెలవారీ చెల్లింపు జోడించండి.</string>
+    <string name="debt_reopen">మళ్ళీ తెరువు</string>
+    <string name="debt_mark_settled">పరిష్కరించినట్లు గుర్తించు</string>
+    <string name="debt_history_title">చెల్లింపు చరిత్ర</string>
+    <string name="debt_no_payments">ఇంకా చెల్లింపులు నమోదు కాలేదు.</string>
+    <string name="debt_record_payment">చెల్లింపు నమోదు చేయి</string>
+
+    <string name="payment_note_label">గమనిక (ఐచ్ఛికం)</string>
+    <string name="payment_note_hint">ఉదా. పాక్షిక చెల్లింపు, నగదులో చెల్లించారు</string>
+
+    <string name="salary_label">జీతం</string>
+    <string name="budget_cap_label">బడ్జెట్ పరిమితి</string>
+    <string name="spending_by_category">వర్గం వారీ ఖర్చు</string>
+    <string name="recent_transactions_label">తాజా లావాదేవీలు</string>
+    <string name="view_all_label">అన్నీ చూడు</string>
+    <string name="load_more">మరిన్ని లోడ్ చేయి</string>
+    <string name="salary_set_title">నెలవారీ ఆదాయం అమర్చు</string>
+    <string name="salary_set_label">నెలవారీ నికర జీతం</string>
+    <string name="salary_set_hint">ఉదా. 50000</string>
+    <string name="add_income">ఆదాయం జోడించు</string>
+    <string name="income_source_hint">మూలం</string>
+    <string name="income_source_placeholder">ఉదా. జీతం, ఫ్రీలాన్స్, బోనస్</string>
+    <string name="income_note_hint">గమనిక (ఐచ్ఛికం)</string>
+    <string name="income_recurring_label">నెలవారీ పునరావృతం</string>
+    <string name="income_recurring_hint">ప్రతి నెలా ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది.</string>
+    <string name="income_history_title">ఈ నెల ఆదాయం</string>
+    <string name="no_income_this_month">ఇంకా ఆదాయం నమోదు కాలేదు</string>
+    <string name="income_total_label">మొత్తం ఆదాయం</string>
+    <string name="stat_spent_label">ఖర్చు</string>
+    <string name="stat_remaining_label">మిగిలింది</string>
+    <string name="months_budget_label">%1$s బడ్జెట్</string>
+
+    <string name="reminder_section_title">రోజువారీ రిమైండర్</string>
+    <string name="reminder_toggle_label">సాయంత్రం ఖర్చు రిమైండర్</string>
+    <string name="reminder_toggle_desc">మీ ఖర్చులు నమోదు చేయడానికి రోజూ రిమైండర్ పొందండి</string>
+    <string name="reminder_time_label">రిమైండర్ సమయం</string>
+    <string name="reminder_notification_title">ఈరోజు ఖర్చులు నమోదు చేశారా? 💸</string>
+    <string name="reminder_notification_body">ఈరోజు మిస్సైన ఖర్చులు త్వరగా జోడించడానికి నొక్కండి.</string>
+
+    <string name="khata_tab_label">ఖాతా</string>
+    <string name="khata_screen_title">ఖాతా</string>
+    <string name="khata_i_owe">నేను చెల్లించాల్సింది</string>
+    <string name="khata_they_owe">నాకు రావలసింది</string>
+    <string name="khata_total_i_owe">మొత్తం చెల్లించాల్సింది</string>
+    <string name="khata_total_they_owe">మొత్తం రావలసింది</string>
+    <string name="khata_add_party">పార్టీ జోడించు</string>
+    <string name="khata_edit_party">పార్టీ సవరించు</string>
+    <string name="khata_party_name_hint">పేరు (దుకాణం లేదా వ్యక్తి)</string>
+    <string name="khata_party_phone_hint">ఫోన్ నంబర్ (WhatsApp కోసం)</string>
+    <string name="khata_party_phone_optional">ఐచ్ఛికం — WhatsApp రిమైండర్‌లకు మాత్రమే అవసరం</string>
+    <string name="khata_save_party">సేవ్ చేయి</string>
+    <string name="khata_delete_party">పార్టీ తొలగించు</string>
+    <string name="khata_no_parties_i_owe">ఇంకా దుకాణాలు జోడించలేదు.\nఖాతా ఉన్న దుకాణం జోడించడానికి + నొక్కండి.</string>
+    <string name="khata_no_parties_they_owe">ఇంకా కస్టమర్లు జోడించలేదు.\nఎవరైనా మీకు బాకీ పడిన వారిని జోడించడానికి + నొక్కండి.</string>
+    <string name="khata_outstanding">బాకీ</string>
+    <string name="khata_settled">పరిష్కరించారు ✓</string>
+    <string name="khata_add_entry">నమోదు జోడించు</string>
+    <string name="khata_credit_label">క్రెడిట్ (అప్పుకు)</string>
+    <string name="khata_payment_label">చెల్లింపు (పరిష్కారం)</string>
+    <string name="khata_amount_hint">మొత్తం</string>
+    <string name="khata_note_hint">గమనిక (ఐచ్ఛికం)</string>
+    <string name="khata_entry_date">తేదీ</string>
+    <string name="khata_no_entries">ఇంకా నమోదులు లేవు. క్రెడిట్ లేదా చెల్లింపు నమోదు చేయడానికి + నొక్కండి.</string>
+    <string name="khata_delete_entry">నమోదు తొలగించు</string>
+    <string name="khata_whatsapp_reminder">రిమైండర్ పంపు</string>
+    <string name="khata_whatsapp_not_installed">WhatsApp ఇన్‌స్టాల్ కాలేదు.</string>
+    <string name="khata_reminder_msg_owe">హలో %1$s 👋
+
+ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు %2$s బాకీ ఉంది.
+
+వీలైనప్పుడు పరిష్కరించండి 🙏
+
+— %3$s</string>
+    <string name="khata_reminder_msg_credit">హలో %1$s 👋
+
+ఒక గమనిక — నా దుకాణంలో మీకు %2$s క్రెడిట్ ఉంది.
+
+ఎప్పుడైనా ఉపయోగించుకోండి!
+
+— %3$s</string>
+    <string name="khata_direction_i_owe_label">నేను ఈ పార్టీకి చెల్లించాల్సింది</string>
+    <string name="khata_direction_they_owe_label">ఈ పార్టీ నాకు చెల్లించాల్సింది</string>
+    <string name="khata_initial_amount_label">ప్రారంభ నిల్వ (ఐచ్ఛికం)</string>
+
+    <string name="budget_alert_warning">⚠️ నెలవారీ బడ్జెట్‌లో 80% ఉపయోగించారు</string>
+    <string name="budget_alert_exceeded">🚨 నెలవారీ బడ్జెట్‌ను మించిపోయారు!</string>
+
+    <string name="export_csv">CSV ఎగుమతి</string>
+    <string name="export_csv_chooser_title">CSV సేవ్ చేయి లేదా పంచుకో</string>
+
+    <string name="search_expenses_hint">ఖర్చులు వెతుకు…</string>
+
+    <string name="security_section_title">భద్రత</string>
+    <string name="biometric_lock_title">ఖర్చు ట్రాకర్ తెరువు</string>
+    <string name="biometric_lock_subtitle">యాప్ తెరవడానికి బయోమెట్రిక్స్ లేదా PIN ఉపయోగించండి</string>
+    <string name="biometric_lock_toggle_label">యాప్ లాక్</string>
+    <string name="biometric_lock_description">ప్రతిసారి యాప్ తెరిచినప్పుడు బయోమెట్రిక్స్ లేదా PIN అవసరం</string>
+
+    <string name="backup_section_title">డేటా బ్యాకప్</string>
+    <string name="backup_export_label">బ్యాకప్ ఎగుమతి</string>
+    <string name="backup_import_label">బ్యాకప్ దిగుమతి</string>
+    <string name="backup_scope_note">ఖర్చులు, వర్గాలు, బడ్జెట్, ఖాతా, అప్పులు కవర్ చేస్తుంది</string>
+    <string name="backup_chooser_title">బ్యాకప్ సేవ్ చేయి లేదా పంచుకో</string>
+    <string name="backup_success">బ్యాకప్ ఎగుమతి అయింది</string>
+    <string name="backup_error">బ్యాకప్ విఫలమైంది</string>
+    <string name="restore_success">పునరుద్ధరణ పూర్తయింది</string>
+    <string name="restore_error">పునరుద్ధరణ విఫలమైంది</string>
+
+    <string name="drive_backup_section_title">Google Drive బ్యాకప్</string>
+    <string name="drive_backup_scope_note">మీ Google Drive యాప్ ఫోల్డర్‌లో ప్రైవేట్‌గా నిల్వ చేయబడుతుంది</string>
+    <string name="drive_backup_sign_in">Google తో సైన్ ఇన్</string>
+    <string name="drive_backup_signed_in_as">%1$s గా సైన్ ఇన్ అయ్యారు</string>
+    <string name="drive_backup_save">Drive లో సేవ్ చేయి</string>
+    <string name="drive_backup_restore">Drive నుండి పునరుద్ధరించు</string>
+    <string name="drive_backup_sign_out">Google నుండి సైన్ అవుట్</string>
+    <string name="drive_backup_success">Google Drive లో బ్యాకప్ సేవ్ అయింది</string>
+    <string name="drive_restore_success">Google Drive నుండి డేటా పునరుద్ధరించారు</string>
+    <string name="drive_no_backup">Drive లో ఇంకా బ్యాకప్ లేదు</string>
+    <string name="drive_backup_error">Google Drive లోపం</string>
+    <string name="khata_label_all_cleared">%1$s తో అన్నీ పరిష్కరించారు ✓</string>
+    <string name="khata_label_i_owe">మీరు %1$s కి చెల్లించాల్సింది</string>
+    <string name="khata_label_they_owe">%1$s మీకు చెల్లించాల్సింది</string>
+    <string name="khata_sender_name_default">నేను</string>
+
+    <string name="khata_subtitle">మీ పరిచయాలతో అప్పుల లావాదేవీలు ట్రాక్ చేయండి</string>
+    <string name="debts_subtitle">మీరు చెల్లించాల్సిన మరియు మీకు రావలసిన మొత్తాలు ట్రాక్ చేయండి</string>
+    <string name="net_all_settled">అన్నీ పరిష్కరించారు ✓</string>
+    <string name="net_in_favour">నికర +%1$s మీకు అనుకూలంగా</string>
+    <string name="net_you_owe_net">నికర −%1$s మీరు చెల్లించాల్సింది</string>
+    <string name="label_party_singular">పార్టీ</string>
+    <string name="label_party_plural">పార్టీలు</string>
+    <string name="label_debt_singular">అప్పు</string>
+    <string name="label_debt_plural">అప్పులు</string>
+    <string name="screenshot_mode_on">స్క్రీన్‌షాట్ మోడ్ ఆన్ — ప్రకటనలు దాచారు</string>
+    <string name="screenshot_mode_off">స్క్రీన్‌షాట్ మోడ్ ఆఫ్ — ప్రకటనలు కనిపిస్తున్నాయి</string>
+    <string name="select_country_code">దేశ కోడ్ ఎంచుకో</string>
+
+    <string name="streak_label">లాగింగ్ స్ట్రీక్</string>
+    <string name="streak_days_suffix">రోజులు</string>
+    <string name="streak_best_label">అత్యుత్తమం</string>
+    <string name="payday_title">జీతం రోజు</string>
+    <string name="payday_not_set">జీతం రోజు అమర్చడానికి నొక్కండి</string>
+    <string name="payday_days_away">రోజులు మిగిలాయి</string>
+    <string name="payday_per_day">రోజుకు</string>
+    <string name="payday_day_label">రోజు %1$d</string>
+    <string name="payday_picker_hint">మీ నెలవారీ జీతం తేదీ</string>
+
+    <string name="goals_section_title">పొదుపు లక్ష్యాలు</string>
+    <string name="goals_add">లక్ష్యం జోడించు</string>
+    <string name="goals_edit">లక్ష్యం సవరించు</string>
+    <string name="goals_empty_hint">మొదటి పొదుపు లక్ష్యం జోడించడానికి + నొక్కండి</string>
+    <string name="goals_sheet_subtitle">మీరు దేని కోసం పొదుపు చేస్తున్నారో ట్రాక్ చేయండి</string>
+    <string name="goals_emoji_label">ఎమోజీ ఎంచుకో</string>
+    <string name="goals_name_label">లక్ష్యం పేరు</string>
+    <string name="goals_name_hint">ఉదా. కొత్త ఫోన్, విహారయాత్ర…</string>
+    <string name="goals_name_error">లక్ష్యం పేరు నమోదు చేయండి</string>
+    <string name="goals_target_label">లక్ష్య మొత్తం</string>
+    <string name="goals_target_hint">0.00</string>
+    <string name="goals_target_error">చెల్లుబాటు అయ్యే మొత్తం నమోదు చేయండి</string>
+    <string name="goals_date_label">లక్ష్య తేదీ</string>
+    <string name="goals_date_optional">(ఐచ్ఛికం)</string>
+
+    <string name="digest_title">వారపు సారాంశం 📊</string>
+    <string name="digest_body_first_week">ఈ వారం %1$s ఖర్చు చేశారు — ట్రాక్ చేస్తూ ఉండండి!</string>
+    <string name="digest_body_no_spend">గొప్ప వారం — ఖర్చులు నమోదు కాలేదు! 🎉</string>
+    <string name="digest_body_less">ఈ వారం %1$s ఖర్చు చేశారు — గత వారం కంటే %2$d%% తక్కువ 🎉</string>
+    <string name="digest_body_more">ఈ వారం %1$s ఖర్చు చేశారు — గత వారం కంటే %2$d%% ఎక్కువ</string>
+    <string name="digest_body_same">ఈ వారం %1$s ఖర్చు చేశారు — గత వారం అంతే</string>
+
+    <string name="personality_card_title">ఈ నెల మీరు ఒక</string>
+    <string name="personality_share_hint">%1$d%% %2$s పై ఖర్చు</string>
+    <string name="personality_foodie">ఆహార ప్రేమికుడు</string>
+    <string name="personality_commuter">ప్రయాణికుడు</string>
+    <string name="personality_homebody">ఇంట్లోనే ఉండేవాడు</string>
+    <string name="personality_bill_payer">బిల్లు చెల్లించేవాడు</string>
+    <string name="personality_entertainer">వినోద ప్రేమికుడు</string>
+    <string name="personality_health_first">ఆరోగ్యం ముందు</string>
+    <string name="personality_shopaholic">షాపింగ్ వ్యసనపరుడు</string>
+    <string name="personality_tech_buff">టెక్ ప్రేమికుడు</string>
+    <string name="personality_saver">పొదుపరి</string>
+    <string name="personality_road_warrior">రోడ్ యోధుడు</string>
+    <string name="personality_scholar">పండితుడు</string>
+    <string name="personality_connected">ఎప్పుడూ కనెక్టెడ్</string>
+    <string name="personality_power_user">పవర్ యూజర్</string>
+    <string name="personality_farmer">రైతు</string>
+    <string name="personality_trader">వ్యాపారి</string>
+    <string name="personality_debt_crusher">అప్పు నిర్మూలకుడు</string>
+    <string name="personality_versatile">వైవిధ్య ఖర్చుదారు</string>
+
+    <string name="voice_listening">వింటోంది…</string>
+    <string name="voice_tap_to_speak">మీ ఖర్చు చెప్పండి — ఉదా. "భోజనానికి 200 ఖర్చు చేశాను"</string>
+    <string name="voice_result_title">నేను వినింది ఇది</string>
+    <string name="voice_confirm">నిర్ధారించి ఖర్చు జోడించు</string>
+    <string name="voice_try_again">మళ్ళీ ప్రయత్నించు</string>
+    <string name="voice_no_speech">మాట్లాడటం గుర్తించలేదు. మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="voice_not_detected">గుర్తించలేదు</string>
+    <string name="voice_field_amount">మొత్తం</string>
+    <string name="voice_field_description">వివరణ</string>
+    <string name="voice_field_category">వర్గం</string>
+    <string name="voice_permission_denied">వాయిస్ ఎంట్రీకి మైక్రోఫోన్ అనుమతి అవసరం</string>
+
+    <string name="receipt_scan_title">రసీదు / బిల్ స్కాన్</string>
+    <string name="receipt_scan_hint">కెమెరాను రసీదు లేదా బిల్లుపై పెట్టండి. మొత్తాన్ని ఆటోమేటిగ్గా చదువుతాము.</string>
+    <string name="receipt_open_camera">కెమెరా తెరువు</string>
+    <string name="receipt_scanning">రసీదు చదువుతోంది…</string>
+    <string name="receipt_amount_found">మొత్తం కనుగొన్నారు</string>
+    <string name="receipt_use_amount">ఈ మొత్తం ఉపయోగించు</string>
+    <string name="receipt_edit_hint">అవసరమైతే పైన ఉన్న మొత్తాన్ని సవరించండి</string>
+    <string name="receipt_rescan">మళ్ళీ స్కాన్</string>
+    <string name="receipt_no_amount_title">మొత్తం చదవలేకపోయాం</string>
+    <string name="receipt_no_amount_body">స్కాన్‌లో స్పష్టమైన మొత్తం కనుగొనలేదు. మంచి వెలుతురులో మళ్ళీ ప్రయత్నించండి, లేదా మొత్తాన్ని మాన్యువల్‌గా నమోదు చేయండి.</string>
+    <string name="receipt_enter_manually">మాన్యువల్‌గా నమోదు చేయి</string>
+    <string name="receipt_error_title">ఏదో తప్పు జరిగింది</string>
+    <string name="receipt_retry">మళ్ళీ ప్రయత్నించు</string>
+    <string name="receipt_close">మూసివేయి</string>
+    <string name="receipt_camera_permission_denied">రసీదు స్కాన్ చేయడానికి కెమెరా అనుమతి అవసరం</string>
+
+    <string name="family_mode_title">కుటుంబ మోడ్</string>
+    <string name="family_mode_subtitle">మీ కుటుంబంతో పంచుకున్న బడ్జెట్ — అన్ని డేటా పరికరంలోనే.</string>
+    <string name="family_mode_toggle_label">కుటుంబ మోడ్ ప్రారంభించు</string>
+    <string name="family_mode_description">కుటుంబ సభ్యుల ఖర్చు ట్రాక్ చేయండి. భాగస్వామిని ఆహ్వానించడానికి కోడ్ పంచుకోండి.</string>
+    <string name="family_setup_members">సభ్యులు నిర్వహించు (%d)</string>
+    <string name="family_setup">కుటుంబ మోడ్ అమర్చు</string>
+    <string name="family_add_member">సభ్యుడు జోడించు</string>
+    <string name="family_edit_member">సభ్యుడు సవరించు</string>
+    <string name="family_delete_member">సభ్యుడు తొలగించు</string>
+    <string name="family_me_label">· నేను</string>
+    <string name="family_member_name_hint">పేరు (ఉదా. సారా)</string>
+    <string name="family_member_emoji_hint">ఎమోజీ అవతార్ (ఐచ్ఛికం)</string>
+    <string name="family_pick_color">రంగు ఎంచుకో</string>
+    <string name="family_shared">పంచుకున్నది</string>
+    <string name="family_share_code_title">భాగస్వామి లేదా కుటుంబంతో పంచుకో</string>
+    <string name="family_share_code_desc">మీ భాగస్వామి తమ ఫోన్‌లో నమోదు చేయడానికి ఒక కోడ్ తయారు చేయండి.</string>
+    <string name="family_generate_code">ఆహ్వాన కోడ్ తయారు చేయి</string>
+    <string name="family_join_code_title">కుటుంబంలో చేరు</string>
+    <string name="family_join_with_code">ఆహ్వాన కోడ్ నమోదు చేయి</string>
+    <string name="family_enter_code_hint">కోడ్ పేస్ట్ లేదా టైప్ చేయి</string>
+    <string name="family_join">సభ్యులను దిగుమతి చేసుకో</string>
+    <string name="family_disable">కుటుంబ మోడ్ నిలిపివేయి</string>
+    <string name="family_disable_confirm_title">కుటుంబ మోడ్ నిలిపివేయాలా?</string>
+    <string name="family_disable_confirm_body">అన్ని సభ్యుల ప్రొఫైల్‌లు తొలగించబడతాయి. మీ ఖర్చు చరిత్ర ప్రభావితం కాదు.</string>
+    <string name="family_delete_confirm_title">సభ్యుడు తొలగించాలా?</string>
+    <string name="family_delete_confirm_body">%s ని మీ కుటుంబం నుండి తొలగించాలా? వారి పాత ఖర్చులు పంచుకున్నట్లు కనిపిస్తాయి.</string>
+    <string name="family_invite_code_title">మీ ఆహ్వాన కోడ్</string>
+    <string name="family_invite_code_desc">ఈ కోడ్ మీ భాగస్వామి లేదా కుటుంబ సభ్యునితో పంచుకోండి.</string>
+    <string name="family_copy_code">కోడ్ కాపీ చేయి</string>
+    <string name="family_no_members_hint">ఇంకా సభ్యులు లేరు — కుటుంబం అమర్చడానికి సెట్టింగ్‌లు నొక్కండి.</string>
+    <string name="family_expense_assigned_to">కేటాయించారు</string>
+    <string name="family_total_spent">మొత్తం: %1$s%2$.2f ఈ నెల</string>
+    <string name="family_import_up_to_date">ఇప్పటికే నవీకరించారు</string>
+    <string name="family_import_added">జోడించారు: %s</string>
+
+    <string name="nav_splits">స్ప్లిట్స్</string>
+    <string name="split_screen_title">స్ప్లిట్స్</string>
+    <string name="split_screen_subtitle">గ్రూప్ ఖర్చు విభజన</string>
+    <string name="split_empty_title">ఇంకా గ్రూపులు లేవు</string>
+    <string name="split_empty_subtitle">స్నేహితులు లేదా కుటుంబంతో ఖర్చులు విభజించడానికి గ్రూప్ తయారు చేయండి</string>
+    <string name="split_create_group">గ్రూప్ తయారు చేయి</string>
+    <string name="split_new_group">కొత్త గ్రూప్</string>
+    <string name="split_new_group_subtitle">పేరు నమోదు చేయండి, ఎమోజీ ఎంచుకోండి, సభ్యులను జోడించండి</string>
+    <string name="split_group_emoji">ఎమోజీ</string>
+    <string name="split_group_name_hint">గ్రూప్ పేరు (ఉదా. దుబాయ్ ట్రిప్)</string>
+    <string name="split_members_label">సభ్యులు</string>
+    <string name="split_add_member_hint">సభ్యుడి పేరు జోడించు</string>
+    <string name="split_member_count">%d సభ్యులు</string>
+    <string name="split_settled">పరిష్కరించారు ✓</string>
+    <string name="split_you_owe">మీరు %1$s%2$.2f చెల్లించాల్సింది</string>
+    <string name="split_you_get">మీకు %1$s%2$.2f రావాల్సింది</string>
+    <string name="split_settle_up">లెక్క తీర్చు</string>
+    <string name="split_member_balances">సభ్యుల బ్యాలెన్స్‌లు</string>
+    <string name="split_expenses_label">ఖర్చులు</string>
+    <string name="split_expense_count">%d ఖర్చులు</string>
+    <string name="split_no_expenses">ఇంకా ఖర్చులు లేవు — + నొక్కండి</string>
+    <string name="split_add_expense">ఖర్చు జోడించు</string>
+    <string name="split_expense_description">ఇది దేని కోసం?</string>
+    <string name="split_expense_amount">మొత్తం</string>
+    <string name="split_paid_by">ఎవరు చెల్లించారు</string>
+    <string name="split_paid_by_member">%s చెల్లించారు</string>
+    <string name="split_split_among">ఎవరిలో విభజించాలి</string>
+    <string name="split_split_among_hint">ఈ ఖర్చు సమానంగా పంచుకునే వారిని ఎంచుకోండి</string>
+    <string name="split_save_expense">ఖర్చు సేవ్ చేయి</string>
+    <string name="split_delete_expense">ఖర్చు తొలగించాలా?</string>
+    <string name="split_delete_expense_confirm">"%s" తొలగించాలా? దీన్ని రద్దు చేయడం సాధ్యం కాదు.</string>
+    <string name="split_delete_group">గ్రూప్ తొలగించు</string>
+    <string name="split_delete_group_confirm">"%s" మరియు దాని అన్ని ఖర్చులు తొలగించాలా? దీన్ని రద్దు చేయడం సాధ్యం కాదు.</string>
+    <string name="split_all_settled">అన్నీ పరిష్కరించారు! 🎉</string>
+    <string name="split_all_settled_subtitle">అందరూ సమానంగా ఉన్నారు. బదిలీలు అవసరం లేదు.</string>
+    <string name="split_transfers_needed">%d బదిలీ(లు) అవసరం</string>
+    <string name="split_mark_paid">చెల్లించినట్లు గుర్తించు</string>
+    <string name="split_share_whatsapp">WhatsApp ద్వారా పంచుకో</string>
+    <string name="split_more_options">మరిన్ని ఎంపికలు</string>
+    <string name="split_wa_header">ఖర్చు సారాంశం</string>
+    <string name="split_wa_expenses">ఖర్చులు (%d)</string>
+    <string name="split_wa_paid_by">చెల్లించినవారు: %s</string>
+    <string name="split_wa_total">మొత్తం: %s</string>
+    <string name="split_wa_balances">బ్యాలెన్స్‌లు</string>
+    <string name="split_wa_gets">పొందుతారు</string>
+    <string name="split_wa_owes">చెల్లించాల్సింది</string>
+    <string name="split_wa_member_settled">పరిష్కరించారు</string>
+    <string name="split_wa_to_pay">చెల్లించండి</string>
+    <string name="split_wa_all_settled">అందరూ పరిష్కరించారు! 🎉</string>
+    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="reminder_notification_tip">చిట్కా: రోజూ నమోదు చేయడం బడ్జెట్ నియంత్రించడం సులభం 📊</string>
+    <string name="reminder_action_add_expense">ఖర్చు జోడించు</string>
+</resources>
