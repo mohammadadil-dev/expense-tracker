@@ -12,40 +12,47 @@ Expense Tracker
 ## Short description (max 80 characters)
 
 ```
-Track spending, budgets & bills privately — no ads, no account, no cloud.
+Expenses, budgets, debts, splits & ledger — private, on-device, no account.
 ```
-(73 characters)
+(76 characters)
 
 ## Full description (max 4000 characters)
 
 ```
-Expense Tracker is a simple, private way to see where your money goes — built for everyone, whether you're managing a household budget or running detailed monthly reports.
-
-Everything stays on your phone. There's no account to create, no ads, and no internet connection required to use the app — your financial data is never uploaded anywhere.
+Expense Tracker is an all-in-one money app — track spending, split bills with friends, manage a lending/borrowing ledger, and pay down debts — all without an account, and with every number staying on your phone.
 
 WHAT YOU CAN DO
-• Log expenses in seconds and organize them by category
+• Log expenses in seconds — by typing, scanning a receipt with your camera, or just saying "spent 50 on food"
 • See a clear monthly breakdown, spending trends, and a financial health score at a glance
-• Set an overall monthly budget and track how much you have left in real time
-• Get plain-language spending insights — like when you're projected to go over budget
+• Set a monthly budget and track how much you have left in real time
+• Get plain-language spending insights — like when you're projected to go over budget, or which category jumped this month
 • Auto-detect expenses from bank/payment SMS messages (optional, and only with your one-tap approval each time — the app never gets blanket access to your messages)
-• Export a polished PDF report of any month for your records or to share
+• Keep a Khata (ledger) of who owes you money and what you owe others, with one-tap WhatsApp payment reminders
+• Track loans and debts with a clear payoff view
+• Split group expenses with friends or family and settle up with one WhatsApp message
+• Set savings goals and build a daily logging streak
+• Turn on Family mode to track a shared household budget together
+• Export a polished PDF or CSV report of any month
 • View your expenses by day, by category, as a grid, or on a calendar
+• Lock the app with your fingerprint or face
+• Add a home-screen widget for an at-a-glance balance
+• Back up your data to your own Google Drive any time (fully optional — off by default)
 • Switch between English, Arabic, and Hindi, with full right-to-left support and an Arabic Hijri calendar
 
-BUILT TO BE PRIVATE
-Expense Tracker has no servers. Every expense, category, and setting is stored locally in a database on your device. We don't collect analytics, we don't show ads, and we don't share your information with anyone — because we never receive it in the first place.
+BUILT TO RESPECT YOUR PRIVACY
+Expense Tracker has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else. Optional Google Drive backup sends data only to your own Drive, under your control.
 
 DESIGNED FOR EVERYONE
-Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for someone who wants detailed monthly reports — no finance background required.
+Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for someone tracking shared expenses across a family or a friend group — no finance background required.
 
 Your currency and language are detected automatically from your phone, and can be changed any time in Settings.
 ```
-(1,721 characters — well under the 4,000 limit)
+(2,231 characters — under the 4,000 limit)
 
-## Release notes — v1.0 (max 500 characters)
+## Release notes — v1.0 (historical, max 500 characters)
 
-Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+This is what shipped in the first release. Kept here for reference — paste the **current version's**
+notes (below) into Play Console for new submissions, not this one.
 
 ```
 Introducing Expense Tracker — a simple, private way to track your spending.
@@ -57,9 +64,33 @@ Introducing Expense Tracker — a simple, private way to track your spending.
 • Export polished PDF reports
 • Available in English, Arabic, and Hindi
 
-No ads, no account, no cloud — everything stays on your device.
+No account, no cloud — everything stays on your device.
 ```
-(451 characters)
+(437 characters)
+
+## Release notes — v1.7.0 (max 500 characters)
+
+Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+Update this section again for future versions rather than reusing v1.0's — the app has grown a lot
+since the first release (Khata ledger, debts, splits, family mode, receipt scan, voice entry, goals
+and streaks, biometric lock, widget, and optional Drive backup all shipped after v1.0).
+
+```
+Expense Tracker now does a lot more than expense tracking:
+
+• Khata ledger for money you're owed or owe, with WhatsApp reminders
+• Debt payoff tracking
+• Split bills with friends — settle up on WhatsApp
+• Receipt scanning and voice expense entry
+• Savings goals and daily streaks
+• Family mode for shared household budgets
+• Fingerprint/face app lock
+• Home-screen widget
+• Optional backup to your own Google Drive
+
+Still no account required, and your data still never leaves your device unless you choose to back it up or export it.
+```
+(499 characters)
 
 ## Notes
 

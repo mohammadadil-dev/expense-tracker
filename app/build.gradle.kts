@@ -1,7 +1,22 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+}
+
+// Release signing credentials live in local.properties (gitignored, machine-local), never in
+// this file — build.gradle.kts is tracked by git and previously had the keystore password
+// committed in plaintext. Debug builds and non-release Gradle tasks don't need these values,
+// so a missing/incomplete local.properties only breaks `assembleRelease`/`bundleRelease`,
+// not day-to-day development.
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(FileInputStream(localPropertiesFile))
+    }
 }
 
 android {
@@ -30,10 +45,11 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile     = file("/Users/mdadil/Documents/android-release-key/expense-tracker/Untitled")
-            storePassword = "Adil@1234"
-            keyAlias      = "key0"
-            keyPassword   = "Adil@1234"
+            val storeFilePath = localProperties.getProperty("RELEASE_STORE_FILE")
+            storeFile     = storeFilePath?.let { file(it) }
+            storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias      = localProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword   = localProperties.getProperty("RELEASE_KEY_PASSWORD")
         }
     }
 
