@@ -22,6 +22,13 @@ object LocaleHelper {
             // to English because it looks for values-fil/, not values-tl/.
             "tl" -> LocaleListCompat.forLanguageTags("fil")
             "bn" -> LocaleListCompat.forLanguageTags("bn")
+            "ta" -> LocaleListCompat.forLanguageTags("ta")
+            "te" -> LocaleListCompat.forLanguageTags("te")
+            "kn" -> LocaleListCompat.forLanguageTags("kn")
+            "ml" -> LocaleListCompat.forLanguageTags("ml")
+            "mr" -> LocaleListCompat.forLanguageTags("mr")
+            "gu" -> LocaleListCompat.forLanguageTags("gu")
+            "pa" -> LocaleListCompat.forLanguageTags("pa")
             else -> LocaleListCompat.forLanguageTags("en")
         }
         AppCompatDelegate.setApplicationLocales(locales)

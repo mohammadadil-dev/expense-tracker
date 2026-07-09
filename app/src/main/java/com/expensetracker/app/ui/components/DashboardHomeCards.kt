@@ -338,27 +338,43 @@ fun BudgetRingCard(
                     }
                 }
             } else {
-                // No budget set — prompt
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White.copy(alpha = 0.08f))
-                        .clickable { onManageBudget() }
-                        .padding(vertical = 14.dp, horizontal = 16.dp),
-                    contentAlignment = Alignment.Center
+                // No budget set — show total spending prominently + prompt to set budget
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        // Ring with 0% even when no budget set
-                        BudgetProgressRing(
-                            spentFraction = 0f,
-                            modifier = Modifier.size(120.dp)
+                    // Total spent this month — always visible even without a budget
+                    Text(
+                        text = stringResource(R.string.stat_spent_label),
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = Color.White.copy(alpha = 0.60f),
+                            fontWeight = FontWeight.Medium
                         )
-                        Spacer(Modifier.height(12.dp))
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    MoneyText(
+                        formatted = Formatters.money(totalSpent, currencySymbol),
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    // Budget prompt — secondary, tappable
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(Color.White.copy(alpha = 0.10f))
+                            .clickable { onManageBudget() }
+                            .padding(horizontal = 20.dp, vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Text(
                             text = stringResource(R.string.bento_budget_no_target),
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = Color.White.copy(alpha = 0.65f)
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = Color.White.copy(alpha = 0.70f)
                             )
                         )
                     }
