@@ -20,12 +20,13 @@ import com.google.android.gms.common.api.Status
  * arrive while [startListening] is active, which in practice means while the app is open, since
  * showing the consent prompt requires a foreground Activity.
  *
- * Because of that foreground-only limitation, this is now the secondary/fallback detection path.
- * [com.expensetracker.app.util.TransactionNotificationListener] is the primary one — it works
- * even while the app is closed, once the user grants notification access. This class stays
- * active alongside it so detection still works for users who haven't granted that access yet.
- * [com.expensetracker.app.data.ExpenseRepository.addPendingSmsExpense] deduplicates in case both
- * paths catch the same real message.
+ * This is deliberately the app's only SMS detection method. A background alternative
+ * (NotificationListenerService, reading the default SMS app's notifications) was built and then
+ * reverted before release: it requires a broad, all-notifications "special app access" grant, and
+ * Play Console review has historically treated that pattern — using notification access to read
+ * SMS content instead of declaring the restricted READ_SMS/RECEIVE_SMS permission — as a policy
+ * circumvention risk for finance apps specifically. Staying foreground-only (detection only works
+ * while the app is open) is the trade-off accepted to avoid that risk.
  */
 class SmsConsentManager(
     private val context: Context,

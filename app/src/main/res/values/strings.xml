@@ -196,11 +196,7 @@
 
     <string name="sms_detection_title">SMS Detection</string>
     <string name="sms_detection_toggle_label">Detect transactions from SMS</string>
-    <string name="sms_detection_description">When you get a bank, UPI, or card SMS, it\'s added to a review queue below — nothing is saved until you confirm it. Turn on background detection below so this keeps working even when the app is closed.</string>
-    <string name="sms_background_access_label">Background detection</string>
-    <string name="sms_background_access_on">Active — works even when the app is closed</string>
-    <string name="sms_background_access_off">Not granted — only catches messages while the app is open</string>
-    <string name="sms_background_access_button">Turn on</string>
+    <string name="sms_detection_description">When you get a bank, UPI, or card SMS, it\'s added to a review queue below — nothing is saved until you confirm it. Only works while the app is open.</string>
     <string name="sms_pending_banner">%1$d transaction(s) detected from SMS — tap to review</string>
     <string name="sms_review_title">Review %1$d Transaction(s)</string>
     <string name="sms_review_subtitle">Confirm or edit each one before it\'s saved as an expense.</string>

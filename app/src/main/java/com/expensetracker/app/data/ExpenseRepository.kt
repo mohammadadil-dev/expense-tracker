@@ -2,7 +2,6 @@ package com.expensetracker.app.data
 
 import com.expensetracker.app.util.DateUtils
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 
 sealed class DeleteCategoryResult {
     object MustKeepOne : DeleteCategoryResult()
@@ -158,24 +157,8 @@ class ExpenseRepository(private val db: AppDatabase) {
 
     /** Queues a parser-detected SMS transaction for the user to review before it becomes a
      * real expense. */
-    /**
-     * Two independent paths can now detect the same real-world SMS: the foreground SMS User
-     * Consent flow ([com.expensetracker.app.util.SmsConsentManager], only while the app is open)
-     * and the background [com.expensetracker.app.util.TransactionNotificationListener] (once the
-     * user grants notification access). If both happen to be active when a message arrives, this
-     * guards against queuing the same transaction twice — same amount within a 90-second window
-     * is treated as a duplicate rather than two genuinely separate transactions, which in
-     * practice is a vanishingly rare false rejection compared to how often it prevents a
-     * confusing double entry in the review queue.
-     */
-    suspend fun addPendingSmsExpense(item: PendingSmsExpense): Long {
-        val recent = db.pendingSmsExpenseDao().observeAll().first()
-        val isDuplicate = recent.any { existing ->
-            existing.amount == item.amount && kotlin.math.abs(existing.receivedAt - item.receivedAt) < 90_000L
-        }
-        if (isDuplicate) return -1L
-        return db.pendingSmsExpenseDao().insert(item)
-    }
+    suspend fun addPendingSmsExpense(item: PendingSmsExpense): Long =
+        db.pendingSmsExpenseDao().insert(item)
 
     /** Removes a pending SMS item — used both when the user dismisses it outright and when
      * it's been accepted (turned into a real expense) and no longer needs to sit in the queue. */
