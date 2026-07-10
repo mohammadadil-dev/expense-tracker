@@ -1,5 +1,9 @@
 # Play Console "Data Safety" Form — Answer Key
 
+**Updated 2026-07-10** to cover the new Notification Listener–based background SMS detection (see
+"Notification Listener access" under Step 1) — this needs its own sensitive-permission disclosure
+in Play Console, separate from the standard Data Safety questions below.
+
 **This file was rewritten on 2026-07-09, then corrected again the same day.** The previous version
 of this answer key told you to declare "no ads" and "no data collection" — that stopped being true
 once AdMob (banner + interstitial) was added (currently in v1.7.0, `versionCode 17`). The first
@@ -49,6 +53,28 @@ picks, not through us). The SMS User Consent flow itself is still **not** collec
 the message text to the app locally after a per-message tap, and the app never relays it anywhere.
 Family Mode is also currently hidden/commented out in `SettingsScreen.kt` and irrelevant here
 regardless, since it was always local-only with no data leaving the device.
+
+### Notification Listener access (added for background SMS detection)
+
+`TransactionNotificationListener.kt` uses `BIND_NOTIFICATION_LISTENER_SERVICE` to read
+notifications from the device's default SMS app, so transaction detection keeps working when the
+app is closed (see `SmsConsentManager.kt`'s doc comment for why the old foreground-only approach
+needed this). Same as the SMS User Consent flow, this is **not** "collection" under Play's
+definition — the notification text is read and parsed entirely on-device, filtered in code to the
+default SMS package only, and nothing is transmitted anywhere.
+
+However, this is a **separate, more sensitive disclosure than Data Safety**: Notification Listener
+(`android.permission.BIND_NOTIFICATION_LISTENER_SERVICE`) is one of Android's "special app access"
+permissions, in the same family of scrutiny as Accessibility Service — Play Console has historically
+required a specific justification for apps requesting it, reviewed more strictly than an ordinary
+runtime permission, precisely because it can technically read *any* notification on the device (this
+app deliberately only reads the default SMS package's notifications, enforced in code, not by the
+permission itself — the permission grant is all-or-nothing on Android's side). **Before submitting a
+release with this feature**, check Play Console's current policy center for whatever the live
+"sensitive permissions" / notification access disclosure requirement is at the time — this changes
+more often than the standard Data Safety form, and specifics here may be stale by the time you read
+this. Explain clearly, wherever Play Console asks: "reads notifications from the user's own default
+SMS app only, to detect bank/UPI transaction messages, entirely on-device, off by default and opt-in."
 
 ## Step 2 — Security practices
 

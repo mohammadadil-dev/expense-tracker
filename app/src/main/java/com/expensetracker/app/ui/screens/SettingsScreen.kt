@@ -79,12 +79,16 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -526,6 +530,60 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary
                         )
+                        if (smsDetectionEnabled) {
+                            // Re-checked on every ON_RESUME (not just once) because the only way
+                            // to grant this is the system "Notification access" screen, which the
+                            // user reaches and returns from without this Activity being recreated.
+                            val lifecycleOwner = LocalLifecycleOwner.current
+                            var notifListenerActive by remember { mutableStateOf(false) }
+                            DisposableEffect(lifecycleOwner) {
+                                fun refresh() {
+                                    notifListenerActive = NotificationManagerCompat
+                                        .getEnabledListenerPackages(context)
+                                        .contains(context.packageName)
+                                }
+                                refresh()
+                                val observer = LifecycleEventObserver { _, event ->
+                                    if (event == Lifecycle.Event.ON_RESUME) refresh()
+                                }
+                                lifecycleOwner.lifecycle.addObserver(observer)
+                                onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+                            }
+
+                            Spacer(Modifier.height(10.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(R.string.sms_background_access_label),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                    Text(
+                                        text = stringResource(
+                                            if (notifListenerActive) R.string.sms_background_access_on
+                                            else R.string.sms_background_access_off
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = if (notifListenerActive) AccentIndigo else TextSecondary
+                                    )
+                                }
+                                if (!notifListenerActive) {
+                                    Spacer(Modifier.width(8.dp))
+                                    TextButton(onClick = {
+                                        context.startActivity(
+                                            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                                        )
+                                    }) {
+                                        Text(stringResource(R.string.sms_background_access_button))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
