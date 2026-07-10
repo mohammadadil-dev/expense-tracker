@@ -137,8 +137,9 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
     // Glance — Compose-based home screen widget toolkit.
-    implementation("androidx.glance:glance-appwidget:1.1.0")
-    implementation("androidx.glance:glance-material3:1.1.0")
+    // 1.1.1 fixes CVE-2024-7254 (protobuf-java) — Play Console flagged 1.1.0 for this.
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+    implementation("androidx.glance:glance-material3:1.1.1")
 
     // Play In-App Updates — forces users onto the latest version via a full-screen
     // immediate update flow that can't be dismissed (used to push users off crashing builds).
