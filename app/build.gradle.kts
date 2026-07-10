@@ -144,6 +144,10 @@ dependencies {
     // immediate update flow that can't be dismissed (used to push users off crashing builds).
     implementation("com.google.android.play:app-update-ktx:2.1.0")
 
+    // Play In-App Review — native star-rating dialog shown after the 5th logged expense,
+    // without sending the user to the Play Store. See util/InAppReviewManager.kt.
+    implementation("com.google.android.play:review-ktx:2.0.1")
+
     // ML Kit Text Recognition — offline OCR for receipt/bill scanning.
     // On-device model (bundled); no network call needed at scan time.
     implementation("com.google.mlkit:text-recognition:16.0.1")

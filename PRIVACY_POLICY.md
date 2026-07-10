@@ -6,11 +6,11 @@ This policy explains what Expense Tracker ("the app") does and does not do with 
 
 ## The short version
 
-Expense Tracker has no servers and no user accounts. Every expense, category, budget, debt, ledger (Khata) entry, and setting you enter is stored only in a local database on your own device, and we — the developer — never receive, see, or store any of it. The app shows ads (see below) and offers an *optional* Google Drive backup feature (see below); both are the only ways any information ever leaves your device, and both are described in full here.
+Expense Tracker has no servers and no user accounts. Every expense, category, budget, debt, ledger (Khata) entry, and setting you enter is stored only in a local database on your own device, and we — the developer — never receive, see, or store any of it. The app shows ads (see below), which is currently the only way any information leaves your device — described in full below.
 
 ## What the app stores, and where
 
-All your data (expenses, income, categories, budgets, debts, ledger/Khata entries, split-group bills, goals, your display name, language and currency preferences) is saved in a local on-device database (Room/SQLite). It stays on your device unless you personally choose to move it — for example, by using the app's PDF/CSV export and sharing that file yourself through Android's share sheet, or by turning on Google Drive backup (below). Sharing via the share sheet is initiated by you, goes through apps you select, and is governed by those apps' own privacy policies — we have no visibility into it.
+All your data (expenses, income, categories, budgets, debts, ledger/Khata entries, split-group bills, goals, your display name, language and currency preferences) is saved in a local on-device database (Room/SQLite). It stays on your device unless you personally choose to move it — for example, by using the app's PDF/CSV export or local JSON backup file and sharing it yourself through Android's share sheet. That sharing step is initiated by you, goes through apps you select, and is governed by those apps' own privacy policies — we have no visibility into it.
 
 If you uninstall the app, its local database is deleted with it. **Settings → Reset All Data** also lets you erase everything inside the app at any time, instantly and permanently.
 
@@ -18,9 +18,9 @@ If you uninstall the app, its local database is deleted with it. **Settings → 
 
 The app shows banner and occasional full-screen ads served by Google AdMob, which is how the app stays free with no account or subscription required. AdMob may collect device identifiers (such as the Android Advertising ID), general app-interaction data, and IP-derived approximate location, and may use this data for ad personalization and measurement, per [Google's AdMob privacy practices](https://support.google.com/admob/answer/6128543). The app does not request device location permission and does not pass any of your financial data (expenses, budgets, Khata entries, etc.) to AdMob or any advertiser — the ad SDK operates independently of, and has no access to, the data described in "What the app stores" above. You can opt out of personalized advertising for your device in your Google Account's Ad Settings.
 
-## Optional cloud backup (Google Drive)
+## Google Drive backup — not currently active
 
-If you turn on backup in **Settings → Backup**, the app uploads a copy of your local database to a folder in *your own* Google Drive account, using Google's Drive API after you sign in with your own Google account. This is entirely opt-in — the feature does nothing unless you turn it on — and the backup file goes only to storage you control; the developer never receives a copy. You can delete a backup at any time from your Google Drive, or from **Settings → Backup** in the app, and you can revoke the app's Drive access at any time from your Google Account's third-party access settings. Google's handling of the backup file once it's in your Drive is governed by [Google's own privacy policy](https://policies.google.com/privacy).
+An optional Google Drive backup feature exists in the app's code but its UI is currently disabled/hidden pending Drive OAuth consent-screen setup — there is no way for a user to reach or trigger it in the current release, so no data is transmitted through it today. This policy will be updated with a full description before that entry point is re-enabled in a future release.
 
 ## SMS-based expense detection (optional)
 
@@ -37,12 +37,12 @@ Receipt scanning uses ML Kit's on-device text recognition (camera permission) �
 - We don't operate any servers, and we never receive, see, or store your financial data ourselves.
 - We don't use analytics or crash-reporting SDKs.
 - We don't share or sell your financial data to third parties.
-- We don't require or use an account, login, email, or phone number to use the app (a Google sign-in is only requested if *you* turn on Drive backup).
+- We don't require or use an account, login, email, or phone number to use the app.
 - We don't track you across other apps or websites.
 
 ## Children's privacy
 
-Expense Tracker is a general-purpose finance utility, not directed at children, and we don't knowingly collect personal information from children. The app itself never receives your financial data regardless of age; the only data leaving the device is the ad-related data described above (handled by Google AdMob, which offers its own controls for treating users as children under COPPA/GDPR-K where applicable) and, only if a user opts in, the Drive backup they explicitly control.
+Expense Tracker is a general-purpose finance utility, not directed at children, and we don't knowingly collect personal information from children. The app itself never receives your financial data regardless of age; the only data leaving the device is the ad-related data described above, handled by Google AdMob, which offers its own controls for treating users as children under COPPA/GDPR-K where applicable.
 
 ## Changes to this policy
 

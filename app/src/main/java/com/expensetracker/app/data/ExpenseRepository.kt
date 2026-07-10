@@ -33,6 +33,9 @@ class ExpenseRepository(private val db: AppDatabase) {
     fun expensesForMonth(monthKey: String): Flow<List<ExpenseEntity>> =
         db.expenseDao().observeByMonth(monthKey)
 
+    /** Total number of expenses ever logged — used only to time the in-app review prompt. */
+    suspend fun countExpenses(): Int = db.expenseDao().count()
+
     suspend fun seedDefaultCategoriesIfNeeded() {
         if (db.categoryDao().count() == 0) {
             defaultCategorySeed().forEach { db.categoryDao().insert(it) }

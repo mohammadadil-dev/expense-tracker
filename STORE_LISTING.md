@@ -31,16 +31,14 @@ WHAT YOU CAN DO
 • Track loans and debts with a clear payoff view
 • Split group expenses with friends or family and settle up with one WhatsApp message
 • Set savings goals and build a daily logging streak
-• Turn on Family mode to track a shared household budget together
-• Export a polished PDF or CSV report of any month
+• Export a polished PDF, CSV, or JSON report/backup of any month
 • View your expenses by day, by category, as a grid, or on a calendar
 • Lock the app with your fingerprint or face
 • Add a home-screen widget for an at-a-glance balance
-• Back up your data to your own Google Drive any time (fully optional — off by default)
 • Switch between English, Arabic, and Hindi, with full right-to-left support and an Arabic Hijri calendar
 
 BUILT TO RESPECT YOUR PRIVACY
-Expense Tracker has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else. Optional Google Drive backup sends data only to your own Drive, under your control.
+Expense Tracker has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else.
 
 DESIGNED FOR EVERYONE
 Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for someone tracking shared expenses across a family or a friend group — no finance background required.
@@ -72,8 +70,10 @@ No account, no cloud — everything stays on your device.
 
 Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
 Update this section again for future versions rather than reusing v1.0's — the app has grown a lot
-since the first release (Khata ledger, debts, splits, family mode, receipt scan, voice entry, goals
-and streaks, biometric lock, widget, and optional Drive backup all shipped after v1.0).
+since the first release (Khata ledger, debts, splits, receipt scan, voice entry, goals and streaks,
+biometric lock, widget all shipped after v1.0). Family Mode and Google Drive backup exist in the
+codebase but their UI entry points are currently commented out / not shipped — don't advertise them
+anywhere in the store listing until they're actually re-enabled for users.
 
 ```
 Expense Tracker now does a lot more than expense tracking:
@@ -83,16 +83,15 @@ Expense Tracker now does a lot more than expense tracking:
 • Split bills with friends — settle up on WhatsApp
 • Receipt scanning and voice expense entry
 • Savings goals and daily streaks
-• Family mode for shared household budgets
 • Fingerprint/face app lock
 • Home-screen widget
-• Optional backup to your own Google Drive
 
-Still no account required, and your data still never leaves your device unless you choose to back it up or export it.
+Still no account required, and your data still never leaves your device unless you choose to export it.
 ```
-(499 characters)
+(423 characters)
 
 ## Notes
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
 - Screenshots and a feature graphic still need to be captured from a real build (see the main README's "Publishing to the Play Store" section) — that requires running the app on a device or emulator, which isn't something that can be produced from here.
+- **This file lags the actual live Play Store listing.** The real listing (title "Expense & Budget Tracker", developer "AG Tech") already has a richer description covering more languages than shown here, and — as of this writing — it still mentions "Google Drive cloud backup" as a feature. Since that feature's UI is currently disabled, that line should be removed from the *live* Play Console listing directly (not just this reference file) to avoid users looking for a feature they can't find.

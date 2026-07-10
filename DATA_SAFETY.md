@@ -1,11 +1,13 @@
 # Play Console "Data Safety" Form — Answer Key
 
-**This file was rewritten on 2026-07-09.** The previous version of this answer key told you to declare
-"no ads" and "no data collection." That stopped being true once AdMob (banner + interstitial) and
-optional Google Drive backup were added (currently in v1.7.0, `versionCode 17`) — filing the old
-answers now would be a **false declaration to Play Console**, which risks a policy strike or app
-suspension if Google's automated scan of your APK/AAB (which does detect the AdMob SDK) disagrees
-with what you declared. This version reflects the app's actual current dependencies and manifest.
+**This file was rewritten on 2026-07-09, then corrected again the same day.** The previous version
+of this answer key told you to declare "no ads" and "no data collection" — that stopped being true
+once AdMob (banner + interstitial) was added (currently in v1.7.0, `versionCode 17`). The first
+rewrite also told you to declare Google Drive backup as collecting Financial info; that's been
+walked back in this version because the Drive backup **UI is currently disabled** (see Step 1) —
+declaring a feature users can't actually reach would over-disclose. Keep this file in sync with
+`SettingsScreen.kt`'s current state, not just `build.gradle.kts`'s dependency list, since a
+dependency being present doesn't mean the feature is reachable.
 
 ⚠️ **Not legal advice.** This is a careful reading of the code, not a substitute for review by
 someone qualified to advise on Play Console policy compliance for your specific situation.
@@ -17,36 +19,43 @@ Drive or a third-party SDK's servers, not just "to the developer." ([Google's ow
 ## Step 1 — Data collection and security
 
 **"Does your app collect or share any of the required user data types?"**
-→ **Yes.** Two independent things leave the device, and both need declaring:
+→ **Yes** — but for one reason only right now, not two:
 
 1. **AdMob (banner + interstitial ads)** — the SDK is present (`play-services-ads:23.3.0` in
-   `app/build.gradle.kts`, plus the `APPLICATION_ID` meta-data in `AndroidManifest.xml`). Declare:
+   `app/build.gradle.kts`, plus the `APPLICATION_ID` meta-data in `AndroidManifest.xml`) and is
+   actively shown to users. Declare:
    - **Device or other IDs** → collected, shared with Google (AdMob), purpose: **Advertising or
      marketing**. This is what the Advertising ID (AD_ID) declaration below covers.
    - Data is **not** collected for App functionality/analytics by you directly — it's the ad SDK's
      own collection, which Play Console asks about separately as "third party" collection.
    - The app does **not** request `ACCESS_FINE_LOCATION`/`ACCESS_COARSE_LOCATION`, so you do not
      need to declare precise or approximate location as collected via ads.
-2. **Optional Google Drive backup** — only if the user turns it on in Settings. Declare:
-   - **Financial info** (the backed-up expense/budget database) → collected, **not shared** with
-     the developer (it goes to the user's own Drive, which the developer never accesses), purpose:
-     **App functionality** (backup/restore), and mark it **optional** — the app is fully usable
-     with backup off.
-   - This data is encrypted in transit (HTTPS to Google's Drive API).
+
+2. **Google Drive backup — NOT currently live, do not declare.** The Drive backend code
+   (`DriveBackupManager.kt`) and dependency are present in the project, but its entry point in
+   **Settings → Backup** is commented out (`SettingsScreen.kt`: "Google Drive backup section
+   hidden — re-enable in next release once OAuth consent screen is fully configured"). A user
+   cannot reach this feature in the current build, so no financial data is actually transmitted
+   through it — nothing to declare here *yet*. **Re-add this declaration (see prior version of
+   this file, or ask to have it regenerated) the moment that Settings section is un-commented and
+   shipped** — don't forget, since Google's static scan may eventually detect the dormant Drive
+   API calls even before the UI is re-enabled, and an undeclared-but-present capability is exactly
+   the kind of mismatch that triggers review scrutiny.
 
 Everything else the app touches — expenses, categories, budgets, Khata/debt/split entries, display
-name, or the text of any SMS you approve — still never leaves the device unless the user explicitly
-exports/shares it themselves (PDF/CSV share sheet) or turns on Drive backup. The SMS User Consent
-flow itself is still **not** collection: Android hands the message text to the app locally after a
-per-message tap, and the app never relays it anywhere.
+name, or the text of any SMS you approve — never leaves the device unless the user explicitly
+exports/shares it themselves via the PDF/CSV/JSON share sheet (which routes through apps the user
+picks, not through us). The SMS User Consent flow itself is still **not** collection: Android hands
+the message text to the app locally after a per-message tap, and the app never relays it anywhere.
+Family Mode is also currently hidden/commented out in `SettingsScreen.kt` and irrelevant here
+regardless, since it was always local-only with no data leaving the device.
 
 ## Step 2 — Security practices
 
-- **"Is all user data encrypted in transit?"** → **Yes**, for the two flows above (AdMob and Drive
-  backup both use HTTPS). Nothing else transmits.
+- **"Is all user data encrypted in transit?"** → **Yes**, for the one active flow above (AdMob,
+  HTTPS). Nothing else transmits while Drive backup stays disabled.
 - **"Do you provide a way for users to request that their data be deleted?"** → **Yes** — users can
-  delete everything instantly via **Settings → Reset All Data**, and can delete a Drive backup from
-  their own Drive or from **Settings → Backup** at any time.
+  delete everything instantly via **Settings → Reset All Data**.
 
 ## Step 3 — Privacy policy URL
 
@@ -80,9 +89,9 @@ free — and paste that URL here.
 ## Why this matters
 
 Getting these answers wrong has real consequences in both directions: under-disclosing the ad SDK
-or Drive backup risks a policy strike or suspension once Google's static analysis of the AAB detects
-`play-services-ads`/Drive API calls that don't match your declaration; over-disclosing the SMS flow
-(declaring "collects SMS data") would incorrectly trigger the restricted-permissions review process
-this app is specifically designed to avoid. Re-check this file against the actual dependency list in
-`app/build.gradle.kts` before every submission — it's the single most reliable source of truth for
-what needs declaring, more reliable than memory of what the app used to do in an earlier version.
+risks a policy strike or suspension once Google's static analysis of the AAB detects
+`play-services-ads` calls that don't match your declaration; over-disclosing a feature nobody can
+reach (Drive backup, today) or the SMS flow (declaring "collects SMS data") would incorrectly
+trigger extra review scrutiny this app doesn't need yet. Re-check this file against both
+`app/build.gradle.kts` (what's *possible*) and `SettingsScreen.kt` (what's actually *reachable* by
+a user) before every submission — a dependency alone doesn't mean a data flow is live.

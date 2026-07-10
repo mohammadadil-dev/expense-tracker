@@ -67,4 +67,9 @@ interface ExpenseDao {
      */
     @Query("SELECT COUNT(*) FROM expenses WHERE recurringSourceId = :sourceId AND monthKey = :monthKey")
     suspend fun countRecurringInstance(sourceId: Long, monthKey: String): Int
+
+    /** Total number of expenses ever logged (all months). Used to time the one-shot
+     * in-app review prompt — see [com.expensetracker.app.util.InAppReviewManager]. */
+    @Query("SELECT COUNT(*) FROM expenses")
+    suspend fun count(): Int
 }

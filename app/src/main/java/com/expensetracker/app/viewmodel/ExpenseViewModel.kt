@@ -262,6 +262,13 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private var lastAlertMonthKey = ""
     private var lastAlertLevel: BudgetAlertLevel? = null
 
+    // One-shot signal to launch Google's in-app review dialog — fired the moment the 5th
+    // expense is logged. UI collects this and calls InAppReviewManager.requestReview(activity),
+    // since the Play Core API needs an Activity, which the ViewModel doesn't have.
+    private val _requestReviewEvent = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    val requestReviewEvent: SharedFlow<Unit> = _requestReviewEvent.asSharedFlow()
+    private companion object { const val REVIEW_PROMPT_EXPENSE_COUNT = 5 }
+
     fun navigateMonth(delta: Long) {
         val next = DateUtils.shiftMonthKey(_currentMonthKey.value, delta)
         // Never navigate into future months — clamp at current calendar month.
@@ -286,6 +293,17 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
             if (id == null) updateLogStreak(date)
             val monthKey = DateUtils.monthKeyFromDate(date)
             _currentMonthKey.value = monthKey
+
+            // Ask for a Play Store rating exactly once, right after the 5th expense ever
+            // logged — enough usage to have an opinion, early enough to catch first-week
+            // enthusiasm. New expenses only (not edits), and only if we haven't asked before.
+            if (id == null && !settings.hasRequestedReview) {
+                val totalCount = repository.countExpenses()
+                if (totalCount >= REVIEW_PROMPT_EXPENSE_COUNT) {
+                    settings.hasRequestedReview = true
+                    _requestReviewEvent.tryEmit(Unit)
+                }
+            }
 
             // Check overall budget threshold — only for new expenses, not edits.
             val overallBudget = if (id == null) budgets.first().firstOrNull { it.categoryId == null }?.amount else null

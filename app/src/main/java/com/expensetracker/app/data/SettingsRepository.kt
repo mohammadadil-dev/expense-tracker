@@ -159,6 +159,17 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getInt(KEY_PAYDAY_DAY, 0)
         set(value) = prefs.edit().putInt(KEY_PAYDAY_DAY, value).apply()
 
+    /**
+     * True once we've asked Google's in-app review API to show its native rating dialog.
+     * Fires exactly once per install, after the 5th expense is logged — see
+     * [com.expensetracker.app.util.InAppReviewManager]. Google's own review API is also
+     * quota-limited on its end regardless of this flag, so this just avoids us re-requesting
+     * every single time the user logs an expense after the 5th.
+     */
+    var hasRequestedReview: Boolean
+        get() = prefs.getBoolean(KEY_HAS_REQUESTED_REVIEW, false)
+        set(value) = prefs.edit().putBoolean(KEY_HAS_REQUESTED_REVIEW, value).apply()
+
     companion object {
         private const val PREFS_NAME = "expense_tracker_settings"
         private const val KEY_LANGUAGE = "language"
@@ -182,5 +193,6 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_LOG_STREAK_BEST = "log_streak_best"
         private const val KEY_PAYDAY_DAY = "payday_day_of_month"
         private const val KEY_FAMILY_MODE_ENABLED = "family_mode_enabled"
+        private const val KEY_HAS_REQUESTED_REVIEW = "has_requested_review"
     }
 }

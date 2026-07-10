@@ -98,6 +98,7 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.data.IncomeEntity
 import com.expensetracker.app.ui.ads.InterstitialAdManager
+import com.expensetracker.app.util.InAppReviewManager
 import com.expensetracker.app.data.PendingSmsExpense
 import com.expensetracker.app.ui.components.AddEditExpenseSheet
 import com.expensetracker.app.ui.components.AddIncomeSheet
@@ -467,6 +468,14 @@ fun DashboardScreen(
                     ExpenseViewModel.BudgetAlertLevel.EXCEEDED -> budgetExceededMsg
                 }
             )
+        }
+    }
+
+    // Native "rate this app" dialog — fired once by the ViewModel after the 5th logged
+    // expense. Needs an Activity (not just a Context) to launch Play Core's review flow.
+    LaunchedEffect(Unit) {
+        viewModel.requestReviewEvent.collect {
+            activity?.let { InAppReviewManager.requestReview(it) }
         }
     }
 
