@@ -167,6 +167,8 @@ fun SettingsScreen(
     val smsDetectionEnabled by viewModel.smsDetectionEnabled.collectAsState()
     val reminderEnabled by viewModel.reminderEnabled.collectAsState()
     val reminderHour by viewModel.reminderHour.collectAsState()
+    val reminder2Enabled by viewModel.reminder2Enabled.collectAsState()
+    val reminderHour2 by viewModel.reminderHour2.collectAsState()
     val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
     @Suppress("UNUSED_VARIABLE") val familyModeEnabled by viewModel.familyModeEnabled.collectAsState()  // reserved for Family Mode re-enable
     @Suppress("UNUSED_VARIABLE") val familyMembers by viewModel.familyMembers.collectAsState()          // reserved for Family Mode re-enable
@@ -177,6 +179,8 @@ fun SettingsScreen(
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
     var pickerHour by remember { mutableStateOf(reminderHour) }
+    // Which reminder the open time-picker dialog is editing — 1 = main, 2 = optional second.
+    var pickerSlot by remember { mutableStateOf(1) }
     var showPaydayPicker by remember { mutableStateOf(false) }
     var pendingCurrencySymbol by remember { mutableStateOf<String?>(null) }
     var rateText by remember { mutableStateOf("") }
@@ -571,7 +575,11 @@ fun SettingsScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { pickerHour = reminderHour; showTimePicker = true }
+                                    .clickable {
+                                        pickerHour = reminderHour
+                                        pickerSlot = 1
+                                        showTimePicker = true
+                                    }
                                     .padding(vertical = 4.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
@@ -587,6 +595,58 @@ fun SettingsScreen(
                                 )
                             }
                             // Test notification button — hidden for now
+
+                            // ── Optional second daily reminder ──────────────────────────
+                            Spacer(Modifier.height(12.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(R.string.reminder2_toggle_label),
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.reminder2_toggle_desc),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = TextSecondary
+                                    )
+                                }
+                                Spacer(Modifier.width(8.dp))
+                                Switch(
+                                    checked = reminder2Enabled,
+                                    onCheckedChange = { enabled -> viewModel.setReminder2Enabled(enabled) }
+                                )
+                            }
+                            if (reminder2Enabled) {
+                                Spacer(Modifier.height(8.dp))
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            pickerHour = reminderHour2
+                                            pickerSlot = 2
+                                            showTimePicker = true
+                                        }
+                                        .padding(vertical = 4.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.reminder2_time_label),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                    Text(
+                                        text = formatReminderHour(reminderHour2),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = AccentIndigo
+                                    )
+                                }
+                            }
                         }
                         // Payday picker — always visible
                         Spacer(Modifier.height(12.dp))
@@ -864,7 +924,14 @@ fun SettingsScreen(
     if (showTimePicker) {
         AlertDialog(
             onDismissRequest = { showTimePicker = false },
-            title = { Text(stringResource(R.string.reminder_time_label)) },
+            title = {
+                Text(
+                    stringResource(
+                        if (pickerSlot == 2) R.string.reminder2_time_label
+                        else R.string.reminder_time_label
+                    )
+                )
+            },
             text = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -882,7 +949,8 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.setReminderHour(pickerHour)
+                    if (pickerSlot == 2) viewModel.setReminderHour2(pickerHour)
+                    else viewModel.setReminderHour(pickerHour)
                     showTimePicker = false
                 }) { Text(stringResource(R.string.done)) }
             },

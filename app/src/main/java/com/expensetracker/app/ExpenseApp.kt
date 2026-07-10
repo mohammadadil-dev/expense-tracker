@@ -92,9 +92,17 @@ class ExpenseApp : Application() {
             )
         }
 
-        // Ensure the daily reminder AlarmManager alarm is set if the user has it enabled.
+        // Ensure the daily reminder AlarmManager alarm(s) are set if the user has them enabled.
+        // Note: this does NOT request POST_NOTIFICATIONS (Application has no Activity to show a
+        // permission dialog from) — that happens in AppNav's onboarding completion and the
+        // one-time Dashboard catch-up check for pre-existing installs. Scheduling the alarm here
+        // regardless of permission status is harmless; the notification just won't display until
+        // permission is actually granted.
         if (settings.reminderEnabled) {
-            ReminderScheduler.schedule(this, settings.reminderHour)
+            ReminderScheduler.schedule(this, settings.reminderHour, slot = 1)
+            if (settings.reminder2Enabled) {
+                ReminderScheduler.schedule(this, settings.reminderHour2, slot = 2)
+            }
         }
 
         // Schedule the weekly digest — always on, fires Sunday evenings.

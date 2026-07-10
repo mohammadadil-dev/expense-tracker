@@ -71,6 +71,30 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getInt(KEY_REMINDER_HOUR, 21)
         set(value) = prefs.edit().putInt(KEY_REMINDER_HOUR, value).apply()
 
+    /**
+     * True once we've actually asked the user for POST_NOTIFICATIONS (Android 13+) — either
+     * during onboarding or via the one-time catch-up check on Dashboard for installs that
+     * predate this flag existing. [reminderEnabled] defaulting to true does NOT mean the OS
+     * permission was ever granted; this flag is what prevents re-prompting every single launch
+     * after a denial, while still guaranteeing every install gets asked at least once.
+     */
+    var notifPermissionRequested: Boolean
+        get() = prefs.getBoolean(KEY_NOTIF_PERMISSION_REQUESTED, false)
+        set(value) = prefs.edit().putBoolean(KEY_NOTIF_PERMISSION_REQUESTED, value).apply()
+
+    /** Optional second daily reminder (e.g. a morning nudge alongside the evening one).
+     * Off by default — opt-in via Settings, independent of the main [reminderEnabled] toggle
+     * but only actually scheduled while that master toggle is also on. */
+    var reminder2Enabled: Boolean
+        get() = prefs.getBoolean(KEY_REMINDER2_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_REMINDER2_ENABLED, value).apply()
+
+    /** Hour of day (0–23) for the optional second reminder. Default 9 = 9 AM, pairing with the
+     * 9 PM default first reminder for a morning + evening pair. */
+    var reminderHour2: Int
+        get() = prefs.getInt(KEY_REMINDER_HOUR2, 9)
+        set(value) = prefs.edit().putInt(KEY_REMINDER_HOUR2, value).apply()
+
     /** Monthly take-home income / salary — shown on the Home dashboard alongside the budget cap
      * so the user can see both what they earn and what they intend to spend. 0 means "not set". */
     var monthlySalary: Double
@@ -194,5 +218,8 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_PAYDAY_DAY = "payday_day_of_month"
         private const val KEY_FAMILY_MODE_ENABLED = "family_mode_enabled"
         private const val KEY_HAS_REQUESTED_REVIEW = "has_requested_review"
+        private const val KEY_NOTIF_PERMISSION_REQUESTED = "notif_permission_requested"
+        private const val KEY_REMINDER2_ENABLED = "reminder2_enabled"
+        private const val KEY_REMINDER_HOUR2 = "reminder_hour2"
     }
 }

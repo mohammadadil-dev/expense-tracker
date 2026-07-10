@@ -11,12 +11,15 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.SettingsRepository
 
 /**
- * Receives the daily reminder alarm fired by [ReminderScheduler] via AlarmManager.setAlarmClock().
+ * Receives the daily reminder alarm(s) fired by [ReminderScheduler] via
+ * AlarmManager.setAndAllowWhileIdle() — one alarm for the main reminder (slot 1), and an
+ * independent optional one for the second reminder (slot 2), distinguished by [ReminderScheduler.EXTRA_SLOT].
  *
  * Responsibilities:
- * 1. Show a rich "Did you log today's expenses?" notification.
- * 2. Immediately re-schedule tomorrow's alarm (setAlarmClock fires once, not repeating).
- * 3. Re-register the alarm after BOOT_COMPLETED / MY_PACKAGE_REPLACED so it survives
+ * 1. Show a rich "Did you log today's expenses?" notification (same for either slot).
+ * 2. Immediately re-schedule tomorrow's alarm for whichever slot fired (each alarm is one-shot,
+ *    not repeating).
+ * 3. Re-register both alarms after BOOT_COMPLETED / MY_PACKAGE_REPLACED so they survive
  *    device reboots and app updates.
  */
 class ReminderReceiver : BroadcastReceiver() {
@@ -27,16 +30,27 @@ class ReminderReceiver : BroadcastReceiver() {
         when (intent.action) {
             ACTION_NOTIFY -> {
                 showNotification(context)
-                // setAlarmClock is one-shot — re-arm for tomorrow automatically.
-                if (settings.reminderEnabled) {
-                    ReminderScheduler.schedule(context, settings.reminderHour)
+                // The alarm is one-shot — re-arm for tomorrow automatically, using whichever
+                // slot (main vs. optional second reminder) actually fired.
+                val slot = intent.getIntExtra(ReminderScheduler.EXTRA_SLOT, 1)
+                if (slot == 2) {
+                    if (settings.reminderEnabled && settings.reminder2Enabled) {
+                        ReminderScheduler.schedule(context, settings.reminderHour2, slot = 2)
+                    }
+                } else {
+                    if (settings.reminderEnabled) {
+                        ReminderScheduler.schedule(context, settings.reminderHour, slot = 1)
+                    }
                 }
             }
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED -> {
-                // Alarms are wiped on reboot and app update — re-register if enabled.
+                // Alarms are wiped on reboot and app update — re-register both slots if enabled.
                 if (settings.reminderEnabled) {
-                    ReminderScheduler.schedule(context, settings.reminderHour)
+                    ReminderScheduler.schedule(context, settings.reminderHour, slot = 1)
+                    if (settings.reminder2Enabled) {
+                        ReminderScheduler.schedule(context, settings.reminderHour2, slot = 2)
+                    }
                 }
             }
         }

@@ -353,6 +353,9 @@
     <string name="reminder_toggle_label">Evening spending reminder</string>
     <string name="reminder_toggle_desc">Get a daily nudge to log your expenses</string>
     <string name="reminder_time_label">Reminder time</string>
+    <string name="reminder2_toggle_label">Add a second reminder</string>
+    <string name="reminder2_toggle_desc">Get an extra nudge earlier in the day, in addition to the one above</string>
+    <string name="reminder2_time_label">Second reminder time</string>
     <string name="reminder_notification_title">Did you log today\'s expenses? 💸</string>
     <string name="reminder_notification_body">Tap to quickly add any expenses you may have missed today.</string>
 

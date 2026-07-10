@@ -1,5 +1,13 @@
 package com.expensetracker.app.ui.navigation
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -105,6 +113,13 @@ fun AppNav() {
 
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val displayName    by viewModel.displayName.collectAsState()
+
+    // POST_NOTIFICATIONS (Android 13+) request for the daily reminder — shared by onboarding
+    // completion and the Dashboard catch-up check below. Mirrors Settings screen's own toggle
+    // logic exactly: only actually enable the reminder if the user grants the permission.
+    val notifPermLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted -> viewModel.setReminderEnabled(granted) }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -259,8 +274,21 @@ fun AppNav() {
                             viewModel.markOnboardingDone()
                             if (salary > 0) viewModel.setMonthlySalary(salary)
                             if (budget > 0) viewModel.setBudget(null, budget)
-                            viewModel.setReminderEnabled(reminderEnabled)
                             if (reminderEnabled) viewModel.setReminderHour(reminderHour)
+                            // This is the actual fix for the reminder silently never firing:
+                            // previously this called setReminderEnabled(reminderEnabled) directly,
+                            // scheduling the alarm without ever asking for POST_NOTIFICATIONS
+                            // (Android 13+) — the notification would then be silently dropped by
+                            // the OS forever, with no error anywhere. Now we request the
+                            // permission first and only actually enable the reminder if granted
+                            // (notifPermLauncher's callback calls setReminderEnabled(granted)),
+                            // matching exactly what the Settings screen's own toggle already does.
+                            viewModel.markNotifPermissionRequested()
+                            if (reminderEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                notifPermLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                viewModel.setReminderEnabled(reminderEnabled)
+                            }
                             navController.navigate(Routes.DASHBOARD) {
                                 popUpTo(Routes.ONBOARDING) { inclusive = true }
                             }
@@ -291,6 +319,27 @@ fun AppNav() {
                     popEnterTransition = { fadeIn(tween(TRANSITION_MS)) },
                     popExitTransition  = { fadeOut(tween(TRANSITION_MS)) }
                 ) {
+                    // One-time catch-up for installs that predate the onboarding permission fix
+                    // above: reminderEnabled defaults to true for everyone, so any existing user
+                    // who installed before this fix has the alarm scheduled but was never actually
+                    // asked for POST_NOTIFICATIONS — their reminder has been silently doing
+                    // nothing. Ask exactly once (guarded by notifPermissionRequested) so we don't
+                    // nag every launch after a denial.
+                    val dashboardContext = LocalContext.current
+                    LaunchedEffect(Unit) {
+                        val alreadyGranted = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                            ContextCompat.checkSelfPermission(
+                                dashboardContext, Manifest.permission.POST_NOTIFICATIONS
+                            ) == PackageManager.PERMISSION_GRANTED
+                        if (!viewModel.notifPermissionRequested &&
+                            viewModel.reminderEnabled.value &&
+                            !alreadyGranted
+                        ) {
+                            viewModel.markNotifPermissionRequested()
+                            notifPermLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    }
+
                     DashboardScreen(
                         viewModel = viewModel,
                         onOpenSettings = {
