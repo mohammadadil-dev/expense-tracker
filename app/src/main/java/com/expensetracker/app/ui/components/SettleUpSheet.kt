@@ -322,8 +322,12 @@ private fun buildGroupSummaryText(
     }
 
     // ── Footer ────────────────────────────────────────────────────────────────
+    // Play Store link appended here in code, not in the translated split_wa_footer string —
+    // the URL needs no localization, and this is often the only touchpoint a non-user group
+    // member (someone who hasn't installed the app yet) has with it.
     sb.appendLine(divider)
-    sb.append("_${lFooter}_ 🧾")
+    sb.appendLine("_${lFooter}_ 🧾")
+    sb.append("play.google.com/store/apps/details?id=${context.packageName}")
 
     return sb.toString()
 }

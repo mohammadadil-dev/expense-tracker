@@ -125,7 +125,11 @@ fun KhataDetailScreen(
         party.name, plainAmount, displayName.ifBlank { senderDefault })
     val reminderMsgCredit  = stringResource(R.string.khata_reminder_msg_credit,
         party.name, plainAmount, displayName.ifBlank { senderDefault })
-    val reminderMsg = if (isIOwe) reminderMsgCredit else reminderMsgOwe
+    // Play Store link appended in code (not in the translated string resources) since the URL
+    // itself needs no localization — this reaches the recipient even if they don't have the app
+    // yet, which is often the case for a Khata reminder sent to someone outside the user base.
+    val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) +
+        "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
     fun sendWhatsApp() {
         // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
