@@ -35,8 +35,8 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 17
-        versionName = "1.7.0"
+        versionCode = 18
+        versionName = "1.7.1"
 
         vectorDrawables {
             useSupportLibrary = true
