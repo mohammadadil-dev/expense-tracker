@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">संध्याकाळ खर्च स्मरण</string>
     <string name="reminder_toggle_desc">खर्च नोंदवण्यासाठी रोज आठवण मिळवा</string>
     <string name="reminder_time_label">स्मरण वेळ</string>
+    <string name="reminder2_toggle_label">दुसरी आठवण जोडा</string>
+    <string name="reminder2_toggle_desc">वरील व्यतिरिक्त, दिवसाच्या आधी अतिरिक्त आठवण मिळवा</string>
+    <string name="reminder2_time_label">दुसऱ्या आठवणीची वेळ</string>
     <string name="reminder_notification_title">आजचे खर्च नोंदवले का? 💸</string>
     <string name="reminder_notification_body">आज काही सुटले नाहीत याची खात्री करण्यासाठी दाबा.</string>
 

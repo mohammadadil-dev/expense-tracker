@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">വൈകുന്നേര ചെലവ് റിമൈൻഡർ</string>
     <string name="reminder_toggle_desc">ചെലവുകൾ ലോഗ് ചെയ്യാൻ ദിവസം ഒരു ഓർമ്മ ലഭിക്കൂ</string>
     <string name="reminder_time_label">റിമൈൻഡർ സമയം</string>
+    <string name="reminder2_toggle_label">രണ്ടാമത്തെ ഓർമ്മപ്പെടുത്തൽ ചേർക്കുക</string>
+    <string name="reminder2_toggle_desc">മുകളിലുള്ളതിന് പുറമെ, ദിവസത്തിന്റെ നേരത്തെയുള്ള സമയത്ത് അധിക ഓർമ്മപ്പെടുത്തൽ നേടുക</string>
+    <string name="reminder2_time_label">രണ്ടാമത്തെ ഓർമ്മപ്പെടുത്തൽ സമയം</string>
     <string name="reminder_notification_title">ഇന്നത്തെ ചെലവുകൾ ലോഗ് ചെയ്തോ? 💸</string>
     <string name="reminder_notification_body">ഇന്ന് ഒരു ചെലവും വിട്ടുപോകാതിരിക്കാൻ ഞെക്കൂ.</string>
 

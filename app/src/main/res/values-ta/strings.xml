@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">மாலை செலவு நினைவூட்டல்</string>
     <string name="reminder_toggle_desc">உங்கள் செலவுகளை பதிவு செய்ய தினசரி நினைவூட்டல் பெறுங்கள்</string>
     <string name="reminder_time_label">நினைவூட்டல் நேரம்</string>
+    <string name="reminder2_toggle_label">இரண்டாவது நினைவூட்டலைச் சேர்க்கவும்</string>
+    <string name="reminder2_toggle_desc">மேலே உள்ளதற்கு கூடுதலாக, நாளின் முந்தைய நேரத்தில் கூடுதல் நினைவூட்டலைப் பெறுங்கள்</string>
+    <string name="reminder2_time_label">இரண்டாவது நினைவூட்டல் நேரம்</string>
     <string name="reminder_notification_title">இன்றைய செலவுகளை பதிவு செய்தீர்களா? 💸</string>
     <string name="reminder_notification_body">இன்று தவறவிட்ட செலவுகளை விரைவாக சேர்க்க தட்டுங்கள்.</string>
 

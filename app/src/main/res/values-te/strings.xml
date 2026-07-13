@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">సాయంత్రం ఖర్చు రిమైండర్</string>
     <string name="reminder_toggle_desc">మీ ఖర్చులు నమోదు చేయడానికి రోజూ రిమైండర్ పొందండి</string>
     <string name="reminder_time_label">రిమైండర్ సమయం</string>
+    <string name="reminder2_toggle_label">రెండవ రిమైండర్ జోడించండి</string>
+    <string name="reminder2_toggle_desc">పైన ఉన్నదానికి అదనంగా, రోజులో ముందుగా అదనపు రిమైండర్ పొందండి</string>
+    <string name="reminder2_time_label">రెండవ రిమైండర్ సమయం</string>
     <string name="reminder_notification_title">ఈరోజు ఖర్చులు నమోదు చేశారా? 💸</string>
     <string name="reminder_notification_body">ఈరోజు మిస్సైన ఖర్చులు త్వరగా జోడించడానికి నొక్కండి.</string>
 

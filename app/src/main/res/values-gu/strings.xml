@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">સાંજ ખર્ચ રિમાઇન્ડર</string>
     <string name="reminder_toggle_desc">ખર્ચ નોંધ કરવા દરરોજ યાદ કરાવો</string>
     <string name="reminder_time_label">રિમાઇન્ડર સમય</string>
+    <string name="reminder2_toggle_label">બીજું રિમાઇન્ડર ઉમેરો</string>
+    <string name="reminder2_toggle_desc">ઉપરના ઉપરાંત, દિવસના વહેલા સમયે વધારાનું રિમાઇન્ડર મેળવો</string>
+    <string name="reminder2_time_label">બીજા રિમાઇન્ડરનો સમય</string>
     <string name="reminder_notification_title">આજના ખર્ચ નોંધ્યા? 💸</string>
     <string name="reminder_notification_body">આજ કંઈ ચૂક્યું નથી ખાત્રી કરવા દબાવો.</string>
 

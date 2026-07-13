@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">ಸಂಜೆ ವೆಚ್ಚ ನೆನಪು</string>
     <string name="reminder_toggle_desc">ನಿಮ್ಮ ವೆಚ್ಚಗಳನ್ನು ದಾಖಲಿಸಲು ರೋಜೂ ನೆನಪು ಪಡೆಯಿರಿ</string>
     <string name="reminder_time_label">ನೆನಪಿನ ಸಮಯ</string>
+    <string name="reminder2_toggle_label">ಎರಡನೇ ರಿಮೈಂಡರ್ ಸೇರಿಸಿ</string>
+    <string name="reminder2_toggle_desc">ಮೇಲಿನದಕ್ಕೆ ಹೆಚ್ಚುವರಿಯಾಗಿ, ದಿನದ ಮುಂಚಿತ ಸಮಯದಲ್ಲಿ ಹೆಚ್ಚುವರಿ ರಿಮೈಂಡರ್ ಪಡೆಯಿರಿ</string>
+    <string name="reminder2_time_label">ಎರಡನೇ ರಿಮೈಂಡರ್ ಸಮಯ</string>
     <string name="reminder_notification_title">ಇಂದಿನ ವೆಚ್ಚಗಳನ್ನು ದಾಖಲಿಸಿದ್ದೀರಾ? 💸</string>
     <string name="reminder_notification_body">ಇಂದು ತಪ್ಪಿದ ವೆಚ್ಚಗಳನ್ನು ತ್ವರಿತವಾಗಿ ಸೇರಿಸಲು ಒತ್ತಿ.</string>
 

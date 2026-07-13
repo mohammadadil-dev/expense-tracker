@@ -345,6 +345,9 @@
     <string name="reminder_toggle_label">ਸ਼ਾਮ ਦਾ ਖਰਚ ਯਾਦ</string>
     <string name="reminder_toggle_desc">ਖਰਚ ਦਰਜ ਕਰਨ ਲਈ ਰੋਜ਼ ਯਾਦ ਦਵਾਓ</string>
     <string name="reminder_time_label">ਯਾਦ ਦਾ ਸਮਾਂ</string>
+    <string name="reminder2_toggle_label">ਦੂਜਾ ਰੀਮਾਈਂਡਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="reminder2_toggle_desc">ਉੱਪਰ ਵਾਲੇ ਤੋਂ ਇਲਾਵਾ, ਦਿਨ ਦੇ ਸ਼ੁਰੂ ਵਿੱਚ ਵਾਧੂ ਯਾਦ-ਦਹਾਨੀ ਲਵੋ</string>
+    <string name="reminder2_time_label">ਦੂਜੇ ਰੀਮਾਈਂਡਰ ਦਾ ਸਮਾਂ</string>
     <string name="reminder_notification_title">ਅੱਜ ਦੇ ਖਰਚ ਦਰਜ ਕੀਤੇ? 💸</string>
     <string name="reminder_notification_body">ਅੱਜ ਕੁਝ ਖੁੰਝਿਆ ਨਹੀਂ ਯਕੀਨੀ ਕਰਨ ਲਈ ਦਬਾਓ।</string>
 
