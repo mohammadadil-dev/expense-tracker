@@ -158,7 +158,6 @@ fun SettingsScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val activity = context as? android.app.Activity
     val clipboardManager = LocalClipboardManager.current
     val languagePref by viewModel.languagePref.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
@@ -253,14 +252,24 @@ fun SettingsScreen(
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { contentVisible = true }
 
-    // Switching the in-app language needs the Activity to be torn down and rebuilt so
-    // every stringResource() call re-reads from the new locale's resources. The OS does
-    // this automatically on API 33+, but we also force it explicitly so it's instant and
-    // reliable across emulators/devices instead of waiting on the framework callback.
+    // Switching the in-app language needs the Activity to be torn down and rebuilt so every
+    // stringResource() call re-reads from the new locale's resources. AppCompatDelegate.
+    // setApplicationLocales() (called inside setLanguagePref -> LocaleHelper) already
+    // schedules that recreate itself -- on API 33+ via the system LocaleManager, on older
+    // versions via AppCompat's own compat layer -- same as the onboarding language step,
+    // which relies on it alone.
+    //
+    // This used to ALSO call activity?.recreate() immediately afterward, to make the switch
+    // feel "instant" instead of waiting on that callback. That backfired: the manual recreate
+    // fired before the new locale had fully propagated to the Activity's resources, so the
+    // rebuilt screen still resolved most stringResource() calls against the OLD locale (only
+    // things reading Locale.getDefault() directly, like date formatting, updated right away).
+    // AppCompat's own recreate then fired moments later and silently fixed it -- which is what
+    // showed up as "translation happens, but only after a delay." Removing the manual call
+    // fixes it: there's only ever one recreate, and it happens with the locale already applied.
     fun changeLanguage(pref: String) {
         viewModel.setLanguagePref(pref)
-        onBack()  // Pop back to dashboard before recreating so the back stack is clean
-        activity?.recreate()
+        onBack()  // Pop back to dashboard so the back stack is clean once the recreate happens
     }
 
     // Changing currency normally opens a dialog asking for an exchange rate, then rescales
