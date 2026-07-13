@@ -164,6 +164,13 @@
     <string name="language_urdu">الأردية (اردو)</string>
     <string name="language_bengali">البنغالية (বাংলা)</string>
     <string name="language_tagalog">التاغالوغية (Filipino)</string>
+    <string name="language_gujarati">الغوجاراتية (ગુજરાતી)</string>
+    <string name="language_kannada">الكانادية (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">المالايالامية (മലയാളം)</string>
+    <string name="language_marathi">الماراثية (मराठी)</string>
+    <string name="language_punjabi">البنجابية (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">التاميلية (தமிழ்)</string>
+    <string name="language_telugu">التيلوغوية (తెలుగు)</string>
     <string name="currency_label">العملة</string>
     <string name="currency_custom_hint">رمز مخصص</string>
     <string name="convert_currency_title">تحويل العملة</string>
@@ -334,6 +341,9 @@
     <string name="reminder_toggle_label">تذكير يومي بالإنفاق</string>
     <string name="reminder_toggle_desc">احصل على تذكير يومي لتسجيل نفقاتك</string>
     <string name="reminder_time_label">وقت التذكير</string>
+    <string name="reminder2_toggle_label">إضافة تذكير ثانٍ</string>
+    <string name="reminder2_toggle_desc">احصل على تذكير إضافي في وقت مبكر من اليوم، بالإضافة إلى التذكير أعلاه</string>
+    <string name="reminder2_time_label">وقت التذكير الثاني</string>
     <string name="reminder_notification_title">هل سجّلت نفقات اليوم؟ 💸</string>
     <string name="reminder_notification_body">اضغط لإضافة أي نفقات قد فاتتك اليوم.</string>
 
@@ -639,4 +649,23 @@
     <string name="split_wa_footer">متتبع المصاريف</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ الجديد</string>
+    <string name="whats_new_subtitle">مرر لاستكشاف الميزات الجديدة</string>
+    <string name="force_update_title">التحديث مطلوب</string>
+    <string name="force_update_body">يتوفر إصدار أحدث من التطبيق يتضمن تحسينات وإصلاحات مهمة. يرجى التحديث لمتابعة استخدام التطبيق.</string>
+    <string name="force_update_button">التحديث الآن</string>
+    <string name="force_update_note">يجب عليك التحديث للمتابعة</string>
+    <string name="khata_balance_label">الرصيد:</string>
+    <string name="split_hero_settled_label">تمت التسوية بالكامل ✓</string>
+    <string name="split_hero_get_back_label">لك عندهم</string>
+    <string name="split_hero_you_owe_label">عليك</string>
+
+    <string name="whats_new_feature_scan_title">مسح الإيصالات</string>
+    <string name="whats_new_feature_voice_title">الإدخال الصوتي</string>
+    <string name="whats_new_feature_split_title">تقسيم الفواتير</string>
+    <string name="whats_new_feature_khata_title">الخاطة / الدفتر</string>
+    <string name="whats_new_feature_goals_title">الأهداف والسلاسل</string>
+    <string name="split_hero_total_spent">إجمالي الإنفاق</string>
 </resources>

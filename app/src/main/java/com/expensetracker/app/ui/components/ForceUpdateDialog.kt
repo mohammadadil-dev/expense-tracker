@@ -19,12 +19,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.expensetracker.app.R
 import com.expensetracker.app.ui.theme.AccentGreen
 import com.expensetracker.app.ui.theme.AccentGreenMid
 import com.expensetracker.app.util.ForceUpdateManager
@@ -103,15 +105,14 @@ fun ForceUpdateDialog() {
                 }
 
                 Text(
-                    "Update Required",
+                    stringResource(R.string.force_update_title),
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Bold
                     )
                 )
 
                 Text(
-                    "A newer version of the app is available with important improvements and fixes. " +
-                    "Please update to continue using the app.",
+                    stringResource(R.string.force_update_body),
                     style     = MaterialTheme.typography.bodyMedium,
                     color     = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -156,14 +157,14 @@ fun ForceUpdateDialog() {
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        "Update Now",
+                        stringResource(R.string.force_update_button),
                         style    = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                 }
 
                 Text(
-                    "You must update to continue",
+                    stringResource(R.string.force_update_note),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

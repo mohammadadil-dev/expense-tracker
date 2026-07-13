@@ -544,7 +544,7 @@ private fun KhataEntryRow(
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Bal: ",
+                        text = stringResource(R.string.khata_balance_label) + " ",
                         style = MaterialTheme.typography.labelSmall,
                         color = TextMuted
                     )

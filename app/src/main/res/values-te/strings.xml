@@ -616,4 +616,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">చిట్కా: రోజూ నమోదు చేయడం బడ్జెట్ నియంత్రించడం సులభం 📊</string>
     <string name="reminder_action_add_expense">ఖర్చు జోడించు</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ కొత్తగా ఏముంది</string>
+    <string name="whats_new_subtitle">కొత్త ఫీచర్లను చూడటానికి స్వైప్ చేయండి</string>
+    <string name="force_update_title">అప్‌డేట్ అవసరం</string>
+    <string name="force_update_body">ముఖ్యమైన మెరుగుదలలు మరియు ఫిక్స్‌లతో యాప్ యొక్క కొత్త వెర్షన్ అందుబాటులో ఉంది. యాప్‌ను ఉపయోగించడం కొనసాగించడానికి దయచేసి అప్‌డేట్ చేయండి.</string>
+    <string name="force_update_button">ఇప్పుడే అప్‌డేట్ చేయండి</string>
+    <string name="force_update_note">కొనసాగించడానికి మీరు తప్పనిసరిగా అప్‌డేట్ చేయాలి</string>
+    <string name="khata_balance_label">బ్యాలెన్స్:</string>
+    <string name="split_hero_settled_label">అన్నీ పరిష్కరించారు ✓</string>
+    <string name="split_hero_get_back_label">మీకు తిరిగి వస్తుంది</string>
+    <string name="split_hero_you_owe_label">మీరు బాకీ ఉన్నారు</string>
+
+    <string name="whats_new_feature_scan_title">రసీదులు స్కాన్ చేయి</string>
+    <string name="whats_new_feature_voice_title">వాయిస్ ఇన్‌పుట్</string>
+    <string name="whats_new_feature_split_title">బిల్లులు విభజించు</string>
+    <string name="whats_new_feature_khata_title">ఖాతా / లెడ్జర్</string>
+    <string name="whats_new_feature_goals_title">లక్ష్యాలు &amp; స్ట్రీక్</string>
+    <string name="split_hero_total_spent">మొత్తం ఖర్చు</string>
 </resources>

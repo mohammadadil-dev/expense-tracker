@@ -616,4 +616,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">ਸੁਝਾਅ: ਰੋਜ਼ ਦਰਜ ਕਰਨ ਨਾਲ ਬਜਟ ਕਾਬੂ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ 📊</string>
     <string name="reminder_action_add_expense">ਖਰਚ ਜੋੜੋ</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ ਨਵਾਂ ਕੀ ਹੈ</string>
+    <string name="whats_new_subtitle">ਨਵੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵੇਖਣ ਲਈ ਸਵਾਈਪ ਕਰੋ</string>
+    <string name="force_update_title">ਅੱਪਡੇਟ ਲੋੜੀਂਦਾ ਹੈ</string>
+    <string name="force_update_body">ਐਪ ਦਾ ਨਵਾਂ ਵਰਜਨ ਉਪਲਬਧ ਹੈ ਜਿਸ ਵਿੱਚ ਮਹੱਤਵਪੂਰਨ ਸੁਧਾਰ ਅਤੇ ਫਿਕਸ ਸ਼ਾਮਲ ਹਨ। ਐਪ ਦੀ ਵਰਤੋਂ ਜਾਰੀ ਰੱਖਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਅੱਪਡੇਟ ਕਰੋ।</string>
+    <string name="force_update_button">ਹੁਣੇ ਅੱਪਡੇਟ ਕਰੋ</string>
+    <string name="force_update_note">ਜਾਰੀ ਰੱਖਣ ਲਈ ਤੁਹਾਨੂੰ ਅੱਪਡੇਟ ਕਰਨਾ ਜ਼ਰੂਰੀ ਹੈ</string>
+    <string name="khata_balance_label">ਬਕਾਇਆ:</string>
+    <string name="split_hero_settled_label">ਸਭ ਨਿਪਟਿਆ ✓</string>
+    <string name="split_hero_get_back_label">ਤੁਹਾਨੂੰ ਵਾਪਸ ਮਿਲੇਗਾ</string>
+    <string name="split_hero_you_owe_label">ਤੁਹਾਡੇ ਵੱਲ ਬਕਾਇਆ ਹੈ</string>
+
+    <string name="whats_new_feature_scan_title">ਰਸੀਦਾਂ ਸਕੈਨ ਕਰੋ</string>
+    <string name="whats_new_feature_voice_title">ਆਵਾਜ਼ ਇਨਪੁੱਟ</string>
+    <string name="whats_new_feature_split_title">ਬਿੱਲ ਸ਼ੇਅਰ ਕਰੋ</string>
+    <string name="whats_new_feature_khata_title">ਖਾਤਾ / ਲੇਜਰ</string>
+    <string name="whats_new_feature_goals_title">ਟੀਚੇ &amp; ਸਟ੍ਰੀਕ</string>
+    <string name="split_hero_total_spent">ਕੁੱਲ ਖਰਚ</string>
 </resources>

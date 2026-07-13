@@ -616,4 +616,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">टिप: रोज नोंद केल्याने बजेट नियंत्रण मदत होते 📊</string>
     <string name="reminder_action_add_expense">खर्च जोडा</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ नवीन काय आहे</string>
+    <string name="whats_new_subtitle">नवीन वैशिष्ट्ये पाहण्यासाठी स्वाइप करा</string>
+    <string name="force_update_title">अपडेट आवश्यक आहे</string>
+    <string name="force_update_body">अ‍ॅपची नवीन आवृत्ती उपलब्ध आहे ज्यात महत्त्वाच्या सुधारणा आणि दुरुस्त्या आहेत. अ‍ॅप वापरणे सुरू ठेवण्यासाठी कृपया अपडेट करा.</string>
+    <string name="force_update_button">आता अपडेट करा</string>
+    <string name="force_update_note">सुरू ठेवण्यासाठी तुम्ही अपडेट करणे आवश्यक आहे</string>
+    <string name="khata_balance_label">शिल्लक:</string>
+    <string name="split_hero_settled_label">सर्व निपटले ✓</string>
+    <string name="split_hero_get_back_label">तुम्हाला परत मिळेल</string>
+    <string name="split_hero_you_owe_label">तुम्ही देणे आहे</string>
+
+    <string name="whats_new_feature_scan_title">पावत्या स्कॅन करा</string>
+    <string name="whats_new_feature_voice_title">आवाज इनपुट</string>
+    <string name="whats_new_feature_split_title">बिल शेअर करा</string>
+    <string name="whats_new_feature_khata_title">खाता / लेजर</string>
+    <string name="whats_new_feature_goals_title">लक्ष्ये &amp; स्ट्रीक</string>
+    <string name="split_hero_total_spent">एकूण खर्च</string>
 </resources>

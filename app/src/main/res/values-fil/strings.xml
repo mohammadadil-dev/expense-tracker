@@ -164,6 +164,13 @@
     <string name="language_urdu">Urdu (اردو)</string>
     <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
     <string name="currency_label">Pera</string>
     <string name="currency_custom_hint">Custom na simbolo</string>
     <string name="convert_currency_title">I-convert ang Pera</string>
@@ -330,6 +337,9 @@
     <string name="reminder_toggle_label">Paalala sa gastos tuwing gabi</string>
     <string name="reminder_toggle_desc">Makatanggap ng paalala araw-araw para itala ang iyong mga gastos</string>
     <string name="reminder_time_label">Oras ng paalala</string>
+    <string name="reminder2_toggle_label">Magdagdag ng pangalawang paalala</string>
+    <string name="reminder2_toggle_desc">Kumuha ng dagdag na paalala nang mas maaga sa araw, bukod sa nasa itaas</string>
+    <string name="reminder2_time_label">Oras ng pangalawang paalala</string>
     <string name="reminder_notification_title">Naitala mo na ba ang iyong mga gastos ngayon? 💸</string>
     <string name="reminder_notification_body">I-tap para mabilis na idagdag ang mga napalampas mong gastos ngayon.</string>
 
@@ -616,4 +626,23 @@ Gamitin anumang oras!
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ Bago Dito</string>
+    <string name="whats_new_subtitle">I-swipe para tuklasin ang mga bagong feature</string>
+    <string name="force_update_title">Kailangan ng Update</string>
+    <string name="force_update_body">May mas bagong bersyon ng app na may mahahalagang pagpapabuti at ayos. Mangyaring mag-update para magpatuloy sa paggamit ng app.</string>
+    <string name="force_update_button">I-update Ngayon</string>
+    <string name="force_update_note">Kailangan mong mag-update para magpatuloy</string>
+    <string name="khata_balance_label">Balanse:</string>
+    <string name="split_hero_settled_label">Nasettle na lahat ✓</string>
+    <string name="split_hero_get_back_label">Babalik sa\'yo</string>
+    <string name="split_hero_you_owe_label">Utang mo</string>
+
+    <string name="whats_new_feature_scan_title">I-scan ang Resibo</string>
+    <string name="whats_new_feature_voice_title">Voice Input</string>
+    <string name="whats_new_feature_split_title">Hatiin ang Bill</string>
+    <string name="whats_new_feature_khata_title">Khata / Ledger</string>
+    <string name="whats_new_feature_goals_title">Mga Layunin at Streak</string>
+    <string name="split_hero_total_spent">Kabuuang Nagastos</string>
 </resources>

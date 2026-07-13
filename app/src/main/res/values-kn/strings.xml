@@ -616,4 +616,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">ಸಲಹೆ: ದಿನಂಪ್ರತಿ ದಾಖಲಿಸುವುದು ಬಜೆಟ್ ನಿಯಂತ್ರಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ 📊</string>
     <string name="reminder_action_add_expense">ವೆಚ್ಚ ಸೇರಿಸಿ</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ ಹೊಸದೇನಿದೆ</string>
+    <string name="whats_new_subtitle">ಹೊಸ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಅನ್ವೇಷಿಸಲು ಸ್ವೈಪ್ ಮಾಡಿ</string>
+    <string name="force_update_title">ಅಪ್‌ಡೇಟ್ ಅಗತ್ಯವಿದೆ</string>
+    <string name="force_update_body">ಅಪ್ಲಿಕೇಶನ್‌ನ ಹೊಸ ಆವೃತ್ತಿ ಲಭ್ಯವಿದೆ, ಇದರಲ್ಲಿ ಪ್ರಮುಖ ಸುಧಾರಣೆಗಳು ಮತ್ತು ಫಿಕ್ಸ್‌ಗಳಿವೆ. ಅಪ್ಲಿಕೇಶನ್ ಬಳಸುವುದನ್ನು ಮುಂದುವರಿಸಲು ದಯವಿಟ್ಟು ಅಪ್‌ಡೇಟ್ ಮಾಡಿ.</string>
+    <string name="force_update_button">ಈಗಲೇ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ</string>
+    <string name="force_update_note">ಮುಂದುವರಿಸಲು ನೀವು ಅಪ್‌ಡೇಟ್ ಮಾಡಲೇಬೇಕು</string>
+    <string name="khata_balance_label">ಬಾಕಿ:</string>
+    <string name="split_hero_settled_label">ಎಲ್ಲಾ ಇತ್ಯರ್ಥವಾಗಿದೆ ✓</string>
+    <string name="split_hero_get_back_label">ನಿಮಗೆ ಹಿಂತಿರುಗುತ್ತದೆ</string>
+    <string name="split_hero_you_owe_label">ನೀವು ಬಾಕಿ ಇದ್ದೀರಿ</string>
+
+    <string name="whats_new_feature_scan_title">ರಸೀದಿಗಳು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="whats_new_feature_voice_title">ಧ್ವನಿ ಇನ್‌ಪುಟ್</string>
+    <string name="whats_new_feature_split_title">ಬಿಲ್‌ಗಳನ್ನು ಹಂಚಿ</string>
+    <string name="whats_new_feature_khata_title">ಖಾತೆ / ಲೆಡ್ಜರ್</string>
+    <string name="whats_new_feature_goals_title">ಗುರಿಗಳು &amp; ಸ್ಟ್ರೀಕ್</string>
+    <string name="split_hero_total_spent">ಒಟ್ಟು ಖರ್ಚು</string>
 </resources>

@@ -524,7 +524,7 @@ private fun SplitHeroHeader(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 HeroStat(
-                    label = "Total spent",
+                    label = stringResource(R.string.split_hero_total_spent),
                     value = "$currencySymbol${"%.2f".format(totalSpent)}",
                     currencySymbol = currencySymbol,
                     valueColor = Color.White
@@ -540,9 +540,9 @@ private fun SplitHeroHeader(
 
                 HeroStat(
                     label = when {
-                        isSettled -> "All settled ✓"
-                        iGotBack  -> "You get back"
-                        else      -> "You owe"
+                        isSettled -> stringResource(R.string.split_hero_settled_label)
+                        iGotBack  -> stringResource(R.string.split_hero_get_back_label)
+                        else      -> stringResource(R.string.split_hero_you_owe_label)
                     },
                     value = if (isSettled) "—"
                     else "$currencySymbol${"%.2f".format(absBalance)}",
@@ -784,7 +784,7 @@ private fun SplitExpenseRow(
                             shape = RoundedCornerShape(4.dp)
                         ) {
                             Text(
-                                "✓ settled",
+                                stringResource(R.string.split_settled),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = SuccessGreen,
                                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)

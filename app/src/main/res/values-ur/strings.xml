@@ -164,6 +164,13 @@
     <string name="language_urdu">اردو</string>
     <string name="language_bengali">بنگالی (বাংলা)</string>
     <string name="language_tagalog">تاگالوگ (Filipino)</string>
+    <string name="language_gujarati">گجراتی (ગુજરાતી)</string>
+    <string name="language_kannada">کنڑ (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">ملیالم (മലയാളം)</string>
+    <string name="language_marathi">مراठی (मराठी)</string>
+    <string name="language_punjabi">پنجابی (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">تامل (தமிழ்)</string>
+    <string name="language_telugu">تیلگو (తెలుగు)</string>
     <string name="currency_label">کرنسی</string>
     <string name="currency_custom_hint">کسٹم علامت</string>
     <string name="convert_currency_title">کرنسی تبدیل کریں</string>
@@ -330,6 +337,9 @@
     <string name="reminder_toggle_label">روزانہ اخراجات یاددہانی</string>
     <string name="reminder_toggle_desc">اپنے اخراجات درج کرنے کے لیے روزانہ یاددہانی حاصل کریں</string>
     <string name="reminder_time_label">یاددہانی کا وقت</string>
+    <string name="reminder2_toggle_label">دوسرا یاد دہانی شامل کریں</string>
+    <string name="reminder2_toggle_desc">اوپر والے کے علاوہ، دن میں پہلے ایک اضافی یاد دہانی حاصل کریں</string>
+    <string name="reminder2_time_label">دوسری یاد دہانی کا وقت</string>
     <string name="reminder_notification_title">کیا آپ نے آج کے اخراجات درج کیے؟ 💸</string>
     <string name="reminder_notification_body">آج کے چھوٹے ہوئے اخراجات جلدی شامل کرنے کے لیے ٹیپ کریں۔</string>
 
@@ -627,4 +637,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">مشورہ: روزانہ لاگ کرنے سے بجٹ کا خیال رہتا ہے 📊</string>
     <string name="reminder_action_add_expense">خرچ شامل کریں</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ نیا کیا ہے</string>
+    <string name="whats_new_subtitle">نئی خصوصیات دیکھنے کے لیے سوائپ کریں</string>
+    <string name="force_update_title">اپ ڈیٹ ضروری ہے</string>
+    <string name="force_update_body">ایپ کا ایک نیا ورژن دستیاب ہے جس میں اہم بہتریاں اور اصلاحات شامل ہیں۔ ایپ کا استعمال جاری رکھنے کے لیے براہ کرم اپ ڈیٹ کریں۔</string>
+    <string name="force_update_button">ابھی اپ ڈیٹ کریں</string>
+    <string name="force_update_note">جاری رکھنے کے لیے آپ کو اپ ڈیٹ کرنا ہوگا</string>
+    <string name="khata_balance_label">بقایا:</string>
+    <string name="split_hero_settled_label">سب طے ✓</string>
+    <string name="split_hero_get_back_label">آپ کو واپس ملے گا</string>
+    <string name="split_hero_you_owe_label">آپ پر واجب ہے</string>
+
+    <string name="whats_new_feature_scan_title">رسید اسکین کریں</string>
+    <string name="whats_new_feature_voice_title">آواز سے اندراج</string>
+    <string name="whats_new_feature_split_title">بل تقسیم کریں</string>
+    <string name="whats_new_feature_khata_title">کھاتہ / بہی</string>
+    <string name="whats_new_feature_goals_title">اہداف اور سلسلہ</string>
+    <string name="split_hero_total_spent">کل خرچ</string>
 </resources>

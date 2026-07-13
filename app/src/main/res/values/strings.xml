@@ -648,4 +648,23 @@ Feel free to use it anytime!
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨  What\'s New</string>
+    <string name="whats_new_subtitle">Swipe to explore new features</string>
+    <string name="force_update_title">Update Required</string>
+    <string name="force_update_body">A newer version of the app is available with important improvements and fixes. Please update to continue using the app.</string>
+    <string name="force_update_button">Update Now</string>
+    <string name="force_update_note">You must update to continue</string>
+    <string name="khata_balance_label">Bal:</string>
+    <string name="split_hero_settled_label">All settled ✓</string>
+    <string name="split_hero_get_back_label">You get back</string>
+    <string name="split_hero_you_owe_label">You owe</string>
+
+    <string name="whats_new_feature_scan_title">Scan Receipts</string>
+    <string name="whats_new_feature_voice_title">Voice Input</string>
+    <string name="whats_new_feature_split_title">Split Bills</string>
+    <string name="whats_new_feature_khata_title">Khata / Ledger</string>
+    <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
+    <string name="split_hero_total_spent">Total spent</string>
 </resources>

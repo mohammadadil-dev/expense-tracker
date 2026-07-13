@@ -163,6 +163,13 @@
     <string name="language_hindi">হিন্দি (हिन्दी)</string>
     <string name="language_urdu">উর্দু (اردو)</string>
     <string name="language_tagalog">তাগালগ (Filipino)</string>
+    <string name="language_gujarati">গুজরাটি (ગુજરાતી)</string>
+    <string name="language_kannada">কন্নড় (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">মালায়ালাম (മലയാളം)</string>
+    <string name="language_marathi">মারাঠি (मराठी)</string>
+    <string name="language_punjabi">পাঞ্জাবি (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">তামিল (தமிழ்)</string>
+    <string name="language_telugu">তেলুগু (తెలుగు)</string>
     <string name="language_bengali">বাংলা</string>
     <string name="currency_label">মুদ্রা</string>
     <string name="currency_custom_hint">কাস্টম প্রতীক</string>
@@ -334,6 +341,9 @@
     <string name="reminder_toggle_label">দৈনিক খরচ রিমাইন্ডার</string>
     <string name="reminder_toggle_desc">প্রতিদিন খরচ লেখার জন্য রিমাইন্ডার পান</string>
     <string name="reminder_time_label">রিমাইন্ডারের সময়</string>
+    <string name="reminder2_toggle_label">দ্বিতীয় রিমাইন্ডার যোগ করুন</string>
+    <string name="reminder2_toggle_desc">উপরেরটির পাশাপাশি, দিনের আগের সময়ে অতিরিক্ত রিমাইন্ডার পান</string>
+    <string name="reminder2_time_label">দ্বিতীয় রিমাইন্ডারের সময়</string>
     <string name="reminder_notification_title">আজকের খরচ কি লিখেছেন? 💸</string>
     <string name="reminder_notification_body">আজ মিস হওয়া খরচ দ্রুত যোগ করতে ট্যাপ করুন।</string>
 
@@ -631,4 +641,23 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">টিপস: প্রতিদিন লগ করলে বাজেটে থাকা সহজ হয় 📊</string>
     <string name="reminder_action_add_expense">খরচ যোগ করুন</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ কী নতুন</string>
+    <string name="whats_new_subtitle">নতুন ফিচারগুলো দেখতে সোয়াইপ করুন</string>
+    <string name="force_update_title">আপডেট প্রয়োজন</string>
+    <string name="force_update_body">অ্যাপের একটি নতুন সংস্করণ পাওয়া যাচ্ছে যাতে গুরুত্বপূর্ণ উন্নতি ও সমাধান রয়েছে। অ্যাপ ব্যবহার চালিয়ে যেতে অনুগ্রহ করে আপডেট করুন।</string>
+    <string name="force_update_button">এখনই আপডেট করুন</string>
+    <string name="force_update_note">চালিয়ে যেতে আপনাকে অবশ্যই আপডেট করতে হবে</string>
+    <string name="khata_balance_label">ব্যালেন্স:</string>
+    <string name="split_hero_settled_label">সব মিটমাট হয়েছে ✓</string>
+    <string name="split_hero_get_back_label">আপনি ফেরত পাবেন</string>
+    <string name="split_hero_you_owe_label">আপনি পাওনা</string>
+
+    <string name="whats_new_feature_scan_title">রিসিট স্ক্যান করুন</string>
+    <string name="whats_new_feature_voice_title">ভয়েস ইনপুট</string>
+    <string name="whats_new_feature_split_title">বিল ভাগ করুন</string>
+    <string name="whats_new_feature_khata_title">খাতা / লেজার</string>
+    <string name="whats_new_feature_goals_title">লক্ষ্য ও স্ট্রিক</string>
+    <string name="split_hero_total_spent">মোট খরচ</string>
 </resources>
