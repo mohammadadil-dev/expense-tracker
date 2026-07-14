@@ -75,156 +75,173 @@
 
     <h1>Privacy Policy for Expense Tracker</h1>
 
-    <p><strong>Effective Date:</strong> June 24, 2026</p>
+    <p><strong>Effective Date:</strong> July 14, 2026</p>
 
     <p>
-        This Privacy Policy explains how Expense Tracker ("the App")
-        handles your information. We are committed to protecting your privacy
-        and being transparent about how your data is managed.
+        This Privacy Policy explains what Expense Tracker ("the App") does and does not do
+        with your information. It is written to match exactly how the App behaves &mdash;
+        there is no hidden data collection beyond what is described here.
     </p>
 
     <div class="highlight">
         <strong>Important:</strong>
-        Expense Tracker does not operate any backend servers, does not require
-        user accounts, and does not upload your financial data to the internet.
-        Your information remains on your device unless you explicitly choose to share it.
+        Expense Tracker has no servers and no user accounts. Every expense, category, budget,
+        debt, ledger (Khata) entry, and setting you enter is stored only in a local database on
+        your own device, and the developer never receives, sees, or stores any of it. The App
+        shows ads (see below), which is currently the only way any information leaves your
+        device &mdash; described in full below.
     </div>
-
-    <h2>The Short Version</h2>
-
-    <p>
-        Expense Tracker has no servers, no user accounts, and no analytics or
-        advertising software. All expenses, categories, budgets, and settings
-        are stored locally on your device.
-    </p>
-
-    <p>
-        The developer does not collect, access, store, transmit, or sell any of your personal
-        or financial information.
-    </p>
 
     <h2>What the App Stores and Where</h2>
 
     <p>
-        The following information may be stored locally on your device:
-    </p>
-
-    <ul>
-        <li>Expense records</li>
-        <li>Categories and budgets</li>
-        <li>User display name</li>
-        <li>Language preferences</li>
-        <li>Currency preferences</li>
-        <li>Application settings</li>
-    </ul>
-
-    <p>
-        All information is stored using a local Room/SQLite database
-        on your device.
+        All your data &mdash; expenses, income, categories, budgets, debts, ledger/Khata entries,
+        split-group bills, goals, your display name, UPI ID if you enter one, and language/currency
+        preferences &mdash; is saved in a local on-device database (Room/SQLite). It stays on your
+        device unless you personally choose to move it, for example by using the App's PDF/CSV
+        export or local JSON backup file and sharing it yourself through Android's share sheet.
+        That sharing step is initiated by you, goes through apps you select, and is governed by
+        those apps' own privacy policies &mdash; the developer has no visibility into it.
     </p>
 
     <p>
-        If you uninstall the application, all locally stored data is removed.
-        You may also permanently delete your data at any time using:
+        If you uninstall the App, its local database is deleted with it.
+        <strong>Settings &rarr; Reset All Data</strong> also lets you erase everything inside the
+        App at any time, instantly and permanently.
     </p>
 
-    <ul>
-        <li><strong>Settings → Reset All Data</strong></li>
-    </ul>
-
-    <h2>PDF Export and Sharing</h2>
+    <h2>Advertising (AdMob)</h2>
 
     <p>
-        Expense Tracker allows users to export reports as PDF files.
+        The App shows banner and occasional full-screen ads served by Google AdMob, which is how
+        the App stays free with no account or subscription required. AdMob may collect device
+        identifiers (such as the Android Advertising ID), general app-interaction data, and
+        IP-derived approximate location, and may use this data for ad personalization and
+        measurement, per
+        <a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Google's AdMob privacy practices</a>.
+        The App does not request device location permission and does not pass any of your
+        financial data (expenses, budgets, Khata entries, etc.) to AdMob or any advertiser &mdash;
+        the ad SDK operates independently of, and has no access to, the data described above.
+        You can opt out of personalized advertising for your device in your Google Account's Ad
+        Settings.
     </p>
 
-    <p>
-        Any sharing of exported reports is initiated solely by the user through
-        Android's native sharing functionality. Once shared, the privacy practices
-        of the selected third-party application (email, cloud storage, messaging app, etc.)
-        will apply.
-    </p>
+    <h2>Google Drive Backup &mdash; Not Currently Active</h2>
 
     <p>
-        The developer has no access to exported files and cannot view or recover them.
+        An optional Google Drive backup feature exists in the App's code, but its interface is
+        currently disabled/hidden pending Drive OAuth consent-screen setup &mdash; there is no way
+        for a user to reach or trigger it in the current release, so no data is transmitted
+        through it today. This policy will be updated with a full description before that entry
+        point is re-enabled in a future release.
     </p>
 
     <h2>SMS-Based Expense Detection (Optional)</h2>
 
     <p>
-        Expense Tracker may provide an optional feature to detect expenses from SMS
-        messages using Android's SMS User Consent API.
+        If you turn on automatic expense detection from SMS in Settings, the App uses Android's
+        SMS User Consent API: when a bank/UPI/card SMS arrives while the App is open, Android
+        itself &mdash; not the App &mdash; briefly reads that one message and shows you a system
+        prompt asking if you want to share it with the App. The App only receives the message text
+        if you tap "Allow" on that prompt, message by message. The underlying Android permission
+        this relies on does not even appear in the App's permission list. This only works while
+        the App is open &mdash; it cannot see message history and does not read anything in the
+        background.
     </p>
 
     <p>
-        This feature operates under the following privacy protections:
+        The message text is parsed entirely on your device to pull out a transaction amount and
+        merchant name, pre-filling a new expense entry for you to review before saving. That text
+        is not transmitted anywhere, not stored beyond what you choose to save as an expense, and
+        not shared with the developer or anyone else.
     </p>
 
-    <ul>
-        <li>The app does not receive blanket access to your SMS inbox.</li>
-        <li>The app cannot read historical SMS messages.</li>
-        <li>Android displays a consent dialog before sharing any message.</li>
-        <li>The app only receives a message after you explicitly approve access.</li>
-        <li>Message processing occurs locally on your device.</li>
-        <li>No SMS content is transmitted to any external server.</li>
-    </ul>
+    <h2>Receipt Scanning and Voice Entry (Optional)</h2>
 
     <p>
-        Approved messages are used solely to extract transaction information
-        such as merchant name and transaction amount to help create expense entries.
+        Receipt scanning uses ML Kit's on-device text recognition (camera permission) &mdash; the
+        photo and extracted text are processed entirely on your device and never uploaded
+        anywhere. Voice expense entry uses Android's on-device/system speech recognizer
+        (microphone permission) the same way &mdash; your speech audio is handled by Android's
+        speech recognition service the same as it would be for any other app using dictation, and
+        the App itself never transmits it to the developer.
     </p>
 
-    <h2>Permissions</h2>
+    <h2>UPI Payment Requests (Optional, India Only)</h2>
 
     <p>
-        The application may use Android system permissions and APIs strictly
-        for providing its core functionality.
+        If your currency is set to &#8377; (INR), Settings offers an optional "Your UPI ID"
+        field, and Khata ledger entries where someone owes you money offer a "Request via UPI"
+        option. This generates a standard <code>upi://pay</code> link and an on-device QR code
+        encoding your UPI ID, the outstanding amount, and a short note &mdash; the App never
+        contacts any payment gateway, bank, or server to create this, and never receives or
+        processes the payment itself. It only hands the QR/link to whatever UPI app (GPay,
+        PhonePe, etc.) the payer already has installed, the same way a printed shop QR code works.
+        Sharing goes through the same WhatsApp share flow already used for ledger reminders, sent
+        by you, to a contact you choose.
     </p>
 
     <p>
-        Any permission request will be presented by Android and can be accepted
-        or denied by the user at any time.
+        The reverse direction works the same way: for a party you owe money to, an optional
+        "Pay via UPI" button opens a <code>upi://pay</code> link built from that party's own UPI
+        ID (if you've entered one for them) directly in your own UPI app &mdash; again with no
+        payment gateway, server, or app-of-ours in the middle. To make entering that UPI ID
+        easier, you can scan the party's UPI QR code with your camera instead of typing it; the
+        photo is processed entirely on your device by the same kind of on-device recognition
+        technology used for receipt scanning above, is never uploaded anywhere, and only the UPI
+        ID text extracted from it is saved (in the same local database described above). If a
+        party has a phone number on file but no UPI ID, tapping "Pay via UPI" instead copies that
+        number to your clipboard and opens your UPI app so you can search for the contact
+        yourself &mdash; the number never leaves your device except via the clipboard, which only
+        your own UPI app reads when you paste into it.
+    </p>
+
+    <p>
+        "Mark as Paid" simply records a payment entry in your local ledger, same as manually
+        logging one &mdash; the App has no way to know whether a UPI payment actually succeeded,
+        since UPI apps don't report that back to other apps; you tell it by tapping the button
+        yourself.
+    </p>
+
+    <p>
+        Your own UPI ID and any UPI ID you optionally enter for a ledger party are stored only in
+        the local on-device database described above &mdash; never transmitted to the developer
+        or anyone else.
     </p>
 
     <h2>What We Do Not Do</h2>
 
     <ul>
-        <li>We do not collect personal information.</li>
-        <li>We do not upload your expense data.</li>
-        <li>We do not sell user data.</li>
-        <li>We do not share user data with third parties.</li>
-        <li>We do not use advertising networks.</li>
-        <li>We do not use analytics tracking services.</li>
-        <li>We do not require account registration.</li>
-        <li>We do not track users across apps or websites.</li>
+        <li>We don't operate any servers, and we never receive, see, or store your financial data ourselves.</li>
+        <li>We don't use analytics or crash-reporting SDKs.</li>
+        <li>We don't share or sell your financial data to third parties.</li>
+        <li>We don't require or use an account, login, email, or phone number to use the App.</li>
+        <li>We don't track you across other apps or websites.</li>
     </ul>
 
     <h2>Children's Privacy</h2>
 
     <p>
-        Expense Tracker is not specifically directed toward children.
-        Since the application does not collect personal information,
-        no personal data is knowingly collected from children.
+        Expense Tracker is a general-purpose finance utility, not directed at children, and the
+        developer doesn't knowingly collect personal information from children. The App itself
+        never receives your financial data regardless of age; the only data leaving the device is
+        the ad-related data described above, handled by Google AdMob, which offers its own
+        controls for treating users as children under COPPA/GDPR-K where applicable.
     </p>
 
     <h2>Changes to This Privacy Policy</h2>
 
     <p>
-        We may update this Privacy Policy from time to time to reflect
-        application changes or legal requirements.
-    </p>
-
-    <p>
-        Any updates will be published on this page along with a revised
-        effective date.
+        If how the App handles data ever changes, this page will be updated and the "Effective
+        Date" above will change accordingly. Continued use of the App after an update means you
+        accept the revised policy.
     </p>
 
     <h2>Contact</h2>
 
     <div class="contact">
         <p>
-            If you have any questions regarding this Privacy Policy,
-            please contact:
+            Questions about this policy or the App's data handling can be sent to:
         </p>
 
         <p>
@@ -233,7 +250,7 @@
     </div>
 
     <div class="footer">
-        © 2026 Expense Tracker. All Rights Reserved.
+        &copy; 2026 Expense Tracker. All Rights Reserved.
     </div>
 
 </div>
