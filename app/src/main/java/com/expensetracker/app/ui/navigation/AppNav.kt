@@ -406,7 +406,10 @@ fun AppNav() {
                         partyId          = partyId,
                         khataViewModel   = khataViewModel,
                         expenseViewModel = viewModel,
-                        onBack           = { navController.popBackStack() }
+                        onBack           = { navController.popBackStack() },
+                        onOpenSettings   = {
+                            navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
+                        }
                     )
                 }
 

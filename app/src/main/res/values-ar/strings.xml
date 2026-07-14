@@ -388,6 +388,7 @@
     <string name="khata_whatsapp_reminder">إرسال تذكير</string>
     <string name="khata_whatsapp_not_installed">واتساب غير مثبت.</string>
     <string name="khata_request_via_upi">الطلب عبر UPI</string>
+    <string name="khata_add_upi_hint">أضف معرّف UPI الخاص بك في الإعدادات حتى يتمكنوا من دفع المبلغ لك فورًا عبر UPI</string>
     <string name="khata_upi_sheet_caption">يمكنهم مسح هذا شخصيًا، أو النقر على الرابط الذي تشاركه للدفع مباشرة.</string>
     <string name="khata_upi_share_link">مشاركة رابط الدفع</string>
     <string name="khata_pay_via_upi">الدفع عبر UPI</string>

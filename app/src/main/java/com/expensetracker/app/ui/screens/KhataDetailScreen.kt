@@ -30,8 +30,10 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
@@ -100,7 +102,8 @@ fun KhataDetailScreen(
     partyId: Long,
     khataViewModel: KhataViewModel,
     expenseViewModel: ExpenseViewModel,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onOpenSettings: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val currencySymbol by expenseViewModel.currencySymbol.collectAsState()
@@ -126,6 +129,12 @@ fun KhataDetailScreen(
     // UPI ID in Settings. See FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§10.2.
     val showUpiButton = !isIOwe && balance >= 1.0 &&
         CurrencyLocaleMapper.isInrSymbol(currencySymbol) && myUpiId.isNotBlank()
+
+    // Shown instead of the "Request via UPI" button above when the only thing missing is the
+    // user's own UPI ID — surfaces the fix right where it's needed, before they hit Send
+    // Reminder and end up sending a message with no way for the party to actually pay via UPI.
+    val showAddUpiHint = !isIOwe && balance >= 1.0 &&
+        CurrencyLocaleMapper.isInrSymbol(currencySymbol) && myUpiId.isBlank()
 
     // "Pay via UPI" — the reverse direction: this app's user owes the party, and the party's
     // own UPI ID was captured on the party. Unlike "Request via UPI" this never goes through
@@ -341,6 +350,8 @@ fun KhataDetailScreen(
                     onSendReminder = { sendWhatsApp() },
                     showUpiButton = showUpiButton,
                     onRequestUpi = { showUpiSheet = true },
+                    showAddUpiHint = showAddUpiHint,
+                    onAddUpiId = onOpenSettings,
                     showPayUpiButton = showPayUpiButton,
                     onPayUpi = { payViaUpi() },
                     showMarkPaidButton = showMarkPaidButton,
@@ -519,6 +530,8 @@ private fun KhataBalanceCard(
     onSendReminder: () -> Unit,
     showUpiButton: Boolean = false,
     onRequestUpi: () -> Unit = {},
+    showAddUpiHint: Boolean = false,
+    onAddUpiId: () -> Unit = {},
     showPayUpiButton: Boolean = false,
     onPayUpi: () -> Unit = {},
     showMarkPaidButton: Boolean = false,
@@ -667,6 +680,45 @@ private fun KhataBalanceCard(
                     Icon(Icons.Filled.QrCode, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(stringResource(R.string.khata_request_via_upi))
+                }
+            }
+
+            // Nudge shown instead of the button above when the only reason "Request via UPI"
+            // is hidden is a missing UPI ID for this app's own user — tapping it jumps to
+            // Settings so it can be fixed right here, before a reminder goes out with no way
+            // for the party to actually pay via UPI.
+            if (showAddUpiHint) {
+                Spacer(Modifier.height(10.dp))
+                Surface(
+                    onClick = onAddUpiId,
+                    shape = RoundedCornerShape(14.dp),
+                    color = Color.White.copy(alpha = 0.16f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.Info,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.khata_add_upi_hint),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            Icons.Filled.ChevronRight,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.80f),
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                 }
             }
 

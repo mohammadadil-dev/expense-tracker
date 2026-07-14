@@ -388,6 +388,7 @@
     <string name="khata_whatsapp_reminder">রিমাইন্ডার পাঠান</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
     <string name="khata_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
+    <string name="khata_add_upi_hint">তারা যাতে আপনাকে সাথে সাথে UPI-এর মাধ্যমে পেমেন্ট করতে পারে, তার জন্য সেটিংসে আপনার UPI আইডি যোগ করুন</string>
     <string name="khata_upi_sheet_caption">তারা এটি সরাসরি স্ক্যান করতে পারে, অথবা আপনার শেয়ার করা লিঙ্কে ট্যাপ করে সরাসরি পেমেন্ট করতে পারে।</string>
     <string name="khata_upi_share_link">পেমেন্ট লিঙ্ক শেয়ার করুন</string>
     <string name="khata_pay_via_upi">UPI-এর মাধ্যমে পেমেন্ট করুন</string>

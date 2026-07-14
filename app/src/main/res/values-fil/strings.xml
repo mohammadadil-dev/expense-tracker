@@ -384,6 +384,7 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_whatsapp_reminder">Magpadala ng Reminder</string>
     <string name="khata_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
     <string name="khata_request_via_upi">Humingi sa pamamagitan ng UPI</string>
+    <string name="khata_add_upi_hint">Idagdag ang iyong UPI ID sa Settings para makapagbayad sila sa iyo agad gamit ang UPI</string>
     <string name="khata_upi_sheet_caption">Maaari nilang i-scan ito nang personal, o i-tap ang link na ibinahagi mo para direktang magbayad.</string>
     <string name="khata_upi_share_link">Ibahagi ang link ng bayad</string>
     <string name="khata_pay_via_upi">Magbayad gamit ang UPI</string>

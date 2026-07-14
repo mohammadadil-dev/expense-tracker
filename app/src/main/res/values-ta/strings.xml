@@ -400,6 +400,7 @@
     <string name="khata_whatsapp_reminder">நினைவூட்டல் அனுப்பு</string>
     <string name="khata_whatsapp_not_installed">WhatsApp நிறுவப்படவில்லை.</string>
     <string name="khata_request_via_upi">UPI மூலம் கோரிக்கை</string>
+    <string name="khata_add_upi_hint">அவர்கள் உங்களுக்கு உடனடியாக UPI மூலம் பணம் செலுத்த, உங்கள் UPI ஐடியை அமைப்புகளில் சேர்க்கவும்</string>
     <string name="khata_upi_sheet_caption">அவர்கள் இதை நேரடியாக ஸ்கேன் செய்யலாம், அல்லது நீங்கள் பகிரும் இணைப்பைத் தட்டி நேரடியாக பணம் செலுத்தலாம்.</string>
     <string name="khata_upi_share_link">கட்டண இணைப்பைப் பகிரவும்</string>
     <string name="khata_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
