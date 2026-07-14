@@ -1,23 +1,29 @@
 package com.expensetracker.app.ui.components
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
@@ -25,6 +31,7 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.SplitExpenseEntity
 import com.expensetracker.app.data.SplitMemberEntity
 import com.expensetracker.app.util.Settlement
+import com.expensetracker.app.util.UpiPaymentHelper
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,11 +44,38 @@ fun SettleUpSheet(
     expenses: List<SplitExpenseEntity> = emptyList(),
     members: List<SplitMemberEntity> = emptyList(),
     netBalances: Map<Long, Double> = emptyMap(),
+    // UPI close-the-loop (India-only, gated on currencySymbol) — mirrors the Khata "Pay via
+    // UPI" / "Request via UPI" treatment. meMemberId is null if this group somehow has no
+    // isMe member (shouldn't normally happen, but guards the UI cleanly either way).
+    meMemberId: Long? = null,
+    myUpiId: String = "",
+    ownerDisplayName: String = "",
+    onSetMemberUpiId: (SplitMemberEntity, String) -> Unit = { _, _ -> },
+    onOpenSettings: () -> Unit = {},
     onDismiss: () -> Unit,
     onMarkPaid: (Settlement) -> Unit
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val memberMap = remember(members) { members.associateBy { it.id } }
+    val showUpiActions = CurrencyLocaleMapper.isInrSymbol(currencySymbol)
+    val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
+
+    // Settlement currently showing the "Request via UPI" QR sheet (someone owes "me").
+    var requestUpiSettlement by remember { mutableStateOf<Settlement?>(null) }
+    // Member currently showing the inline "set their UPI ID" dialog (before I can pay them).
+    var editingUpiForMember by remember { mutableStateOf<SplitMemberEntity?>(null) }
+
+    fun payMemberViaUpi(toMember: SplitMemberEntity, amount: Double) {
+        val vpa = toMember.upiId
+        if (vpa.isNullOrBlank()) return
+        val uri = UpiPaymentHelper.buildUpiUri(vpa, toMember.name, amount, "Split: $groupName")
+        try {
+            context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -147,15 +181,102 @@ fun SettleUpSheet(
                 Spacer(Modifier.height(12.dp))
 
                 settlements.forEach { settlement ->
+                    val iOwe   = showUpiActions && meMemberId != null && settlement.fromMemberId == meMemberId
+                    val owedToMe = showUpiActions && meMemberId != null && settlement.toMemberId == meMemberId
+                    val toMember = memberMap[settlement.toMemberId]
+
                     SettlementRow(
                         settlement = settlement,
                         currencySymbol = currencySymbol,
-                        onMarkPaid = { onMarkPaid(settlement) }
+                        onMarkPaid = { onMarkPaid(settlement) },
+                        payUpiAction = when {
+                            iOwe && !toMember?.upiId.isNullOrBlank() -> {
+                                { payMemberViaUpi(toMember!!, settlement.amount) }
+                            }
+                            iOwe -> {
+                                { editingUpiForMember = toMember }
+                            }
+                            owedToMe && myUpiId.isNotBlank() -> {
+                                { requestUpiSettlement = settlement }
+                            }
+                            owedToMe -> {
+                                { onOpenSettings() }
+                            }
+                            else -> null
+                        },
+                        payUpiLabel = when {
+                            iOwe && !toMember?.upiId.isNullOrBlank() -> stringResource(R.string.split_pay_via_upi)
+                            iOwe -> stringResource(R.string.split_add_their_upi)
+                            owedToMe && myUpiId.isNotBlank() -> stringResource(R.string.split_request_via_upi)
+                            owedToMe -> stringResource(R.string.split_set_your_upi)
+                            else -> null
+                        }
                     )
                     Spacer(Modifier.height(8.dp))
                 }
             }
         }
+    }
+
+    // ── Inline "set their UPI ID" dialog ─────────────────────────────────────
+    editingUpiForMember?.let { member ->
+        var upiInput by remember(member.id) { mutableStateOf(member.upiId ?: "") }
+        val upiValid = upiInput.isBlank() || UpiPaymentHelper.isValidVpa(upiInput)
+        AlertDialog(
+            onDismissRequest = { editingUpiForMember = null },
+            title = { Text(stringResource(R.string.split_add_their_upi)) },
+            text = {
+                OutlinedTextField(
+                    value = upiInput,
+                    onValueChange = { upiInput = it },
+                    label = { Text(stringResource(R.string.upi_id_label)) },
+                    placeholder = { Text(stringResource(R.string.upi_id_hint)) },
+                    singleLine = true,
+                    isError = !upiValid,
+                    supportingText = if (!upiValid) {
+                        { Text(stringResource(R.string.upi_id_invalid)) }
+                    } else null,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = upiInput.isNotBlank() && upiValid,
+                    onClick = {
+                        onSetMemberUpiId(member, upiInput.trim())
+                        editingUpiForMember = null
+                    }
+                ) { Text(stringResource(R.string.done)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingUpiForMember = null }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+
+    // ── "Request via UPI" QR sheet (someone owes "me") ───────────────────────
+    requestUpiSettlement?.let { settlement ->
+        val fromName = memberMap[settlement.fromMemberId]?.name ?: ""
+        RequestUpiPaymentSheet(
+            myUpiId = myUpiId,
+            payeeDisplayName = ownerDisplayName,
+            partyName = fromName,
+            amount = settlement.amount,
+            currencySymbol = currencySymbol,
+            notePrefix = "Split",
+            onShareQr = { qrUri ->
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    putExtra(Intent.EXTRA_STREAM, qrUri)
+                    putExtra(Intent.EXTRA_TEXT, "Split: $groupName")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(Intent.createChooser(sendIntent, null))
+                requestUpiSettlement = null
+            },
+            onDismiss = { requestUpiSettlement = null }
+        )
     }
 }
 
@@ -163,53 +284,73 @@ fun SettleUpSheet(
 private fun SettlementRow(
     settlement: Settlement,
     currencySymbol: String,
-    onMarkPaid: () -> Unit
+    onMarkPaid: () -> Unit,
+    payUpiAction: (() -> Unit)? = null,
+    payUpiLabel: String? = null
 ) {
     Card(
         shape = RoundedCornerShape(14.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(
-                        settlement.fromMemberName,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Icon(
-                        Icons.Filled.ArrowForward,
-                        contentDescription = null,
-                        modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        settlement.toMemberName,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold
+        Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            settlement.fromMemberName,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Icon(
+                            Icons.Filled.ArrowForward,
+                            contentDescription = null,
+                            modifier = Modifier.size(14.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            settlement.toMemberName,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    MoneyText(
+                        formatted = "$currencySymbol${"%.2f".format(settlement.amount)}",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
-                MoneyText(
-                    formatted = "$currencySymbol${"%.2f".format(settlement.amount)}",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.primary
-                )
+
+                OutlinedButton(
+                    onClick = onMarkPaid,
+                    shape = RoundedCornerShape(10.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Text(stringResource(R.string.split_mark_paid), style = MaterialTheme.typography.labelMedium)
+                }
             }
 
-            OutlinedButton(
-                onClick = onMarkPaid,
-                shape = RoundedCornerShape(10.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
-            ) {
-                Text(stringResource(R.string.split_mark_paid), style = MaterialTheme.typography.labelMedium)
+            if (payUpiAction != null && payUpiLabel != null) {
+                Spacer(Modifier.height(8.dp))
+                TextButton(
+                    onClick = payUpiAction,
+                    contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
+                ) {
+                    Icon(
+                        if (payUpiLabel == stringResource(R.string.split_request_via_upi)) Icons.Filled.QrCode
+                        else Icons.Filled.AccountBalance,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(payUpiLabel, style = MaterialTheme.typography.labelMedium)
+                }
             }
         }
     }

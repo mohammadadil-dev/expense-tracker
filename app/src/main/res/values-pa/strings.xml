@@ -241,6 +241,7 @@
     <string name="cat_farming">ਖੇਤੀਬਾੜੀ</string>
     <string name="cat_khata">ਖਾਤਾ</string>
     <string name="cat_education">ਸਿੱਖਿਆ</string>
+    <string name="cat_splits">ਸਪਲਿਟਸ</string>
     <string name="khata_delete_party_title">ਪਾਰਟੀ ਮਿਟਾਉਣੀ ਹੈ?</string>
     <string name="khata_delete_party_confirm">%1$s ਅਤੇ ਉਹਨਾਂ ਦੀਆਂ ਸਾਰੀਆਂ ਐਂਟਰੀਆਂ ਸਥਾਈ ਤੌਰ ਉੱਤੇ ਮਿਟਾ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ। ਇਹ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
 
@@ -642,6 +643,19 @@
     <string name="split_wa_to_pay">ਦਿਓ</string>
     <string name="split_wa_all_settled">ਸਭ ਨੇ ਦਿੱਤਾ! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">ਬਰਾਬਰ</string>
+    <string name="split_mode_exact">ਸਟੀਕ</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">%2$s ਵਿੱਚੋਂ %1$s ਦਰਜ ਕੀਤਾ</string>
+    <string name="split_percent_sum_hint">100%% ਵਿੱਚੋਂ %1$s%% ਦਰਜ ਕੀਤਾ</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰੋ</string>
+    <string name="split_add_their_upi">ਉਹਨਾਂ ਦੀ UPI ID ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="split_request_via_upi">UPI ਰਾਹੀਂ ਬੇਨਤੀ ਕਰੋ</string>
+    <string name="split_set_your_upi">ਆਪਣੀ UPI ID ਸੈੱਟ ਕਰੋ</string>
     <string name="reminder_notification_tip">ਸੁਝਾਅ: ਰੋਜ਼ ਦਰਜ ਕਰਨ ਨਾਲ ਬਜਟ ਕਾਬੂ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ 📊</string>
     <string name="reminder_action_add_expense">ਖਰਚ ਜੋੜੋ</string>
 

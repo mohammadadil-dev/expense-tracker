@@ -25,6 +25,10 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.SplitMemberEntity
 import com.expensetracker.app.data.SplitRepository
+import kotlin.math.abs
+
+/** How the total amount is divided among the selected members. */
+private enum class SplitMode { EQUAL, EXACT, PERCENT }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +36,7 @@ fun AddSplitExpenseSheet(
     members: List<SplitMemberEntity>,
     currencySymbol: String,
     onDismiss: () -> Unit,
-    onSave: (description: String, amount: Double, paidByMemberId: Long, splitAmongIds: List<Long>) -> Unit
+    onSave: (description: String, amount: Double, paidByMemberId: Long, splitAmongIds: List<Long>, customShares: Map<Long, Double>?) -> Unit
 ) {
     var description by remember { mutableStateOf("") }
     var amountText by remember { mutableStateOf("") }
@@ -42,8 +46,28 @@ fun AddSplitExpenseSheet(
     // Split-among: all members selected by default
     val splitAmongIds = remember { mutableStateListOf<Long>().apply { addAll(members.map { it.id }) } }
 
+    var splitMode by remember { mutableStateOf(SplitMode.EQUAL) }
+    // Per-member free-text inputs for EXACT (currency amount) and PERCENT (0-100) modes —
+    // kept as raw strings (like the main amount field) so users can type/clear freely
+    // without a parse error mid-keystroke.
+    val exactAmounts  = remember { mutableStateMapOf<Long, String>() }
+    val percentInputs = remember { mutableStateMapOf<Long, String>() }
+
     val scrollState = rememberScrollState()
     val memberMap = remember(members) { members.associateBy { it.id } }
+    val amount = amountText.toDoubleOrNull() ?: 0.0
+
+    // Sums used for validation — recomputed on every recomposition (cheap, small lists).
+    val exactSum = splitAmongIds.sumOf { exactAmounts[it]?.toDoubleOrNull() ?: 0.0 }
+    val percentSum = splitAmongIds.sumOf { percentInputs[it]?.toDoubleOrNull() ?: 0.0 }
+    val exactMatches = amount > 0 && abs(exactSum - amount) < 0.01
+    val percentMatches = abs(percentSum - 100.0) < 0.01
+
+    val canSave = description.isNotBlank() && amount > 0 && splitAmongIds.isNotEmpty() && when (splitMode) {
+        SplitMode.EQUAL   -> true
+        SplitMode.EXACT   -> exactMatches
+        SplitMode.PERCENT -> percentMatches
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -137,15 +161,52 @@ fun AddSplitExpenseSheet(
             HorizontalDivider()
             Spacer(Modifier.height(12.dp))
 
-            // Split among
+            // Split among + mode selector
             Text(stringResource(R.string.split_split_among), style = MaterialTheme.typography.labelLarge)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(R.string.split_split_among_hint),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
             Spacer(Modifier.height(8.dp))
+
+            // Equal / Exact / Percentage segmented selector
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(50))
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                listOf(
+                    SplitMode.EQUAL   to R.string.split_mode_equal,
+                    SplitMode.EXACT   to R.string.split_mode_exact,
+                    SplitMode.PERCENT to R.string.split_mode_percent
+                ).forEach { (mode, labelRes) ->
+                    val selected = splitMode == mode
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(50))
+                            .background(if (selected) MaterialTheme.colorScheme.primary else Color.Transparent)
+                            .clickable { splitMode = mode }
+                            .padding(vertical = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(labelRes),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = if (selected) MaterialTheme.colorScheme.onPrimary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(10.dp))
+
+            if (splitMode == SplitMode.EQUAL) {
+                Text(
+                    stringResource(R.string.split_split_among_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(8.dp))
+            }
 
             members.forEach { member ->
                 val checked = splitAmongIds.contains(member.id)
@@ -171,29 +232,80 @@ fun AddSplitExpenseSheet(
                     MemberAvatar(member = member, size = 32)
                     Text(member.name, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
 
-                    // Preview share amount
-                    val amount = amountText.toDoubleOrNull() ?: 0.0
-                    val share = if (splitAmongIds.size > 0 && checked) amount / splitAmongIds.size else 0.0
-                    if (share > 0) {
-                        MoneyText(
-                            formatted = "$currencySymbol${"%.2f".format(share)}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                    when (splitMode) {
+                        SplitMode.EQUAL -> {
+                            val share = if (splitAmongIds.size > 0 && checked) amount / splitAmongIds.size else 0.0
+                            if (share > 0) {
+                                MoneyText(
+                                    formatted = "$currencySymbol${"%.2f".format(share)}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                        SplitMode.EXACT -> if (checked) {
+                            OutlinedTextField(
+                                value = exactAmounts[member.id] ?: "",
+                                onValueChange = { exactAmounts[member.id] = it },
+                                modifier = Modifier.width(96.dp),
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.bodySmall,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                                prefix = { Text(currencySymbol, style = MaterialTheme.typography.bodySmall) }
+                            )
+                        }
+                        SplitMode.PERCENT -> if (checked) {
+                            OutlinedTextField(
+                                value = percentInputs[member.id] ?: "",
+                                onValueChange = { percentInputs[member.id] = it },
+                                modifier = Modifier.width(72.dp),
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.bodySmall,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                                suffix = { Text("%", style = MaterialTheme.typography.bodySmall) }
+                            )
+                        }
                     }
                 }
             }
 
+            // Running-total validation hint for Exact/Percentage modes
+            if (splitMode == SplitMode.EXACT) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = stringResource(
+                        R.string.split_exact_sum_hint,
+                        "$currencySymbol${"%.2f".format(exactSum)}",
+                        "$currencySymbol${"%.2f".format(amount)}"
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (exactMatches) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
+                )
+            } else if (splitMode == SplitMode.PERCENT) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = stringResource(R.string.split_percent_sum_hint, "%.1f".format(percentSum)),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (percentMatches) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
+                )
+            }
+
             Spacer(Modifier.height(24.dp))
 
-            val amount = amountText.toDoubleOrNull() ?: 0.0
             Button(
                 onClick = {
-                    if (description.isNotBlank() && amount > 0 && splitAmongIds.isNotEmpty()) {
-                        onSave(description.trim(), amount, paidByMemberId, splitAmongIds.toList())
+                    if (!canSave) return@Button
+                    val customShares: Map<Long, Double>? = when (splitMode) {
+                        SplitMode.EQUAL -> null
+                        SplitMode.EXACT -> splitAmongIds.associateWith { exactAmounts[it]?.toDoubleOrNull() ?: 0.0 }
+                        SplitMode.PERCENT -> splitAmongIds.associateWith { memberId ->
+                            val pct = percentInputs[memberId]?.toDoubleOrNull() ?: 0.0
+                            amount * pct / 100.0
+                        }
                     }
+                    onSave(description.trim(), amount, paidByMemberId, splitAmongIds.toList(), customShares)
                 },
-                enabled = description.isNotBlank() && amount > 0 && splitAmongIds.isNotEmpty(),
+                enabled = canSave,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(14.dp)
             ) {

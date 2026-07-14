@@ -241,6 +241,7 @@
     <string name="cat_farming">விவசாயம்</string>
     <string name="cat_khata">கணக்கு</string>
     <string name="cat_education">கல்வி</string>
+    <string name="cat_splits">பிரிவுகள்</string>
     <string name="khata_delete_party_title">தரப்பை நீக்கவா?</string>
     <string name="khata_delete_party_confirm">%1$s மற்றும் அவர்களின் அனைத்து உள்ளீடுகளும் நிரந்தரமாக நீக்கப்படும். இதை மீட்கல் இயலாது.</string>
 
@@ -642,6 +643,19 @@
     <string name="split_wa_to_pay">செலுத்த</string>
     <string name="split_wa_all_settled">எல்லோரும் தீர்வு! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">சமம்</string>
+    <string name="split_mode_exact">துல்லியம்</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">%2$s இல் %1$s உள்ளிடப்பட்டது</string>
+    <string name="split_percent_sum_hint">100%% இல் %1$s%% உள்ளிடப்பட்டது</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
+    <string name="split_add_their_upi">அவர்களின் UPI ID-ஐ சேர்க்கவும்</string>
+    <string name="split_request_via_upi">UPI மூலம் கோரவும்</string>
+    <string name="split_set_your_upi">உங்கள் UPI ID-ஐ அமைக்கவும்</string>
     <string name="reminder_notification_tip">குறிப்பு: தினசரி பதிவு பட்ஜெட்டை கட்டுக்கோப்பாக வைக்கும் 📊</string>
     <string name="reminder_action_add_expense">செலவு சேர்</string>
 

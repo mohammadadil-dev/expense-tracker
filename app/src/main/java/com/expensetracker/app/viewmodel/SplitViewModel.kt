@@ -87,6 +87,11 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch { repository.deleteMember(member) }
     }
 
+    /** Sets/clears a member's UPI ID — used by the Settle Up sheet's inline prompt. */
+    fun setMemberUpiId(member: SplitMemberEntity, upiId: String) {
+        viewModelScope.launch { repository.setMemberUpiId(member, upiId) }
+    }
+
     // ── Expense CRUD ─────────────────────────────────────────────────────────
 
     fun addExpense(
@@ -95,7 +100,8 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         amount: Double,
         paidByMemberId: Long,
         splitAmongIds: List<Long>,
-        date: String
+        date: String,
+        customShares: Map<Long, Double>? = null
     ) {
         viewModelScope.launch {
             repository.addExpense(
@@ -104,7 +110,8 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
                 amount           = amount,
                 paidByMemberId   = paidByMemberId,
                 splitAmongIds    = splitAmongIds,
-                date             = date
+                date             = date,
+                customShares     = customShares
             )
         }
     }

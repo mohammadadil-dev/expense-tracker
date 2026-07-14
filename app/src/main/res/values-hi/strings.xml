@@ -239,6 +239,7 @@
     <string name="cat_farming">खेती</string>
     <string name="cat_khata">खाता</string>
     <string name="cat_education">शिक्षा</string>
+    <string name="cat_splits">स्प्लिट्स</string>
     <string name="khata_delete_party_title">पार्टी हटाएं?</string>
     <string name="khata_delete_party_confirm">%1$s और उनकी सभी एंट्री स्थायी रूप से हटा दी जाएंगी। यह पूर्ववत नहीं किया जा सकता।</string>
 
@@ -668,6 +669,19 @@
     <string name="split_wa_to_pay">भुगतान करें</string>
     <string name="split_wa_all_settled">सब चुकता हो गया! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">समान</string>
+    <string name="split_mode_exact">सटीक</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">%2$s में से %1$s दर्ज किया गया</string>
+    <string name="split_percent_sum_hint">100%% में से %1$s%% दर्ज किया गया</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">UPI से भुगतान करें</string>
+    <string name="split_add_their_upi">उनकी UPI ID जोड़ें</string>
+    <string name="split_request_via_upi">UPI से अनुरोध करें</string>
+    <string name="split_set_your_upi">अपनी UPI ID सेट करें</string>
     <string name="reminder_notification_tip">सुझाव: रोज़ाना लॉग करने से बजट पर नज़र रहती है 📊</string>
     <string name="reminder_action_add_expense">खर्च जोड़ें</string>
 

@@ -239,6 +239,7 @@
     <string name="cat_farming">কৃষি</string>
     <string name="cat_khata">খাতা</string>
     <string name="cat_education">শিক্ষা</string>
+    <string name="cat_splits">স্প্লিট</string>
     <string name="khata_delete_party_title">পার্টি মুছবেন?</string>
     <string name="khata_delete_party_confirm">%1$s এবং তাদের সমস্ত এন্ট্রি স্থায়ীভাবে মুছে যাবে।</string>
 
@@ -667,6 +668,19 @@
     <string name="split_wa_to_pay">পরিশোধ করুন</string>
     <string name="split_wa_all_settled">সবার হিসাব মিটে গেছে! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">সমান</string>
+    <string name="split_mode_exact">সঠিক</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">%2$s এর মধ্যে %1$s প্রবেশ করানো হয়েছে</string>
+    <string name="split_percent_sum_hint">১০০%% এর মধ্যে %1$s%% প্রবেশ করানো হয়েছে</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">UPI-এর মাধ্যমে পরিশোধ করুন</string>
+    <string name="split_add_their_upi">তাদের UPI আইডি যোগ করুন</string>
+    <string name="split_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
+    <string name="split_set_your_upi">আপনার UPI আইডি সেট করুন</string>
     <string name="reminder_notification_tip">টিপস: প্রতিদিন লগ করলে বাজেটে থাকা সহজ হয় 📊</string>
     <string name="reminder_action_add_expense">খরচ যোগ করুন</string>
 

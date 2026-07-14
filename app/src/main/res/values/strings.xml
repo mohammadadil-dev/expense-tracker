@@ -244,6 +244,7 @@
     <string name="cat_farming">Farming</string>
     <string name="cat_khata">Ledger</string>
     <string name="cat_education">Education</string>
+    <string name="cat_splits">Splits</string>
     <string name="khata_delete_party_title">Delete Party?</string>
     <string name="khata_delete_party_confirm">This will permanently delete %1$s and all their entries. This cannot be undone.</string>
 
@@ -675,6 +676,19 @@ Feel free to use it anytime!</string>
     <string name="split_wa_to_pay">To Pay</string>
     <string name="split_wa_all_settled">Everyone is settled! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">Equal</string>
+    <string name="split_mode_exact">Exact</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">Entered %1$s of %2$s</string>
+    <string name="split_percent_sum_hint">Entered %1$s%% of 100%%</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">Pay via UPI</string>
+    <string name="split_add_their_upi">Add their UPI ID</string>
+    <string name="split_request_via_upi">Request via UPI</string>
+    <string name="split_set_your_upi">Set your UPI ID</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
 

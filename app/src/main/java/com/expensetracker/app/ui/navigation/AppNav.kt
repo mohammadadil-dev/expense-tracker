@@ -115,6 +115,7 @@ fun AppNav() {
 
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val displayName    by viewModel.displayName.collectAsState()
+    val myUpiId        by viewModel.myUpiId.collectAsState()
 
     // POST_NOTIFICATIONS (Android 13+) request for the daily reminder — shared by onboarding
     // completion and the Dashboard catch-up check below. Mirrors Settings screen's own toggle
@@ -457,10 +458,15 @@ fun AppNav() {
                     val groupId = backStackEntry.arguments
                         ?.getString("groupId")?.toLongOrNull() ?: return@composable
                     SplitGroupDetailScreen(
-                        groupId        = groupId,
-                        viewModel      = splitViewModel,
-                        currencySymbol = currencySymbol,
-                        onBack         = { navController.popBackStack() }
+                        groupId          = groupId,
+                        viewModel        = splitViewModel,
+                        currencySymbol   = currencySymbol,
+                        myUpiId          = myUpiId,
+                        ownerDisplayName = displayName.ifBlank { "Me" },
+                        onOpenSettings   = {
+                            navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
+                        },
+                        onBack           = { navController.popBackStack() }
                     )
                 }
 

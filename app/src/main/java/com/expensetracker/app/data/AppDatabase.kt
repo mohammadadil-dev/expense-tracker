@@ -22,7 +22,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         SplitExpenseEntity::class, SplitExpenseShareEntity::class,
         PaymentAccountEntity::class
     ],
-    version = 17,
+    version = 18,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -507,6 +507,78 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v17 -> v18: Splits improvements.
+        //   split_expenses.linkedExpenseId — non-settlement split expenses where "me"
+        //   participates now auto-generate a personal ExpenseEntity for *my own share* of
+        //   the cost, the same linked-expense pattern Khata/Debts already use, so group
+        //   spend actually counts toward the Dashboard/budget instead of being invisible to
+        //   them. Backfilled for every existing non-settlement split expense so historical
+        //   figures are correct after upgrading, not just future ones.
+        //   split_members.upiId — optional UPI ID so a settlement owed *to* a member can be
+        //   paid directly from Settle Up, mirroring khata_parties.upiId.
+        private val MIGRATION_17_18 = object : Migration(17, 18) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE split_expenses ADD COLUMN linkedExpenseId INTEGER")
+                db.execSQL("ALTER TABLE split_members ADD COLUMN upiId TEXT")
+
+                // Seed the "Splits" category (same pattern as cat_khata in MIGRATION_7_8).
+                var nextSortOrder = 0
+                db.query("SELECT COUNT(*) FROM categories").use { c ->
+                    if (c.moveToFirst()) nextSortOrder = c.getInt(0)
+                }
+                db.execSQL(
+                    "INSERT INTO categories (nameKey, customName, colorHex, sortOrder) VALUES (?, NULL, ?, ?)",
+                    arrayOf<Any?>("cat_splits", "#00BFA5", nextSortOrder)
+                )
+                var splitsCategoryId = -1L
+                db.query("SELECT id FROM categories WHERE nameKey = 'cat_splits' ORDER BY id DESC LIMIT 1").use { c ->
+                    if (c.moveToFirst()) splitsCategoryId = c.getLong(0)
+                }
+                if (splitsCategoryId == -1L) return
+
+                // Backfill: for every existing non-settlement split expense where the device
+                // owner ("me") has a share, create a linked personal expense for that share
+                // amount (not the full expense amount — "me" only ever really spends my own
+                // share; the rest is fronted-and-reimbursed, not spend).
+                data class PendingBackfill(val expenseId: Long, val myShare: Double, val date: String, val description: String)
+                val toBackfill = mutableListOf<PendingBackfill>()
+                db.query(
+                    """
+                    SELECT se.id, ses.shareAmount, se.date, se.description
+                    FROM split_expenses se
+                    INNER JOIN split_members sm ON sm.groupId = se.groupId AND sm.isMe = 1
+                    INNER JOIN split_expense_shares ses ON ses.expenseId = se.id AND ses.memberId = sm.id
+                    WHERE se.isSettlement = 0
+                    """.trimIndent()
+                ).use { c ->
+                    while (c.moveToNext()) {
+                        toBackfill.add(
+                            PendingBackfill(c.getLong(0), c.getDouble(1), c.getString(2), c.getString(3))
+                        )
+                    }
+                }
+
+                for (row in toBackfill) {
+                    if (row.myShare <= 0.0) continue
+                    val monthKey = if (row.date.length >= 7) row.date.substring(0, 7) else row.date
+                    db.execSQL(
+                        "INSERT INTO expenses (categoryId, description, amount, date, monthKey) VALUES (?, ?, ?, ?, ?)",
+                        arrayOf<Any?>(splitsCategoryId, row.description, row.myShare, row.date, monthKey)
+                    )
+                    var newExpenseId = -1L
+                    db.query("SELECT last_insert_rowid()").use { c ->
+                        if (c.moveToFirst()) newExpenseId = c.getLong(0)
+                    }
+                    if (newExpenseId != -1L) {
+                        db.execSQL(
+                            "UPDATE split_expenses SET linkedExpenseId = ? WHERE id = ?",
+                            arrayOf<Any?>(newExpenseId, row.expenseId)
+                        )
+                    }
+                }
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -517,7 +589,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
-                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17
+                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
+                    MIGRATION_17_18
                 ).build().also { INSTANCE = it }
             }
         }

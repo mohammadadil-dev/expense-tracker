@@ -14,6 +14,10 @@ interface SplitExpenseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(expense: SplitExpenseEntity): Long
 
+    /** Used to stamp [SplitExpenseEntity.linkedExpenseId] onto a row right after inserting it. */
+    @Update
+    suspend fun update(expense: SplitExpenseEntity)
+
     @Delete
     suspend fun delete(expense: SplitExpenseEntity)
 

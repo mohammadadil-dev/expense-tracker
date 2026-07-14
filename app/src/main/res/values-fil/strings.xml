@@ -238,6 +238,7 @@
     <string name="cat_farming">Pagsasaka</string>
     <string name="cat_khata">Kwenta</string>
     <string name="cat_education">Edukasyon</string>
+    <string name="cat_splits">Hati-hati</string>
     <string name="khata_delete_party_title">Tanggalin ang partido?</string>
     <string name="khata_delete_party_confirm">Permanenteng matatanggal si %1$s at lahat ng kanyang entries.</string>
 
@@ -652,6 +653,19 @@ Gamitin anumang oras!</string>
     <string name="split_wa_to_pay">Babayaran</string>
     <string name="split_wa_all_settled">Lahat ay naisaayos na! 🎉</string>
     <string name="split_wa_footer">Expense Tracker</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">Pantay</string>
+    <string name="split_mode_exact">Eksakto</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">Naipasok na %1$s ng %2$s</string>
+    <string name="split_percent_sum_hint">Naipasok na %1$s%% ng 100%%</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">Magbayad gamit ang UPI</string>
+    <string name="split_add_their_upi">Idagdag ang UPI ID nila</string>
+    <string name="split_request_via_upi">Humingi gamit ang UPI</string>
+    <string name="split_set_your_upi">Itakda ang iyong UPI ID</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
 

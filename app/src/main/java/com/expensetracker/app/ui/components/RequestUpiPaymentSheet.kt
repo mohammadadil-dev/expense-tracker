@@ -44,11 +44,14 @@ fun RequestUpiPaymentSheet(
     partyName: String,
     amount: Double,
     currencySymbol: String,
+    // "Khata" by default so the existing Khata call sites are unaffected — Splits passes
+    // "Split" so the transaction note in the payer's UPI app reads correctly for either flow.
+    notePrefix: String = "Khata",
     onShareQr: (qrImageUri: android.net.Uri) -> Unit,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
-    val note = "Khata: $partyName"
+    val note = "$notePrefix: $partyName"
     val upiUri = remember(myUpiId, payeeDisplayName, amount, note) {
         UpiPaymentHelper.buildUpiUri(myUpiId, payeeDisplayName, amount, note)
     }

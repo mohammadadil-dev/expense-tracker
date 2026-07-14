@@ -45,7 +45,8 @@ class ExpenseApp : Application() {
             database.splitGroupDao(),
             database.splitMemberDao(),
             database.splitExpenseDao(),
-            database.splitExpenseShareDao()
+            database.splitExpenseShareDao(),
+            database
         )
         settings = SettingsRepository(this)
 

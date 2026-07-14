@@ -239,6 +239,7 @@
     <string name="cat_farming">الزراعة</string>
     <string name="cat_khata">الحساب</string>
     <string name="cat_education">تعليم</string>
+    <string name="cat_splits">التقسيمات</string>
     <string name="khata_delete_party_title">حذف الطرف؟</string>
     <string name="khata_delete_party_confirm">سيتم حذف %1$s وجميع سجلاته نهائياً. لا يمكن التراجع عن هذا.</string>
 
@@ -675,6 +676,19 @@
     <string name="split_wa_to_pay">للسداد</string>
     <string name="split_wa_all_settled">الجميع مسدد! 🎉</string>
     <string name="split_wa_footer">متتبع المصاريف</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">متساوٍ</string>
+    <string name="split_mode_exact">دقيق</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">تم إدخال %1$s من %2$s</string>
+    <string name="split_percent_sum_hint">تم إدخال %1$s%% من 100%%</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">الدفع عبر UPI</string>
+    <string name="split_add_their_upi">أضف معرف UPI الخاص بهم</string>
+    <string name="split_request_via_upi">طلب عبر UPI</string>
+    <string name="split_set_your_upi">عيّن معرف UPI الخاص بك</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
 

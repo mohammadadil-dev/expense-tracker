@@ -67,6 +67,9 @@ fun SplitGroupDetailScreen(
     groupId: Long,
     viewModel: SplitViewModel,
     currencySymbol: String,
+    myUpiId: String = "",
+    ownerDisplayName: String = "",
+    onOpenSettings: () -> Unit = {},
     onBack: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -353,14 +356,15 @@ fun SplitGroupDetailScreen(
             members = members,
             currencySymbol = currencySymbol,
             onDismiss = { showAddExpenseSheet = false },
-            onSave = { description, amount, paidById, splitIds ->
+            onSave = { description, amount, paidById, splitIds, customShares ->
                 viewModel.addExpense(
                     groupId = groupId,
                     description = description,
                     amount = amount,
                     paidByMemberId = paidById,
                     splitAmongIds = splitIds,
-                    date = com.expensetracker.app.util.DateUtils.todayIso()
+                    date = com.expensetracker.app.util.DateUtils.todayIso(),
+                    customShares = customShares
                 )
                 showAddExpenseSheet = false
             }
@@ -369,13 +373,18 @@ fun SplitGroupDetailScreen(
 
     if (showSettleUpSheet) {
         SettleUpSheet(
-            groupName      = group.name,
-            settlements    = settlements,
-            currencySymbol = currencySymbol,
-            expenses       = expenses,
-            members        = members,
-            netBalances    = netBalances,
-            onDismiss      = { showSettleUpSheet = false },
+            groupName        = group.name,
+            settlements      = settlements,
+            currencySymbol   = currencySymbol,
+            expenses         = expenses,
+            members          = members,
+            netBalances      = netBalances,
+            meMemberId       = meMember?.id,
+            myUpiId          = myUpiId,
+            ownerDisplayName = ownerDisplayName.ifBlank { meMember?.name ?: "Me" },
+            onSetMemberUpiId = { member, upiId -> viewModel.setMemberUpiId(member, upiId) },
+            onOpenSettings   = onOpenSettings,
+            onDismiss        = { showSettleUpSheet = false },
             onMarkPaid     = { settlement ->
                 viewModel.markSettlementPaid(
                     groupId        = groupId,
