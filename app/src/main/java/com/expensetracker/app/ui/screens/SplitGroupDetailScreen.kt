@@ -1,6 +1,7 @@
 package com.expensetracker.app.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -93,6 +94,12 @@ fun SplitGroupDetailScreen(
 
     // Active member filter — null = all, memberId = only that member's expenses
     var filterMemberId by remember { mutableStateOf<Long?>(null) }
+
+    // Hero slide-in trigger — same LaunchedEffect(Unit) + AnimatedVisibility pattern used by
+    // the main SplitsScreen list (and DebtsScreen/KhataScreen) so opening a group feels like
+    // part of the same animated space rather than a flatter, static sub-screen.
+    var heroVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { heroVisible = true }
 
     LaunchedEffect(expenses, members) {
         settlements = viewModel.getSettlement(groupId)
@@ -223,13 +230,19 @@ fun SplitGroupDetailScreen(
 
                 // ── Hero header ─────────────────────────────────────────────
                 item(key = "hero") {
-                    SplitHeroHeader(
-                        group        = group,
-                        totalSpent   = totalSpent,
-                        meBalance    = meBalance,
-                        currencySymbol = currencySymbol,
-                        expenseCount = expenses.count { !it.isSettlement }
-                    )
+                    AnimatedVisibility(
+                        visible = heroVisible,
+                        enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                                fadeIn(tween(500))
+                    ) {
+                        SplitHeroHeader(
+                            group        = group,
+                            totalSpent   = totalSpent,
+                            meBalance    = meBalance,
+                            currencySymbol = currencySymbol,
+                            expenseCount = expenses.count { !it.isSettlement }
+                        )
+                    }
                 }
 
                 // ── Member avatar filter row ────────────────────────────────

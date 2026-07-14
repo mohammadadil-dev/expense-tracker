@@ -89,13 +89,17 @@ fun SplitsScreen(
         }
     }
 
-    // Aggregate stats across all groups
-    val totalYouOwe = remember(groupSummaries, groups) {
-        groups.sumOf { g -> (groupSummaries[g.id]?.first ?: 0.0).coerceAtMost(0.0) }.let { abs(it) }
-    }
-    val totalYouGetBack = remember(groupSummaries, groups) {
-        groups.sumOf { g -> (groupSummaries[g.id]?.first ?: 0.0).coerceAtLeast(0.0) }
-    }
+    // Aggregate stats across all groups — computed as plain vals (NOT wrapped in remember)
+    // so they recompute on every recomposition. groupSummaries is a SnapshotStateMap that's
+    // populated asynchronously (one coroutine per group, above); wrapping this calculation in
+    // remember(groupSummaries, groups) was a bug — since the *map instance* never changes
+    // identity when its contents are mutated, remember saw the same keys on every pass and
+    // kept returning the very first (near-empty, all-zero) result forever, so this card stayed
+    // stuck at "All settled up / ₹0.00" even once real balances loaded. Reading the map
+    // directly here (a cheap sum over a normally-small group list) is what lets Compose's
+    // snapshot system actually notice the update and recompose.
+    val totalYouOwe = groups.sumOf { g -> (groupSummaries[g.id]?.first ?: 0.0).coerceAtMost(0.0) }.let { abs(it) }
+    val totalYouGetBack = groups.sumOf { g -> (groupSummaries[g.id]?.first ?: 0.0).coerceAtLeast(0.0) }
     val net = totalYouGetBack - totalYouOwe
 
     // Hero slide-in trigger (same LaunchedEffect(Unit) pattern as DebtsScreen)
