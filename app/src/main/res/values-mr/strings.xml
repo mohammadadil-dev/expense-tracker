@@ -384,6 +384,13 @@
     <string name="khata_upi_qr_scan_error">त्या QR कोडमध्ये कोणताही UPI आयडी सापडला नाही. पुन्हा प्रयत्न करा किंवा स्वतः प्रविष्ट करा.</string>
     <string name="khata_party_upi_mine_ready">UPI विनंती तयार आहे — तुमचा UPI आयडी वापरला जाईल: %1$s</string>
     <string name="khata_party_upi_mine_missing">त्यांना UPI द्वारे पैसे देऊ देण्यासाठी सेटिंग्जमध्ये तुमचा UPI आयडी सेट करा</string>
+    <string name="khata_credit_limit_label">क्रेडिट मर्यादा</string>
+    <string name="khata_credit_limit_optional">पर्यायी</string>
+    <string name="khata_credit_limit_of">%1$s मर्यादेपैकी</string>
+    <string name="khata_credit_limit_near">%1$s मर्यादेच्या जवळ</string>
+    <string name="khata_credit_limit_over">%1$s मर्यादेपेक्षा जास्त</string>
+    <string name="khata_credit_limit_near_short">मर्यादेच्या जवळ</string>
+    <string name="khata_credit_limit_over_short">मर्यादेपेक्षा जास्त</string>
     <string name="khata_save_party">जतन करा</string>
     <string name="khata_delete_party">पार्टी हटवा</string>
     <string name="khata_no_parties_i_owe">अजून दुकाने नाहीत.\nउधार असलेले दुकान जोडण्यासाठी + दाबा.</string>
@@ -396,6 +403,14 @@
     <string name="khata_amount_hint">रक्कम</string>
     <string name="khata_note_hint">नोट (वैकल्पिक)</string>
     <string name="khata_entry_date">तारीख</string>
+    <string name="khata_due_date_label">देय तारीख</string>
+    <string name="khata_due_date_optional">पर्यायी — हे कधी द्यायचे/जमा करायचे आहे</string>
+    <string name="khata_due_on">देय %1$s</string>
+    <string name="khata_due_overdue">मुदतबाह्य — %1$s रोजी देय होते</string>
+    <string name="khata_receipt_photo_label">पावतीचा फोटो</string>
+    <string name="khata_take_photo">कॅमेरा</string>
+    <string name="khata_choose_photo">गॅलरी</string>
+    <string name="khata_remove_photo">फोटो काढा</string>
     <string name="khata_no_entries">अजून नोंदी नाहीत. क्रेडिट किंवा देयता नोंदवण्यासाठी + दाबा.</string>
     <string name="khata_delete_entry">नोंद हटवा</string>
     <string name="khata_whatsapp_reminder">स्मरण पाठवा</string>
@@ -650,6 +665,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s पैकी %1$s टाकले</string>
     <string name="split_percent_sum_hint">100%% पैकी %1$s%% टाकले</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">वस्तूनुसार</string>
+    <string name="split_itemized_hint">बिल वस्तूंमध्ये विभाजित करा आणि प्रत्येकात कोणी वाटा घेतला ते टॅप करा</string>
+    <string name="split_itemized_amount_hint">खालील वस्तूंवरून आपोआप गणले</string>
+    <string name="split_add_item">वस्तू जोडा</string>
+    <string name="split_item_name_hint">वस्तू</string>
+    <string name="split_remove_item">वस्तू काढा</string>
+    <string name="split_itemized_total">एकूण वस्तू: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI द्वारे पैसे द्या</string>

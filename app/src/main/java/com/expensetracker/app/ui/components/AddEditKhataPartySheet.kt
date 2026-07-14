@@ -191,7 +191,8 @@ fun AddEditKhataPartySheet(
         direction: String,
         initialAmount: Double,
         initialNote: String,
-        upiId: String?
+        upiId: String?,
+        creditLimit: Double?
     ) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -207,6 +208,8 @@ fun AddEditKhataPartySheet(
     var localPhone        by remember(initial) { mutableStateOf(initLocal) }
     var direction         by remember(initial) { mutableStateOf(initial?.direction ?: defaultDirection) }
     var upiIdInput        by remember(initial) { mutableStateOf(initial?.upiId ?: "") }
+    var creditLimitText   by remember(initial) { mutableStateOf(initial?.creditLimit?.let { if (it == it.toLong().toDouble()) it.toLong().toString() else it.toString() } ?: "") }
+    var creditLimitError  by remember { mutableStateOf(false) }
     var nameError         by remember { mutableStateOf(false) }
     var showCountryPicker by remember { mutableStateOf(false) }
 
@@ -439,6 +442,30 @@ fun AddEditKhataPartySheet(
                 Text(stringResource(R.string.khata_they_owe), style = MaterialTheme.typography.bodyMedium)
             }
 
+            // ── Credit limit (optional) ───────────────────────────────────────
+            // A purely local warning threshold — this app never blocks adding a credit entry
+            // that would push the balance over the limit, it just surfaces a warning once
+            // the outstanding balance gets close to or crosses it (see KhataPartyCard /
+            // KhataBalanceCard's progress-bar treatment).
+            Spacer(Modifier.height(16.dp))
+            OutlinedTextField(
+                value = creditLimitText,
+                onValueChange = { creditLimitText = it; creditLimitError = false },
+                label = { Text(stringResource(R.string.khata_credit_limit_label)) },
+                placeholder = { Text(stringResource(R.string.khata_credit_limit_optional)) },
+                singleLine = true,
+                isError = creditLimitError,
+                supportingText = if (creditLimitError) {
+                    { Text(stringResource(R.string.error_invalid_budget_amount)) }
+                } else null,
+                prefix = { Text(currencySymbol) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                    imeAction = ImeAction.Next
+                ),
+                modifier = Modifier.fillMaxWidth()
+            )
+
             // ── UPI (India-only) ───────────────────────────────────────────────
             // "Request via UPI" always pays the *app user's own* UPI ID (set in Settings) —
             // it never uses a party's UPI ID, so asking for "their UPI ID" only makes sense
@@ -563,12 +590,22 @@ fun AddEditKhataPartySheet(
                         parsedAmount = 0.0
                     }
 
+                    val parsedCreditLimit: Double?
+                    if (creditLimitText.isBlank()) {
+                        parsedCreditLimit = null
+                    } else {
+                        val v = creditLimitText.trim().toDoubleOrNull()
+                        if (v == null || v < 0.0) { creditLimitError = true; return@Button }
+                        parsedCreditLimit = v.takeIf { it > 0.0 }
+                    }
+
                     val fullPhone = if (localPhone.isBlank()) ""
                         else "${selectedCountry.dial}${localPhone.trim().replace(" ", "").replace("-", "")}"
 
                     onSave(
                         initial?.id, name.trim(), fullPhone, direction, parsedAmount, noteText.trim(),
-                        effectiveUpiId.trim().takeIf { it.isNotBlank() }
+                        effectiveUpiId.trim().takeIf { it.isNotBlank() },
+                        parsedCreditLimit
                     )
                 }) {
                     Text(stringResource(R.string.khata_save_party))

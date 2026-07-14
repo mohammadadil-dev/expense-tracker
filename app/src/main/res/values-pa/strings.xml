@@ -384,6 +384,13 @@
     <string name="khata_upi_qr_scan_error">ਉਸ QR ਕੋਡ ਵਿੱਚ ਕੋਈ UPI ਆਈਡੀ ਨਹੀਂ ਮਿਲੀ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਇਸਨੂੰ ਖੁਦ ਦਰਜ ਕਰੋ।</string>
     <string name="khata_party_upi_mine_ready">UPI ਬੇਨਤੀ ਤਿਆਰ ਹੈ — ਤੁਹਾਡੀ UPI ID ਵਰਤੀ ਜਾਵੇਗੀ: %1$s</string>
     <string name="khata_party_upi_mine_missing">ਉਹਨਾਂ ਨੂੰ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰਨ ਦੇਣ ਲਈ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਆਪਣੀ UPI ID ਸੈੱਟ ਕਰੋ</string>
+    <string name="khata_credit_limit_label">ਕ੍ਰੈਡਿਟ ਸੀਮਾ</string>
+    <string name="khata_credit_limit_optional">ਵਿਕਲਪਿਕ</string>
+    <string name="khata_credit_limit_of">%1$s ਸੀਮਾ ਵਿੱਚੋਂ</string>
+    <string name="khata_credit_limit_near">%1$s ਸੀਮਾ ਦੇ ਨੇੜੇ</string>
+    <string name="khata_credit_limit_over">%1$s ਸੀਮਾ ਤੋਂ ਵੱਧ</string>
+    <string name="khata_credit_limit_near_short">ਸੀਮਾ ਦੇ ਨੇੜੇ</string>
+    <string name="khata_credit_limit_over_short">ਸੀਮਾ ਤੋਂ ਵੱਧ</string>
     <string name="khata_save_party">ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="khata_delete_party">ਪਾਰਟੀ ਮਿਟਾਓ</string>
     <string name="khata_no_parties_i_owe">ਅਜੇ ਕੋਈ ਦੁਕਾਨ ਨਹੀਂ।\nਉਧਾਰ ਵਾਲੀ ਦੁਕਾਨ ਜੋੜਨ ਲਈ + ਦਬਾਓ।</string>
@@ -396,6 +403,14 @@
     <string name="khata_amount_hint">ਰਕਮ</string>
     <string name="khata_note_hint">ਨੋਟ (ਵਿਕਲਪਿਕ)</string>
     <string name="khata_entry_date">ਮਿਤੀ</string>
+    <string name="khata_due_date_label">ਨਿਯਤ ਮਿਤੀ</string>
+    <string name="khata_due_date_optional">ਵਿਕਲਪਿਕ — ਇਹ ਕਦੋਂ ਅਦਾ/ਇਕੱਠਾ ਕਰਨਾ ਹੈ</string>
+    <string name="khata_due_on">ਬਕਾਇਆ %1$s</string>
+    <string name="khata_due_overdue">ਮਿਆਦ ਪੁੱਗੀ — %1$s ਨੂੰ ਬਕਾਇਆ ਸੀ</string>
+    <string name="khata_receipt_photo_label">ਰਸੀਦ ਦੀ ਫੋਟੋ</string>
+    <string name="khata_take_photo">ਕੈਮਰਾ</string>
+    <string name="khata_choose_photo">ਗੈਲਰੀ</string>
+    <string name="khata_remove_photo">ਫੋਟੋ ਹਟਾਓ</string>
     <string name="khata_no_entries">ਅਜੇ ਕੋਈ ਐਂਟਰੀ ਨਹੀਂ। ਕ੍ਰੈਡਿਟ ਜਾਂ ਭੁਗਤਾਨ ਦਰਜ ਕਰਨ ਲਈ + ਦਬਾਓ।</string>
     <string name="khata_delete_entry">ਐਂਟਰੀ ਮਿਟਾਓ</string>
     <string name="khata_whatsapp_reminder">ਯਾਦ ਭੇਜੋ</string>
@@ -650,6 +665,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s ਵਿੱਚੋਂ %1$s ਦਰਜ ਕੀਤਾ</string>
     <string name="split_percent_sum_hint">100%% ਵਿੱਚੋਂ %1$s%% ਦਰਜ ਕੀਤਾ</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">ਵਸਤੂ ਅਨੁਸਾਰ</string>
+    <string name="split_itemized_hint">ਬਿੱਲ ਨੂੰ ਵਸਤੂਆਂ ਵਿੱਚ ਵੰਡੋ ਅਤੇ ਟੈਪ ਕਰੋ ਕਿ ਹਰੇਕ ਨੂੰ ਕਿਸਨੇ ਸਾਂਝਾ ਕੀਤਾ</string>
+    <string name="split_itemized_amount_hint">ਹੇਠਾਂ ਦਿੱਤੀਆਂ ਵਸਤੂਆਂ ਤੋਂ ਆਪਣੇ ਆਪ ਗਿਣਿਆ ਗਿਆ</string>
+    <string name="split_add_item">ਵਸਤੂ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="split_item_name_hint">ਵਸਤੂ</string>
+    <string name="split_remove_item">ਵਸਤੂ ਹਟਾਓ</string>
+    <string name="split_itemized_total">ਕੁੱਲ ਵਸਤੂਆਂ: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰੋ</string>

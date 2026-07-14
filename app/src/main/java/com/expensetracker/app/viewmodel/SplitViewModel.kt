@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.expensetracker.app.ExpenseApp
+import com.expensetracker.app.data.ItemDraft
 import com.expensetracker.app.data.SplitExpenseEntity
+import com.expensetracker.app.data.SplitExpenseItemEntity
+import com.expensetracker.app.data.SplitExpenseItemMemberEntity
 import com.expensetracker.app.data.SplitExpenseShareEntity
 import com.expensetracker.app.data.SplitGroupEntity
 import com.expensetracker.app.data.SplitMemberEntity
@@ -101,7 +104,8 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         paidByMemberId: Long,
         splitAmongIds: List<Long>,
         date: String,
-        customShares: Map<Long, Double>? = null
+        customShares: Map<Long, Double>? = null,
+        items: List<ItemDraft>? = null
     ) {
         viewModelScope.launch {
             repository.addExpense(
@@ -111,7 +115,8 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
                 paidByMemberId   = paidByMemberId,
                 splitAmongIds    = splitAmongIds,
                 date             = date,
-                customShares     = customShares
+                customShares     = customShares,
+                items            = items
             )
         }
     }
@@ -153,4 +158,12 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
     /** Returns a one-shot snapshot of members for the given group (for summary calculations). */
     suspend fun getMembersSnapshot(groupId: Long): List<SplitMemberEntity> =
         repository.getMembersSnapshot(groupId)
+
+    /** Itemized breakdown for one expense — empty if it wasn't itemized. */
+    suspend fun getItemsForExpense(expenseId: Long): List<SplitExpenseItemEntity> =
+        repository.getItemsForExpense(expenseId)
+
+    /** Which members share each item on an itemized expense. */
+    suspend fun getItemMembersForExpense(expenseId: Long): List<SplitExpenseItemMemberEntity> =
+        repository.getItemMembersForExpense(expenseId)
 }

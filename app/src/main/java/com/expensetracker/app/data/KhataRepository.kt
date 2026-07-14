@@ -38,14 +38,16 @@ class KhataRepository(private val db: AppDatabase) {
         name: String,
         phone: String,
         direction: String,
-        upiId: String? = null
+        upiId: String? = null,
+        creditLimit: Double? = null
     ): Long {
         val entity = KhataPartyEntity(
             id = id ?: 0,
             name = name.trim(),
             phone = phone.trim(),
             direction = direction,
-            upiId = upiId?.trim()?.takeIf { it.isNotBlank() }
+            upiId = upiId?.trim()?.takeIf { it.isNotBlank() },
+            creditLimit = creditLimit?.takeIf { it > 0.0 }
         )
         return if (id == null) {
             // New party — insert and return auto-generated id
@@ -59,10 +61,12 @@ class KhataRepository(private val db: AppDatabase) {
     }
 
     suspend fun deleteParty(party: KhataPartyEntity) {
-        // Clean up linked expenses before CASCADE removes the entry rows —
-        // otherwise the linkedExpenseId references are lost and phantom spend lingers.
+        // Clean up linked expenses and receipt photo files before CASCADE removes the entry
+        // rows — otherwise the linkedExpenseId references are lost (phantom spend lingers)
+        // and photo files are orphaned on disk with nothing left pointing at them.
         dao.entriesForPartyOnce(party.id).forEach { entry ->
             entry.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
+            com.expensetracker.app.util.ReceiptPhotoStore.delete(entry.photoPath)
         }
         dao.deleteParty(party)
     }
@@ -78,7 +82,9 @@ class KhataRepository(private val db: AppDatabase) {
         amount: Double,
         note: String,
         date: String,
-        type: String
+        type: String,
+        dueDate: String? = null,
+        photoPath: String? = null
     ): Long {
         var linkedExpenseId: Long? = null
 
@@ -106,7 +112,12 @@ class KhataRepository(private val db: AppDatabase) {
             note            = note.trim(),
             date            = date,
             type            = type,
-            linkedExpenseId = linkedExpenseId
+            linkedExpenseId = linkedExpenseId,
+            // A due date only ever makes sense on a CREDIT entry (something owed by a
+            // deadline) — silently dropped on PAYMENT entries rather than trusting the
+            // caller to already enforce this.
+            dueDate         = dueDate?.takeIf { type == KhataEntryEntity.TYPE_CREDIT },
+            photoPath       = photoPath
         )
         return dao.insertEntry(entry)
     }
@@ -115,6 +126,9 @@ class KhataRepository(private val db: AppDatabase) {
         dao.deleteEntry(entry)
         // Remove the phantom expense so the dashboard stays in sync.
         entry.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
+        // Remove the receipt photo file so deleting an entry doesn't leave an orphaned
+        // image behind in this app's private storage.
+        com.expensetracker.app.util.ReceiptPhotoStore.delete(entry.photoPath)
     }
 
     // ── Private helpers ────────────────────────────────────────────────────────

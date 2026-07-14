@@ -370,6 +370,13 @@
     <string name="khata_upi_qr_scan_error">لم يتم العثور على معرّف UPI في رمز QR هذا. حاول مرة أخرى أو أدخله يدويًا.</string>
     <string name="khata_party_upi_mine_ready">طلب الدفع عبر UPI جاهز — سيتم استخدام معرف UPI الخاص بك: %1$s</string>
     <string name="khata_party_upi_mine_missing">لتمكينهم من الدفع لك عبر UPI، عيّن معرف UPI الخاص بك في الإعدادات</string>
+    <string name="khata_credit_limit_label">حد الائتمان</string>
+    <string name="khata_credit_limit_optional">اختياري</string>
+    <string name="khata_credit_limit_of">من حد %1$s</string>
+    <string name="khata_credit_limit_near">يقترب من حد %1$s</string>
+    <string name="khata_credit_limit_over">تجاوز حد %1$s</string>
+    <string name="khata_credit_limit_near_short">قريب من الحد</string>
+    <string name="khata_credit_limit_over_short">تجاوز الحد</string>
     <string name="khata_save_party">حفظ</string>
     <string name="khata_delete_party">حذف الطرف</string>
     <string name="khata_no_parties_i_owe">لم تتم إضافة أي محل بعد.
@@ -384,6 +391,14 @@
     <string name="khata_amount_hint">المبلغ</string>
     <string name="khata_note_hint">ملاحظة (اختياري)</string>
     <string name="khata_entry_date">التاريخ</string>
+    <string name="khata_due_date_label">تاريخ الاستحقاق</string>
+    <string name="khata_due_date_optional">اختياري — متى يجب سداده/تحصيله</string>
+    <string name="khata_due_on">الاستحقاق %1$s</string>
+    <string name="khata_due_overdue">متأخر — كان مستحقًا في %1$s</string>
+    <string name="khata_receipt_photo_label">صورة الفاتورة</string>
+    <string name="khata_take_photo">الكاميرا</string>
+    <string name="khata_choose_photo">المعرض</string>
+    <string name="khata_remove_photo">إزالة الصورة</string>
     <string name="khata_no_entries">لا توجد إدخالات بعد. اضغط + لتسجيل دين أو دفعة.</string>
     <string name="khata_delete_entry">حذف الإدخال</string>
     <string name="khata_whatsapp_reminder">إرسال تذكير</string>
@@ -683,6 +698,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">تم إدخال %1$s من %2$s</string>
     <string name="split_percent_sum_hint">تم إدخال %1$s%% من 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">حسب الأصناف</string>
+    <string name="split_itemized_hint">قسّم الفاتورة إلى أصناف وحدد من شارك كل صنف</string>
+    <string name="split_itemized_amount_hint">يُحسب تلقائيًا من الأصناف أدناه</string>
+    <string name="split_add_item">إضافة صنف</string>
+    <string name="split_item_name_hint">الصنف</string>
+    <string name="split_remove_item">إزالة الصنف</string>
+    <string name="split_itemized_total">إجمالي الأصناف: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">الدفع عبر UPI</string>

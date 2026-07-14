@@ -384,6 +384,13 @@
     <string name="khata_upi_qr_scan_error">ఆ QR కోడ్‌లో UPI ID కనుగొనబడలేదు. మళ్లీ ప్రయత్నించండి లేదా మాన్యువల్‌గా నమోదు చేయండి.</string>
     <string name="khata_party_upi_mine_ready">UPI అభ్యర్థన సిద్ధంగా ఉంది — మీ UPI ఐడీ ఉపయోగించబడుతుంది: %1$s</string>
     <string name="khata_party_upi_mine_missing">వారు UPI ద్వారా మీకు చెల్లించడానికి సెట్టింగ్‌లలో మీ UPI ఐడీని సెట్ చేయండి</string>
+    <string name="khata_credit_limit_label">క్రెడిట్ పరిమితి</string>
+    <string name="khata_credit_limit_optional">ఐచ్ఛికం</string>
+    <string name="khata_credit_limit_of">%1$s పరిమితిలో</string>
+    <string name="khata_credit_limit_near">%1$s పరిమితిని సమీపిస్తోంది</string>
+    <string name="khata_credit_limit_over">%1$s పరిమితిని మించింది</string>
+    <string name="khata_credit_limit_near_short">పరిమితికి దగ్గరగా</string>
+    <string name="khata_credit_limit_over_short">పరిమితిని మించింది</string>
     <string name="khata_save_party">సేవ్ చేయి</string>
     <string name="khata_delete_party">పార్టీ తొలగించు</string>
     <string name="khata_no_parties_i_owe">ఇంకా దుకాణాలు జోడించలేదు.\nఖాతా ఉన్న దుకాణం జోడించడానికి + నొక్కండి.</string>
@@ -396,6 +403,14 @@
     <string name="khata_amount_hint">మొత్తం</string>
     <string name="khata_note_hint">గమనిక (ఐచ్ఛికం)</string>
     <string name="khata_entry_date">తేదీ</string>
+    <string name="khata_due_date_label">గడువు తేదీ</string>
+    <string name="khata_due_date_optional">ఐచ్ఛికం — దీన్ని ఎప్పుడు చెల్లించాలి/వసూలు చేయాలి</string>
+    <string name="khata_due_on">గడువు %1$s</string>
+    <string name="khata_due_overdue">గడువు ముగిసింది — %1$s న గడువు ఉంది</string>
+    <string name="khata_receipt_photo_label">రసీదు ఫోటో</string>
+    <string name="khata_take_photo">కెమెరా</string>
+    <string name="khata_choose_photo">గ్యాలరీ</string>
+    <string name="khata_remove_photo">ఫోటోను తీసివేయండి</string>
     <string name="khata_no_entries">ఇంకా నమోదులు లేవు. క్రెడిట్ లేదా చెల్లింపు నమోదు చేయడానికి + నొక్కండి.</string>
     <string name="khata_delete_entry">నమోదు తొలగించు</string>
     <string name="khata_whatsapp_reminder">రిమైండర్ పంపు</string>
@@ -650,6 +665,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s లో %1$s నమోదు చేయబడింది</string>
     <string name="split_percent_sum_hint">100%% లో %1$s%% నమోదు చేయబడింది</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">అంశాల వారీగా</string>
+    <string name="split_itemized_hint">బిల్లును అంశాలుగా విభజించి ప్రతిదాన్ని ఎవరు పంచుకున్నారో నొక్కండి</string>
+    <string name="split_itemized_amount_hint">దిగువ అంశాల నుండి స్వయంచాలకంగా లెక్కించబడింది</string>
+    <string name="split_add_item">అంశాన్ని జోడించండి</string>
+    <string name="split_item_name_hint">అంశం</string>
+    <string name="split_remove_item">అంశాన్ని తీసివేయండి</string>
+    <string name="split_itemized_total">మొత్తం అంశాలు: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI ద్వారా చెల్లించండి</string>

@@ -20,9 +20,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         GoalEntity::class, FamilyMemberEntity::class,
         SplitGroupEntity::class, SplitMemberEntity::class,
         SplitExpenseEntity::class, SplitExpenseShareEntity::class,
-        PaymentAccountEntity::class
+        PaymentAccountEntity::class,
+        SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class
     ],
-    version = 18,
+    version = 20,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -42,6 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun splitExpenseDao(): SplitExpenseDao
     abstract fun splitExpenseShareDao(): SplitExpenseShareDao
     abstract fun paymentAccountDao(): PaymentAccountDao
+    abstract fun splitExpenseItemDao(): SplitExpenseItemDao
 
     companion object {
         @Volatile
@@ -579,6 +581,52 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v18 -> v19: Khata due-date / credit-limit tracking + receipt photo attachment.
+        //   khata_entries.dueDate    — optional "pay/collect by" date on a CREDIT entry.
+        //   khata_entries.photoPath  — optional absolute path to a receipt photo saved in
+        //                              this app's private storage (filesDir/receipts/).
+        //   khata_parties.creditLimit — optional cap on a party's outstanding balance, used
+        //                               purely as a local warning threshold.
+        // All three are nullable/additive — every existing row just has no due date, no
+        // photo, and no limit, which is fully backwards-compatible.
+        private val MIGRATION_18_19 = object : Migration(18, 19) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE khata_entries ADD COLUMN dueDate TEXT")
+                db.execSQL("ALTER TABLE khata_entries ADD COLUMN photoPath TEXT")
+                db.execSQL("ALTER TABLE khata_parties ADD COLUMN creditLimit REAL")
+            }
+        }
+
+        // v19 -> v20: Itemized/receipt-based Splits — a bill can be broken into line items
+        // (e.g. "Pizza", "Coke") each assigned to whichever members actually had them, instead
+        // of only ever being one flat equal/exact/percentage split across the whole amount.
+        //   split_expense_items        — one row per line item (name, amount) on an expense.
+        //   split_expense_item_members — junction: which members share a given item's cost
+        //                                 (split equally among them).
+        // Both are new, additive tables — no existing schema changes, nothing to backfill;
+        // pre-existing split expenses simply have zero item rows (they weren't itemized).
+        private val MIGRATION_19_20 = object : Migration(19, 20) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expense_items` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `expenseId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `amount` REAL NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expense_item_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `itemId` INTEGER NOT NULL,
+                        `memberId` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_items_expenseId` ON `split_expense_items` (`expenseId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_item_members_itemId` ON `split_expense_item_members` (`itemId`)")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -590,7 +638,7 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
                     MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
-                    MIGRATION_17_18
+                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20
                 ).build().also { INSTANCE = it }
             }
         }

@@ -394,6 +394,13 @@
     <string name="khata_upi_qr_scan_error">Couldn\'t find a UPI ID in that QR code. Try again or enter it manually.</string>
     <string name="khata_party_upi_mine_ready">Request via UPI is ready — using your UPI ID: %1$s</string>
     <string name="khata_party_upi_mine_missing">Set your UPI ID in Settings to let them pay you via UPI</string>
+    <string name="khata_credit_limit_label">Credit limit</string>
+    <string name="khata_credit_limit_optional">Optional</string>
+    <string name="khata_credit_limit_of">of %1$s limit</string>
+    <string name="khata_credit_limit_near">Approaching %1$s limit</string>
+    <string name="khata_credit_limit_over">Over %1$s limit</string>
+    <string name="khata_credit_limit_near_short">Near limit</string>
+    <string name="khata_credit_limit_over_short">Over limit</string>
     <string name="khata_save_party">Save</string>
     <string name="khata_delete_party">Delete Party</string>
     <string name="khata_no_parties_i_owe">No shops added yet.
@@ -408,6 +415,14 @@ Tap + to add someone who owes you.</string>
     <string name="khata_amount_hint">Amount</string>
     <string name="khata_note_hint">Note (optional)</string>
     <string name="khata_entry_date">Date</string>
+    <string name="khata_due_date_label">Due date</string>
+    <string name="khata_due_date_optional">Optional — when this should be paid/collected by</string>
+    <string name="khata_due_on">Due %1$s</string>
+    <string name="khata_due_overdue">Overdue — was due %1$s</string>
+    <string name="khata_receipt_photo_label">Receipt photo</string>
+    <string name="khata_take_photo">Camera</string>
+    <string name="khata_choose_photo">Gallery</string>
+    <string name="khata_remove_photo">Remove photo</string>
     <string name="khata_no_entries">No entries yet. Tap + to log a credit or payment.</string>
     <string name="khata_delete_entry">Delete entry</string>
     <string name="khata_whatsapp_reminder">Send Reminder</string>
@@ -683,6 +698,15 @@ Feel free to use it anytime!</string>
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">Entered %1$s of %2$s</string>
     <string name="split_percent_sum_hint">Entered %1$s%% of 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">Itemized</string>
+    <string name="split_itemized_hint">Break the bill into items and tap who shared each one</string>
+    <string name="split_itemized_amount_hint">Auto-calculated from items below</string>
+    <string name="split_add_item">Add item</string>
+    <string name="split_item_name_hint">Item</string>
+    <string name="split_remove_item">Remove item</string>
+    <string name="split_itemized_total">Items total: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">Pay via UPI</string>

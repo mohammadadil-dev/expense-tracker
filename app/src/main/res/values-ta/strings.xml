@@ -384,6 +384,13 @@
     <string name="khata_upi_qr_scan_error">அந்த QR குறியீட்டில் UPI ஐடி கிடைக்கவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது கைமுறையாக உள்ளிடவும்.</string>
     <string name="khata_party_upi_mine_ready">UPI கோரிக்கை தயார் — உங்கள் UPI ஐடி பயன்படுத்தப்படும்: %1$s</string>
     <string name="khata_party_upi_mine_missing">அவர்கள் UPI மூலம் உங்களுக்கு பணம் செலுத்த, அமைப்புகளில் உங்கள் UPI ஐடியை அமைக்கவும்</string>
+    <string name="khata_credit_limit_label">கடன் வரம்பு</string>
+    <string name="khata_credit_limit_optional">விருப்பத்தேர்வு</string>
+    <string name="khata_credit_limit_of">%1$s வரம்பில்</string>
+    <string name="khata_credit_limit_near">%1$s வரம்பை நெருங்குகிறது</string>
+    <string name="khata_credit_limit_over">%1$s வரம்பை மீறியது</string>
+    <string name="khata_credit_limit_near_short">வரம்பை நெருங்குகிறது</string>
+    <string name="khata_credit_limit_over_short">வரம்பை மீறியது</string>
     <string name="khata_save_party">சேமி</string>
     <string name="khata_delete_party">தரப்பை நீக்கு</string>
     <string name="khata_no_parties_i_owe">இன்னும் கடைகள் சேர்க்கவில்லை.\nகடன் உள்ள கடையை சேர்க்க + தட்டுங்கள்.</string>
@@ -396,6 +403,14 @@
     <string name="khata_amount_hint">தொகை</string>
     <string name="khata_note_hint">குறிப்பு (விருப்பமானது)</string>
     <string name="khata_entry_date">தேதி</string>
+    <string name="khata_due_date_label">நிலுவைத் தேதி</string>
+    <string name="khata_due_date_optional">விருப்பத்தேர்வு — இது எப்போது செலுத்த/வசூலிக்க வேண்டும்</string>
+    <string name="khata_due_on">நிலுவை %1$s</string>
+    <string name="khata_due_overdue">காலாவதியானது — %1$s அன்று நிலுவையில் இருந்தது</string>
+    <string name="khata_receipt_photo_label">ரசீது புகைப்படம்</string>
+    <string name="khata_take_photo">கேமரா</string>
+    <string name="khata_choose_photo">கேலரி</string>
+    <string name="khata_remove_photo">புகைப்படத்தை அகற்று</string>
     <string name="khata_no_entries">இன்னும் உள்ளீடுகள் இல்லை. கடன் அல்லது கட்டணம் பதிவு செய்ய + தட்டுங்கள்.</string>
     <string name="khata_delete_entry">உள்ளீட்டை நீக்கு</string>
     <string name="khata_whatsapp_reminder">நினைவூட்டல் அனுப்பு</string>
@@ -650,6 +665,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s இல் %1$s உள்ளிடப்பட்டது</string>
     <string name="split_percent_sum_hint">100%% இல் %1$s%% உள்ளிடப்பட்டது</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">உருப்படி வாரியாக</string>
+    <string name="split_itemized_hint">பில்லை உருப்படிகளாகப் பிரித்து ஒவ்வொன்றையும் யார் பகிர்ந்தனர் என்பதைத் தட்டவும்</string>
+    <string name="split_itemized_amount_hint">கீழே உள்ள உருப்படிகளிலிருந்து தானாகக் கணக்கிடப்பட்டது</string>
+    <string name="split_add_item">உருப்படியைச் சேர்</string>
+    <string name="split_item_name_hint">உருப்படி</string>
+    <string name="split_remove_item">உருப்படியை அகற்று</string>
+    <string name="split_itemized_total">மொத்த உருப்படிகள்: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>

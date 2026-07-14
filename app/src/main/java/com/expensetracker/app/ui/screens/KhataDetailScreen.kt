@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
@@ -123,6 +124,7 @@ fun KhataDetailScreen(
     var pendingDelete  by remember { mutableStateOf<KhataEntryEntity?>(null) }
     var showUpiSheet   by remember { mutableStateOf(false) }
     var showMarkPaidConfirm by remember { mutableStateOf(false) }
+    var viewingPhotoPath by remember { mutableStateOf<String?>(null) }
 
     // "Request via UPI" is only offered when: they owe the user money, the outstanding
     // balance clears the ₹1 floor, the currency is INR, and the user has set their own
@@ -347,6 +349,8 @@ fun KhataDetailScreen(
                     currencySymbol = currencySymbol,
                     isIOwe = isIOwe,
                     hasPhone = party.phone.isNotBlank(),
+                    creditLimit = party.creditLimit,
+                    creditLimitFraction = khataViewModel.creditLimitFraction(party, balance),
                     onSendReminder = { sendWhatsApp() },
                     showUpiButton = showUpiButton,
                     onRequestUpi = { showUpiSheet = true },
@@ -416,7 +420,10 @@ fun KhataDetailScreen(
                                 entry = entry,
                                 runningBalance = runningBalance,
                                 currencySymbol = currencySymbol,
-                                onDelete = { pendingDelete = entry }
+                                isOverdue = khataViewModel.isOverdue(entry),
+                                isDueSoon = khataViewModel.isDueSoon(entry),
+                                onDelete = { pendingDelete = entry },
+                                onViewPhoto = { viewingPhotoPath = it }
                             )
                         }
                     }
@@ -428,8 +435,8 @@ fun KhataDetailScreen(
     // ── Sheets & dialogs ────────────────────────────────────────────────────
     if (showAddEntry) {
         AddKhataEntrySheet(
-            onSave = { amount, note, date, type ->
-                khataViewModel.addEntry(partyId, amount, note, date, type)
+            onSave = { amount, note, date, type, dueDate, photoPath ->
+                khataViewModel.addEntry(partyId, amount, note, date, type, dueDate, photoPath)
                 showAddEntry = false
             },
             onDismiss = { showAddEntry = false }
@@ -442,9 +449,9 @@ fun KhataDetailScreen(
             defaultDirection = party.direction,
             currencySymbol = currencySymbol,
             myUpiId = myUpiId,
-            onSave = { id, name, phone, direction, _, _, upiId ->
+            onSave = { id, name, phone, direction, _, _, upiId, creditLimit ->
                 // Editing an existing party — initial amount fields are hidden, pass-through ignored
-                khataViewModel.saveParty(id, name, phone, direction, upiId = upiId)
+                khataViewModel.saveParty(id, name, phone, direction, upiId = upiId, creditLimit = creditLimit)
                 showEditParty = false
             },
             onDismiss = { showEditParty = false }
@@ -481,6 +488,30 @@ fun KhataDetailScreen(
             onShareQr = { qrUri -> sendUpiPaymentQr(qrUri) },
             onDismiss = { showUpiSheet = false }
         )
+    }
+
+    viewingPhotoPath?.let { path ->
+        androidx.compose.ui.window.Dialog(onDismissRequest = { viewingPhotoPath = null }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.Black)
+            ) {
+                androidx.compose.foundation.Image(
+                    painter = coil.compose.rememberAsyncImagePainter(java.io.File(path)),
+                    contentDescription = stringResource(R.string.khata_receipt_photo_label),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                    modifier = Modifier.fillMaxWidth().height(420.dp)
+                )
+                IconButton(
+                    onClick = { viewingPhotoPath = null },
+                    modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+                ) {
+                    Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close), tint = Color.White)
+                }
+            }
+        }
     }
 
     pendingDelete?.let { entry ->
@@ -527,6 +558,8 @@ private fun KhataBalanceCard(
     currencySymbol: String,
     isIOwe: Boolean,
     hasPhone: Boolean,
+    creditLimit: Double? = null,
+    creditLimitFraction: Float? = null,
     onSendReminder: () -> Unit,
     showUpiButton: Boolean = false,
     onRequestUpi: () -> Unit = {},
@@ -626,6 +659,45 @@ private fun KhataBalanceCard(
             )
 
             Spacer(Modifier.height(12.dp))
+
+            // Credit limit progress bar — only shown when a limit is actually set. Purely a
+            // local warning, not a hard cap (the app never blocks adding a credit entry that
+            // would push the balance over it).
+            if (creditLimit != null && creditLimitFraction != null && !isSettled) {
+                val fraction = creditLimitFraction.coerceIn(0f, 1f)
+                val isOverLimit = creditLimitFraction >= 1f
+                val isNearLimit = creditLimitFraction >= 0.8f
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(Color.White.copy(alpha = 0.25f))
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(fraction)
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(50))
+                                .background(if (isOverLimit) Color(0xFFFFCDD2) else Color.White)
+                        )
+                    }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        text = when {
+                            isOverLimit -> stringResource(R.string.khata_credit_limit_over, Formatters.money(creditLimit, currencySymbol))
+                            isNearLimit -> stringResource(R.string.khata_credit_limit_near, Formatters.money(creditLimit, currencySymbol))
+                            else -> stringResource(R.string.khata_credit_limit_of, Formatters.money(creditLimit, currencySymbol))
+                        },
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.White.copy(alpha = 0.90f),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Spacer(Modifier.height(12.dp))
+            }
 
             if (isSettled) {
                 // Settled badge pill
@@ -769,7 +841,10 @@ private fun KhataEntryRow(
     entry: KhataEntryEntity,
     runningBalance: Double,
     currencySymbol: String,
-    onDelete: () -> Unit
+    isOverdue: Boolean = false,
+    isDueSoon: Boolean = false,
+    onDelete: () -> Unit,
+    onViewPhoto: (String) -> Unit = {}
 ) {
     val isCredit = entry.type == KhataEntryEntity.TYPE_CREDIT
     Card(
@@ -783,6 +858,24 @@ private fun KhataEntryRow(
                 .padding(horizontal = 14.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Receipt photo thumbnail, if attached — tap to view full screen.
+            entry.photoPath?.let { path ->
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onViewPhoto(path) }
+                ) {
+                    androidx.compose.foundation.Image(
+                        painter = coil.compose.rememberAsyncImagePainter(java.io.File(path)),
+                        contentDescription = stringResource(R.string.khata_receipt_photo_label),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Spacer(Modifier.width(10.dp))
+            }
+
             // Type dot
             Box(
                 modifier = Modifier
@@ -812,6 +905,31 @@ private fun KhataEntryRow(
                     style = MaterialTheme.typography.bodySmall,
                     color = TextMuted
                 )
+                if (entry.dueDate != null) {
+                    Spacer(Modifier.height(2.dp))
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = when {
+                            isOverdue -> DangerRed.copy(alpha = 0.12f)
+                            isDueSoon -> Color(0xFFFFA000).copy(alpha = 0.14f)
+                            else -> TextMuted.copy(alpha = 0.10f)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(
+                                if (isOverdue) R.string.khata_due_overdue else R.string.khata_due_on,
+                                entry.dueDate
+                            ),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = when {
+                                isOverdue -> DangerRed
+                                isDueSoon -> Color(0xFFE65100)
+                                else -> TextMuted
+                            },
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                }
             }
 
             // Amount + running balance

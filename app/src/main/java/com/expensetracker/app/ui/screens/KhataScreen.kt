@@ -272,6 +272,7 @@ fun KhataScreen(
                                     party          = party,
                                     balance        = balance,
                                     currencySymbol = currencySymbol,
+                                    creditLimitFraction = khataViewModel.creditLimitFraction(party, balance),
                                     onClick        = { onOpenDetail(party.id) },
                                     onEdit         = { editingParty = party; showAddParty = true },
                                     onDelete       = { pendingDelete = party },
@@ -298,8 +299,8 @@ fun KhataScreen(
                                else KhataPartyEntity.DIRECTION_THEY_OWE,
             currencySymbol   = currencySymbol,
             myUpiId          = myUpiId,
-            onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId ->
-                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId)
+            onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId, creditLimit ->
+                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId, creditLimit)
                 showAddParty = false; editingParty = null
             },
             onDismiss = { showAddParty = false; editingParty = null }
@@ -611,6 +612,7 @@ private fun KhataPartyCard(
     party: KhataPartyEntity,
     balance: Double,
     currencySymbol: String,
+    creditLimitFraction: Float? = null,
     onClick: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
@@ -696,6 +698,20 @@ private fun KhataPartyCard(
                         color = TextMuted,
                         maxLines = 1
                     )
+                    // Compact credit-limit warning — only surfaced once the balance gets
+                    // close to or crosses the limit, to avoid cluttering every row with a
+                    // progress bar for parties that don't need it.
+                    if (creditLimitFraction != null && creditLimitFraction >= 0.8f) {
+                        Text(
+                            text = if (creditLimitFraction >= 1f)
+                                stringResource(R.string.khata_credit_limit_over_short)
+                            else
+                                stringResource(R.string.khata_credit_limit_near_short),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = DangerRed,
+                            maxLines = 1
+                        )
+                    }
                 }
             }
             // Compact 32dp action icons (smaller than IconButton's 48dp default touch target)

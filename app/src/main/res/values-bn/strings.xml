@@ -370,6 +370,13 @@
     <string name="khata_upi_qr_scan_error">সেই QR কোডে কোনো UPI আইডি পাওয়া যায়নি। আবার চেষ্টা করুন বা নিজে লিখুন।</string>
     <string name="khata_party_upi_mine_ready">UPI অনুরোধ প্রস্তুত — আপনার UPI আইডি ব্যবহার করা হবে: %1$s</string>
     <string name="khata_party_upi_mine_missing">তাদের UPI-এর মাধ্যমে আপনাকে পেমেন্ট করতে দিতে সেটিংসে আপনার UPI আইডি সেট করুন</string>
+    <string name="khata_credit_limit_label">ক্রেডিট সীমা</string>
+    <string name="khata_credit_limit_optional">ঐচ্ছিক</string>
+    <string name="khata_credit_limit_of">%1$s সীমার মধ্যে</string>
+    <string name="khata_credit_limit_near">%1$s সীমার কাছাকাছি</string>
+    <string name="khata_credit_limit_over">%1$s সীমা অতিক্রম</string>
+    <string name="khata_credit_limit_near_short">সীমার কাছাকাছি</string>
+    <string name="khata_credit_limit_over_short">সীমা অতিক্রম</string>
     <string name="khata_save_party">সংরক্ষণ করুন</string>
     <string name="khata_delete_party">পার্টি মুছুন</string>
     <string name="khata_no_parties_i_owe">এখনো কোনো দোকান যোগ করা হয়নি।
@@ -384,6 +391,14 @@
     <string name="khata_amount_hint">পরিমাণ</string>
     <string name="khata_note_hint">নোট (ঐচ্ছিক)</string>
     <string name="khata_entry_date">তারিখ</string>
+    <string name="khata_due_date_label">নির্ধারিত তারিখ</string>
+    <string name="khata_due_date_optional">ঐচ্ছিক — কখন এটি পরিশোধ/সংগ্রহ করতে হবে</string>
+    <string name="khata_due_on">নির্ধারিত %1$s</string>
+    <string name="khata_due_overdue">মেয়াদোত্তীর্ণ — %1$s তারিখে নির্ধারিত ছিল</string>
+    <string name="khata_receipt_photo_label">রসিদের ছবি</string>
+    <string name="khata_take_photo">ক্যামেরা</string>
+    <string name="khata_choose_photo">গ্যালারি</string>
+    <string name="khata_remove_photo">ছবি সরান</string>
     <string name="khata_no_entries">এখনো কোনো এন্ট্রি নেই। ক্রেডিট বা পরিশোধ লগ করতে + চাপুন।</string>
     <string name="khata_delete_entry">এন্ট্রি মুছুন</string>
     <string name="khata_whatsapp_reminder">রিমাইন্ডার পাঠান</string>
@@ -675,6 +690,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s এর মধ্যে %1$s প্রবেশ করানো হয়েছে</string>
     <string name="split_percent_sum_hint">১০০%% এর মধ্যে %1$s%% প্রবেশ করানো হয়েছে</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">আইটেম অনুযায়ী</string>
+    <string name="split_itemized_hint">বিলটি আইটেমে ভাগ করুন এবং কে কোনটি শেয়ার করেছে তা ট্যাপ করুন</string>
+    <string name="split_itemized_amount_hint">নিচের আইটেম থেকে স্বয়ংক্রিয়ভাবে গণনা করা হয়েছে</string>
+    <string name="split_add_item">আইটেম যোগ করুন</string>
+    <string name="split_item_name_hint">আইটেম</string>
+    <string name="split_remove_item">আইটেম সরান</string>
+    <string name="split_itemized_total">মোট আইটেম: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI-এর মাধ্যমে পরিশোধ করুন</string>

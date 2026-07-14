@@ -68,10 +68,11 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         initialAmount: Double = 0.0,
         initialNote: String = "",
         upiId: String? = null,
+        creditLimit: Double? = null,
         onDone: () -> Unit = {}
     ) {
         viewModelScope.launch {
-            val partyId = repo.addOrUpdateParty(id, name, phone, direction, upiId)
+            val partyId = repo.addOrUpdateParty(id, name, phone, direction, upiId, creditLimit)
             // Auto-create the first entry when a new party is saved with an opening balance.
             if (id == null && initialAmount > 0.0) {
                 repo.addEntry(
@@ -99,12 +100,42 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         note: String,
         date: String = DateUtils.todayIso(),
         type: String,
+        dueDate: String? = null,
+        photoPath: String? = null,
         onDone: () -> Unit = {}
     ) {
         viewModelScope.launch {
-            repo.addEntry(partyId, amount, note, date, type)
+            repo.addEntry(partyId, amount, note, date, type, dueDate, photoPath)
             onDone()
         }
+    }
+
+    // ── Due-date / credit-limit helpers ─────────────────────────────────────
+
+    /** True when [entry] has a due date that has already passed and is still unsettled
+     *  (a CREDIT entry with no concept of "already paid" per-entry — see class doc — so this
+     *  is a simplification: it flags the purchase's own deadline, not whether the party's
+     *  overall balance has since been paid down). */
+    fun isOverdue(entry: KhataEntryEntity): Boolean {
+        val due = entry.dueDate ?: return false
+        return due < DateUtils.todayIso()
+    }
+
+    /** True when [entry]'s due date is today or within the next [withinDays] days. */
+    fun isDueSoon(entry: KhataEntryEntity, withinDays: Int = 3): Boolean {
+        val due = entry.dueDate ?: return false
+        val today = DateUtils.todayIso()
+        if (due < today) return false
+        val daysAway = DateUtils.daysBetween(today, due)
+        return daysAway in 0..withinDays
+    }
+
+    /** Fraction of [party]'s credit limit currently used by [balance] (0f–1f+), or null if
+     *  the party has no credit limit set. Used to drive a progress bar / warning color. */
+    fun creditLimitFraction(party: KhataPartyEntity, balance: Double): Float? {
+        val limit = party.creditLimit ?: return null
+        if (limit <= 0.0) return null
+        return (balance / limit).toFloat()
     }
 
     fun deleteEntry(entry: KhataEntryEntity, onDone: () -> Unit = {}) {

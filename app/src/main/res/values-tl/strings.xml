@@ -365,6 +365,13 @@
     <string name="khata_upi_qr_scan_error">Walang nahanap na UPI ID sa QR code na iyon. Subukang muli o ilagay ito nang manwal.</string>
     <string name="khata_party_upi_mine_ready">Handa na ang UPI na kahilingan — gagamitin ang UPI ID mo: %1$s</string>
     <string name="khata_party_upi_mine_missing">Para sila makapagbayad sa iyo gamit ang UPI, itakda ang UPI ID mo sa Settings</string>
+    <string name="khata_credit_limit_label">Limitasyon sa kredito</string>
+    <string name="khata_credit_limit_optional">Opsyonal</string>
+    <string name="khata_credit_limit_of">sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_near">Papalapit sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_over">Lumagpas sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_near_short">Malapit na sa limitasyon</string>
+    <string name="khata_credit_limit_over_short">Lumagpas sa limitasyon</string>
     <string name="khata_save_party">I-save</string>
     <string name="khata_delete_party">Burahin ang Party</string>
     <string name="khata_no_parties_i_owe">Wala pang tindahang naidagdag.
@@ -379,6 +386,14 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_amount_hint">Halaga</string>
     <string name="khata_note_hint">Tala (opsyonal)</string>
     <string name="khata_entry_date">Petsa</string>
+    <string name="khata_due_date_label">Takdang petsa</string>
+    <string name="khata_due_date_optional">Opsyonal — kailan ito dapat bayaran/kolektahin</string>
+    <string name="khata_due_on">Deadline %1$s</string>
+    <string name="khata_due_overdue">Lumipas na — dapat noong %1$s</string>
+    <string name="khata_receipt_photo_label">Larawan ng resibo</string>
+    <string name="khata_take_photo">Camera</string>
+    <string name="khata_choose_photo">Gallery</string>
+    <string name="khata_remove_photo">Alisin ang larawan</string>
     <string name="khata_no_entries">Wala pang entries. Pindutin ang + para mag-log ng credit o bayad.</string>
     <string name="khata_delete_entry">Burahin ang entry</string>
     <string name="khata_whatsapp_reminder">Magpadala ng Reminder</string>
@@ -671,6 +686,15 @@ Gamitin anumang oras!</string>
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">Naipasok na %1$s ng %2$s</string>
     <string name="split_percent_sum_hint">Naipasok na %1$s%% ng 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">Item-item</string>
+    <string name="split_itemized_hint">Hatiin ang bill sa mga item at pindutin kung sino ang nagbahagi sa bawat isa</string>
+    <string name="split_itemized_amount_hint">Awtomatikong kinakalkula mula sa mga item sa ibaba</string>
+    <string name="split_add_item">Magdagdag ng item</string>
+    <string name="split_item_name_hint">Item</string>
+    <string name="split_remove_item">Alisin ang item</string>
+    <string name="split_itemized_total">Kabuuang item: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">Magbayad gamit ang UPI</string>

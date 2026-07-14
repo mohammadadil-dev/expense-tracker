@@ -356,7 +356,7 @@ fun SplitGroupDetailScreen(
             members = members,
             currencySymbol = currencySymbol,
             onDismiss = { showAddExpenseSheet = false },
-            onSave = { description, amount, paidById, splitIds, customShares ->
+            onSave = { description, amount, paidById, splitIds, customShares, items ->
                 viewModel.addExpense(
                     groupId = groupId,
                     description = description,
@@ -364,7 +364,8 @@ fun SplitGroupDetailScreen(
                     paidByMemberId = paidById,
                     splitAmongIds = splitIds,
                     date = com.expensetracker.app.util.DateUtils.todayIso(),
-                    customShares = customShares
+                    customShares = customShares,
+                    items = items
                 )
                 showAddExpenseSheet = false
             }

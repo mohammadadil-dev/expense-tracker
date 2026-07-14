@@ -171,6 +171,11 @@ dependencies {
     // ML Kit Barcode Scanning above, not this library.
     implementation("com.google.zxing:core:3.5.3")
 
+    // Coil — Compose async image loading, used to show Khata receipt-photo thumbnails and
+    // the full-screen viewer from a local file path without blocking the UI thread decoding
+    // full-resolution JPEGs. No network image loading is used anywhere in this app.
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
     // Google Drive API — used for cloud backup / restore.
     // SETUP REQUIRED before using: go to console.cloud.google.com, enable the Drive API,
     // and register an Android OAuth 2.0 client with package name com.agtech.expensetracker

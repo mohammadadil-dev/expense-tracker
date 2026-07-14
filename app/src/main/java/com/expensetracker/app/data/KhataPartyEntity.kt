@@ -25,7 +25,12 @@ data class KhataPartyEntity(
     val phone: String = "",
     val direction: String,
     val upiId: String? = null,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    /** Optional cap on this party's outstanding balance — a shop's credit limit for I_OWE
+     *  parties, or a limit the user extends to a customer for THEY_OWE parties. Purely a
+     *  local warning threshold (this app never blocks an entry from being added); null =
+     *  no limit tracked. */
+    val creditLimit: Double? = null
 ) {
     companion object {
         /** Shop / vendor the user has a running tab at. */

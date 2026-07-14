@@ -366,6 +366,13 @@
     <string name="khata_upi_qr_scan_error">اس QR کوڈ میں کوئی UPI آئی ڈی نہیں ملی۔ دوبارہ کوشش کریں یا خود درج کریں۔</string>
     <string name="khata_party_upi_mine_ready">UPI درخواست تیار ہے — آپ کی UPI آئی ڈی استعمال ہوگی: %1$s</string>
     <string name="khata_party_upi_mine_missing">انہیں UPI کے ذریعے آپ کو ادائیگی کرنے دینے کے لیے سیٹنگز میں اپنی UPI آئی ڈی سیٹ کریں</string>
+    <string name="khata_credit_limit_label">کریڈٹ حد</string>
+    <string name="khata_credit_limit_optional">اختیاری</string>
+    <string name="khata_credit_limit_of">%1$s حد میں سے</string>
+    <string name="khata_credit_limit_near">%1$s حد کے قریب</string>
+    <string name="khata_credit_limit_over">%1$s حد سے زیادہ</string>
+    <string name="khata_credit_limit_near_short">حد کے قریب</string>
+    <string name="khata_credit_limit_over_short">حد سے زیادہ</string>
     <string name="khata_save_party">محفوظ کریں</string>
     <string name="khata_delete_party">فریق حذف کریں</string>
     <string name="khata_no_parties_i_owe">ابھی کوئی دکان نہیں جوڑی گئی۔
@@ -380,6 +387,14 @@
     <string name="khata_amount_hint">رقم</string>
     <string name="khata_note_hint">نوٹ (اختیاری)</string>
     <string name="khata_entry_date">تاریخ</string>
+    <string name="khata_due_date_label">مقررہ تاریخ</string>
+    <string name="khata_due_date_optional">اختیاری — یہ کب ادا/وصول کرنا ہے</string>
+    <string name="khata_due_on">واجب الادا %1$s</string>
+    <string name="khata_due_overdue">میعاد ختم — %1$s کو واجب تھی</string>
+    <string name="khata_receipt_photo_label">رسید کی تصویر</string>
+    <string name="khata_take_photo">کیمرہ</string>
+    <string name="khata_choose_photo">گیلری</string>
+    <string name="khata_remove_photo">تصویر ہٹائیں</string>
     <string name="khata_no_entries">ابھی کوئی اندراج نہیں۔ کریڈٹ یا ادائیگی درج کرنے کے لیے + دبائیں۔</string>
     <string name="khata_delete_entry">اندراج حذف کریں</string>
     <string name="khata_whatsapp_reminder">یاددہانی بھیجیں</string>
@@ -671,6 +686,15 @@
     <string name="split_mode_percent">%</string>
     <string name="split_exact_sum_hint">%2$s میں سے %1$s درج کیا گیا</string>
     <string name="split_percent_sum_hint">100%% میں سے %1$s%% درج کیا گیا</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">آئٹم کے لحاظ سے</string>
+    <string name="split_itemized_hint">بل کو آئٹمز میں تقسیم کریں اور ٹیپ کریں کہ ہر ایک کو کس نے شیئر کیا</string>
+    <string name="split_itemized_amount_hint">نیچے دیے گئے آئٹمز سے خودکار طور پر شمار کیا گیا</string>
+    <string name="split_add_item">آئٹم شامل کریں</string>
+    <string name="split_item_name_hint">آئٹم</string>
+    <string name="split_remove_item">آئٹم ہٹائیں</string>
+    <string name="split_itemized_total">کل آئٹمز: %1$s</string>
 
     <!-- UPI in Split settle-up -->
     <string name="split_pay_via_upi">UPI کے ذریعے ادائیگی کریں</string>
