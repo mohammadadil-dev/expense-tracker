@@ -397,16 +397,14 @@
 
 એક મૈત્રીપૂર્ण યાદ — તમારી %2$s બાકી છે.
 
-અનુકૂળ હોય ત્યારે ચૂકવો 🙏
-
-— %3$s</string>
+અનુકૂળ હોય ત્યારે ચૂકવો 🙏</string>
     <string name="khata_reminder_msg_credit">નમસ્તે %1$s 👋
 
 એક નોંધ — મારી દુકાનમાં તમારું %2$s ક્રેડિટ છે.
 
-ગમે ત્યારે વાપરો!
-
-— %3$s</string>
+ગમે ત્યારે વાપરો!</string>
+    <string name="khata_reminder_signature">સાદર,
+%1$s</string>
     <string name="khata_direction_i_owe_label">હું આ પાર્ટીને આપવાનો</string>
     <string name="khata_direction_they_owe_label">આ પાર્ટી મને આપવાની</string>
     <string name="khata_initial_amount_label">પ્રારંભ રકમ (વૈકલ્પિક)</string>
@@ -449,7 +447,6 @@
     <string name="khata_label_all_cleared">%1$s સાથે બધું પૂર્ણ ✓</string>
     <string name="khata_label_i_owe">તમારે %1$s ને આપવાનું</string>
     <string name="khata_label_they_owe">%1$s તમને આપવાનું</string>
-    <string name="khata_sender_name_default">હું</string>
 
     <string name="khata_subtitle">તમારા સંપર્કો સાથે ઉધારીનો ટ્રૅક રાખો</string>
     <string name="debts_subtitle">આપવાની અને લેવાની રકમ ટ્રૅક કરો</string>

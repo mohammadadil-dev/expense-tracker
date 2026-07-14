@@ -397,16 +397,14 @@
 
 एक मैत्रीपूर्ण आठवण — तुमची %2$s बाकी आहे.
 
-सोयीस्कर असेल तेव्हा निपटवा 🙏
-
-— %3$s</string>
+सोयीस्कर असेल तेव्हा निपटवा 🙏</string>
     <string name="khata_reminder_msg_credit">नमस्कार %1$s 👋
 
 एक नोट — माझ्या दुकानात तुमचे %2$s क्रेडिट आहे.
 
-केव्हाही वापरा!
-
-— %3$s</string>
+केव्हाही वापरा!</string>
+    <string name="khata_reminder_signature">आदरपूर्वक,
+%1$s</string>
     <string name="khata_direction_i_owe_label">मी या पार्टीला द्यायचे</string>
     <string name="khata_direction_they_owe_label">ही पार्टी मला द्यायची</string>
     <string name="khata_initial_amount_label">प्रारंभिक रक्कम (वैकल्पिक)</string>
@@ -449,7 +447,6 @@
     <string name="khata_label_all_cleared">%1$s सोबत सर्व निपटले ✓</string>
     <string name="khata_label_i_owe">तुम्ही %1$s ला द्यायचे</string>
     <string name="khata_label_they_owe">%1$s तुम्हाला द्यायचे</string>
-    <string name="khata_sender_name_default">मी</string>
 
     <string name="khata_subtitle">तुमच्या संपर्कांसोबत उधार व्यवहार ट्रॅक करा</string>
     <string name="debts_subtitle">द्यायची आणि घ्यायची रक्कम ट्रॅक करा</string>

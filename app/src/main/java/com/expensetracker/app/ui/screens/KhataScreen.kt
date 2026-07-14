@@ -120,7 +120,6 @@ fun KhataScreen(
     // Party pending a "Mark as Paid" confirm dialog.
     var markPaidParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
-    val senderDefault = stringResource(R.string.khata_sender_name_default)
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
     val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
 
@@ -282,13 +281,18 @@ fun KhataScreen(
             if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) "SAR $formatted"
             else "$currencySymbol $formatted"
         }
+        // Signed only if the user has actually set their name in Settings — see
+        // KhataDetailScreen.kt's matching comment for why "Me" is deliberately not a fallback.
+        val signature = if (displayName.isNotBlank())
+            "\n\n" + stringResource(R.string.khata_reminder_signature, displayName)
+        else ""
         val reminderMsg = stringResource(
-            R.string.khata_reminder_msg_owe, party.name, plainAmount, displayName.ifBlank { senderDefault }
-        ) + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+            R.string.khata_reminder_msg_owe, party.name, plainAmount
+        ) + signature + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
-            // Not falling back to "Me" here — that's fine as a signed reminder line (below),
+            // Not falling back to "Me" here — that's fine as a signed reminder line (above),
             // but wrong to embed as the payee name shown on a stranger's UPI app. buildUpiUri
             // omits the `pn` param entirely when this is blank.
             payeeDisplayName = displayName,

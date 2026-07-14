@@ -397,16 +397,14 @@
 
 ஒரு நட்பு நினைவூட்டல் — உங்களிடம் %2$s நிலுவை உள்ளது.
 
-வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏
-
-— %3$s</string>
+வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏</string>
     <string name="khata_reminder_msg_credit">வணக்கம் %1$s 👋
 
 ஒரு குறிப்பு — என் கடையில் உங்களுக்கு %2$s கடன் உள்ளது.
 
-எப்போது வேண்டுமானாலும் பயன்படுத்திக்கொள்ளுங்கள்!
-
-— %3$s</string>
+எப்போது வேண்டுமானாலும் பயன்படுத்திக்கொள்ளுங்கள்!</string>
+    <string name="khata_reminder_signature">வணக்கத்துடன்,
+%1$s</string>
     <string name="khata_direction_i_owe_label">நான் இந்த தரப்பிடம் கொடுக்க வேண்டியது</string>
     <string name="khata_direction_they_owe_label">இந்த தரப்பு என்னிடம் கொடுக்க வேண்டியது</string>
     <string name="khata_initial_amount_label">தொடக்க இருப்பு (விருப்பமானது)</string>
@@ -449,7 +447,6 @@
     <string name="khata_label_all_cleared">%1$s உடன் எல்லாம் தீர்வு ✓</string>
     <string name="khata_label_i_owe">நீங்கள் %1$s க்கு கொடுக்க வேண்டியது</string>
     <string name="khata_label_they_owe">%1$s உங்களுக்கு கொடுக்க வேண்டியது</string>
-    <string name="khata_sender_name_default">நான்</string>
 
     <string name="khata_subtitle">உங்கள் தொடர்புகளுடன் கடன் கொடுக்கல் வாங்கலை கண்காணி</string>
     <string name="debts_subtitle">நீங்கள் கொடுக்க மற்றும் பெற வேண்டியவற்றை கண்காணி</string>

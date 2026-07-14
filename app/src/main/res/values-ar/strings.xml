@@ -396,16 +396,14 @@
 
 تذكير ودي — لديك رصيد مستحق بقيمة %2$s.
 
-يرجى السداد عند الإمكان 🙏
-
-— %3$s</string>
+يرجى السداد عند الإمكان 🙏</string>
     <string name="khata_reminder_msg_credit">مرحباً %1$s 👋
 
 ملاحظة — لديك رصيد دائن بقيمة %2$s في محلي.
 
-استخدمه في أي وقت!
-
-— %3$s</string>
+استخدمه في أي وقت!</string>
+    <string name="khata_reminder_signature">مع التحية،
+%1$s</string>
     <string name="khata_direction_i_owe_label">أنا مدين لهذا الطرف</string>
     <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
     <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
@@ -460,7 +458,6 @@
     <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
     <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
     <string name="khata_label_they_owe">%1$s مدين لك</string>
-    <string name="khata_sender_name_default">أنا</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">تتبع الأموال المُقرضة والمُقترضة مع جهات الاتصال</string>

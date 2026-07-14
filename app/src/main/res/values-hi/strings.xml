@@ -396,16 +396,14 @@
 
 याद दिला दें — आपका बकाया %2$s है।
 
-कृपया सुविधानुसार चुका दें 🙏
-
-— %3$s</string>
+कृपया सुविधानुसार चुका दें 🙏</string>
     <string name="khata_reminder_msg_credit">हेलो %1$s 👋
 
 बस जानकारी — मेरी दुकान पर आपका %2$s क्रेडिट है।
 
-कभी भी उपयोग करें!
-
-— %3$s</string>
+कभी भी उपयोग करें!</string>
+    <string name="khata_reminder_signature">सादर,
+%1$s</string>
     <string name="khata_direction_i_owe_label">मुझे इस पार्टी को देना है</string>
     <string name="khata_direction_they_owe_label">इस पार्टी को मुझे देना है</string>
     <string name="khata_initial_amount_label">शुरुआती राशि (वैकल्पिक)</string>
@@ -460,7 +458,6 @@
     <string name="khata_label_all_cleared">%1$s के साथ सब साफ ✓</string>
     <string name="khata_label_i_owe">आप %1$s के ऋणी हैं</string>
     <string name="khata_label_they_owe">%1$s आपके ऋणी हैं</string>
-    <string name="khata_sender_name_default">मैं</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">अपने संपर्कों के साथ उधार दिए और लिए गए पैसों को ट्रैक करें</string>

@@ -397,16 +397,14 @@
 
 ഒരു സൗഹൃദ ഓർമ്മപ്പെടുത്തൽ — നിങ്ങൾക്ക് %2$s ബാക്കിയുണ്ട്.
 
-സൗകര്യമുള്ളപ്പോൾ തീർക്കൂ 🙏
-
-— %3$s</string>
+സൗകര്യമുള്ളപ്പോൾ തീർക്കൂ 🙏</string>
     <string name="khata_reminder_msg_credit">ഹലോ %1$s 👋
 
 ഒരു കുറിപ്പ് — എന്റെ കടയിൽ നിങ്ങൾക്ക് %2$s ക്രെഡിറ്റ് ഉണ്ട്.
 
-ഏപ്പോൾ വേണമെങ്കിലും ഉപയോഗിക്കൂ!
-
-— %3$s</string>
+ഏപ്പോൾ വേണമെങ്കിലും ഉപയോഗിക്കൂ!</string>
+    <string name="khata_reminder_signature">ആശംസകളോടെ,
+%1$s</string>
     <string name="khata_direction_i_owe_label">ഞാൻ ഈ പാർട്ടിക്ക് നൽകണം</string>
     <string name="khata_direction_they_owe_label">ഈ പാർട്ടി എനിക്ക് നൽകണം</string>
     <string name="khata_initial_amount_label">ആദ്യ തുക (ഓപ്ഷണൽ)</string>
@@ -449,7 +447,6 @@
     <string name="khata_label_all_cleared">%1$s-യുമായി എല്ലാം തീർന്നു ✓</string>
     <string name="khata_label_i_owe">നിങ്ങൾ %1$s-ക്ക് നൽകണം</string>
     <string name="khata_label_they_owe">%1$s നിങ്ങൾക്ക് നൽകണം</string>
-    <string name="khata_sender_name_default">ഞാൻ</string>
 
     <string name="khata_subtitle">നിങ്ങളുടെ കോൺടാക്ടുകളുമായി കടം കൊടുക്കൽ ട്രാക്ക് ചെയ്യൂ</string>
     <string name="debts_subtitle">നൽകേണ്ടതും ലഭിക്കേണ്ടതും ട്രാക്ക് ചെയ്യൂ</string>

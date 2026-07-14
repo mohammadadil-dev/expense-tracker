@@ -147,15 +147,18 @@ fun KhataDetailScreen(
         else "$currencySymbol $formatted"
     }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
-    val senderDefault = stringResource(R.string.khata_sender_name_default)
-    val reminderMsgOwe     = stringResource(R.string.khata_reminder_msg_owe,
-        party.name, plainAmount, displayName.ifBlank { senderDefault })
-    val reminderMsgCredit  = stringResource(R.string.khata_reminder_msg_credit,
-        party.name, plainAmount, displayName.ifBlank { senderDefault })
+    val reminderMsgOwe     = stringResource(R.string.khata_reminder_msg_owe, party.name, plainAmount)
+    val reminderMsgCredit  = stringResource(R.string.khata_reminder_msg_credit, party.name, plainAmount)
+    // Signed only if the user has actually set their name in Settings — falling back to a
+    // placeholder like "Me" would sign a stranger's reminder with a literal word "Me", which
+    // reads as broken rather than just anonymous. No name set = no signature line at all.
+    val signature = if (displayName.isNotBlank())
+        "\n\n" + stringResource(R.string.khata_reminder_signature, displayName)
+    else ""
     // Play Store link appended in code (not in the translated string resources) since the URL
     // itself needs no localization — this reaches the recipient even if they don't have the app
     // yet, which is often the case for a Khata reminder sent to someone outside the user base.
-    val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) +
+    val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) + signature +
         "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
     // Shared by the plain reminder and the "Request via UPI" share — both hand off to

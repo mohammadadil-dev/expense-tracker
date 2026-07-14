@@ -391,16 +391,14 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
 
 Paalala lang — mayroon kang natitirang balanse na %2$s.
 
-Mangyaring bayaran kapag maginhawa 🙏
-
-— %3$s</string>
+Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="khata_reminder_msg_credit">Kamusta %1$s 👋
 
 Paalala — mayroon kang %2$s na credit sa aking tindahan.
 
-Gamitin anumang oras!
-
-— %3$s</string>
+Gamitin anumang oras!</string>
+    <string name="khata_reminder_signature">Regards,
+%1$s</string>
     <string name="khata_direction_i_owe_label">May utang ako sa party na ito</string>
     <string name="khata_direction_they_owe_label">May utang ang party na ito sa akin</string>
     <string name="khata_initial_amount_label">Panimulang halaga (opsyonal)</string>
@@ -456,7 +454,6 @@ Gamitin anumang oras!
     <string name="khata_label_all_cleared">Naaayos na ang lahat kay %1$s ✓</string>
     <string name="khata_label_i_owe">Ikaw ay may utang kay %1$s</string>
     <string name="khata_label_they_owe">Si %1$s ay may utang sa iyo</string>
-    <string name="khata_sender_name_default">Ako</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">I-track ang pera na ipinahiram at hiniram mula sa iyong mga contact</string>

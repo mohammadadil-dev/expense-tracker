@@ -409,16 +409,14 @@ Tap + to add someone who owes you.</string>
 
 This is a friendly reminder — you have an outstanding balance of %2$s.
 
-Kindly settle when convenient 🙏
-
-— %3$s</string>
+Kindly settle when convenient 🙏</string>
     <string name="khata_reminder_msg_credit">Hi %1$s 👋
 
 Just a note — you have a credit of %2$s at my shop.
 
-Feel free to use it anytime!
-
-— %3$s</string>
+Feel free to use it anytime!</string>
+    <string name="khata_reminder_signature">Regards,
+%1$s</string>
     <string name="khata_direction_i_owe_label">I owe this party</string>
     <string name="khata_direction_they_owe_label">They owe me</string>
     <string name="khata_initial_amount_label">Opening balance (optional)</string>
@@ -467,7 +465,6 @@ Feel free to use it anytime!
     <string name="khata_label_all_cleared">All cleared with %1$s ✓</string>
     <string name="khata_label_i_owe">You owe %1$s</string>
     <string name="khata_label_they_owe">%1$s owes you</string>
-    <string name="khata_sender_name_default">Me</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">Track money lent &amp; borrowed with your contacts</string>

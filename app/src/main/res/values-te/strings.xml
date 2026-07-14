@@ -397,16 +397,14 @@
 
 ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు %2$s బాకీ ఉంది.
 
-వీలైనప్పుడు పరిష్కరించండి 🙏
-
-— %3$s</string>
+వీలైనప్పుడు పరిష్కరించండి 🙏</string>
     <string name="khata_reminder_msg_credit">హలో %1$s 👋
 
 ఒక గమనిక — నా దుకాణంలో మీకు %2$s క్రెడిట్ ఉంది.
 
-ఎప్పుడైనా ఉపయోగించుకోండి!
-
-— %3$s</string>
+ఎప్పుడైనా ఉపయోగించుకోండి!</string>
+    <string name="khata_reminder_signature">వందనాలతో,
+%1$s</string>
     <string name="khata_direction_i_owe_label">నేను ఈ పార్టీకి చెల్లించాల్సింది</string>
     <string name="khata_direction_they_owe_label">ఈ పార్టీ నాకు చెల్లించాల్సింది</string>
     <string name="khata_initial_amount_label">ప్రారంభ నిల్వ (ఐచ్ఛికం)</string>
@@ -449,7 +447,6 @@
     <string name="khata_label_all_cleared">%1$s తో అన్నీ పరిష్కరించారు ✓</string>
     <string name="khata_label_i_owe">మీరు %1$s కి చెల్లించాల్సింది</string>
     <string name="khata_label_they_owe">%1$s మీకు చెల్లించాల్సింది</string>
-    <string name="khata_sender_name_default">నేను</string>
 
     <string name="khata_subtitle">మీ పరిచయాలతో అప్పుల లావాదేవీలు ట్రాక్ చేయండి</string>
     <string name="debts_subtitle">మీరు చెల్లించాల్సిన మరియు మీకు రావలసిన మొత్తాలు ట్రాక్ చేయండి</string>
