@@ -1,10 +1,14 @@
 package com.expensetracker.app.util
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import androidx.core.content.FileProvider
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
+import java.io.File
+import java.io.FileOutputStream
 import java.util.Locale
 
 /**
@@ -26,16 +30,22 @@ object UpiPaymentHelper {
      *
      * @param payeeVpa the payee's UPI ID (e.g. "name@bank") — this app's own [myUpiId], not the
      *   payer's, since the whole point is that the *other* person pays *this* app's user.
-     * @param payeeName shown in the payer's UPI app as who they're paying.
+     * @param payeeName shown in the payer's UPI app as who they're paying. Left out of the link
+     *   entirely if blank — a fallback placeholder like "Me" would show up as the shop/person's
+     *   own name on the payer's bank confirmation screen, which is worse than just omitting it
+     *   (most UPI apps fall back to showing the VPA itself when `pn` is absent).
      * @param amount the exact outstanding balance — always prefilled so the payer doesn't have
      *   to type it themselves.
      * @param note a short transaction note (e.g. the Khata party's name), shown in the payer's
      *   UPI app for their own reference.
      */
     fun buildUpiUri(payeeVpa: String, payeeName: String, amount: Double, note: String): Uri {
-        return Uri.parse("upi://pay").buildUpon()
+        val builder = Uri.parse("upi://pay").buildUpon()
             .appendQueryParameter("pa", payeeVpa)
-            .appendQueryParameter("pn", payeeName)
+        if (payeeName.isNotBlank()) {
+            builder.appendQueryParameter("pn", payeeName)
+        }
+        return builder
             .appendQueryParameter("am", String.format(Locale.US, "%.2f", amount))
             .appendQueryParameter("cu", "INR")
             .appendQueryParameter("tn", note)
@@ -70,5 +80,25 @@ object UpiPaymentHelper {
             }
         }
         return bitmap
+    }
+
+    /**
+     * Saves [bitmap] to `cacheDir/qrcodes/` and returns a `content://` [Uri] via this app's
+     * existing [androidx.core.content.FileProvider] (see `res/xml/file_paths.xml`) — needed
+     * because WhatsApp (and every other share target) can't read a raw `file://` path or an
+     * in-memory bitmap directly. Mirrors the same FileProvider pattern already used by
+     * `PdfExporter`/`CsvExporter`/`BackupManager` for sharing generated files.
+     *
+     * Why this exists at all: a `upi://pay` link is not auto-linkified (tappable) inside
+     * WhatsApp message bubbles the way an `https://` link is — WhatsApp only recognizes the
+     * http(s) scheme for that. Sending the actual QR *image* alongside the link means the
+     * recipient always has something they can scan or forward, even though the raw link text
+     * shows up as plain, non-clickable text.
+     */
+    fun saveQrToCache(context: Context, bitmap: Bitmap): Uri {
+        val dir = File(context.cacheDir, "qrcodes").apply { mkdirs() }
+        val file = File(dir, "upi_qr_${System.currentTimeMillis()}.png")
+        FileOutputStream(file).use { out -> bitmap.compress(Bitmap.CompressFormat.PNG, 100, out) }
+        return FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
     }
 }

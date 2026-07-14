@@ -169,11 +169,36 @@ fun KhataDetailScreen(
 
     fun sendWhatsApp() = sendWhatsAppMessage(reminderMsg)
 
-    // "Share payment link" from the UPI sheet — reuses reminderMsg verbatim, just adds the
-    // UPI deep link as one more line (FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§5). No copy-link
-    // fallback: sharing always goes through this same WhatsApp flow (§10.3).
-    fun sendUpiPaymentLink(upiLink: String) {
-        sendWhatsAppMessage(reminderMsg + "\n\n" + upiLink)
+    // "Share payment link" from the UPI sheet — sends the actual QR *image* (not just the raw
+    // link) because WhatsApp only auto-linkifies http(s) URLs; a `upi://pay` link shows up as
+    // inert plain text in a chat bubble, so the scannable image is what makes this usable.
+    // reminderMsg + the link both ride along as the image caption for reference/fallback.
+    // No copy-link fallback: sharing always goes through this same WhatsApp flow (§10.3).
+    fun sendUpiPaymentQr(qrImageUri: Uri, upiLink: String) {
+        val caption = reminderMsg + "\n\n" + upiLink
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, qrImageUri)
+            putExtra(Intent.EXTRA_TEXT, caption)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setPackage("com.whatsapp")
+        }
+        try {
+            context.startActivity(sendIntent)
+        } catch (e: ActivityNotFoundException) {
+            val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                putExtra(Intent.EXTRA_STREAM, qrImageUri)
+                putExtra(Intent.EXTRA_TEXT, caption)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp.w4b")
+            }
+            try {
+                context.startActivity(fallbackIntent)
+            } catch (e2: ActivityNotFoundException) {
+                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+            }
+        }
         showUpiSheet = false
     }
 
@@ -331,11 +356,15 @@ fun KhataDetailScreen(
     if (showUpiSheet) {
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
-            payeeDisplayName = displayName.ifBlank { senderDefault },
+            // Deliberately NOT falling back to "Me" here (unlike the WhatsApp text signature
+            // below) — that fallback is fine as a signed reminder line, but wrong to embed as
+            // the payee name a stranger's UPI app would show them. UpiPaymentHelper.buildUpiUri
+            // omits the `pn` param entirely when this is blank.
+            payeeDisplayName = displayName,
             partyName = party.name,
             amount = balance,
             currencySymbol = currencySymbol,
-            onShareLink = { upiLink -> sendUpiPaymentLink(upiLink) },
+            onShareQr = { qrUri, upiLink -> sendUpiPaymentQr(qrUri, upiLink) },
             onDismiss = { showUpiSheet = false }
         )
     }

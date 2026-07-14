@@ -2,7 +2,6 @@ package com.expensetracker.app.ui.screens
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -254,23 +253,38 @@ fun KhataScreen(
 
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
-            payeeDisplayName = displayName.ifBlank { senderDefault },
+            // Not falling back to "Me" here — that's fine as a signed reminder line (below),
+            // but wrong to embed as the payee name shown on a stranger's UPI app. buildUpiUri
+            // omits the `pn` param entirely when this is blank.
+            payeeDisplayName = displayName,
             partyName = party.name,
             amount = balance,
             currencySymbol = currencySymbol,
-            onShareLink = { upiLink ->
-                val message = reminderMsg + "\n\n" + upiLink
-                val phone = party.phone
-                    .replace("+", "").replace(" ", "").replace("-", "")
-                    .replace("(", "").replace(")", "")
-                val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
-                val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
+            // Sends the actual QR *image*, not just the raw link — WhatsApp only auto-linkifies
+            // http(s) URLs, so a bare `upi://pay` link shows up as inert plain text in the chat.
+            // The image + link both go out via a generic ACTION_SEND (no phone-number prefill
+            // possible for image shares), so WhatsApp opens its own contact picker here.
+            onShareQr = { qrUri, upiLink ->
+                val caption = reminderMsg + "\n\n" + upiLink
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    putExtra(Intent.EXTRA_STREAM, qrUri)
+                    putExtra(Intent.EXTRA_TEXT, caption)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    setPackage("com.whatsapp")
+                }
                 try {
-                    context.startActivity(intent)
+                    context.startActivity(sendIntent)
                 } catch (e: ActivityNotFoundException) {
-                    val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+                    val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "image/png"
+                        putExtra(Intent.EXTRA_STREAM, qrUri)
+                        putExtra(Intent.EXTRA_TEXT, caption)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        setPackage("com.whatsapp.w4b")
+                    }
                     try {
-                        context.startActivity(intent2)
+                        context.startActivity(fallbackIntent)
                     } catch (e2: ActivityNotFoundException) {
                         Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
                     }

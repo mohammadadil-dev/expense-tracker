@@ -1,5 +1,6 @@
 package com.expensetracker.app.ui.components
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +31,10 @@ import com.expensetracker.app.util.UpiPaymentHelper
  * regardless of what's installed on this device, and sharing always goes through the
  * existing WhatsApp reminder flow — whether the *recipient* has a UPI app is their own
  * concern, same as it already is for the plain-text reminder today.
+ *
+ * Sharing sends the actual QR *image* (not just the raw link) because WhatsApp only
+ * auto-linkifies http(s) URLs — a `upi://pay` link shows up as inert plain text in a chat
+ * bubble, so the image is what makes this actually scannable/usable for the recipient.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,16 +44,18 @@ fun RequestUpiPaymentSheet(
     partyName: String,
     amount: Double,
     currencySymbol: String,
-    onShareLink: (upiLink: String) -> Unit,
+    onShareQr: (qrImageUri: android.net.Uri, upiLink: String) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val context = LocalContext.current
     val note = "Khata: $partyName"
     val upiUri = remember(myUpiId, payeeDisplayName, amount, note) {
         UpiPaymentHelper.buildUpiUri(myUpiId, payeeDisplayName, amount, note)
     }
-    val qrBitmap = remember(upiUri) {
-        UpiPaymentHelper.generateQrBitmap(upiUri.toString(), 640).asImageBitmap()
+    val qrBitmapRaw: Bitmap = remember(upiUri) {
+        UpiPaymentHelper.generateQrBitmap(upiUri.toString(), 640)
     }
+    val qrBitmap = remember(qrBitmapRaw) { qrBitmapRaw.asImageBitmap() }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -100,7 +108,10 @@ fun RequestUpiPaymentSheet(
             Spacer(Modifier.height(20.dp))
 
             Button(
-                onClick = { onShareLink(upiUri.toString()) },
+                onClick = {
+                    val qrUri = UpiPaymentHelper.saveQrToCache(context, qrBitmapRaw)
+                    onShareQr(qrUri, upiUri.toString())
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Filled.Share, contentDescription = null, modifier = Modifier.size(18.dp))
