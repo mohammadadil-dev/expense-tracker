@@ -116,13 +116,18 @@ fun SplitsScreen(
 
         Scaffold(
             containerColor = Color.Transparent,
+            // Only shown once there's at least one group — the empty state below already has
+            // its own full-width "Create Group" button as the sole call-to-action, so a FAB
+            // doing the exact same thing on top of it was pure duplication.
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { showNewGroupSheet = true },
-                    shape = CircleShape,
-                    containerColor = MaterialTheme.colorScheme.primary
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                if (groups.isNotEmpty()) {
+                    FloatingActionButton(
+                        onClick = { showNewGroupSheet = true },
+                        shape = CircleShape,
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                    }
                 }
             }
         ) { padding ->

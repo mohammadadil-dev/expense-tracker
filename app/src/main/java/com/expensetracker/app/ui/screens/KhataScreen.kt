@@ -67,6 +67,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
@@ -613,12 +614,14 @@ private fun KhataPartyCard(
             }
             Spacer(Modifier.width(12.dp))
 
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f, fill = false)) {
                 Text(
                     text       = party.name,
                     style      = MaterialTheme.typography.bodyLarge,
                     color      = TextPrimary,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    maxLines   = 1,
+                    overflow   = TextOverflow.Ellipsis
                 )
                 if (party.phone.isNotBlank()) {
                     Text(
@@ -626,17 +629,22 @@ private fun KhataPartyCard(
                         style = MaterialTheme.typography.bodySmall.copy(
                             textDirection = androidx.compose.ui.text.style.TextDirection.Ltr
                         ),
-                        color = TextMuted
+                        color = TextMuted,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
+
+            Spacer(Modifier.width(8.dp))
 
             Column(horizontalAlignment = Alignment.End) {
                 if (isSettled) {
                     Text(
                         text  = stringResource(R.string.khata_settled),
                         style = MaterialTheme.typography.labelSmall,
-                        color = SuccessGreen
+                        color = SuccessGreen,
+                        maxLines = 1
                     )
                 } else {
                     MoneyText(
@@ -647,41 +655,44 @@ private fun KhataPartyCard(
                     Text(
                         text  = stringResource(R.string.khata_outstanding),
                         style = MaterialTheme.typography.labelSmall,
-                        color = TextMuted
+                        color = TextMuted,
+                        maxLines = 1
                     )
                 }
             }
+            // Compact 32dp action icons (smaller than IconButton's 48dp default touch target)
+            // so up to two of these plus the arrow don't crowd out the party name column.
             if (showUpiButton) {
-                IconButton(onClick = onRequestUpi) {
+                IconButton(onClick = onRequestUpi, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.QrCode,
                         contentDescription = stringResource(R.string.khata_request_via_upi),
                         tint = AccentIndigo,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }
             if (showPayUpiButton) {
-                IconButton(onClick = onPayUpi) {
+                IconButton(onClick = onPayUpi, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.AccountBalance,
                         contentDescription = stringResource(R.string.khata_pay_via_upi),
                         tint = AccentIndigo,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }
             if (showMarkPaidButton) {
-                IconButton(onClick = onMarkPaid) {
+                IconButton(onClick = onMarkPaid, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.Check,
                         contentDescription = stringResource(R.string.khata_mark_as_paid),
                         tint = SuccessGreen,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(4.dp))
             Icon(Icons.Filled.ArrowForward, contentDescription = null, tint = TextMuted, modifier = Modifier.size(16.dp))
         }
     }
