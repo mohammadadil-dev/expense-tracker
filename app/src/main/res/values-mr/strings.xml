@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">खाता / लेजर</string>
     <string name="whats_new_feature_goals_title">लक्ष्ये &amp; स्ट्रीक</string>
     <string name="split_hero_total_spent">एकूण खर्च</string>
+
+    <string name="reminder_hour_decrease">तास कमी करा</string>
+    <string name="reminder_hour_increase">तास वाढवा</string>
 </resources>

@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">கட்டா / லெட்ஜர்</string>
     <string name="whats_new_feature_goals_title">இலக்குகள் &amp; ஸ்ட்ரீக்</string>
     <string name="split_hero_total_spent">மொத்த செலவு</string>
+
+    <string name="reminder_hour_decrease">மணி நேரத்தை குறை</string>
+    <string name="reminder_hour_increase">மணி நேரத்தை அதிகரி</string>
 </resources>

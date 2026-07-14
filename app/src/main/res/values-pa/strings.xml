@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">ਖਾਤਾ / ਲੇਜਰ</string>
     <string name="whats_new_feature_goals_title">ਟੀਚੇ &amp; ਸਟ੍ਰੀਕ</string>
     <string name="split_hero_total_spent">ਕੁੱਲ ਖਰਚ</string>
+
+    <string name="reminder_hour_decrease">ਘੰਟਾ ਘਟਾਓ</string>
+    <string name="reminder_hour_increase">ਘੰਟਾ ਵਧਾਓ</string>
 </resources>

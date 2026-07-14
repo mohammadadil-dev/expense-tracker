@@ -668,4 +668,7 @@
     <string name="whats_new_feature_khata_title">الخاطة / الدفتر</string>
     <string name="whats_new_feature_goals_title">الأهداف والسلاسل</string>
     <string name="split_hero_total_spent">إجمالي الإنفاق</string>
+
+    <string name="reminder_hour_decrease">تقليل الساعة</string>
+    <string name="reminder_hour_increase">زيادة الساعة</string>
 </resources>

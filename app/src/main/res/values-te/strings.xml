@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">ఖాతా / లెడ్జర్</string>
     <string name="whats_new_feature_goals_title">లక్ష్యాలు &amp; స్ట్రీక్</string>
     <string name="split_hero_total_spent">మొత్తం ఖర్చు</string>
+
+    <string name="reminder_hour_decrease">గంట తగ్గించు</string>
+    <string name="reminder_hour_increase">గంట పెంచు</string>
 </resources>

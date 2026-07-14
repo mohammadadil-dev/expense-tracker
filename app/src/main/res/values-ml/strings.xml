@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">ഖാതാ / ലെഡ്ജർ</string>
     <string name="whats_new_feature_goals_title">ലക്ഷ്യങ്ങൾ &amp; സ്‌ട്രീക്ക്</string>
     <string name="split_hero_total_spent">മൊത്തം ചെലവ്</string>
+
+    <string name="reminder_hour_decrease">മണിക്കൂർ കുറയ്ക്കുക</string>
+    <string name="reminder_hour_increase">മണിക്കൂർ കൂട്ടുക</string>
 </resources>

@@ -667,4 +667,7 @@ Feel free to use it anytime!
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
     <string name="split_hero_total_spent">Total spent</string>
+
+    <string name="reminder_hour_decrease">Decrease hour</string>
+    <string name="reminder_hour_increase">Increase hour</string>
 </resources>

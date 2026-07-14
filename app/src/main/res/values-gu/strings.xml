@@ -635,4 +635,7 @@
     <string name="whats_new_feature_khata_title">ખાતું / ચોપડો</string>
     <string name="whats_new_feature_goals_title">લક્ષ્ય &amp; સ્ટ્રીક</string>
     <string name="split_hero_total_spent">કુલ ખર્ચ</string>
+
+    <string name="reminder_hour_decrease">કલાક ઘટાડો</string>
+    <string name="reminder_hour_increase">કલાક વધારો</string>
 </resources>

@@ -37,6 +37,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Backup
@@ -946,12 +948,30 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.headlineMedium
                     )
                     Spacer(Modifier.height(8.dp))
-                    Slider(
-                        value = pickerHour.toFloat(),
-                        onValueChange = { pickerHour = it.toInt() },
-                        valueRange = 0f..23f,
-                        steps = 22
-                    )
+                    // The slider alone can't reliably land on every one of the 24 discrete
+                    // hour stops — dragging across a narrow track packed with that many steps
+                    // means a normal swipe can overshoot the exact tick you're aiming for
+                    // (e.g. landing on 8 when dragging toward 7). The +/- buttons give an
+                    // always-exact way to nudge one hour at a time; the slider stays for
+                    // quick coarse scrubbing.
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        IconButton(onClick = { pickerHour = (pickerHour - 1 + 24) % 24 }) {
+                            Icon(Icons.Filled.Remove, contentDescription = stringResource(R.string.reminder_hour_decrease))
+                        }
+                        Slider(
+                            value = pickerHour.toFloat(),
+                            onValueChange = { pickerHour = it.toInt() },
+                            valueRange = 0f..23f,
+                            steps = 22,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(onClick = { pickerHour = (pickerHour + 1) % 24 }) {
+                            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.reminder_hour_increase))
+                        }
+                    }
                 }
             },
             confirmButton = {

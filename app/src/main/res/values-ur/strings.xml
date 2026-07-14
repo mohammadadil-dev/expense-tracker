@@ -656,4 +656,7 @@
     <string name="whats_new_feature_khata_title">کھاتہ / بہی</string>
     <string name="whats_new_feature_goals_title">اہداف اور سلسلہ</string>
     <string name="split_hero_total_spent">کل خرچ</string>
+
+    <string name="reminder_hour_decrease">گھنٹہ کم کریں</string>
+    <string name="reminder_hour_increase">گھنٹہ بڑھائیں</string>
 </resources>

@@ -645,4 +645,7 @@ Gamitin anumang oras!
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Mga Layunin at Streak</string>
     <string name="split_hero_total_spent">Kabuuang Nagastos</string>
+
+    <string name="reminder_hour_decrease">Bawasan ang oras</string>
+    <string name="reminder_hour_increase">Dagdagan ang oras</string>
 </resources>

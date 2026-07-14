@@ -660,4 +660,7 @@
     <string name="whats_new_feature_khata_title">খাতা / লেজার</string>
     <string name="whats_new_feature_goals_title">লক্ষ্য ও স্ট্রিক</string>
     <string name="split_hero_total_spent">মোট খরচ</string>
+
+    <string name="reminder_hour_decrease">ঘণ্টা কমান</string>
+    <string name="reminder_hour_increase">ঘণ্টা বাড়ান</string>
 </resources>
