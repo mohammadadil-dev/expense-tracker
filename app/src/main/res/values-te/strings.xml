@@ -8,6 +8,10 @@
     <string name="your_name_label">మీ పేరు</string>
     <string name="your_name_hint">ఉదా. Mohammad</string>
     <string name="your_name_note">మీ డాష్‌బోర్డ్ శుభాకాంక్షలను వ్యక్తిగతీకరించడానికి మాత్రమే ఉపయోగించబడుతుంది. ఎక్కడికీ పంపబడదు.</string>
+    <string name="upi_section_title">చెల్లింపు (UPI)</string>
+    <string name="upi_id_label">మీ UPI ఐడీ</string>
+    <string name="upi_id_hint">ఉదా. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">చెల్లుబాటు అయ్యే UPI ఐడీని నమోదు చేయండి (ఉదా. name@bank)</string>
 
     <string name="nav_dashboard">హోమ్</string>
     <string name="nav_categories">వర్గాలు</string>
@@ -362,6 +366,7 @@
     <string name="khata_party_name_hint">పేరు (దుకాణం లేదా వ్యక్తి)</string>
     <string name="khata_party_phone_hint">ఫోన్ నంబర్ (WhatsApp కోసం)</string>
     <string name="khata_party_phone_optional">ఐచ్ఛికం — WhatsApp రిమైండర్‌లకు మాత్రమే అవసరం</string>
+    <string name="khata_party_upi_hint">వారి UPI ఐడీ (ఐచ్ఛికం)</string>
     <string name="khata_save_party">సేవ్ చేయి</string>
     <string name="khata_delete_party">పార్టీ తొలగించు</string>
     <string name="khata_no_parties_i_owe">ఇంకా దుకాణాలు జోడించలేదు.\nఖాతా ఉన్న దుకాణం జోడించడానికి + నొక్కండి.</string>
@@ -378,6 +383,9 @@
     <string name="khata_delete_entry">నమోదు తొలగించు</string>
     <string name="khata_whatsapp_reminder">రిమైండర్ పంపు</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ఇన్‌స్టాల్ కాలేదు.</string>
+    <string name="khata_request_via_upi">UPI ద్వారా అభ్యర్థించండి</string>
+    <string name="khata_upi_sheet_caption">వారు దీన్ని నేరుగా స్కాన్ చేయవచ్చు, లేదా మీరు షేర్ చేసిన లింక్‌ను నొక్కి నేరుగా చెల్లించవచ్చు.</string>
+    <string name="khata_upi_share_link">చెల్లింపు లింక్‌ను షేర్ చేయండి</string>
     <string name="khata_reminder_msg_owe">హలో %1$s 👋
 
 ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు %2$s బాకీ ఉంది.

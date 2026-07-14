@@ -24,10 +24,12 @@ New "Payment (UPI)" section in Settings, **visible only when detected/selected c
 - Text field: "Your UPI ID" (e.g. `mohammad@okhdfcbank`), with a lightweight format check (must contain exactly one `@`, no spaces).
 - Saved locally only — never transmitted anywhere, same as every other setting in this app.
 
-### 3b. Requesting payment (KhataDetailScreen)
+### 3b. Requesting payment (Khata list + detail screens)
 
-On a party's ledger screen, when **they owe the user** money (`direction == THEY_OWE`, outstanding balance > 0) and the user has set their UPI ID:
-- A new "Request via UPI" button appears next to the existing WhatsApp reminder button.
+When **they owe the user** money (`direction == THEY_OWE`, outstanding balance ≥ ₹1) and the user has set their UPI ID:
+- On the **Khata list screen** (`KhataScreen.kt`), each party row gets a compact "Request via UPI" affordance (icon button, to fit the existing row layout) alongside whatever action is already there.
+- On the **detail screen** (`KhataDetailScreen.kt`), a full "Request via UPI" button appears next to the existing WhatsApp reminder button.
+- Both open the same bottom sheet.
 - Tapping it opens a bottom sheet showing:
   - A QR code (generated on-device, no network call) encoding the UPI deep link for the exact outstanding balance.
   - "Share payment link" — appends the same UPI deep link to the *existing* WhatsApp reminder message (reuses `reminderMsgOwe`/`reminderMsgCredit` construction in `KhataDetailScreen.kt` verbatim, just adds one more line).
@@ -81,8 +83,9 @@ var myUpiId: String
   - `generateQrBitmap(content: String, sizePx: Int): Bitmap` — wraps ZXing's `QRCodeWriter`, pure on-device generation.
   - `isValidVpa(input: String): Boolean` — basic format guard for the Settings text field.
 - **New dependency:** `implementation("com.google.zxing:core:3.5.3")` — no Play Services, no network, no extra permissions. (`journeyapps:zxing-android-embedded` is an alternative if a ready-made scanning UI is ever wanted, but pure QR *generation* only needs `zxing:core`.)
-- **New composable:** `RequestUpiPaymentSheet.kt` (bottom sheet) — QR image + "Share payment link" button + caption. Lives alongside the existing `SettleUpSheet.kt`/`AddKhataEntrySheet.kt` pattern in `ui/components`.
+- **New composable:** `RequestUpiPaymentSheet.kt` (bottom sheet) — QR image + "Share payment link" button + caption. No app-detection logic (see §10.3). Lives alongside the existing `SettleUpSheet.kt`/`AddKhataEntrySheet.kt` pattern in `ui/components`.
 - **`KhataDetailScreen.kt`** — add the "Request via UPI" button and wire the new sheet in; append the UPI link to `reminderMsg` only when this flow is used (the existing plain WhatsApp reminder stays unchanged for parties without an INR/UPI setup).
+- **`KhataScreen.kt`** — add the same "Request via UPI" affordance to each qualifying party row in the list, wired to the same bottom sheet.
 - **`SettingsScreen.kt`** — new "Payment (UPI)" section, gated on `CurrencyLocaleMapper.isInrSymbol(currencySymbol)` (new one-line helper, same shape as the existing `isSaudiRiyalSymbol`).
 - **`AddEditKhataPartySheet.kt`** — one optional field, same gating.
 
@@ -114,13 +117,14 @@ Comparable in size to the reminder/SMS work already shipped this session (each o
 | Settings UI (UPI ID field, gating) | 0.75 hr |
 | `AddEditKhataPartySheet` field | 0.5 hr |
 | `RequestUpiPaymentSheet` + KhataDetailScreen wiring | 1.5–2 hr |
+| KhataScreen list-row wiring | 0.5 hr |
 | Strings × 14 locales | 0.75 hr |
 | Manual test pass (GPay/PhonePe deep link, QR scan, no-UPI-app fallback) | 1 hr |
 | Docs update (Privacy/Data Safety) | 0.25 hr |
 | **Total** | **~6–7 hours / one focused session** |
 
-## 10. Open questions (need a decision before build)
+## 10. Decisions (resolved)
 
-1. Should "Request via UPI" also appear on the **Khata list screen** (per-party row), not just the detail screen — faster access, but more UI to fit?
-2. Any minimum amount worth enforcing before showing the UPI option (e.g. skip for balances under ₹1)?
-3. Fallback copy when no UPI app is installed on the *shopkeeper's* device to show the QR — should the app still offer "copy link" so it can be pasted anywhere?
+1. **Yes** — "Request via UPI" appears on the Khata list screen (per-party row) as well as the detail screen, not just the detail screen.
+2. **Minimum threshold: ₹1.** The UPI option is hidden when the outstanding balance is below ₹1.
+3. **No copy-link fallback.** Simpler v1: no UPI-app-detection/fallback logic at all. The QR is generated and shown locally regardless (it's just an on-device image, needs no UPI app to display), and "Share payment link" always goes through WhatsApp exactly like the existing reminder flow. Whether the *recipient* has a UPI app is their own concern, same as it already is for the plain-text reminder today.

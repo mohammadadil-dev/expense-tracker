@@ -153,6 +153,11 @@ dependencies {
     // On-device model (bundled); no network call needed at scan time.
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
+    // ZXing — pure on-device QR code generation for Khata UPI payment requests.
+    // No network call, no Play Services dependency; we only ever encode a string
+    // locally, never scan/decode, so the lightweight `core` artifact is enough.
+    implementation("com.google.zxing:core:3.5.3")
+
     // Google Drive API — used for cloud backup / restore.
     // SETUP REQUIRED before using: go to console.cloud.google.com, enable the Drive API,
     // and register an Android OAuth 2.0 client with package name com.agtech.expensetracker

@@ -8,6 +8,10 @@
     <string name="your_name_label">ನಿಮ್ಮ ಹೆಸರು</string>
     <string name="your_name_hint">ಉದಾ. Mohammad</string>
     <string name="your_name_note">ನಿಮ್ಮ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಶುಭಾಶಯವನ್ನು ವೈಯಕ್ತಿಕಗೊಳಿಸಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ. ಎಲ್ಲಿಯೂ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ.</string>
+    <string name="upi_section_title">ಪಾವತಿ (UPI)</string>
+    <string name="upi_id_label">ನಿಮ್ಮ UPI ID</string>
+    <string name="upi_id_hint">ಉದಾ. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">ಮಾನ್ಯ UPI ID ನಮೂದಿಸಿ (ಉದಾ. name@bank)</string>
 
     <string name="nav_dashboard">ಮುಖಪುಟ</string>
     <string name="nav_categories">ವರ್ಗಗಳು</string>
@@ -362,6 +366,7 @@
     <string name="khata_party_name_hint">ಹೆಸರು (ಅಂಗಡಿ ಅಥವಾ ವ್ಯಕ್ತಿ)</string>
     <string name="khata_party_phone_hint">ಫೋನ್ ನಂಬರ್ (WhatsApp ಗಾಗಿ)</string>
     <string name="khata_party_phone_optional">ಐಚ್ಛಿಕ — WhatsApp ನೆನಪಿಗಾಗಿ ಮಾತ್ರ ಬೇಕು</string>
+    <string name="khata_party_upi_hint">ಅವರ UPI ID (ಐಚ್ಛಿಕ)</string>
     <string name="khata_save_party">ಉಳಿಸಿ</string>
     <string name="khata_delete_party">ಪಾರ್ಟಿ ಅಳಿಸಿ</string>
     <string name="khata_no_parties_i_owe">ಇನ್ನೂ ಅಂಗಡಿಗಳಿಲ್ಲ.\nಸಾಲ ಇರುವ ಅಂಗಡಿ ಸೇರಿಸಲು + ಒತ್ತಿ.</string>
@@ -378,6 +383,9 @@
     <string name="khata_delete_entry">ನಮೂದು ಅಳಿಸಿ</string>
     <string name="khata_whatsapp_reminder">ನೆನಪು ಕಳುಹಿಸಿ</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ಸ್ಥಾಪಿಸಿಲ್ಲ.</string>
+    <string name="khata_request_via_upi">UPI ಮೂಲಕ ವಿನಂತಿಸಿ</string>
+    <string name="khata_upi_sheet_caption">ಅವರು ಇದನ್ನು ಖುದ್ದಾಗಿ ಸ್ಕ್ಯಾನ್ ಮಾಡಬಹುದು, ಅಥವಾ ನೀವು ಹಂಚಿಕೊಂಡ ಲಿಂಕ್ ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡುವ ಮೂಲಕ ನೇರವಾಗಿ ಪಾವತಿಸಬಹುದು.</string>
+    <string name="khata_upi_share_link">ಪಾವತಿ ಲಿಂಕ್ ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="khata_reminder_msg_owe">ನಮಸ್ಕಾರ %1$s 👋
 
 ಒಂದು ಸ್ನೇಹಪೂರ್ಣ ನೆನಪು — ನಿಮ್ಮ ಬಾಕಿ %2$s ಇದೆ.

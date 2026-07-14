@@ -9,6 +9,11 @@
     <string name="your_name_hint">e.g. Mohammad</string>
     <string name="your_name_note">Used only to personalize your dashboard greeting. Never sent anywhere.</string>
 
+    <string name="upi_section_title">Payment (UPI)</string>
+    <string name="upi_id_label">Your UPI ID</string>
+    <string name="upi_id_hint">e.g. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">Enter a valid UPI ID (e.g. name@bank)</string>
+
     <string name="nav_dashboard">Home</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_settings">Settings</string>
@@ -371,6 +376,7 @@
     <string name="khata_party_name_hint">Name (shop or person)</string>
     <string name="khata_party_phone_hint">Phone number (for WhatsApp)</string>
     <string name="khata_party_phone_optional">Optional — needed only for WhatsApp reminders</string>
+    <string name="khata_party_upi_hint">Their UPI ID (optional)</string>
     <string name="khata_save_party">Save</string>
     <string name="khata_delete_party">Delete Party</string>
     <string name="khata_no_parties_i_owe">No shops added yet.
@@ -389,6 +395,9 @@ Tap + to add someone who owes you.</string>
     <string name="khata_delete_entry">Delete entry</string>
     <string name="khata_whatsapp_reminder">Send Reminder</string>
     <string name="khata_whatsapp_not_installed">WhatsApp is not installed.</string>
+    <string name="khata_request_via_upi">Request via UPI</string>
+    <string name="khata_upi_sheet_caption">They can scan this in person, or tap the link you share to pay you directly.</string>
+    <string name="khata_upi_share_link">Share payment link</string>
     <string name="khata_reminder_msg_owe">Hi %1$s 👋
 
 This is a friendly reminder — you have an outstanding balance of %2$s.

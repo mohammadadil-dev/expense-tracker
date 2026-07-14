@@ -37,6 +37,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Alarm
@@ -100,6 +101,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
+import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 // import com.expensetracker.app.ui.components.FamilySetupSheet  // reserved for Family Mode re-enable
@@ -174,6 +176,8 @@ fun SettingsScreen(
     val allExpenses by viewModel.allExpenses.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
+    val myUpiId by viewModel.myUpiId.collectAsState()
+    var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
     var showResetStep1 by remember { mutableStateOf(false) }
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
@@ -389,6 +393,42 @@ fun SettingsScreen(
             }
 
             Spacer(Modifier.height(24.dp))
+
+            // India-only: UPI only works with Indian bank accounts, so this section (and the
+            // "Request via UPI" flow it powers on Khata entries) is hidden for every other
+            // currency rather than showing a payment method that can't actually be used.
+            if (CurrencyLocaleMapper.isInrSymbol(currencySymbol)) {
+                AnimatedSection(visible = contentVisible, delayMillis = 22) {
+                    SettingsSectionHeader(icon = Icons.Filled.AccountBalance, title = stringResource(R.string.upi_section_title))
+                    Spacer(Modifier.height(8.dp))
+                    val upiValid = upiInput.isBlank() || UpiPaymentHelper.isValidVpa(upiInput)
+                    OutlinedTextField(
+                        value = upiInput,
+                        onValueChange = { upiInput = it },
+                        label = { Text(stringResource(R.string.upi_id_label)) },
+                        placeholder = { Text(stringResource(R.string.upi_id_hint)) },
+                        singleLine = true,
+                        isError = !upiValid,
+                        supportingText = if (!upiValid) {
+                            { Text(stringResource(R.string.upi_id_invalid), color = DangerRed) }
+                        } else null,
+                        trailingIcon = {
+                            IconButton(
+                                enabled = upiValid,
+                                onClick = {
+                                    viewModel.setMyUpiId(upiInput.trim())
+                                    onBack()
+                                }
+                            ) {
+                                Icon(Icons.Filled.Check, contentDescription = stringResource(R.string.done))
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                Spacer(Modifier.height(24.dp))
+            }
 
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))

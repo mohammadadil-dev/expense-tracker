@@ -10,7 +10,7 @@ Expense Tracker has no servers and no user accounts. Every expense, category, bu
 
 ## What the app stores, and where
 
-All your data (expenses, income, categories, budgets, debts, ledger/Khata entries, split-group bills, goals, your display name, language and currency preferences) is saved in a local on-device database (Room/SQLite). It stays on your device unless you personally choose to move it — for example, by using the app's PDF/CSV export or local JSON backup file and sharing it yourself through Android's share sheet. That sharing step is initiated by you, goes through apps you select, and is governed by those apps' own privacy policies — we have no visibility into it.
+All your data (expenses, income, categories, budgets, debts, ledger/Khata entries, split-group bills, goals, your display name, UPI ID if you enter one, language and currency preferences) is saved in a local on-device database (Room/SQLite). It stays on your device unless you personally choose to move it — for example, by using the app's PDF/CSV export or local JSON backup file and sharing it yourself through Android's share sheet. That sharing step is initiated by you, goes through apps you select, and is governed by those apps' own privacy policies — we have no visibility into it.
 
 If you uninstall the app, its local database is deleted with it. **Settings → Reset All Data** also lets you erase everything inside the app at any time, instantly and permanently.
 
@@ -31,6 +31,12 @@ The message text is parsed entirely on your device to pull out a transaction amo
 ## Receipt scanning and voice entry (optional)
 
 Receipt scanning uses ML Kit's on-device text recognition (camera permission) — the photo and extracted text are processed entirely on your device and never uploaded anywhere. Voice expense entry uses Android's on-device/system speech recognizer (microphone permission) the same way — your speech audio is handled by Android's speech recognition service the same as it would be for any other app using dictation, and the app itself never transmits it to us.
+
+## UPI payment requests (optional, India only)
+
+If your currency is set to ₹ (INR), Settings offers an optional "Your UPI ID" field, and Khata ledger entries where someone owes you money offer a "Request via UPI" option. This generates a standard `upi://pay` link and an on-device QR code encoding your UPI ID, the outstanding amount, and a short note — the app never contacts any payment gateway, bank, or server to create this, and never receives or processes the payment itself. It only hands the link/QR to whatever UPI app (GPay, PhonePe, etc.) the payer already has installed, the same way a printed shop QR code works. Sharing the link goes through the same WhatsApp share flow already used for ledger reminders, sent by you, to a contact you choose.
+
+Your own UPI ID and any UPI ID you optionally enter for a ledger party are stored only in the local on-device database described above — never transmitted to us or anyone else.
 
 ## What we don't do
 

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -72,6 +73,7 @@ import com.expensetracker.app.ui.components.AddEditKhataPartySheet
 import com.expensetracker.app.ui.components.AddKhataEntrySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.RequestUpiPaymentSheet
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
@@ -97,6 +99,7 @@ fun KhataDetailScreen(
     val context = LocalContext.current
     val currencySymbol by expenseViewModel.currencySymbol.collectAsState()
     val displayName    by expenseViewModel.displayName.collectAsState()
+    val myUpiId        by expenseViewModel.myUpiId.collectAsState()
     val allParties     by khataViewModel.allParties.collectAsState()
     val allEntries     by khataViewModel.allEntries.collectAsState()
 
@@ -109,6 +112,13 @@ fun KhataDetailScreen(
     var showEditParty  by remember { mutableStateOf(false) }
     var showDeleteParty by remember { mutableStateOf(false) }
     var pendingDelete  by remember { mutableStateOf<KhataEntryEntity?>(null) }
+    var showUpiSheet   by remember { mutableStateOf(false) }
+
+    // "Request via UPI" is only offered when: they owe the user money, the outstanding
+    // balance clears the ₹1 floor, the currency is INR, and the user has set their own
+    // UPI ID in Settings. See FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§10.2.
+    val showUpiButton = !isIOwe && balance >= 1.0 &&
+        CurrencyLocaleMapper.isInrSymbol(currencySymbol) && myUpiId.isNotBlank()
 
     // WhatsApp message builder
     // For plain-text messages, "ر.س500.00" is unreadable. For SAR use "SAR 500.00" (ISO code
@@ -131,7 +141,9 @@ fun KhataDetailScreen(
     val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) +
         "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
-    fun sendWhatsApp() {
+    // Shared by the plain reminder and the "Request via UPI" share — both hand off to
+    // WhatsApp via Intent.ACTION_VIEW, never touching the message content or transport.
+    fun sendWhatsAppMessage(message: String) {
         // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
         // e.g. "+966 51 234 5678" → "96651234567"
         val phone = party.phone
@@ -140,7 +152,7 @@ fun KhataDetailScreen(
             .replace("-", "")
             .replace("(", "")
             .replace(")", "")
-        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(reminderMsg)}")
+        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
         val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
         try {
             context.startActivity(intent)
@@ -153,6 +165,16 @@ fun KhataDetailScreen(
                 Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun sendWhatsApp() = sendWhatsAppMessage(reminderMsg)
+
+    // "Share payment link" from the UPI sheet — reuses reminderMsg verbatim, just adds the
+    // UPI deep link as one more line (FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§5). No copy-link
+    // fallback: sharing always goes through this same WhatsApp flow (§10.3).
+    fun sendUpiPaymentLink(upiLink: String) {
+        sendWhatsAppMessage(reminderMsg + "\n\n" + upiLink)
+        showUpiSheet = false
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -209,7 +231,9 @@ fun KhataDetailScreen(
                     currencySymbol = currencySymbol,
                     isIOwe = isIOwe,
                     hasPhone = party.phone.isNotBlank(),
-                    onSendReminder = { sendWhatsApp() }
+                    onSendReminder = { sendWhatsApp() },
+                    showUpiButton = showUpiButton,
+                    onRequestUpi = { showUpiSheet = true }
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -294,12 +318,25 @@ fun KhataDetailScreen(
         AddEditKhataPartySheet(
             initial = party,
             defaultDirection = party.direction,
-            onSave = { id, name, phone, direction, _, _ ->
+            currencySymbol = currencySymbol,
+            onSave = { id, name, phone, direction, _, _, upiId ->
                 // Editing an existing party — initial amount fields are hidden, pass-through ignored
-                khataViewModel.saveParty(id, name, phone, direction)
+                khataViewModel.saveParty(id, name, phone, direction, upiId = upiId)
                 showEditParty = false
             },
             onDismiss = { showEditParty = false }
+        )
+    }
+
+    if (showUpiSheet) {
+        RequestUpiPaymentSheet(
+            myUpiId = myUpiId,
+            payeeDisplayName = displayName.ifBlank { senderDefault },
+            partyName = party.name,
+            amount = balance,
+            currencySymbol = currencySymbol,
+            onShareLink = { upiLink -> sendUpiPaymentLink(upiLink) },
+            onDismiss = { showUpiSheet = false }
         )
     }
 
@@ -347,7 +384,9 @@ private fun KhataBalanceCard(
     currencySymbol: String,
     isIOwe: Boolean,
     hasPhone: Boolean,
-    onSendReminder: () -> Unit
+    onSendReminder: () -> Unit,
+    showUpiButton: Boolean = false,
+    onRequestUpi: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
 
@@ -476,6 +515,22 @@ private fun KhataBalanceCard(
                         color = Color.White,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
                     )
+                }
+            }
+
+            // "Request via UPI" — independent of the WhatsApp/no-phone branch above since
+            // the QR needs no phone number at all. INR-only, ₹1 floor (see call site).
+            if (showUpiButton) {
+                Spacer(Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = onRequestUpi,
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+                    border = BorderStroke(1.5.dp, Color.White.copy(alpha = 0.70f)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.QrCode, contentDescription = null, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.khata_request_via_upi))
                 }
             }
         }

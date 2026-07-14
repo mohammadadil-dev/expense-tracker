@@ -11,6 +11,12 @@ import androidx.room.PrimaryKey
  * [phone] is optional — needed only when the user wants to send a WhatsApp reminder.
  * It is stored as a raw string (digits + optional +/country-code prefix) so the UI
  * can format it however the OS expects for the wa.me deep-link.
+ *
+ * [upiId] is optional and India-only (UPI VPA, e.g. "name@bank") — this is the party's
+ * *own* UPI ID, only relevant for a future "pay them" flow. Not used by the current
+ * "request payment via UPI" flow, which uses the app owner's own UPI ID instead
+ * (see [SettingsRepository.myUpiId]); captured here now so that flow doesn't need a
+ * second data-entry pass later.
  */
 @Entity(tableName = "khata_parties")
 data class KhataPartyEntity(
@@ -18,6 +24,7 @@ data class KhataPartyEntity(
     val name: String,
     val phone: String = "",
     val direction: String,
+    val upiId: String? = null,
     val createdAt: Long = System.currentTimeMillis()
 ) {
     companion object {

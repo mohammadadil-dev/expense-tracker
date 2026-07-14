@@ -1,5 +1,13 @@
 # Play Console "Data Safety" Form — Answer Key
 
+**Updated 2026-07-14**: added optional Khata "Request via UPI" payment links/QR (INR-only,
+`FEATURE_SPEC_KHATA_UPI_PAYMENTS.md`). No new Data Safety declaration needed — `myUpiId` (Settings)
+and a party's `upiId` (Khata) are stored only in the local Room database, same as phone numbers
+already stored for WhatsApp reminders. The feature builds a `upi://pay` URI and an on-device QR
+code (ZXing, no network call) and hands both to whatever UPI app is installed or to the existing
+WhatsApp share flow — the app itself never contacts a payment gateway, bank, or server, so there is
+no new "collection" or "sharing" under Play's definition (nothing new leaves the device).
+
 **Updated 2026-07-10**: a NotificationListenerService-based background SMS detection feature was
 built and then reverted before release, so no "Notification Listener access" disclosure applies —
 see `SmsConsentManager.kt`'s doc comment for why (Play Console review has historically treated apps
@@ -50,7 +58,8 @@ Drive or a third-party SDK's servers, not just "to the developer." ([Google's ow
    the kind of mismatch that triggers review scrutiny.
 
 Everything else the app touches — expenses, categories, budgets, Khata/debt/split entries, display
-name, or the text of any SMS you approve — never leaves the device unless the user explicitly
+name, UPI IDs entered for the optional Khata payment-request feature, or the text of any SMS you
+approve — never leaves the device unless the user explicitly
 exports/shares it themselves via the PDF/CSV/JSON share sheet (which routes through apps the user
 picks, not through us). The SMS User Consent flow itself is still **not** collection: Android hands
 the message text to the app locally after a per-message tap, and the app never relays it anywhere.

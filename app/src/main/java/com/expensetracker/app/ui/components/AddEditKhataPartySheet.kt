@@ -55,10 +55,13 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.expensetracker.app.R
+import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.theme.AccentIndigo
+import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.SuccessGreen
 import com.expensetracker.app.ui.theme.TextSecondary
+import com.expensetracker.app.util.UpiPaymentHelper
 
 // ── Country code data ──────────────────────────────────────────────────────────
 
@@ -156,13 +159,15 @@ private fun splitPhone(stored: String): Pair<String, String> {
 fun AddEditKhataPartySheet(
     initial: KhataPartyEntity?,
     defaultDirection: String,
+    currencySymbol: String,
     onSave: (
         id: Long?,
         name: String,
         phone: String,
         direction: String,
         initialAmount: Double,
-        initialNote: String
+        initialNote: String,
+        upiId: String?
     ) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -177,6 +182,7 @@ fun AddEditKhataPartySheet(
     var selectedCountry   by remember(initial) { mutableStateOf(initialEntry) }
     var localPhone        by remember(initial) { mutableStateOf(initLocal) }
     var direction         by remember(initial) { mutableStateOf(initial?.direction ?: defaultDirection) }
+    var upiIdInput        by remember(initial) { mutableStateOf(initial?.upiId ?: "") }
     var nameError         by remember { mutableStateOf(false) }
     var showCountryPicker by remember { mutableStateOf(false) }
 
@@ -370,6 +376,28 @@ fun AddEditKhataPartySheet(
                 Text(stringResource(R.string.khata_they_owe), style = MaterialTheme.typography.bodyMedium)
             }
 
+            // ── UPI ID (India-only, optional) ─────────────────────────────────
+            // Not used by the current "request via UPI" flow (that uses this app's own
+            // UPI ID, from Settings) — this is the party's own VPA, captured now so a
+            // future "pay them" flow doesn't need a second data-entry pass.
+            if (CurrencyLocaleMapper.isInrSymbol(currencySymbol)) {
+                Spacer(Modifier.height(16.dp))
+                val upiValid = upiIdInput.isBlank() || UpiPaymentHelper.isValidVpa(upiIdInput)
+                OutlinedTextField(
+                    value = upiIdInput,
+                    onValueChange = { upiIdInput = it },
+                    label = { Text(stringResource(R.string.khata_party_upi_hint)) },
+                    placeholder = { Text(stringResource(R.string.upi_id_hint)) },
+                    singleLine = true,
+                    isError = !upiValid,
+                    supportingText = if (!upiValid) {
+                        { Text(stringResource(R.string.upi_id_invalid), color = DangerRed) }
+                    } else null,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             // ── Opening balance (new party only) ──────────────────────────────
             if (isNew) {
                 Spacer(Modifier.height(20.dp))
@@ -426,6 +454,7 @@ fun AddEditKhataPartySheet(
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = {
                     if (name.isBlank()) { nameError = true; return@Button }
+                    if (upiIdInput.isNotBlank() && !UpiPaymentHelper.isValidVpa(upiIdInput)) return@Button
 
                     val parsedAmount: Double
                     if (isNew && amountText.isNotBlank()) {
@@ -439,7 +468,10 @@ fun AddEditKhataPartySheet(
                     val fullPhone = if (localPhone.isBlank()) ""
                         else "${selectedCountry.dial}${localPhone.trim().replace(" ", "").replace("-", "")}"
 
-                    onSave(initial?.id, name.trim(), fullPhone, direction, parsedAmount, noteText.trim())
+                    onSave(
+                        initial?.id, name.trim(), fullPhone, direction, parsedAmount, noteText.trim(),
+                        upiIdInput.trim().takeIf { it.isNotBlank() }
+                    )
                 }) {
                     Text(stringResource(R.string.khata_save_party))
                 }

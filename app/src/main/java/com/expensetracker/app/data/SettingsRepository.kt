@@ -35,6 +35,13 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getString(KEY_DISPLAY_NAME, "") ?: ""
         set(value) = prefs.edit().putString(KEY_DISPLAY_NAME, value).apply()
 
+    /** The user's own UPI ID (VPA, e.g. "name@bank") — India-only, used to build the
+     * "Request via UPI" QR/link on Khata entries where someone owes the user money.
+     * Stored locally only, same as every other setting here; never sent anywhere. */
+    var myUpiId: String
+        get() = prefs.getString(KEY_MY_UPI_ID, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_MY_UPI_ID, value).apply()
+
     var firstRunDone: Boolean
         get() = prefs.getBoolean(KEY_FIRST_RUN_DONE, false)
         set(value) = prefs.edit().putBoolean(KEY_FIRST_RUN_DONE, value).apply()
@@ -200,6 +207,7 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_CURRENCY = "currency"
         private const val KEY_CURRENCY_SETUP_DONE = "currency_setup_done"
         private const val KEY_DISPLAY_NAME = "display_name"
+        private const val KEY_MY_UPI_ID = "my_upi_id"
         private const val KEY_FIRST_RUN_DONE = "first_run_done"
         private const val KEY_ONBOARDING_DONE = "onboarding_done"
         private const val KEY_CUSTOMER_ID = "customer_id"

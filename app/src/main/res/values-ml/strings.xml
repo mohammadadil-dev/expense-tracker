@@ -8,6 +8,10 @@
     <string name="your_name_label">നിങ്ങളുടെ പേര്</string>
     <string name="your_name_hint">ഉദാ. Mohammad</string>
     <string name="your_name_note">ഡാഷ്‌ബോർഡ് ഗ്രീറ്റിംഗ് വ്യക്തിഗതമാക്കാൻ മാത്രം ഉപയോഗിക്കുന്നു. ഒരിടത്തും അയക്കുന്നില്ല.</string>
+    <string name="upi_section_title">പേയ്‌മെന്റ് (UPI)</string>
+    <string name="upi_id_label">നിങ്ങളുടെ UPI ഐഡി</string>
+    <string name="upi_id_hint">ഉദാ. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">സാധുവായ UPI ഐഡി നൽകുക (ഉദാ. name@bank)</string>
 
     <string name="nav_dashboard">ഹോം</string>
     <string name="nav_categories">വിഭാഗങ്ങൾ</string>
@@ -362,6 +366,7 @@
     <string name="khata_party_name_hint">പേര് (കട അല്ലെങ്കിൽ വ്യക്തി)</string>
     <string name="khata_party_phone_hint">ഫോൺ നമ്പർ (WhatsApp-ൽ)</string>
     <string name="khata_party_phone_optional">ഓപ്ഷണൽ — WhatsApp റിമൈൻഡർ മാത്രം</string>
+    <string name="khata_party_upi_hint">അവരുടെ UPI ഐഡി (ഐച്ഛികം)</string>
     <string name="khata_save_party">സേവ് ചെയ്യൂ</string>
     <string name="khata_delete_party">പാർട്ടി ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="khata_no_parties_i_owe">ഇനി കടകൾ ഇല്ല.\nകടം ഉള്ള ഒരു കട ചേർക്കൂ + ഞെക്കൂ.</string>
@@ -378,6 +383,9 @@
     <string name="khata_delete_entry">എൻട്രി ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="khata_whatsapp_reminder">റിമൈൻഡർ അയക്കൂ</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ഇൻസ്‌റ്റോൾ ചെയ്തിട്ടില്ല.</string>
+    <string name="khata_request_via_upi">UPI വഴി അഭ്യർത്ഥിക്കുക</string>
+    <string name="khata_upi_sheet_caption">അവർക്ക് ഇത് നേരിട്ട് സ്കാൻ ചെയ്യാം, അല്ലെങ്കിൽ നിങ്ങൾ പങ്കിടുന്ന ലിങ്കിൽ ടാപ്പ് ചെയ്ത് നേരിട്ട് പണമടയ്ക്കാം.</string>
+    <string name="khata_upi_share_link">പേയ്‌മെന്റ് ലിങ്ക് പങ്കിടുക</string>
     <string name="khata_reminder_msg_owe">ഹലോ %1$s 👋
 
 ഒരു സൗഹൃദ ഓർമ്മപ്പെടുത്തൽ — നിങ്ങൾക്ക് %2$s ബാക്കിയുണ്ട്.

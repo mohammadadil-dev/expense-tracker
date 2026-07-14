@@ -8,6 +8,10 @@
     <string name="your_name_label">আপনার নাম</string>
     <string name="your_name_hint">যেমন: মোহাম্মদ</string>
     <string name="your_name_note">শুধুমাত্র ড্যাশবোর্ড অভিবাদন ব্যক্তিগত করতে ব্যবহৃত। কোথাও পাঠানো হয় না।</string>
+    <string name="upi_section_title">পেমেন্ট (UPI)</string>
+    <string name="upi_id_label">আপনার UPI আইডি</string>
+    <string name="upi_id_hint">যেমন mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">একটি বৈধ UPI আইডি লিখুন (যেমন name@bank)</string>
 
     <string name="nav_dashboard">হোম</string>
     <string name="nav_categories">বিভাগ</string>
@@ -359,6 +363,7 @@
     <string name="khata_party_name_hint">নাম (দোকান বা ব্যক্তি)</string>
     <string name="khata_party_phone_hint">ফোন নম্বর (WhatsApp-এর জন্য)</string>
     <string name="khata_party_phone_optional">ঐচ্ছিক — শুধুমাত্র WhatsApp রিমাইন্ডারের জন্য প্রয়োজন</string>
+    <string name="khata_party_upi_hint">তাদের UPI আইডি (ঐচ্ছিক)</string>
     <string name="khata_save_party">সংরক্ষণ করুন</string>
     <string name="khata_delete_party">পার্টি মুছুন</string>
     <string name="khata_no_parties_i_owe">এখনো কোনো দোকান যোগ করা হয়নি।
@@ -377,6 +382,9 @@
     <string name="khata_delete_entry">এন্ট্রি মুছুন</string>
     <string name="khata_whatsapp_reminder">রিমাইন্ডার পাঠান</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
+    <string name="khata_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
+    <string name="khata_upi_sheet_caption">তারা এটি সরাসরি স্ক্যান করতে পারে, অথবা আপনার শেয়ার করা লিঙ্কে ট্যাপ করে সরাসরি পেমেন্ট করতে পারে।</string>
+    <string name="khata_upi_share_link">পেমেন্ট লিঙ্ক শেয়ার করুন</string>
     <string name="khata_reminder_msg_owe">হ্যালো %1$s 👋
 
 একটু মনে করিয়ে দিচ্ছি — আপনার বকেয়া %2$s আছে।

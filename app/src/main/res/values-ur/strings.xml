@@ -8,6 +8,10 @@
     <string name="your_name_label">آپ کا نام</string>
     <string name="your_name_hint">مثال: محمد</string>
     <string name="your_name_note">صرف ڈیش بورڈ سلام کو ذاتی بنانے کے لیے۔ کہیں نہیں بھیجا جاتا۔</string>
+    <string name="upi_section_title">ادائیگی (UPI)</string>
+    <string name="upi_id_label">آپ کی UPI آئی ڈی</string>
+    <string name="upi_id_hint">مثلاً mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">ایک درست UPI آئی ڈی درج کریں (مثلاً name@bank)</string>
 
     <string name="nav_dashboard">ہوم</string>
     <string name="nav_categories">زمرے</string>
@@ -355,6 +359,7 @@
     <string name="khata_party_name_hint">نام (دکان یا شخص)</string>
     <string name="khata_party_phone_hint">فون نمبر (واٹس ایپ کے لیے)</string>
     <string name="khata_party_phone_optional">اختیاری — صرف واٹس ایپ یاددہانی کے لیے</string>
+    <string name="khata_party_upi_hint">ان کی UPI آئی ڈی (اختیاری)</string>
     <string name="khata_save_party">محفوظ کریں</string>
     <string name="khata_delete_party">فریق حذف کریں</string>
     <string name="khata_no_parties_i_owe">ابھی کوئی دکان نہیں جوڑی گئی۔
@@ -373,6 +378,9 @@
     <string name="khata_delete_entry">اندراج حذف کریں</string>
     <string name="khata_whatsapp_reminder">یاددہانی بھیجیں</string>
     <string name="khata_whatsapp_not_installed">واٹس ایپ انسٹال نہیں ہے۔</string>
+    <string name="khata_request_via_upi">UPI کے ذریعے درخواست کریں</string>
+    <string name="khata_upi_sheet_caption">وہ اسے خود اسکین کر سکتے ہیں، یا آپ کے شیئر کردہ لنک پر ٹیپ کر کے براہ راست ادائیگی کر سکتے ہیں۔</string>
+    <string name="khata_upi_share_link">ادائیگی کا لنک شیئر کریں</string>
     <string name="khata_reminder_msg_owe">السلام علیکم %1$s 👋
 
 یاد دہانی — آپ کا باقی %2$s ہے۔

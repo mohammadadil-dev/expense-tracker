@@ -1,5 +1,9 @@
 package com.expensetracker.app.ui.screens
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -29,6 +33,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TrendingDown
 import androidx.compose.material.icons.filled.TrendingUp
@@ -40,6 +45,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -56,15 +62,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
+import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AddEditKhataPartySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.RequestUpiPaymentSheet
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
@@ -87,7 +96,10 @@ fun KhataScreen(
     expenseViewModel: ExpenseViewModel,
     onOpenDetail: (Long) -> Unit
 ) {
+    val context = LocalContext.current
     val currencySymbol  by expenseViewModel.currencySymbol.collectAsState()
+    val displayName     by expenseViewModel.displayName.collectAsState()
+    val myUpiId         by expenseViewModel.myUpiId.collectAsState()
     val allParties      by khataViewModel.allParties.collectAsState()
     val iOweParties     by khataViewModel.iOweParties.collectAsState()
     val theyOweParties  by khataViewModel.theyOweParties.collectAsState()
@@ -98,6 +110,11 @@ fun KhataScreen(
     var editingParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     var pendingDelete by remember { mutableStateOf<KhataPartyEntity?>(null) }
     var heroVisible  by remember { mutableStateOf(false) }
+    // Party currently showing the "Request via UPI" sheet, opened from a compact icon
+    // button on its list row (see FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§10.1).
+    var upiRequestParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
+    val senderDefault = stringResource(R.string.khata_sender_name_default)
 
     val totalIOwe    = khataViewModel.totalIOwe(allParties, allEntries)
     val totalTheyOwe = khataViewModel.totalTheyOwe(allParties, allEntries)
@@ -186,13 +203,18 @@ fun KhataScreen(
                         ) {
                             items(parties, key = { it.id }) { party ->
                                 val balance = khataViewModel.balanceForParty(party.id, allEntries)
+                                val showUpiButton = party.direction == KhataPartyEntity.DIRECTION_THEY_OWE &&
+                                    balance >= 1.0 && CurrencyLocaleMapper.isInrSymbol(currencySymbol) &&
+                                    myUpiId.isNotBlank()
                                 KhataPartyCard(
                                     party          = party,
                                     balance        = balance,
                                     currencySymbol = currencySymbol,
                                     onClick        = { onOpenDetail(party.id) },
                                     onEdit         = { editingParty = party; showAddParty = true },
-                                    onDelete       = { pendingDelete = party }
+                                    onDelete       = { pendingDelete = party },
+                                    showUpiButton  = showUpiButton,
+                                    onRequestUpi   = { upiRequestParty = party }
                                 )
                             }
                         }
@@ -208,11 +230,54 @@ fun KhataScreen(
             initial          = editingParty,
             defaultDirection = if (showIOwe) KhataPartyEntity.DIRECTION_I_OWE
                                else KhataPartyEntity.DIRECTION_THEY_OWE,
-            onSave    = { id, name, phone, direction, initialAmount, initialNote ->
-                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote)
+            currencySymbol   = currencySymbol,
+            onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId ->
+                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId)
                 showAddParty = false; editingParty = null
             },
             onDismiss = { showAddParty = false; editingParty = null }
+        )
+    }
+
+    upiRequestParty?.let { party ->
+        val balance = khataViewModel.balanceForParty(party.id, allEntries)
+        // Same message construction as KhataDetailScreen's reminder — this button only ever
+        // shows for THEY_OWE parties, so the "credit" wording always applies here.
+        val plainAmount = run {
+            val formatted = String.format(java.util.Locale.US, "%.2f", balance)
+            if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) "SAR $formatted"
+            else "$currencySymbol $formatted"
+        }
+        val reminderMsg = stringResource(
+            R.string.khata_reminder_msg_owe, party.name, plainAmount, displayName.ifBlank { senderDefault }
+        ) + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+
+        RequestUpiPaymentSheet(
+            myUpiId = myUpiId,
+            payeeDisplayName = displayName.ifBlank { senderDefault },
+            partyName = party.name,
+            amount = balance,
+            currencySymbol = currencySymbol,
+            onShareLink = { upiLink ->
+                val message = reminderMsg + "\n\n" + upiLink
+                val phone = party.phone
+                    .replace("+", "").replace(" ", "").replace("-", "")
+                    .replace("(", "").replace(")", "")
+                val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
+                val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
+                try {
+                    context.startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+                    try {
+                        context.startActivity(intent2)
+                    } catch (e2: ActivityNotFoundException) {
+                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                upiRequestParty = null
+            },
+            onDismiss = { upiRequestParty = null }
         )
     }
 
@@ -437,7 +502,9 @@ private fun KhataPartyCard(
     currencySymbol: String,
     onClick: () -> Unit,
     onEdit: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    showUpiButton: Boolean = false,
+    onRequestUpi: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
     Card(
@@ -505,6 +572,16 @@ private fun KhataPartyCard(
                         text  = stringResource(R.string.khata_outstanding),
                         style = MaterialTheme.typography.labelSmall,
                         color = TextMuted
+                    )
+                }
+            }
+            if (showUpiButton) {
+                IconButton(onClick = onRequestUpi) {
+                    Icon(
+                        Icons.Filled.QrCode,
+                        contentDescription = stringResource(R.string.khata_request_via_upi),
+                        tint = AccentIndigo,
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }

@@ -152,6 +152,9 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _displayName = MutableStateFlow(settings.displayName)
     val displayName: StateFlow<String> = _displayName
 
+    private val _myUpiId = MutableStateFlow(settings.myUpiId)
+    val myUpiId: StateFlow<String> = _myUpiId
+
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
 
@@ -394,6 +397,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun setDisplayName(name: String) {
         settings.displayName = name
         _displayName.value = name
+    }
+
+    fun setMyUpiId(upiId: String) {
+        settings.myUpiId = upiId
+        _myUpiId.value = upiId
     }
 
     fun setCurrencySymbol(symbol: String) {

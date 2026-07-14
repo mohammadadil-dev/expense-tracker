@@ -67,10 +67,11 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         direction: String,
         initialAmount: Double = 0.0,
         initialNote: String = "",
+        upiId: String? = null,
         onDone: () -> Unit = {}
     ) {
         viewModelScope.launch {
-            val partyId = repo.addOrUpdateParty(id, name, phone, direction)
+            val partyId = repo.addOrUpdateParty(id, name, phone, direction, upiId)
             // Auto-create the first entry when a new party is saved with an opening balance.
             if (id == null && initialAmount > 0.0) {
                 repo.addEntry(
