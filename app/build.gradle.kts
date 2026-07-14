@@ -153,9 +153,14 @@ dependencies {
     // On-device model (bundled); no network call needed at scan time.
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    // ZXing — pure on-device QR code generation for Khata UPI payment requests.
-    // No network call, no Play Services dependency; we only ever encode a string
-    // locally, never scan/decode, so the lightweight `core` artifact is enough.
+    // ML Kit Barcode Scanning — offline QR decode, used to scan a party's UPI QR code
+    // and auto-fill their VPA instead of asking the user to type/dictate it. On-device
+    // model (bundled); no network call needed at scan time.
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
+
+    // ZXing — pure on-device QR code generation for Khata "Request via UPI" payment
+    // requests (encode only). Actual scanning/decoding of QR codes is handled by
+    // ML Kit Barcode Scanning above, not this library.
     implementation("com.google.zxing:core:3.5.3")
 
     // Google Drive API — used for cloud backup / restore.

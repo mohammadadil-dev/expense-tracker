@@ -360,6 +360,9 @@
     <string name="khata_party_phone_hint">Numero ng telepono (para sa WhatsApp)</string>
     <string name="khata_party_phone_optional">Opsyonal — para lang sa WhatsApp reminders</string>
     <string name="khata_party_upi_hint">Ang UPI ID nila (opsyonal)</string>
+    <string name="khata_scan_upi_qr">I-scan ang UPI QR code</string>
+    <string name="khata_scan_upi_qr_hint">O i-tap ang icon ng scan para punan ito mula sa kanilang UPI QR code</string>
+    <string name="khata_upi_qr_scan_error">Walang nahanap na UPI ID sa QR code na iyon. Subukang muli o ilagay ito nang manwal.</string>
     <string name="khata_party_upi_mine_ready">Handa na ang kahilingan sa UPI — gagamitin ang UPI ID mo: %1$s</string>
     <string name="khata_party_upi_mine_missing">Para makapagbayad sila sa iyo gamit ang UPI, itakda ang iyong UPI ID sa Settings</string>
     <string name="khata_save_party">I-save</string>
@@ -385,6 +388,7 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_upi_share_link">Ibahagi ang link ng bayad</string>
     <string name="khata_pay_via_upi">Magbayad gamit ang UPI</string>
     <string name="khata_no_upi_app">Walang nahanap na UPI app sa device na ito.</string>
+    <string name="khata_pay_via_upi_phone_fallback">Nakopya ang numero ng telepono — hanapin ito sa iyong UPI app para bayaran si %1$s.</string>
     <string name="khata_mark_as_paid">Markahan bilang Nabayaran</string>
     <string name="khata_mark_as_paid_confirm">Markahan ang %1$s bilang nabayaran? Magla-log ito ng entry ng bayad na nagbabayad sa natitirang balanse.</string>
     <string name="khata_marked_as_paid_note">Minarkahan bilang nabayaran</string>

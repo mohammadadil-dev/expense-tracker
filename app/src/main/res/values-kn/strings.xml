@@ -378,6 +378,9 @@
     <string name="khata_party_phone_hint">ಫೋನ್ ನಂಬರ್ (WhatsApp ಗಾಗಿ)</string>
     <string name="khata_party_phone_optional">ಐಚ್ಛಿಕ — WhatsApp ನೆನಪಿಗಾಗಿ ಮಾತ್ರ ಬೇಕು</string>
     <string name="khata_party_upi_hint">ಅವರ UPI ID (ಐಚ್ಛಿಕ)</string>
+    <string name="khata_scan_upi_qr">UPI QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="khata_scan_upi_qr_hint">ಅಥವಾ ಅವರ UPI QR ಕೋಡ್‌ನಿಂದ ಇದನ್ನು ಭರ್ತಿ ಮಾಡಲು ಸ್ಕ್ಯಾನ್ ಐಕಾನ್ ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="khata_upi_qr_scan_error">ಆ QR ಕೋಡ್‌ನಲ್ಲಿ UPI ಐಡಿ ಕಂಡುಬಂದಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಸ್ವತಃ ನಮೂದಿಸಿ.</string>
     <string name="khata_party_upi_mine_ready">UPI ವಿನಂತಿ ಸಿದ್ಧವಾಗಿದೆ — ನಿಮ್ಮ UPI ID ಬಳಸಲಾಗುತ್ತದೆ: %1$s</string>
     <string name="khata_party_upi_mine_missing">ಅವರು UPI ಮೂಲಕ ನಿಮಗೆ ಪಾವತಿಸಲು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಿಮ್ಮ UPI ID ಹೊಂದಿಸಿ</string>
     <string name="khata_save_party">ಉಳಿಸಿ</string>
@@ -401,6 +404,7 @@
     <string name="khata_upi_share_link">ಪಾವತಿ ಲಿಂಕ್ ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="khata_pay_via_upi">UPI ಮೂಲಕ ಪಾವತಿಸಿ</string>
     <string name="khata_no_upi_app">ಈ ಸಾಧನದಲ್ಲಿ UPI ಆ್ಯಪ್ ಕಂಡುಬಂದಿಲ್ಲ.</string>
+    <string name="khata_pay_via_upi_phone_fallback">ಫೋನ್ ಸಂಖ್ಯೆ ನಕಲಿಸಲಾಗಿದೆ — %1$s ಗೆ ಪಾವತಿಸಲು ನಿಮ್ಮ UPI ಆ್ಯಪ್‌ನಲ್ಲಿ ಇದನ್ನು ಹುಡುಕಿ.</string>
     <string name="khata_mark_as_paid">ಪಾವತಿಯಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ</string>
     <string name="khata_mark_as_paid_confirm">%1$s ಪಾವತಿಯಾಗಿದೆ ಎಂದು ಗುರುತಿಸುವುದೇ? ಇದು ಬಾಕಿ ಮೊತ್ತವನ್ನು ತೀರಿಸುವ ಪಾವತಿ ನಮೂದನ್ನು ದಾಖಲಿಸುತ್ತದೆ.</string>
     <string name="khata_marked_as_paid_note">ಪಾವತಿಯಾಗಿದೆ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>

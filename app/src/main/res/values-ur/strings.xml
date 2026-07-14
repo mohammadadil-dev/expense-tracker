@@ -360,6 +360,9 @@
     <string name="khata_party_phone_hint">فون نمبر (واٹس ایپ کے لیے)</string>
     <string name="khata_party_phone_optional">اختیاری — صرف واٹس ایپ یاددہانی کے لیے</string>
     <string name="khata_party_upi_hint">ان کی UPI آئی ڈی (اختیاری)</string>
+    <string name="khata_scan_upi_qr">UPI QR کوڈ اسکین کریں</string>
+    <string name="khata_scan_upi_qr_hint">یا اس فیلڈ کو ان کے UPI QR کوڈ سے بھرنے کے لیے اسکین آئیکن پر ٹیپ کریں</string>
+    <string name="khata_upi_qr_scan_error">اس QR کوڈ میں کوئی UPI آئی ڈی نہیں ملی۔ دوبارہ کوشش کریں یا خود درج کریں۔</string>
     <string name="khata_party_upi_mine_ready">UPI درخواست تیار ہے — آپ کی UPI آئی ڈی استعمال ہوگی: %1$s</string>
     <string name="khata_party_upi_mine_missing">انہیں UPI کے ذریعے آپ کو ادائیگی کرنے دینے کے لیے سیٹنگز میں اپنی UPI آئی ڈی سیٹ کریں</string>
     <string name="khata_save_party">محفوظ کریں</string>
@@ -385,6 +388,7 @@
     <string name="khata_upi_share_link">ادائیگی کا لنک شیئر کریں</string>
     <string name="khata_pay_via_upi">UPI کے ذریعے ادائیگی کریں</string>
     <string name="khata_no_upi_app">اس ڈیوائس پر کوئی UPI ایپ نہیں ملی۔</string>
+    <string name="khata_pay_via_upi_phone_fallback">فون نمبر کاپی ہو گیا — %1$s کو ادائیگی کرنے کے لیے اپنی UPI ایپ میں اسے تلاش کریں۔</string>
     <string name="khata_mark_as_paid">ادا شدہ کے طور پر نشان زد کریں</string>
     <string name="khata_mark_as_paid_confirm">%1$s کو ادا شدہ کے طور پر نشان زد کریں؟ اس سے بقایا رقم ختم کرنے والی ادائیگی کی اندراج ہوگی۔</string>
     <string name="khata_marked_as_paid_note">ادا شدہ کے طور پر نشان زد</string>

@@ -378,6 +378,9 @@
     <string name="khata_party_phone_hint">தொலைபேசி எண் (WhatsApp க்கு)</string>
     <string name="khata_party_phone_optional">விருப்பமானது — WhatsApp நினைவூட்டல்களுக்கு மட்டும் தேவை</string>
     <string name="khata_party_upi_hint">அவர்களின் UPI ஐடி (விருப்பத்திற்குரியது)</string>
+    <string name="khata_scan_upi_qr">UPI QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
+    <string name="khata_scan_upi_qr_hint">அல்லது அவர்களின் UPI QR குறியீட்டிலிருந்து இதை நிரப்ப ஸ்கேன் ஐகானைத் தட்டவும்</string>
+    <string name="khata_upi_qr_scan_error">அந்த QR குறியீட்டில் UPI ஐடி கிடைக்கவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது கைமுறையாக உள்ளிடவும்.</string>
     <string name="khata_party_upi_mine_ready">UPI கோரிக்கை தயார் — உங்கள் UPI ஐடி பயன்படுத்தப்படும்: %1$s</string>
     <string name="khata_party_upi_mine_missing">அவர்கள் UPI மூலம் உங்களுக்கு பணம் செலுத்த, அமைப்புகளில் உங்கள் UPI ஐடியை அமைக்கவும்</string>
     <string name="khata_save_party">சேமி</string>
@@ -401,6 +404,7 @@
     <string name="khata_upi_share_link">கட்டண இணைப்பைப் பகிரவும்</string>
     <string name="khata_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
     <string name="khata_no_upi_app">இந்த சாதனத்தில் UPI ஆப் எதுவும் இல்லை.</string>
+    <string name="khata_pay_via_upi_phone_fallback">தொலைபேசி எண் நகலெடுக்கப்பட்டது — %1$s க்கு பணம் செலுத்த உங்கள் UPI ஆப்பில் இதைத் தேடுங்கள்.</string>
     <string name="khata_mark_as_paid">செலுத்தப்பட்டதாகக் குறிக்கவும்</string>
     <string name="khata_mark_as_paid_confirm">%1$s செலுத்தப்பட்டதாகக் குறிக்கவா? இது நிலுவைத் தொகையை தீர்க்கும் ஒரு கட்டண பதிவை உருவாக்கும்.</string>
     <string name="khata_marked_as_paid_note">செலுத்தப்பட்டதாகக் குறிக்கப்பட்டது</string>

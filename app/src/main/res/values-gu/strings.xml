@@ -378,6 +378,9 @@
     <string name="khata_party_phone_hint">ફોન નંબર (WhatsApp માટે)</string>
     <string name="khata_party_phone_optional">વૈકલ્પિક — ફક્ત WhatsApp રિમાઇન્ડર માટે</string>
     <string name="khata_party_upi_hint">તેમનું UPI ID (વૈકલ્પિક)</string>
+    <string name="khata_scan_upi_qr">UPI QR કોડ સ્કેન કરો</string>
+    <string name="khata_scan_upi_qr_hint">અથવા તેમના UPI QR કોડમાંથી આ ભરવા માટે સ્કેન આઇકન પર ટેપ કરો</string>
+    <string name="khata_upi_qr_scan_error">તે QR કોડમાં કોઈ UPI ID મળ્યો નથી. ફરી પ્રયાસ કરો અથવા જાતે દાખલ કરો.</string>
     <string name="khata_party_upi_mine_ready">UPI વિનંતી તૈયાર છે — તમારી UPI ID વપરાશે: %1$s</string>
     <string name="khata_party_upi_mine_missing">તેમને UPI દ્વારા ચુકવણી કરવા દેવા માટે સેટિંગ્સમાં તમારું UPI ID સેટ કરો</string>
     <string name="khata_save_party">સાચવો</string>
@@ -401,6 +404,7 @@
     <string name="khata_upi_share_link">ચુકવણી લિંક શેર કરો</string>
     <string name="khata_pay_via_upi">UPI દ્વારા ચુકવણી કરો</string>
     <string name="khata_no_upi_app">આ ડિવાઇસ પર કોઈ UPI એપ મળી નથી.</string>
+    <string name="khata_pay_via_upi_phone_fallback">ફોન નંબર કૉપિ થયો — %1$s ને ચુકવણી કરવા માટે તમારી UPI એપમાં તેને શોધો.</string>
     <string name="khata_mark_as_paid">ચૂકવેલ તરીકે ચિહ્નિત કરો</string>
     <string name="khata_mark_as_paid_confirm">%1$s ને ચૂકવેલ તરીકે ચિહ્નિત કરવું છે? આનાથી બાકી રકમ પતાવતી ચુકવણી એન્ટ્રી નોંધાશે.</string>
     <string name="khata_marked_as_paid_note">ચૂકવેલ તરીકે ચિહ્નિત</string>

@@ -1,6 +1,9 @@
 package com.expensetracker.app.ui.screens
 
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -129,8 +132,12 @@ fun KhataDetailScreen(
     // WhatsApp — it's an app-initiated ACTION_VIEW that Android hands straight to whatever UPI
     // app is installed, so the upi:// scheme actually works here (the WhatsApp-linkify problem
     // only applies to *shared* text, not a direct in-app open).
+    // Shown with either a VPA on file (one-tap payment) or just a phone number (opens the
+    // UPI app so the user can search the contact themselves) — see payViaUpi() below for why
+    // phone-only can't auto-resolve to a VPA.
     val showPayUpiButton = isIOwe && balance >= 1.0 &&
-        CurrencyLocaleMapper.isInrSymbol(currencySymbol) && !party.upiId.isNullOrBlank()
+        CurrencyLocaleMapper.isInrSymbol(currencySymbol) &&
+        (!party.upiId.isNullOrBlank() || party.phone.isNotBlank())
 
     // "Mark as Paid" — a general quick-settle shortcut available for any party regardless of
     // direction or currency (not just the UPI flows above), since a debt can be settled in cash,
@@ -224,17 +231,44 @@ fun KhataDetailScreen(
 
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
     val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
+    val payViaUpiPhoneFallbackTemplate = stringResource(R.string.khata_pay_via_upi_phone_fallback)
 
-    // "Pay via UPI" — opens the party's own UPI ID directly (app-initiated, not shared), so
-    // Android resolves it to an installed UPI app without the WhatsApp-linkify problem.
+    // "Pay via UPI" — app-initiated ACTION_VIEW, so Android resolves it to an installed UPI
+    // app without the WhatsApp-linkify problem that affects the "Request via UPI" share.
+    //
+    // Two paths depending on what's on file for the party — most people won't have typed in
+    // (or been asked to dictate) someone else's UPI ID, so this can't assume a VPA exists:
+    //  - VPA on file: one-tap payment, amount and payee pre-filled, exactly like before.
+    //  - No VPA but a phone number is on file: there's no public API this app can use to
+    //    resolve a phone number to a VPA (that lookup only exists inside licensed UPI/PSP
+    //    apps themselves), so instead this copies the phone number to the clipboard and opens
+    //    the user's UPI app directly so they can search the contact by number themselves.
     fun payViaUpi() {
-        val vpa = party.upiId ?: return
-        val uri = UpiPaymentHelper.buildUpiUri(vpa, party.name, balance, "Khata: ${party.name}")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        try {
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+        val vpa = party.upiId
+        if (!vpa.isNullOrBlank()) {
+            val uri = UpiPaymentHelper.buildUpiUri(vpa, party.name, balance, "Khata: ${party.name}")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            try {
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+        if (party.phone.isNotBlank()) {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+            clipboard?.setPrimaryClip(ClipData.newPlainText("phone", party.phone))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("upi://pay"))
+            try {
+                context.startActivity(intent)
+                Toast.makeText(
+                    context,
+                    String.format(payViaUpiPhoneFallbackTemplate, party.name),
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -68,6 +68,32 @@ object UpiPaymentHelper {
     }
 
     /**
+     * Pulls a VPA out of the raw text decoded from a scanned QR code — used by the "scan their
+     * UPI QR" flow on the Khata "Their UPI ID" field, so the user never has to type or be told
+     * someone else's VPA out loud.
+     *
+     * Handles the two shapes QR-encoded UPI payment info actually comes in:
+     *  - A `upi://pay?pa=<vpa>&pn=...` deep link (the overwhelming majority of personal/merchant
+     *    UPI QR codes, including the ones this app itself generates for "Request via UPI").
+     *  - A bare VPA string with nothing else around it (some minimal/legacy QR generators).
+     *
+     * Returns null if [raw] doesn't parse into anything that passes [isValidVpa] — the caller is
+     * expected to show a "couldn't find a UPI ID in that QR code" error in that case, not a crash.
+     */
+    fun extractVpaFromQrContent(raw: String): String? {
+        val trimmed = raw.trim()
+        if (trimmed.isEmpty()) return null
+
+        if (trimmed.startsWith("upi://", ignoreCase = true)) {
+            val uri = try { Uri.parse(trimmed) } catch (e: Exception) { null }
+            val vpa = uri?.getQueryParameter("pa")?.trim()
+            return vpa?.takeIf { isValidVpa(it) }
+        }
+
+        return trimmed.takeIf { isValidVpa(it) }
+    }
+
+    /**
      * Renders [content] (a UPI URI, as a string) as a square black-on-white QR code bitmap,
      * generated entirely on-device via ZXing — no network call, no external service.
      */
