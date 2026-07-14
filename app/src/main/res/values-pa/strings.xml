@@ -379,7 +379,7 @@
     <string name="khata_party_phone_optional">ਵਿਕਲਪਿਕ — ਸਿਰਫ਼ WhatsApp ਯਾਦ ਲਈ</string>
     <string name="khata_party_upi_hint">ਉਹਨਾਂ ਦੀ UPI ID (ਵਿਕਲਪਿਕ)</string>
     <string name="khata_scan_upi_qr">UPI QR ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
-    <string name="khata_scan_upi_qr_hint">ਜਾਂ ਉਹਨਾਂ ਦੇ UPI QR ਕੋਡ ਤੋਂ ਇਹ ਭਰਨ ਲਈ ਸਕੈਨ ਆਈਕਨ 'ਤੇ ਟੈਪ ਕਰੋ</string>
+    <string name="khata_scan_upi_qr_hint">ਜਾਂ ਉਹਨਾਂ ਦੇ UPI QR ਕੋਡ ਤੋਂ ਇਹ ਭਰਨ ਲਈ ਸਕੈਨ ਆਈਕਨ ਤੇ ਟੈਪ ਕਰੋ</string>
     <string name="khata_upi_qr_scan_error">ਉਸ QR ਕੋਡ ਵਿੱਚ ਕੋਈ UPI ਆਈਡੀ ਨਹੀਂ ਮਿਲੀ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਇਸਨੂੰ ਖੁਦ ਦਰਜ ਕਰੋ।</string>
     <string name="khata_party_upi_mine_ready">UPI ਬੇਨਤੀ ਤਿਆਰ ਹੈ — ਤੁਹਾਡੀ UPI ID ਵਰਤੀ ਜਾਵੇਗੀ: %1$s</string>
     <string name="khata_party_upi_mine_missing">ਉਹਨਾਂ ਨੂੰ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰਨ ਦੇਣ ਲਈ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਆਪਣੀ UPI ID ਸੈੱਟ ਕਰੋ</string>
