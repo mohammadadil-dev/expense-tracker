@@ -169,13 +169,13 @@ fun KhataDetailScreen(
 
     fun sendWhatsApp() = sendWhatsAppMessage(reminderMsg)
 
-    // "Share payment link" from the UPI sheet — sends the actual QR *image* (not just the raw
-    // link) because WhatsApp only auto-linkifies http(s) URLs; a `upi://pay` link shows up as
-    // inert plain text in a chat bubble, so the scannable image is what makes this usable.
-    // reminderMsg + the link both ride along as the image caption for reference/fallback.
-    // No copy-link fallback: sharing always goes through this same WhatsApp flow (§10.3).
-    fun sendUpiPaymentQr(qrImageUri: Uri, upiLink: String) {
-        val caption = reminderMsg + "\n\n" + upiLink
+    // "Share payment link" from the UPI sheet — sends the actual QR *image* because WhatsApp
+    // only auto-linkifies http(s) URLs; a `upi://pay` link shows up as inert, ugly-looking
+    // plain text in a chat bubble (percent-encoded characters and all), with zero functional
+    // benefit once the scannable QR is already attached — so it's deliberately left out of the
+    // caption. No copy-link fallback: sharing always goes through this same WhatsApp flow (§10.3).
+    fun sendUpiPaymentQr(qrImageUri: Uri) {
+        val caption = reminderMsg
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
             type = "image/png"
             putExtra(Intent.EXTRA_STREAM, qrImageUri)
@@ -364,7 +364,7 @@ fun KhataDetailScreen(
             partyName = party.name,
             amount = balance,
             currencySymbol = currencySymbol,
-            onShareQr = { qrUri, upiLink -> sendUpiPaymentQr(qrUri, upiLink) },
+            onShareQr = { qrUri -> sendUpiPaymentQr(qrUri) },
             onDismiss = { showUpiSheet = false }
         )
     }

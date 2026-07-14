@@ -44,7 +44,7 @@ fun RequestUpiPaymentSheet(
     partyName: String,
     amount: Double,
     currencySymbol: String,
-    onShareQr: (qrImageUri: android.net.Uri, upiLink: String) -> Unit,
+    onShareQr: (qrImageUri: android.net.Uri) -> Unit,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -110,7 +110,7 @@ fun RequestUpiPaymentSheet(
             Button(
                 onClick = {
                     val qrUri = UpiPaymentHelper.saveQrToCache(context, qrBitmapRaw)
-                    onShareQr(qrUri, upiUri.toString())
+                    onShareQr(qrUri)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {

@@ -260,12 +260,13 @@ fun KhataScreen(
             partyName = party.name,
             amount = balance,
             currencySymbol = currencySymbol,
-            // Sends the actual QR *image*, not just the raw link — WhatsApp only auto-linkifies
-            // http(s) URLs, so a bare `upi://pay` link shows up as inert plain text in the chat.
-            // The image + link both go out via a generic ACTION_SEND (no phone-number prefill
+            // Sends the actual QR *image*, not the raw upi:// link — WhatsApp only auto-linkifies
+            // http(s) URLs, so that link shows up as inert, ugly percent-encoded plain text with
+            // no functional benefit once the scannable QR is attached, so it's left out of the
+            // caption. The image goes out via a generic ACTION_SEND (no phone-number prefill
             // possible for image shares), so WhatsApp opens its own contact picker here.
-            onShareQr = { qrUri, upiLink ->
-                val caption = reminderMsg + "\n\n" + upiLink
+            onShareQr = { qrUri ->
+                val caption = reminderMsg
                 val sendIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "image/png"
                     putExtra(Intent.EXTRA_STREAM, qrUri)
