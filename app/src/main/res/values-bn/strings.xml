@@ -364,6 +364,8 @@
     <string name="khata_party_phone_hint">ফোন নম্বর (WhatsApp-এর জন্য)</string>
     <string name="khata_party_phone_optional">ঐচ্ছিক — শুধুমাত্র WhatsApp রিমাইন্ডারের জন্য প্রয়োজন</string>
     <string name="khata_party_upi_hint">তাদের UPI আইডি (ঐচ্ছিক)</string>
+    <string name="khata_party_upi_mine_ready">UPI অনুরোধ প্রস্তুত — আপনার UPI আইডি ব্যবহার করা হবে: %1$s</string>
+    <string name="khata_party_upi_mine_missing">তাদের UPI-এর মাধ্যমে আপনাকে পেমেন্ট করতে দিতে সেটিংসে আপনার UPI আইডি সেট করুন</string>
     <string name="khata_save_party">সংরক্ষণ করুন</string>
     <string name="khata_delete_party">পার্টি মুছুন</string>
     <string name="khata_no_parties_i_owe">এখনো কোনো দোকান যোগ করা হয়নি।

@@ -364,6 +364,8 @@
     <string name="khata_party_phone_hint">رقم الهاتف (للواتساب)</string>
     <string name="khata_party_phone_optional">اختياري — مطلوب فقط لتذكيرات واتساب</string>
     <string name="khata_party_upi_hint">معرف UPI الخاص بهم (اختياري)</string>
+    <string name="khata_party_upi_mine_ready">طلب الدفع عبر UPI جاهز — سيتم استخدام معرف UPI الخاص بك: %1$s</string>
+    <string name="khata_party_upi_mine_missing">لتمكينهم من الدفع لك عبر UPI، عيّن معرف UPI الخاص بك في الإعدادات</string>
     <string name="khata_save_party">حفظ</string>
     <string name="khata_delete_party">حذف الطرف</string>
     <string name="khata_no_parties_i_owe">لم تتم إضافة أي محل بعد.

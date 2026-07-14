@@ -344,6 +344,7 @@ fun KhataDetailScreen(
             initial = party,
             defaultDirection = party.direction,
             currencySymbol = currencySymbol,
+            myUpiId = myUpiId,
             onSave = { id, name, phone, direction, _, _, upiId ->
                 // Editing an existing party — initial amount fields are hidden, pass-through ignored
                 khataViewModel.saveParty(id, name, phone, direction, upiId = upiId)

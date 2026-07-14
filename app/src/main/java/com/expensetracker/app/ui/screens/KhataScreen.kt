@@ -230,6 +230,7 @@ fun KhataScreen(
             defaultDirection = if (showIOwe) KhataPartyEntity.DIRECTION_I_OWE
                                else KhataPartyEntity.DIRECTION_THEY_OWE,
             currencySymbol   = currencySymbol,
+            myUpiId          = myUpiId,
             onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId ->
                 khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId)
                 showAddParty = false; editingParty = null

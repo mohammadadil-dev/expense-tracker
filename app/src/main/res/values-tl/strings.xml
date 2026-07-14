@@ -359,6 +359,8 @@
     <string name="khata_party_phone_hint">Numero ng telepono (para sa WhatsApp)</string>
     <string name="khata_party_phone_optional">Opsyonal — para lang sa WhatsApp reminders</string>
     <string name="khata_party_upi_hint">UPI ID nila (opsyonal)</string>
+    <string name="khata_party_upi_mine_ready">Handa na ang UPI na kahilingan — gagamitin ang UPI ID mo: %1$s</string>
+    <string name="khata_party_upi_mine_missing">Para sila makapagbayad sa iyo gamit ang UPI, itakda ang UPI ID mo sa Settings</string>
     <string name="khata_save_party">I-save</string>
     <string name="khata_delete_party">Burahin ang Party</string>
     <string name="khata_no_parties_i_owe">Wala pang tindahang naidagdag.

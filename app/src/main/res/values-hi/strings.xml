@@ -364,6 +364,8 @@
     <string name="khata_party_phone_hint">फ़ोन नंबर (WhatsApp के लिए)</string>
     <string name="khata_party_phone_optional">वैकल्पिक — केवल WhatsApp रिमाइंडर के लिए आवश्यक</string>
     <string name="khata_party_upi_hint">उनकी UPI आईडी (वैकल्पिक)</string>
+    <string name="khata_party_upi_mine_ready">UPI से अनुरोध तैयार है — आपकी UPI आईडी का उपयोग होगा: %1$s</string>
+    <string name="khata_party_upi_mine_missing">इन्हें UPI से भुगतान करने देने के लिए सेटिंग्स में अपनी UPI आईडी सेट करें</string>
     <string name="khata_save_party">सहेजें</string>
     <string name="khata_delete_party">पार्टी हटाएं</string>
     <string name="khata_no_parties_i_owe">अभी कोई दुकान नहीं जोड़ी गई।

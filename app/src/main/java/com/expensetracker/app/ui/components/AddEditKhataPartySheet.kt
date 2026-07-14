@@ -160,6 +160,7 @@ fun AddEditKhataPartySheet(
     initial: KhataPartyEntity?,
     defaultDirection: String,
     currencySymbol: String,
+    myUpiId: String,
     onSave: (
         id: Long?,
         name: String,
@@ -376,26 +377,46 @@ fun AddEditKhataPartySheet(
                 Text(stringResource(R.string.khata_they_owe), style = MaterialTheme.typography.bodyMedium)
             }
 
-            // ── UPI ID (India-only, optional) ─────────────────────────────────
-            // Not used by the current "request via UPI" flow (that uses this app's own
-            // UPI ID, from Settings) — this is the party's own VPA, captured now so a
-            // future "pay them" flow doesn't need a second data-entry pass.
+            // ── UPI (India-only) ───────────────────────────────────────────────
+            // "Request via UPI" always pays the *app user's own* UPI ID (set in Settings) —
+            // it never uses a party's UPI ID, so asking for "their UPI ID" only makes sense
+            // for I_OWE parties (captured now so a future "pay them" flow doesn't need a
+            // second data-entry pass). For THEY_OWE parties, show read-only status about the
+            // user's own ID instead of an editable field that would otherwise do nothing.
             if (CurrencyLocaleMapper.isInrSymbol(currencySymbol)) {
                 Spacer(Modifier.height(16.dp))
-                val upiValid = upiIdInput.isBlank() || UpiPaymentHelper.isValidVpa(upiIdInput)
-                OutlinedTextField(
-                    value = upiIdInput,
-                    onValueChange = { upiIdInput = it },
-                    label = { Text(stringResource(R.string.khata_party_upi_hint)) },
-                    placeholder = { Text(stringResource(R.string.upi_id_hint)) },
-                    singleLine = true,
-                    isError = !upiValid,
-                    supportingText = if (!upiValid) {
-                        { Text(stringResource(R.string.upi_id_invalid), color = DangerRed) }
-                    } else null,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (direction == KhataPartyEntity.DIRECTION_I_OWE) {
+                    val upiValid = upiIdInput.isBlank() || UpiPaymentHelper.isValidVpa(upiIdInput)
+                    OutlinedTextField(
+                        value = upiIdInput,
+                        onValueChange = { upiIdInput = it },
+                        label = { Text(stringResource(R.string.khata_party_upi_hint)) },
+                        placeholder = { Text(stringResource(R.string.upi_id_hint)) },
+                        singleLine = true,
+                        isError = !upiValid,
+                        supportingText = if (!upiValid) {
+                            { Text(stringResource(R.string.upi_id_invalid), color = DangerRed) }
+                        } else null,
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = if (myUpiId.isNotBlank()) SuccessGreen.copy(alpha = 0.10f)
+                                else MaterialTheme.colorScheme.surfaceVariant
+                    ) {
+                        Text(
+                            text = if (myUpiId.isNotBlank())
+                                stringResource(R.string.khata_party_upi_mine_ready, myUpiId)
+                            else
+                                stringResource(R.string.khata_party_upi_mine_missing),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = if (myUpiId.isNotBlank()) SuccessGreen else TextSecondary,
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp)
+                        )
+                    }
+                }
             }
 
             // ── Opening balance (new party only) ──────────────────────────────
@@ -454,7 +475,10 @@ fun AddEditKhataPartySheet(
                 Spacer(Modifier.width(8.dp))
                 Button(onClick = {
                     if (name.isBlank()) { nameError = true; return@Button }
-                    if (upiIdInput.isNotBlank() && !UpiPaymentHelper.isValidVpa(upiIdInput)) return@Button
+                    // The UPI field only shows (and is only editable) for I_OWE parties — ignore
+                    // any stale value if the direction was switched away from I_OWE after typing.
+                    val effectiveUpiId = if (direction == KhataPartyEntity.DIRECTION_I_OWE) upiIdInput else ""
+                    if (effectiveUpiId.isNotBlank() && !UpiPaymentHelper.isValidVpa(effectiveUpiId)) return@Button
 
                     val parsedAmount: Double
                     if (isNew && amountText.isNotBlank()) {
@@ -470,7 +494,7 @@ fun AddEditKhataPartySheet(
 
                     onSave(
                         initial?.id, name.trim(), fullPhone, direction, parsedAmount, noteText.trim(),
-                        upiIdInput.trim().takeIf { it.isNotBlank() }
+                        effectiveUpiId.trim().takeIf { it.isNotBlank() }
                     )
                 }) {
                     Text(stringResource(R.string.khata_save_party))

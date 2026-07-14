@@ -367,6 +367,8 @@
     <string name="khata_party_phone_hint">फोन नंबर (WhatsApp साठी)</string>
     <string name="khata_party_phone_optional">वैकल्पिक — फक्त WhatsApp स्मरणासाठी हवे</string>
     <string name="khata_party_upi_hint">त्यांचा UPI आयडी (ऐच्छिक)</string>
+    <string name="khata_party_upi_mine_ready">UPI विनंती तयार आहे — तुमचा UPI आयडी वापरला जाईल: %1$s</string>
+    <string name="khata_party_upi_mine_missing">त्यांना UPI द्वारे पैसे देऊ देण्यासाठी सेटिंग्जमध्ये तुमचा UPI आयडी सेट करा</string>
     <string name="khata_save_party">जतन करा</string>
     <string name="khata_delete_party">पार्टी हटवा</string>
     <string name="khata_no_parties_i_owe">अजून दुकाने नाहीत.\nउधार असलेले दुकान जोडण्यासाठी + दाबा.</string>

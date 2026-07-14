@@ -377,6 +377,8 @@
     <string name="khata_party_phone_hint">Phone number (for WhatsApp)</string>
     <string name="khata_party_phone_optional">Optional — needed only for WhatsApp reminders</string>
     <string name="khata_party_upi_hint">Their UPI ID (optional)</string>
+    <string name="khata_party_upi_mine_ready">Request via UPI is ready — using your UPI ID: %1$s</string>
+    <string name="khata_party_upi_mine_missing">Set your UPI ID in Settings to let them pay you via UPI</string>
     <string name="khata_save_party">Save</string>
     <string name="khata_delete_party">Delete Party</string>
     <string name="khata_no_parties_i_owe">No shops added yet.

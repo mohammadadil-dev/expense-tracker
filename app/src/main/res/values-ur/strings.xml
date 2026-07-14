@@ -360,6 +360,8 @@
     <string name="khata_party_phone_hint">فون نمبر (واٹس ایپ کے لیے)</string>
     <string name="khata_party_phone_optional">اختیاری — صرف واٹس ایپ یاددہانی کے لیے</string>
     <string name="khata_party_upi_hint">ان کی UPI آئی ڈی (اختیاری)</string>
+    <string name="khata_party_upi_mine_ready">UPI درخواست تیار ہے — آپ کی UPI آئی ڈی استعمال ہوگی: %1$s</string>
+    <string name="khata_party_upi_mine_missing">انہیں UPI کے ذریعے آپ کو ادائیگی کرنے دینے کے لیے سیٹنگز میں اپنی UPI آئی ڈی سیٹ کریں</string>
     <string name="khata_save_party">محفوظ کریں</string>
     <string name="khata_delete_party">فریق حذف کریں</string>
     <string name="khata_no_parties_i_owe">ابھی کوئی دکان نہیں جوڑی گئی۔
