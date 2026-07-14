@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">மணி நேரத்தை குறை</string>
     <string name="reminder_hour_increase">மணி நேரத்தை அதிகரி</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">பணம்</string>
+    <string name="account_bank">வங்கிக் கணக்கு</string>
+    <string name="account_card">அட்டை</string>
+    <string name="settings_section_payment_accounts">கட்டண கணக்குகள்</string>
+    <string name="manage_payment_accounts">கணக்குகளை நிர்வகி</string>
+    <string name="payment_accounts_hint">உங்கள் பணம் உண்மையில் எங்கு செல்கிறது என்பதைப் பார்க்க செலவுகளை பணம், வங்கி அல்லது அட்டையுடன் குறியிடுங்கள்.</string>
+    <string name="add_payment_account">கணக்கு சேர்</string>
+    <string name="new_account_name_hint">புதிய கணக்கு பெயர்</string>
+    <string name="enter_account_name">கணக்கு பெயரை உள்ளிடவும்</string>
+    <string name="delete_payment_account_confirm">இந்தக் கணக்கை நீக்கவா? இதனுடன் குறியிடப்பட்ட செலவுகள் குறியிடப்படாமல் மாறும் — எதுவும் நீக்கப்படாது.</string>
+    <string name="payment_account_label">செலுத்திய இடம்</string>
+    <string name="payment_account_not_set">அமைக்கப்படவில்லை</string>
+    <string name="account_breakdown_title">கணக்கு வாரியாக</string>
+    <string name="export_col_account">கணக்கு</string>
 </resources>

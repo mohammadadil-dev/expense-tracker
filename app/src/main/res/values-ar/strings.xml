@@ -699,4 +699,20 @@
 
     <string name="reminder_hour_decrease">تقليل الساعة</string>
     <string name="reminder_hour_increase">زيادة الساعة</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">نقدًا</string>
+    <string name="account_bank">حساب بنكي</string>
+    <string name="account_card">بطاقة</string>
+    <string name="settings_section_payment_accounts">حسابات الدفع</string>
+    <string name="manage_payment_accounts">إدارة الحسابات</string>
+    <string name="payment_accounts_hint">قم بوسم المصروفات بالنقد أو البنك أو البطاقة لمعرفة أين يذهب مالك فعليًا.</string>
+    <string name="add_payment_account">إضافة حساب</string>
+    <string name="new_account_name_hint">اسم الحساب الجديد</string>
+    <string name="enter_account_name">أدخل اسم الحساب</string>
+    <string name="delete_payment_account_confirm">هل تريد حذف هذا الحساب؟ ستصبح المصروفات الموسومة به بدون وسم فقط — لن يُحذف أي شيء.</string>
+    <string name="payment_account_label">مصدر الدفع</string>
+    <string name="payment_account_not_set">غير محدد</string>
+    <string name="account_breakdown_title">حسب الحساب</string>
+    <string name="export_col_account">الحساب</string>
 </resources>

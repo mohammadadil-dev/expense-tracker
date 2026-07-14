@@ -691,4 +691,20 @@
 
     <string name="reminder_hour_decrease">ঘণ্টা কমান</string>
     <string name="reminder_hour_increase">ঘণ্টা বাড়ান</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">নগদ</string>
+    <string name="account_bank">ব্যাংক অ্যাকাউন্ট</string>
+    <string name="account_card">কার্ড</string>
+    <string name="settings_section_payment_accounts">পেমেন্ট অ্যাকাউন্ট</string>
+    <string name="manage_payment_accounts">অ্যাকাউন্ট পরিচালনা করুন</string>
+    <string name="payment_accounts_hint">আপনার টাকা আসলে কোথায় যাচ্ছে তা দেখতে খরচগুলোকে নগদ, ব্যাংক বা কার্ড দিয়ে ট্যাগ করুন।</string>
+    <string name="add_payment_account">অ্যাকাউন্ট যোগ করুন</string>
+    <string name="new_account_name_hint">নতুন অ্যাকাউন্টের নাম</string>
+    <string name="enter_account_name">অ্যাকাউন্টের নাম লিখুন</string>
+    <string name="delete_payment_account_confirm">এই অ্যাকাউন্টটি মুছবেন? এটি দিয়ে ট্যাগ করা খরচগুলো শুধু আনট্যাগ হয়ে যাবে — কিছুই মুছে যাবে না।</string>
+    <string name="payment_account_label">পেমেন্টের উৎস</string>
+    <string name="payment_account_not_set">সেট করা নেই</string>
+    <string name="account_breakdown_title">অ্যাকাউন্ট অনুযায়ী</string>
+    <string name="export_col_account">অ্যাকাউন্ট</string>
 </resources>

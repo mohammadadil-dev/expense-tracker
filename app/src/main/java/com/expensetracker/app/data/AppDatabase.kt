@@ -19,9 +19,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class,
         GoalEntity::class, FamilyMemberEntity::class,
         SplitGroupEntity::class, SplitMemberEntity::class,
-        SplitExpenseEntity::class, SplitExpenseShareEntity::class
+        SplitExpenseEntity::class, SplitExpenseShareEntity::class,
+        PaymentAccountEntity::class
     ],
-    version = 16,
+    version = 17,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -40,6 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun splitMemberDao(): SplitMemberDao
     abstract fun splitExpenseDao(): SplitExpenseDao
     abstract fun splitExpenseShareDao(): SplitExpenseShareDao
+    abstract fun paymentAccountDao(): PaymentAccountDao
 
     companion object {
         @Volatile
@@ -464,6 +466,47 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v16 -> v17: Payment accounts (Cash / Bank / Card / etc.) — an expense can optionally
+        // be tagged with which account it was paid from. Adds the payment_accounts table and
+        // a nullable expenses.accountId column (NULL on every existing row = "not specified",
+        // fully backwards-compatible — no existing behavior changes). Seeds three built-in
+        // accounts (Cash, Bank Account, Card) the same way MIGRATION_4_5 seeded a category,
+        // using nameKey so their labels localize; "Cash" is marked isDefault so new expenses
+        // default to it while Bank/Card are just available choices.
+        private val MIGRATION_16_17 = object : Migration(16, 17) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `payment_accounts` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `nameKey` TEXT,
+                        `customName` TEXT,
+                        `type` TEXT NOT NULL DEFAULT 'OTHER',
+                        `colorHex` TEXT NOT NULL DEFAULT '#4CAF50',
+                        `isDefault` INTEGER NOT NULL DEFAULT 0,
+                        `sortOrder` INTEGER NOT NULL DEFAULT 0,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("ALTER TABLE expenses ADD COLUMN accountId INTEGER")
+
+                val now = System.currentTimeMillis()
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_cash", "CASH", "#4CAF50", 1, 0, now)
+                )
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_bank", "BANK", "#2196F3", 0, 1, now)
+                )
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_card", "CARD", "#FF9800", 0, 2, now)
+                )
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -474,7 +517,7 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
-                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16
+                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17
                 ).build().also { INSTANCE = it }
             }
         }

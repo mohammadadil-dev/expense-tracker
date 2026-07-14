@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">तास कमी करा</string>
     <string name="reminder_hour_increase">तास वाढवा</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">रोख</string>
+    <string name="account_bank">बँक खाते</string>
+    <string name="account_card">कार्ड</string>
+    <string name="settings_section_payment_accounts">पेमेंट खाती</string>
+    <string name="manage_payment_accounts">खाती व्यवस्थापित करा</string>
+    <string name="payment_accounts_hint">तुमचे पैसे प्रत्यक्षात कुठे जातात हे पाहण्यासाठी खर्च रोख, बँक किंवा कार्डसह टॅग करा.</string>
+    <string name="add_payment_account">खाते जोडा</string>
+    <string name="new_account_name_hint">नवीन खात्याचे नाव</string>
+    <string name="enter_account_name">खात्याचे नाव प्रविष्ट करा</string>
+    <string name="delete_payment_account_confirm">हे खाते हटवायचे? त्यासह टॅग केलेले खर्च फक्त अनटॅग होतील — काहीही हटवले जाणार नाही.</string>
+    <string name="payment_account_label">भरणा स्रोत</string>
+    <string name="payment_account_not_set">सेट नाही</string>
+    <string name="account_breakdown_title">खात्यानुसार</string>
+    <string name="export_col_account">खाते</string>
 </resources>

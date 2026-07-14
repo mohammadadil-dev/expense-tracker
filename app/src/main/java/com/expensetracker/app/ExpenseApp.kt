@@ -116,6 +116,9 @@ class ExpenseApp : Application() {
         appScope.launch {
             repository.seedDefaultCategoriesIfNeeded()
             repository.ensureNewBuiltinCategories()
+            // Fresh installs skip MIGRATION_16_17 entirely (Room creates the latest schema
+            // directly), so this is what actually seeds Cash/Bank Account/Card for new users.
+            repository.seedDefaultAccountsIfNeeded()
             // Auto-create this month's entries for any recurring expense templates.
             // Runs every startup; idempotent — won't duplicate entries already created.
             repository.createRecurringExpensesForCurrentMonth()

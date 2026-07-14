@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">ਘੰਟਾ ਘਟਾਓ</string>
     <string name="reminder_hour_increase">ਘੰਟਾ ਵਧਾਓ</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">ਨਕਦ</string>
+    <string name="account_bank">ਬੈਂਕ ਖਾਤਾ</string>
+    <string name="account_card">ਕਾਰਡ</string>
+    <string name="settings_section_payment_accounts">ਭੁਗਤਾਨ ਖਾਤੇ</string>
+    <string name="manage_payment_accounts">ਖਾਤੇ ਪ੍ਰਬੰਧਿਤ ਕਰੋ</string>
+    <string name="payment_accounts_hint">ਇਹ ਦੇਖਣ ਲਈ ਕਿ ਤੁਹਾਡਾ ਪੈਸਾ ਅਸਲ ਵਿੱਚ ਕਿੱਥੇ ਜਾਂਦਾ ਹੈ, ਖਰਚਿਆਂ ਨੂੰ ਨਕਦ, ਬੈਂਕ ਜਾਂ ਕਾਰਡ ਨਾਲ ਟੈਗ ਕਰੋ।</string>
+    <string name="add_payment_account">ਖਾਤਾ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="new_account_name_hint">ਨਵੇਂ ਖਾਤੇ ਦਾ ਨਾਮ</string>
+    <string name="enter_account_name">ਖਾਤੇ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ</string>
+    <string name="delete_payment_account_confirm">ਇਹ ਖਾਤਾ ਮਿਟਾਉਣਾ ਹੈ? ਇਸ ਨਾਲ ਟੈਗ ਕੀਤੇ ਖਰਚੇ ਸਿਰਫ਼ ਅਣ-ਟੈਗ ਹੋ ਜਾਣਗੇ — ਕੁਝ ਵੀ ਮਿਟਾਇਆ ਨਹੀਂ ਜਾਵੇਗਾ।</string>
+    <string name="payment_account_label">ਭੁਗਤਾਨ ਸਰੋਤ</string>
+    <string name="payment_account_not_set">ਸੈੱਟ ਨਹੀਂ</string>
+    <string name="account_breakdown_title">ਖਾਤੇ ਅਨੁਸਾਰ</string>
+    <string name="export_col_account">ਖਾਤਾ</string>
 </resources>

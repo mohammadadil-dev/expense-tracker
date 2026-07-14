@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">മണിക്കൂർ കുറയ്ക്കുക</string>
     <string name="reminder_hour_increase">മണിക്കൂർ കൂട്ടുക</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">പണം</string>
+    <string name="account_bank">ബാങ്ക് അക്കൗണ്ട്</string>
+    <string name="account_card">കാർഡ്</string>
+    <string name="settings_section_payment_accounts">പേയ്‌മെന്റ് അക്കൗണ്ടുകൾ</string>
+    <string name="manage_payment_accounts">അക്കൗണ്ടുകൾ കൈകാര്യം ചെയ്യുക</string>
+    <string name="payment_accounts_hint">നിങ്ങളുടെ പണം യഥാർത്ഥത്തിൽ എവിടെ പോകുന്നു എന്ന് കാണാൻ ചെലവുകൾ പണം, ബാങ്ക് അല്ലെങ്കിൽ കാർഡ് ഉപയോഗിച്ച് ടാഗ് ചെയ്യുക.</string>
+    <string name="add_payment_account">അക്കൗണ്ട് ചേർക്കുക</string>
+    <string name="new_account_name_hint">പുതിയ അക്കൗണ്ട് പേര്</string>
+    <string name="enter_account_name">അക്കൗണ്ട് പേര് നൽകുക</string>
+    <string name="delete_payment_account_confirm">ഈ അക്കൗണ്ട് ഇല്ലാതാക്കണോ? ഇത് ടാഗ് ചെയ്ത ചെലവുകൾ ടാഗ് ഇല്ലാതെയാകും — ഒന്നും ഇല്ലാതാകില്ല.</string>
+    <string name="payment_account_label">പണമടച്ച ഇടം</string>
+    <string name="payment_account_not_set">സജ്ജമാക്കിയിട്ടില്ല</string>
+    <string name="account_breakdown_title">അക്കൗണ്ട് പ്രകാരം</string>
+    <string name="export_col_account">അക്കൗണ്ട്</string>
 </resources>

@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">કલાક ઘટાડો</string>
     <string name="reminder_hour_increase">કલાક વધારો</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">રોકડ</string>
+    <string name="account_bank">બેંક ખાતું</string>
+    <string name="account_card">કાર્ડ</string>
+    <string name="settings_section_payment_accounts">ચુકવણી ખાતાં</string>
+    <string name="manage_payment_accounts">ખાતાં સંચાલિત કરો</string>
+    <string name="payment_accounts_hint">તમારા પૈસા ખરેખર ક્યાં જાય છે તે જોવા માટે ખર્ચને રોકડ, બેંક અથવા કાર્ડ સાથે ટૅગ કરો.</string>
+    <string name="add_payment_account">ખાતું ઉમેરો</string>
+    <string name="new_account_name_hint">નવા ખાતાનું નામ</string>
+    <string name="enter_account_name">ખાતાનું નામ દાખલ કરો</string>
+    <string name="delete_payment_account_confirm">આ ખાતું કાઢી નાખવું છે? તેની સાથે ટૅગ કરેલા ખર્ચ ફક્ત અનટૅગ થઈ જશે — કંઈ કાઢી નાખવામાં આવશે નહીં.</string>
+    <string name="payment_account_label">ચૂકવણી સ્ત્રોત</string>
+    <string name="payment_account_not_set">સેટ નથી</string>
+    <string name="account_breakdown_title">ખાતા પ્રમાણે</string>
+    <string name="export_col_account">ખાતું</string>
 </resources>

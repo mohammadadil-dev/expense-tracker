@@ -687,4 +687,20 @@ Gamitin anumang oras!</string>
 
     <string name="reminder_hour_decrease">Bawasan ang oras</string>
     <string name="reminder_hour_increase">Dagdagan ang oras</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">Cash</string>
+    <string name="account_bank">Bank Account</string>
+    <string name="account_card">Card</string>
+    <string name="settings_section_payment_accounts">Mga Payment Account</string>
+    <string name="manage_payment_accounts">Pamahalaan ang mga Account</string>
+    <string name="payment_accounts_hint">I-tag ang mga gastos gamit ang cash, bank, o card para makita kung saan talaga napupunta ang iyong pera.</string>
+    <string name="add_payment_account">Magdagdag ng account</string>
+    <string name="new_account_name_hint">Pangalan ng bagong account</string>
+    <string name="enter_account_name">Ilagay ang pangalan ng account</string>
+    <string name="delete_payment_account_confirm">Tanggalin ang account na ito? Ang mga gastos na naka-tag dito ay mawawalan lang ng tag — walang matatanggal.</string>
+    <string name="payment_account_label">Pinagbayaran mula sa</string>
+    <string name="payment_account_not_set">Hindi naka-set</string>
+    <string name="account_breakdown_title">Ayon sa Account</string>
+    <string name="export_col_account">Account</string>
 </resources>

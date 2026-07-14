@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Alarm
@@ -178,6 +179,8 @@ fun SettingsScreen(
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
     val myUpiId by viewModel.myUpiId.collectAsState()
     var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
+    val paymentAccounts by viewModel.paymentAccounts.collectAsState()
+    var showAccountManageSheet by remember { mutableStateOf(false) }
     var showResetStep1 by remember { mutableStateOf(false) }
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
@@ -429,6 +432,27 @@ fun SettingsScreen(
 
                 Spacer(Modifier.height(24.dp))
             }
+
+            AnimatedSection(visible = contentVisible, delayMillis = 23) {
+                SettingsSectionHeader(icon = Icons.Filled.AccountBalanceWallet, title = stringResource(R.string.settings_section_payment_accounts))
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.payment_accounts_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = { showAccountManageSheet = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.AccountBalanceWallet, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.manage_payment_accounts))
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
 
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))
@@ -1062,6 +1086,17 @@ fun SettingsScreen(
             dismissButton = {
                 TextButton(onClick = { showPaydayPicker = false }) { Text(stringResource(R.string.cancel)) }
             }
+        )
+    }
+
+    if (showAccountManageSheet) {
+        com.expensetracker.app.ui.components.PaymentAccountManageSheet(
+            accounts = paymentAccounts,
+            onDismiss = { showAccountManageSheet = false },
+            onRename = { account, name -> viewModel.renameAccount(account, name) },
+            onRecolor = { account, hex -> viewModel.recolorAccount(account, hex) },
+            onAddAccount = { name, hex -> viewModel.addAccount(name, hex) },
+            onDeleteAccount = { account -> viewModel.deleteAccount(account) }
         )
     }
 }

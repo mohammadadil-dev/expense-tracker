@@ -699,4 +699,20 @@ Feel free to use it anytime!</string>
 
     <string name="reminder_hour_decrease">Decrease hour</string>
     <string name="reminder_hour_increase">Increase hour</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">Cash</string>
+    <string name="account_bank">Bank Account</string>
+    <string name="account_card">Card</string>
+    <string name="settings_section_payment_accounts">Payment Accounts</string>
+    <string name="manage_payment_accounts">Manage Accounts</string>
+    <string name="payment_accounts_hint">Tag expenses with cash, bank, or card to see where your money actually goes.</string>
+    <string name="add_payment_account">Add account</string>
+    <string name="new_account_name_hint">New account name</string>
+    <string name="enter_account_name">Enter an account name</string>
+    <string name="delete_payment_account_confirm">Delete this account? Expenses tagged with it will just become untagged — nothing is deleted.</string>
+    <string name="payment_account_label">Paid from</string>
+    <string name="payment_account_not_set">Not set</string>
+    <string name="account_breakdown_title">By Account</string>
+    <string name="export_col_account">Account</string>
 </resources>

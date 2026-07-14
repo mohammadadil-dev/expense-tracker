@@ -102,6 +102,7 @@ import com.expensetracker.app.ui.ads.InterstitialAdManager
 import com.expensetracker.app.util.InAppReviewManager
 import com.expensetracker.app.data.PendingSmsExpense
 import com.expensetracker.app.ui.components.AddEditExpenseSheet
+import com.expensetracker.app.ui.components.AccountBreakdownCard
 import com.expensetracker.app.ui.components.AddIncomeSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
@@ -154,6 +155,7 @@ import com.expensetracker.app.util.FinancialInsights
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.CsvExporter
 import com.expensetracker.app.util.PdfExporter
+import com.expensetracker.app.util.accountDisplayName
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import kotlinx.coroutines.launch
@@ -169,6 +171,7 @@ fun DashboardScreen(
     onOpenSubscriptions: () -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
+    val paymentAccounts by viewModel.paymentAccounts.collectAsState()
     val monthExpenses by viewModel.monthExpenses.collectAsState()
     val allExpenses by viewModel.allExpenses.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
@@ -314,6 +317,8 @@ fun DashboardScreen(
     // categoryDisplayName is @Composable (calls stringResource), so it must be resolved
     // here at the composable call-site — never inside a remember { } lambda.
     val categoryNameById = categories.associate { it.id to categoryDisplayName(it) }
+    // accountDisplayName is @Composable too — same reasoning as categoryNameById above.
+    val accountNameById = paymentAccounts.associate { it.id to accountDisplayName(it) }
 
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
@@ -378,13 +383,14 @@ fun DashboardScreen(
     val noExpensesLabel = stringResource(R.string.no_expenses_this_month)
     val exportCustomerIdLabel = stringResource(R.string.export_customer_id_label, viewModel.customerId)
     val monthLabelForExport = DateUtils.monthLabel(currentMonthKey, locale)
-    val exportRows = remember(monthExpenses, categoryNameById, locale, currencySymbol) {
+    val exportRows = remember(monthExpenses, categoryNameById, accountNameById, locale, currencySymbol) {
         monthExpenses.sortedByDescending { it.date }.map { e ->
             ExportRow(
                 dateLabel = DateUtils.formatExpenseDate(e.date, locale),
                 categoryLabel = categoryNameById[e.categoryId] ?: "",
                 description = e.description,
-                amountLabel = Formatters.money(e.amount, currencySymbol)
+                amountLabel = Formatters.money(e.amount, currencySymbol),
+                accountLabel = e.accountId?.let { accountNameById[it] }
             )
         }
     }
@@ -415,6 +421,7 @@ fun DashboardScreen(
     }
 
     val exportCsvChooserTitle = stringResource(R.string.export_csv_chooser_title)
+    val exportColAccount = stringResource(R.string.export_col_account)
     fun exportMonthAsCsv() {
         if (exportRows.isEmpty()) {
             Toast.makeText(context, noExpensesLabel, Toast.LENGTH_SHORT).show()
@@ -428,6 +435,7 @@ fun DashboardScreen(
             colCategory = exportColCategory,
             colDescription = exportColDescription,
             colAmount = exportColAmount,
+            colAccount = exportColAccount,
             rows = exportRows
         )
         CsvExporter.shareOrSave(context, uri, exportCsvChooserTitle)
@@ -664,6 +672,20 @@ fun DashboardScreen(
                         SpendingPersonalityCard(personality = p)
                     }
                     // Family Mode card — hidden (feature not yet ready for release)
+
+                    // Account breakdown — only worth showing once spend is actually split
+                    // across 2+ distinct accounts this month; otherwise it's just noise.
+                    val accountsWithSpend = remember(monthExpenses) {
+                        monthExpenses.mapNotNull { it.accountId }.toSet()
+                    }
+                    if (accountsWithSpend.size >= 2) {
+                        AccountBreakdownCard(
+                            accounts = paymentAccounts,
+                            monthExpenses = monthExpenses,
+                            currencySymbol = currencySymbol,
+                            onManageAccounts = onOpenSettings
+                        )
+                    }
                 }
             }
 
@@ -1175,9 +1197,10 @@ fun DashboardScreen(
             prefill = voicePrefill,          // non-null when opened from voice entry
             familyModeEnabled = familyModeEnabled,
             familyMembers = familyMembers,
+            accounts = paymentAccounts,
             onDismiss = { showAddSheet = false; voicePrefill = null },
-            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay ->
-                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId) {
+            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay, accountId ->
+                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId, accountId) {
                     showAddSheet = false
                     voicePrefill = null
                 }
@@ -1379,8 +1402,9 @@ fun DashboardScreen(
                 categoryId = item.suggestedCategoryId,
                 date = item.date
             ),
+            accounts = paymentAccounts,
             onDismiss = { smsItemBeingAccepted = null },
-            onSave = { _, catId, desc, amt, date, _, _, _ ->
+            onSave = { _, catId, desc, amt, date, _, _, _, _ ->
                 // SMS-detected expenses are never recurring — ignore the toggle value.
                 viewModel.acceptPendingSms(item, catId, desc, amt, date) {
                     smsItemBeingAccepted = null

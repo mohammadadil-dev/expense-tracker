@@ -687,4 +687,20 @@
 
     <string name="reminder_hour_decrease">گھنٹہ کم کریں</string>
     <string name="reminder_hour_increase">گھنٹہ بڑھائیں</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">نقد</string>
+    <string name="account_bank">بینک اکاؤنٹ</string>
+    <string name="account_card">کارڈ</string>
+    <string name="settings_section_payment_accounts">ادائیگی اکاؤنٹس</string>
+    <string name="manage_payment_accounts">اکاؤنٹس کا انتظام کریں</string>
+    <string name="payment_accounts_hint">یہ دیکھنے کے لیے کہ آپ کی رقم واقعی کہاں جاتی ہے، اخراجات کو نقد، بینک یا کارڈ کے ساتھ ٹیگ کریں۔</string>
+    <string name="add_payment_account">اکاؤنٹ شامل کریں</string>
+    <string name="new_account_name_hint">نئے اکاؤنٹ کا نام</string>
+    <string name="enter_account_name">اکاؤنٹ کا نام درج کریں</string>
+    <string name="delete_payment_account_confirm">یہ اکاؤنٹ حذف کریں؟ اس کے ساتھ ٹیگ کیے گئے اخراجات صرف ان ٹیگ ہو جائیں گے — کچھ بھی حذف نہیں ہوگا۔</string>
+    <string name="payment_account_label">ادائیگی کا ذریعہ</string>
+    <string name="payment_account_not_set">سیٹ نہیں</string>
+    <string name="account_breakdown_title">اکاؤنٹ کے مطابق</string>
+    <string name="export_col_account">اکاؤنٹ</string>
 </resources>

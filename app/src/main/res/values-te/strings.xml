@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">గంట తగ్గించు</string>
     <string name="reminder_hour_increase">గంట పెంచు</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">నగదు</string>
+    <string name="account_bank">బ్యాంక్ ఖాతా</string>
+    <string name="account_card">కార్డు</string>
+    <string name="settings_section_payment_accounts">చెల్లింపు ఖాతాలు</string>
+    <string name="manage_payment_accounts">ఖాతాలను నిర్వహించండి</string>
+    <string name="payment_accounts_hint">మీ డబ్బు నిజంగా ఎక్కడికి వెళుతుందో చూడటానికి ఖర్చులను నగదు, బ్యాంక్ లేదా కార్డుతో ట్యాగ్ చేయండి.</string>
+    <string name="add_payment_account">ఖాతా జోడించు</string>
+    <string name="new_account_name_hint">కొత్త ఖాతా పేరు</string>
+    <string name="enter_account_name">ఖాతా పేరును నమోదు చేయండి</string>
+    <string name="delete_payment_account_confirm">ఈ ఖాతాను తొలగించాలా? దీనితో ట్యాగ్ చేయబడిన ఖర్చులు ట్యాగ్ లేకుండా మారతాయి — ఏమీ తొలగించబడదు.</string>
+    <string name="payment_account_label">చెల్లింపు మూలం</string>
+    <string name="payment_account_not_set">సెట్ చేయలేదు</string>
+    <string name="account_breakdown_title">ఖాతా వారీగా</string>
+    <string name="export_col_account">ఖాతా</string>
 </resources>

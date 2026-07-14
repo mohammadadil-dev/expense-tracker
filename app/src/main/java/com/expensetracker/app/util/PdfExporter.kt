@@ -12,12 +12,19 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 
-/** One printable row of an exported report — already fully resolved to display strings. */
+/** One printable row of an exported report — already fully resolved to display strings.
+ *
+ * [accountLabel] is optional (null when the expense has no payment account tagged, or for
+ * callers that don't pass it at all) and is only consumed by [CsvExporter] — [PdfExporter]'s
+ * fixed 4-column page layout is left untouched by design, since reflowing its hand-tuned
+ * column widths/clipping without a way to visually verify the render would risk a layout
+ * regression in a report real users already rely on. */
 data class ExportRow(
     val dateLabel: String,
     val categoryLabel: String,
     val description: String,
-    val amountLabel: String
+    val amountLabel: String,
+    val accountLabel: String? = null
 )
 
 /**

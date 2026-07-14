@@ -23,6 +23,7 @@ class ExpenseRepository(private val db: AppDatabase) {
     }
 
     val categories: Flow<List<CategoryEntity>> = db.categoryDao().observeAll()
+    val paymentAccounts: Flow<List<PaymentAccountEntity>> = db.paymentAccountDao().observeAll()
     val allExpenses: Flow<List<ExpenseEntity>> = db.expenseDao().observeAll()
     val pendingSmsExpenses: Flow<List<PendingSmsExpense>> = db.pendingSmsExpenseDao().observeAll()
     val budgets: Flow<List<BudgetEntity>> = db.budgetDao().observeAll()
@@ -42,6 +43,19 @@ class ExpenseRepository(private val db: AppDatabase) {
     suspend fun seedDefaultCategoriesIfNeeded() {
         if (db.categoryDao().count() == 0) {
             defaultCategorySeed().forEach { db.categoryDao().insert(it) }
+        }
+    }
+
+    /** Fresh installs never run MIGRATION_16_17 (Room creates the latest schema directly,
+     * with no rows) — this is what actually seeds Cash/Bank Account/Card for a new user.
+     * Upgrading users already have 3 rows from the migration, so this is a safe no-op for
+     * them. Called once per app launch, same pattern as [seedDefaultCategoriesIfNeeded]. */
+    suspend fun seedDefaultAccountsIfNeeded() {
+        if (db.paymentAccountDao().count() == 0) {
+            val now = System.currentTimeMillis()
+            db.paymentAccountDao().insert(PaymentAccountEntity(nameKey = "account_cash", type = "CASH", colorHex = "#4CAF50", isDefault = true, sortOrder = 0, createdAt = now))
+            db.paymentAccountDao().insert(PaymentAccountEntity(nameKey = "account_bank", type = "BANK", colorHex = "#2196F3", sortOrder = 1, createdAt = now))
+            db.paymentAccountDao().insert(PaymentAccountEntity(nameKey = "account_card", type = "CARD", colorHex = "#FF9800", sortOrder = 2, createdAt = now))
         }
     }
 
@@ -94,7 +108,8 @@ class ExpenseRepository(private val db: AppDatabase) {
         isRecurring: Boolean = false,
         recurringPeriod: String? = null,
         recurringDayOfMonth: Int? = null,
-        memberId: Long? = null
+        memberId: Long? = null,
+        accountId: Long? = null
     ) {
         val monthKey = date.substring(0, 7)
         val period = if (isRecurring) (recurringPeriod ?: "MONTHLY") else null
@@ -106,7 +121,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                     amount = amount, date = date, monthKey = monthKey,
                     isRecurring = isRecurring, recurringPeriod = period,
                     recurringDayOfMonth = dayOfMonth,
-                    memberId = memberId
+                    memberId = memberId,
+                    accountId = accountId
                 )
             )
         } else {
@@ -116,7 +132,8 @@ class ExpenseRepository(private val db: AppDatabase) {
                     amount = amount, date = date, monthKey = monthKey,
                     isRecurring = isRecurring, recurringPeriod = period,
                     recurringDayOfMonth = dayOfMonth,
-                    memberId = memberId
+                    memberId = memberId,
+                    accountId = accountId
                 )
             )
         }
@@ -193,6 +210,31 @@ class ExpenseRepository(private val db: AppDatabase) {
 
     suspend fun isCategoryInUse(categoryId: Long): Boolean = db.expenseDao().categoryInUse(categoryId)
 
+    // ── Payment Accounts ──────────────────────────────────────────────────────
+
+    suspend fun addAccount(name: String, colorHex: String): Long {
+        val sortOrder = db.paymentAccountDao().count()
+        return db.paymentAccountDao().insert(
+            PaymentAccountEntity(customName = name, type = "OTHER", colorHex = colorHex, sortOrder = sortOrder)
+        )
+    }
+
+    suspend fun renameAccount(account: PaymentAccountEntity, newName: String) {
+        // Same convention as renameCategory: editing detaches it from its localized name key.
+        db.paymentAccountDao().update(account.copy(customName = newName, nameKey = null))
+    }
+
+    suspend fun recolorAccount(account: PaymentAccountEntity, colorHex: String) {
+        db.paymentAccountDao().update(account.copy(colorHex = colorHex))
+    }
+
+    /** Unlike categories, accounts are optional metadata — deleting one just un-tags any
+     * expense that referenced it (never blocks the delete, never touches the expense itself). */
+    suspend fun deleteAccount(account: PaymentAccountEntity) {
+        db.paymentAccountDao().clearFromExpenses(account.id)
+        db.paymentAccountDao().delete(account)
+    }
+
     suspend fun deleteCategory(category: CategoryEntity): DeleteCategoryResult {
         val all = db.categoryDao().getAllOnce()
         if (all.size <= 1) return DeleteCategoryResult.MustKeepOne
@@ -232,9 +274,11 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.debtDao().deleteAll()
         db.debtPaymentDao().deleteAll()
         db.incomeDao().deleteAll()
+        db.paymentAccountDao().deleteAll()
         // Goals are personal commitments — deliberately NOT wiped on data reset so users
         // don't lose their savings targets when clearing transaction history.
         seedDefaultCategoriesIfNeeded()
+        seedDefaultAccountsIfNeeded()
     }
 
     // ── Savings Goals ─────────────────────────────────────────────────────────

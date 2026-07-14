@@ -666,4 +666,20 @@
 
     <string name="reminder_hour_decrease">ಗಂಟೆ ಕಡಿಮೆ ಮಾಡಿ</string>
     <string name="reminder_hour_increase">ಗಂಟೆ ಹೆಚ್ಚಿಸಿ</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">ನಗದು</string>
+    <string name="account_bank">ಬ್ಯಾಂಕ್ ಖಾತೆ</string>
+    <string name="account_card">ಕಾರ್ಡ್</string>
+    <string name="settings_section_payment_accounts">ಪಾವತಿ ಖಾತೆಗಳು</string>
+    <string name="manage_payment_accounts">ಖಾತೆಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="payment_accounts_hint">ನಿಮ್ಮ ಹಣ ನಿಜವಾಗಿಯೂ ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತದೆ ಎಂಬುದನ್ನು ನೋಡಲು ಖರ್ಚುಗಳನ್ನು ನಗದು, ಬ್ಯಾಂಕ್ ಅಥವಾ ಕಾರ್ಡ್‌ನೊಂದಿಗೆ ಟ್ಯಾಗ್ ಮಾಡಿ.</string>
+    <string name="add_payment_account">ಖಾತೆ ಸೇರಿಸಿ</string>
+    <string name="new_account_name_hint">ಹೊಸ ಖಾತೆಯ ಹೆಸರು</string>
+    <string name="enter_account_name">ಖಾತೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="delete_payment_account_confirm">ಈ ಖಾತೆಯನ್ನು ಅಳಿಸುವುದೇ? ಇದರೊಂದಿಗೆ ಟ್ಯಾಗ್ ಮಾಡಲಾದ ಖರ್ಚುಗಳು ಟ್ಯಾಗ್ ಇಲ್ಲದೆ ಆಗುತ್ತವೆ — ಏನೂ ಅಳಿಸಲಾಗುವುದಿಲ್ಲ.</string>
+    <string name="payment_account_label">ಪಾವತಿ ಮೂಲ</string>
+    <string name="payment_account_not_set">ಹೊಂದಿಸಿಲ್ಲ</string>
+    <string name="account_breakdown_title">ಖಾತೆವಾರು</string>
+    <string name="export_col_account">ಖಾತೆ</string>
 </resources>
