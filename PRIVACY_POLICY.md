@@ -34,7 +34,11 @@ Receipt scanning uses ML Kit's on-device text recognition (camera permission) �
 
 ## UPI payment requests (optional, India only)
 
-If your currency is set to ₹ (INR), Settings offers an optional "Your UPI ID" field, and Khata ledger entries where someone owes you money offer a "Request via UPI" option. This generates a standard `upi://pay` link and an on-device QR code encoding your UPI ID, the outstanding amount, and a short note — the app never contacts any payment gateway, bank, or server to create this, and never receives or processes the payment itself. It only hands the link/QR to whatever UPI app (GPay, PhonePe, etc.) the payer already has installed, the same way a printed shop QR code works. Sharing the link goes through the same WhatsApp share flow already used for ledger reminders, sent by you, to a contact you choose.
+If your currency is set to ₹ (INR), Settings offers an optional "Your UPI ID" field, and Khata ledger entries where someone owes you money offer a "Request via UPI" option. This generates a standard `upi://pay` link and an on-device QR code encoding your UPI ID, the outstanding amount, and a short note — the app never contacts any payment gateway, bank, or server to create this, and never receives or processes the payment itself. It only hands the QR/link to whatever UPI app (GPay, PhonePe, etc.) the payer already has installed, the same way a printed shop QR code works. Sharing goes through the same WhatsApp share flow already used for ledger reminders, sent by you, to a contact you choose.
+
+The reverse direction works the same way: for a party you owe money to, an optional "Pay via UPI" button opens a `upi://pay` link built from that party's own UPI ID (if you've entered one for them) directly in your own UPI app — again with no payment gateway, server, or app-of-ours in the middle.
+
+"Mark as Paid" simply records a payment entry in your local ledger, same as manually logging one — the app has no way to know whether a UPI payment actually succeeded, since UPI apps don't report that back to other apps; you tell it by tapping the button yourself.
 
 Your own UPI ID and any UPI ID you optionally enter for a ledger party are stored only in the local on-device database described above — never transmitted to us or anyone else.
 

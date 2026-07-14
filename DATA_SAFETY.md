@@ -1,12 +1,15 @@
 # Play Console "Data Safety" Form — Answer Key
 
 **Updated 2026-07-14**: added optional Khata "Request via UPI" payment links/QR (INR-only,
-`FEATURE_SPEC_KHATA_UPI_PAYMENTS.md`). No new Data Safety declaration needed — `myUpiId` (Settings)
-and a party's `upiId` (Khata) are stored only in the local Room database, same as phone numbers
-already stored for WhatsApp reminders. The feature builds a `upi://pay` URI and an on-device QR
-code (ZXing, no network call) and hands both to whatever UPI app is installed or to the existing
-WhatsApp share flow — the app itself never contacts a payment gateway, bank, or server, so there is
-no new "collection" or "sharing" under Play's definition (nothing new leaves the device).
+`FEATURE_SPEC_KHATA_UPI_PAYMENTS.md`), plus the follow-up "Pay via UPI" (reverse direction, opens
+the party's own UPI ID directly) and "Mark as Paid" (manual quick-settle, any currency/direction).
+No new Data Safety declaration needed for any of these — `myUpiId` (Settings) and a party's `upiId`
+(Khata) are stored only in the local Room database, same as phone numbers already stored for
+WhatsApp reminders. The features build `upi://pay` URIs and on-device QR codes (ZXing, no network
+call) and hand them to whatever UPI app is installed or to the existing WhatsApp share flow — the
+app itself never contacts a payment gateway, bank, or server, so there is no new "collection" or
+"sharing" under Play's definition (nothing new leaves the device). "Mark as Paid" just writes a
+ledger entry, already covered under existing Khata data.
 
 **Updated 2026-07-10**: a NotificationListenerService-based background SMS detection feature was
 built and then reverted before release, so no "Notification Listener access" disclosure applies —

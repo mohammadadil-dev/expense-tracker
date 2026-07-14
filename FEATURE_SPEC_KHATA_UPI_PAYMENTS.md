@@ -96,8 +96,8 @@ New keys (base + all 13 locales, following the pattern already established this 
 
 ## 7. Explicitly out of scope for v1 (park for later)
 
-- Paying a party's own UPI ID (the "I owe them" direction) — needs the reverse flow plus its own UPI-app-opens-on-my-phone handling.
-- Reading payment confirmation/status back into the app (UPI has no standard callback for this without a payment gateway partner — out of reach for a client-only app, and deliberately so, given the no-transaction-processing stance in §2).
+- ~~Paying a party's own UPI ID (the "I owe them" direction)~~ — **shipped** as "Pay via UPI" (see §11).
+- Reading payment confirmation/status back into the app (UPI has no standard callback for this without a payment gateway partner — out of reach for a client-only app, and deliberately so, given the no-transaction-processing stance in §2). **"Mark as Paid" (§11) is the deliberate manual substitute** — the app still never knows a payment actually succeeded, the user tells it.
 - Any non-UPI rail (cards, wallets) — no reason to scope that until UPI is validated with real users.
 
 ## 8. Compliance notes
@@ -128,3 +128,13 @@ Comparable in size to the reminder/SMS work already shipped this session (each o
 1. **Yes** — "Request via UPI" appears on the Khata list screen (per-party row) as well as the detail screen, not just the detail screen.
 2. **Minimum threshold: ₹1.** The UPI option is hidden when the outstanding balance is below ₹1.
 3. **No copy-link fallback.** Simpler v1: no UPI-app-detection/fallback logic at all. The QR is generated and shown locally regardless (it's just an on-device image, needs no UPI app to display), and "Share payment link" always goes through WhatsApp exactly like the existing reminder flow. Whether the *recipient* has a UPI app is their own concern, same as it already is for the plain-text reminder today.
+
+## 11. Shipped after v1: closing the loop
+
+Built as a direct follow-up once real usage surfaced two gaps (see conversation history 2026-07-14):
+
+- **The raw `upi://pay` link is dead text in WhatsApp.** WhatsApp only auto-linkifies `http(s)` URLs, so the shared link showed up as inert, ugly percent-encoded text with no functional benefit. Fixed by sharing the actual QR *image* (saved to cache, sent via `FileProvider` + `ACTION_SEND image/png`) instead of/alongside the link; the raw link was later dropped from the caption entirely since the image is the only part that actually works.
+- **"Their UPI ID" field made no sense for THEY_OWE parties.** Request via UPI always pays the *app user's own* UPI ID — a party's UPI ID is never read by that flow. The editable field is now shown only for I_OWE parties; THEY_OWE parties instead show a read-only status line reflecting the user's own UPI ID readiness.
+- **Pay via UPI** (I_OWE parties, party's own UPI ID set, INR, balance ≥ ₹1): opens a direct `ACTION_VIEW` on a `upi://pay` link built from the party's UPI ID. Unlike Request via UPI this is app-initiated, not shared as text, so the `upi://` scheme resolves straight to an installed UPI app with no WhatsApp-linkify problem. This is what makes the party-level `upiId` field (captured back in §4) actually useful.
+- **Mark as Paid**: a general one-tap quick-settle action (confirm dialog, logs one PAYMENT entry for the full balance) available for *any* party regardless of direction or currency — not UPI-specific, since a debt can be settled in cash, bank transfer, etc. This is the deliberate manual stand-in for payment-confirmation tracking (§7) — the app still has no way to know a UPI payment actually went through; the user tells it.
+- Deliberately **no auto-prompt** ("did you pay?") when returning to the app after opening a UPI app — consistent with the "no app-detection, keep it simple" stance in §10.3.
