@@ -387,6 +387,11 @@
     <string name="khata_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
     <string name="khata_upi_sheet_caption">তারা এটি সরাসরি স্ক্যান করতে পারে, অথবা আপনার শেয়ার করা লিঙ্কে ট্যাপ করে সরাসরি পেমেন্ট করতে পারে।</string>
     <string name="khata_upi_share_link">পেমেন্ট লিঙ্ক শেয়ার করুন</string>
+    <string name="khata_pay_via_upi">UPI-এর মাধ্যমে পেমেন্ট করুন</string>
+    <string name="khata_no_upi_app">এই ডিভাইসে কোনো UPI অ্যাপ পাওয়া যায়নি।</string>
+    <string name="khata_mark_as_paid">পরিশোধিত হিসেবে চিহ্নিত করুন</string>
+    <string name="khata_mark_as_paid_confirm">%1$s পরিশোধিত হিসেবে চিহ্নিত করবেন? এতে বকেয়া মেটানোর একটি পেমেন্ট এন্ট্রি রেকর্ড হবে।</string>
+    <string name="khata_marked_as_paid_note">পরিশোধিত হিসেবে চিহ্নিত করা হয়েছে</string>
     <string name="khata_reminder_msg_owe">হ্যালো %1$s 👋
 
 একটু মনে করিয়ে দিচ্ছি — আপনার বকেয়া %2$s আছে।

@@ -30,8 +30,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TrendingDown
@@ -68,6 +70,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
+import com.expensetracker.app.data.KhataEntryEntity
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AddEditKhataPartySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
@@ -84,6 +87,7 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
 import kotlin.math.abs
@@ -112,8 +116,26 @@ fun KhataScreen(
     // Party currently showing the "Request via UPI" sheet, opened from a compact icon
     // button on its list row (see FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§10.1).
     var upiRequestParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    // Party pending a "Mark as Paid" confirm dialog.
+    var markPaidParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
     val senderDefault = stringResource(R.string.khata_sender_name_default)
+    val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
+    val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
+
+    // "Pay via UPI" — app-initiated ACTION_VIEW on the party's own UPI ID (I_OWE parties
+    // only). Not shared via WhatsApp, so the upi:// scheme resolves directly to an installed
+    // UPI app without the WhatsApp-linkify problem that affects the "Request via UPI" share.
+    fun payViaUpi(party: KhataPartyEntity, balance: Double) {
+        val vpa = party.upiId ?: return
+        val uri = UpiPaymentHelper.buildUpiUri(vpa, party.name, balance, "Khata: ${party.name}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     val totalIOwe    = khataViewModel.totalIOwe(allParties, allEntries)
     val totalTheyOwe = khataViewModel.totalTheyOwe(allParties, allEntries)
@@ -205,6 +227,13 @@ fun KhataScreen(
                                 val showUpiButton = party.direction == KhataPartyEntity.DIRECTION_THEY_OWE &&
                                     balance >= 1.0 && CurrencyLocaleMapper.isInrSymbol(currencySymbol) &&
                                     myUpiId.isNotBlank()
+                                // Reverse direction — app user owes the party, using the party's
+                                // own UPI ID. App-initiated open, not shared via WhatsApp.
+                                val showPayUpiButton = party.direction == KhataPartyEntity.DIRECTION_I_OWE &&
+                                    balance >= 1.0 && CurrencyLocaleMapper.isInrSymbol(currencySymbol) &&
+                                    !party.upiId.isNullOrBlank()
+                                // General quick-settle — any direction, any currency.
+                                val showMarkPaidButton = balance > 0.0
                                 KhataPartyCard(
                                     party          = party,
                                     balance        = balance,
@@ -213,7 +242,11 @@ fun KhataScreen(
                                     onEdit         = { editingParty = party; showAddParty = true },
                                     onDelete       = { pendingDelete = party },
                                     showUpiButton  = showUpiButton,
-                                    onRequestUpi   = { upiRequestParty = party }
+                                    onRequestUpi   = { upiRequestParty = party },
+                                    showPayUpiButton   = showPayUpiButton,
+                                    onPayUpi           = { payViaUpi(party, balance) },
+                                    showMarkPaidButton = showMarkPaidButton,
+                                    onMarkPaid         = { markPaidParty = party }
                                 )
                             }
                         }
@@ -294,6 +327,29 @@ fun KhataScreen(
                 upiRequestParty = null
             },
             onDismiss = { upiRequestParty = null }
+        )
+    }
+
+    markPaidParty?.let { party ->
+        val balance = khataViewModel.balanceForParty(party.id, allEntries)
+        AlertDialog(
+            onDismissRequest = { markPaidParty = null },
+            title = { Text(stringResource(R.string.khata_mark_as_paid)) },
+            text = { Text(stringResource(R.string.khata_mark_as_paid_confirm, Formatters.money(balance, currencySymbol))) },
+            confirmButton = {
+                TextButton(onClick = {
+                    khataViewModel.addEntry(
+                        partyId = party.id,
+                        amount = balance,
+                        note = markedAsPaidNote,
+                        type = KhataEntryEntity.TYPE_PAYMENT
+                    )
+                    markPaidParty = null
+                }) { Text(stringResource(R.string.khata_mark_as_paid)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { markPaidParty = null }) { Text(stringResource(R.string.cancel)) }
+            }
         )
     }
 
@@ -520,7 +576,11 @@ private fun KhataPartyCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit,
     showUpiButton: Boolean = false,
-    onRequestUpi: () -> Unit = {}
+    onRequestUpi: () -> Unit = {},
+    showPayUpiButton: Boolean = false,
+    onPayUpi: () -> Unit = {},
+    showMarkPaidButton: Boolean = false,
+    onMarkPaid: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
     Card(
@@ -597,6 +657,26 @@ private fun KhataPartyCard(
                         Icons.Filled.QrCode,
                         contentDescription = stringResource(R.string.khata_request_via_upi),
                         tint = AccentIndigo,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+            if (showPayUpiButton) {
+                IconButton(onClick = onPayUpi) {
+                    Icon(
+                        Icons.Filled.AccountBalance,
+                        contentDescription = stringResource(R.string.khata_pay_via_upi),
+                        tint = AccentIndigo,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+            if (showMarkPaidButton) {
+                IconButton(onClick = onMarkPaid) {
+                    Icon(
+                        Icons.Filled.Check,
+                        contentDescription = stringResource(R.string.khata_mark_as_paid),
+                        tint = SuccessGreen,
                         modifier = Modifier.size(20.dp)
                     )
                 }

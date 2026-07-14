@@ -383,6 +383,11 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_request_via_upi">Humingi sa pamamagitan ng UPI</string>
     <string name="khata_upi_sheet_caption">Maaari nilang i-scan ito nang personal, o i-tap ang link na ibinahagi mo para direktang magbayad.</string>
     <string name="khata_upi_share_link">Ibahagi ang link ng bayad</string>
+    <string name="khata_pay_via_upi">Magbayad gamit ang UPI</string>
+    <string name="khata_no_upi_app">Walang nahanap na UPI app sa device na ito.</string>
+    <string name="khata_mark_as_paid">Markahan bilang Nabayaran</string>
+    <string name="khata_mark_as_paid_confirm">Markahan ang %1$s bilang nabayaran? Magla-log ito ng entry ng bayad na nagbabayad sa natitirang balanse.</string>
+    <string name="khata_marked_as_paid_note">Minarkahan bilang nabayaran</string>
     <string name="khata_reminder_msg_owe">Kamusta %1$s 👋
 
 Paalala lang — mayroon kang natitirang balanse na %2$s.

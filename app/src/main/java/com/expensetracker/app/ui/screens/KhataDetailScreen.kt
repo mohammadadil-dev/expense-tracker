@@ -23,8 +23,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode
@@ -85,6 +87,7 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
 
@@ -113,12 +116,26 @@ fun KhataDetailScreen(
     var showDeleteParty by remember { mutableStateOf(false) }
     var pendingDelete  by remember { mutableStateOf<KhataEntryEntity?>(null) }
     var showUpiSheet   by remember { mutableStateOf(false) }
+    var showMarkPaidConfirm by remember { mutableStateOf(false) }
 
     // "Request via UPI" is only offered when: they owe the user money, the outstanding
     // balance clears the ₹1 floor, the currency is INR, and the user has set their own
     // UPI ID in Settings. See FEATURE_SPEC_KHATA_UPI_PAYMENTS.md §3b/§10.2.
     val showUpiButton = !isIOwe && balance >= 1.0 &&
         CurrencyLocaleMapper.isInrSymbol(currencySymbol) && myUpiId.isNotBlank()
+
+    // "Pay via UPI" — the reverse direction: this app's user owes the party, and the party's
+    // own UPI ID was captured on the party. Unlike "Request via UPI" this never goes through
+    // WhatsApp — it's an app-initiated ACTION_VIEW that Android hands straight to whatever UPI
+    // app is installed, so the upi:// scheme actually works here (the WhatsApp-linkify problem
+    // only applies to *shared* text, not a direct in-app open).
+    val showPayUpiButton = isIOwe && balance >= 1.0 &&
+        CurrencyLocaleMapper.isInrSymbol(currencySymbol) && !party.upiId.isNullOrBlank()
+
+    // "Mark as Paid" — a general quick-settle shortcut available for any party regardless of
+    // direction or currency (not just the UPI flows above), since a debt can be settled in cash,
+    // bank transfer, etc. Logs one PAYMENT entry for the full outstanding balance.
+    val showMarkPaidButton = balance > 0.0
 
     // WhatsApp message builder
     // For plain-text messages, "ر.س500.00" is unreadable. For SAR use "SAR 500.00" (ISO code
@@ -202,6 +219,34 @@ fun KhataDetailScreen(
         showUpiSheet = false
     }
 
+    val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
+    val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
+
+    // "Pay via UPI" — opens the party's own UPI ID directly (app-initiated, not shared), so
+    // Android resolves it to an installed UPI app without the WhatsApp-linkify problem.
+    fun payViaUpi() {
+        val vpa = party.upiId ?: return
+        val uri = UpiPaymentHelper.buildUpiUri(vpa, party.name, balance, "Khata: ${party.name}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // "Mark as Paid" confirm — logs a single PAYMENT entry for the full outstanding balance,
+    // settling the party regardless of how the money actually changed hands.
+    fun markAsPaid() {
+        khataViewModel.addEntry(
+            partyId = partyId,
+            amount = balance,
+            note = markedAsPaidNote,
+            type = KhataEntryEntity.TYPE_PAYMENT
+        )
+        showMarkPaidConfirm = false
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         AnimatedBlobBackground(
             blobColors = listOf(NeonCyan, NeonPink, NeonTeal),
@@ -258,7 +303,11 @@ fun KhataDetailScreen(
                     hasPhone = party.phone.isNotBlank(),
                     onSendReminder = { sendWhatsApp() },
                     showUpiButton = showUpiButton,
-                    onRequestUpi = { showUpiSheet = true }
+                    onRequestUpi = { showUpiSheet = true },
+                    showPayUpiButton = showPayUpiButton,
+                    onPayUpi = { payViaUpi() },
+                    showMarkPaidButton = showMarkPaidButton,
+                    onMarkPaid = { showMarkPaidConfirm = true }
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -354,6 +403,22 @@ fun KhataDetailScreen(
         )
     }
 
+    if (showMarkPaidConfirm) {
+        AlertDialog(
+            onDismissRequest = { showMarkPaidConfirm = false },
+            title = { Text(stringResource(R.string.khata_mark_as_paid)) },
+            text = { Text(stringResource(R.string.khata_mark_as_paid_confirm, Formatters.money(balance, currencySymbol))) },
+            confirmButton = {
+                TextButton(onClick = { markAsPaid() }) {
+                    Text(stringResource(R.string.khata_mark_as_paid))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showMarkPaidConfirm = false }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+
     if (showUpiSheet) {
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
@@ -416,7 +481,11 @@ private fun KhataBalanceCard(
     hasPhone: Boolean,
     onSendReminder: () -> Unit,
     showUpiButton: Boolean = false,
-    onRequestUpi: () -> Unit = {}
+    onRequestUpi: () -> Unit = {},
+    showPayUpiButton: Boolean = false,
+    onPayUpi: () -> Unit = {},
+    showMarkPaidButton: Boolean = false,
+    onMarkPaid: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
 
@@ -561,6 +630,43 @@ private fun KhataBalanceCard(
                     Icon(Icons.Filled.QrCode, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(stringResource(R.string.khata_request_via_upi))
+                }
+            }
+
+            // "Pay via UPI" — the reverse of Request via UPI: this app's user owes the party,
+            // and the party's own UPI ID was captured. App-initiated (not shared), so the
+            // upi:// deep link works directly here.
+            if (showPayUpiButton) {
+                Spacer(Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = onPayUpi,
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+                    border = BorderStroke(1.5.dp, Color.White.copy(alpha = 0.70f)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.AccountBalance, contentDescription = null, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.khata_pay_via_upi))
+                }
+            }
+
+            // "Mark as Paid" — general quick-settle shortcut, any direction/currency, lighter
+            // weight than the buttons above since it's a closing action, not a payment method.
+            if (showMarkPaidButton) {
+                Spacer(Modifier.height(4.dp))
+                TextButton(onClick = onMarkPaid) {
+                    Icon(
+                        Icons.Filled.Check,
+                        contentDescription = null,
+                        tint = Color.White.copy(alpha = 0.90f),
+                        modifier = Modifier.size(15.dp)
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        stringResource(R.string.khata_mark_as_paid),
+                        color = Color.White.copy(alpha = 0.90f),
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
             }
         }

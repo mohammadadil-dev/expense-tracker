@@ -388,6 +388,11 @@
     <string name="khata_request_via_upi">UPI மூலம் கோரிக்கை</string>
     <string name="khata_upi_sheet_caption">அவர்கள் இதை நேரடியாக ஸ்கேன் செய்யலாம், அல்லது நீங்கள் பகிரும் இணைப்பைத் தட்டி நேரடியாக பணம் செலுத்தலாம்.</string>
     <string name="khata_upi_share_link">கட்டண இணைப்பைப் பகிரவும்</string>
+    <string name="khata_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
+    <string name="khata_no_upi_app">இந்த சாதனத்தில் UPI ஆப் எதுவும் இல்லை.</string>
+    <string name="khata_mark_as_paid">செலுத்தப்பட்டதாகக் குறிக்கவும்</string>
+    <string name="khata_mark_as_paid_confirm">%1$s செலுத்தப்பட்டதாகக் குறிக்கவா? இது நிலுவைத் தொகையை தீர்க்கும் ஒரு கட்டண பதிவை உருவாக்கும்.</string>
+    <string name="khata_marked_as_paid_note">செலுத்தப்பட்டதாகக் குறிக்கப்பட்டது</string>
     <string name="khata_reminder_msg_owe">வணக்கம் %1$s 👋
 
 ஒரு நட்பு நினைவூட்டல் — உங்களிடம் %2$s நிலுவை உள்ளது.

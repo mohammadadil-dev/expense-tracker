@@ -400,6 +400,11 @@ Tap + to add someone who owes you.</string>
     <string name="khata_request_via_upi">Request via UPI</string>
     <string name="khata_upi_sheet_caption">They can scan this in person, or tap the link you share to pay you directly.</string>
     <string name="khata_upi_share_link">Share payment link</string>
+    <string name="khata_pay_via_upi">Pay via UPI</string>
+    <string name="khata_no_upi_app">No UPI app found on this device.</string>
+    <string name="khata_mark_as_paid">Mark as Paid</string>
+    <string name="khata_mark_as_paid_confirm">Mark %1$s as paid? This logs a payment entry that settles the outstanding balance.</string>
+    <string name="khata_marked_as_paid_note">Marked as paid</string>
     <string name="khata_reminder_msg_owe">Hi %1$s 👋
 
 This is a friendly reminder — you have an outstanding balance of %2$s.

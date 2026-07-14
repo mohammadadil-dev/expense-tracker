@@ -388,6 +388,11 @@
     <string name="khata_request_via_upi">UPI വഴി അഭ്യർത്ഥിക്കുക</string>
     <string name="khata_upi_sheet_caption">അവർക്ക് ഇത് നേരിട്ട് സ്കാൻ ചെയ്യാം, അല്ലെങ്കിൽ നിങ്ങൾ പങ്കിടുന്ന ലിങ്കിൽ ടാപ്പ് ചെയ്ത് നേരിട്ട് പണമടയ്ക്കാം.</string>
     <string name="khata_upi_share_link">പേയ്‌മെന്റ് ലിങ്ക് പങ്കിടുക</string>
+    <string name="khata_pay_via_upi">UPI വഴി പണമടയ്ക്കുക</string>
+    <string name="khata_no_upi_app">ഈ ഉപകരണത്തിൽ UPI ആപ്പ് കണ്ടെത്തിയില്ല.</string>
+    <string name="khata_mark_as_paid">അടച്ചതായി അടയാളപ്പെടുത്തുക</string>
+    <string name="khata_mark_as_paid_confirm">%1$s അടച്ചതായി അടയാളപ്പെടുത്തണോ? ഇത് ബാക്കി തുക തീർക്കുന്ന ഒരു പേയ്‌മെന്റ് എൻട്രി രേഖപ്പെടുത്തും.</string>
+    <string name="khata_marked_as_paid_note">അടച്ചതായി അടയാളപ്പെടുത്തി</string>
     <string name="khata_reminder_msg_owe">ഹലോ %1$s 👋
 
 ഒരു സൗഹൃദ ഓർമ്മപ്പെടുത്തൽ — നിങ്ങൾക്ക് %2$s ബാക്കിയുണ്ട്.
