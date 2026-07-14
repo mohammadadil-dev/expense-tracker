@@ -35,8 +35,16 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 18
-        versionName = "1.7.1"
+        // v1.7.1 (versionCode 18) was bumped for the Glance CVE-2024-7254 fix but never
+        // actually published — the live Play Store build is still versionCode 17 (1.7.0),
+        // per the developer as of 2026-07-14. This release folds that unpublished security
+        // fix in along with everything since (Khata UPI close-the-loop: Pay via UPI, QR-scan
+        // to fill a UPI ID, phone-number fallback, "add your UPI ID" nudge; the new
+        // Subscriptions/recurring-expense screen; assorted UI fixes) — bumping straight to
+        // 19/1.8.0 rather than reusing 18, since versionCode must only ever increase and this
+        // avoids any doubt about whether 18 was ever uploaded to a testing track.
+        versionCode = 19
+        versionName = "1.8.0"
 
         vectorDrawables {
             useSupportLibrary = true

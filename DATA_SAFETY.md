@@ -1,5 +1,21 @@
 # Play Console "Data Safety" Form — Answer Key
 
+**Updated 2026-07-14 (v1.8.0, versionCode 19)**: added QR-code scanning to fill in a Khata
+party's UPI ID (`AddEditKhataPartySheet.kt`, ML Kit Barcode Scanning — the **bundled** model, not
+the Google-Play-Services unbundled one, same distinction as the existing receipt-scan OCR entry
+below), a phone-number fallback for "Pay via UPI" when no VPA is on file (copies the number to
+the clipboard and opens the user's UPI app — no new permission, clipboard write requires none on
+modern Android and nothing leaves the device), a Settings-navigation nudge when the user's own
+UPI ID is missing (pure UI, no data implication), and the new Subscriptions screen for recurring
+expenses (just new local Room columns/UI over data already covered under "Financial info").
+**No new Data Safety declaration needed for any of this** — the QR photo is processed by an
+on-device model and never uploaded (identical reasoning to receipt scanning, still using the
+already-declared `CAMERA` permission, no new permission added), the extracted UPI ID is stored in
+the same local `upiId` column already covered by the prior entry below, and the clipboard/
+Subscriptions changes don't touch anything Play's Data Safety form asks about. Also reuses this
+release to fold in the unpublished v1.7.1 Glance CVE-2024-7254 fix (see `STORE_LISTING.md`) — no
+Data Safety impact from that either, it's a transitive dependency version bump only.
+
 **Updated 2026-07-14**: added optional Khata "Request via UPI" payment links/QR (INR-only,
 `FEATURE_SPEC_KHATA_UPI_PAYMENTS.md`), plus the follow-up "Pay via UPI" (reverse direction, opens
 the party's own UPI ID directly) and "Mark as Paid" (manual quick-settle, any currency/direction).

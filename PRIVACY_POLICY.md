@@ -1,6 +1,6 @@
 # Privacy Policy for Expense Tracker
 
-**Effective date: July 9, 2026**
+**Effective date: July 14, 2026**
 
 This policy explains what Expense Tracker ("the app") does and does not do with your information. We wrote it to match exactly how the app behaves — there is no hidden data collection beyond what's described here.
 
@@ -36,7 +36,7 @@ Receipt scanning uses ML Kit's on-device text recognition (camera permission) �
 
 If your currency is set to ₹ (INR), Settings offers an optional "Your UPI ID" field, and Khata ledger entries where someone owes you money offer a "Request via UPI" option. This generates a standard `upi://pay` link and an on-device QR code encoding your UPI ID, the outstanding amount, and a short note — the app never contacts any payment gateway, bank, or server to create this, and never receives or processes the payment itself. It only hands the QR/link to whatever UPI app (GPay, PhonePe, etc.) the payer already has installed, the same way a printed shop QR code works. Sharing goes through the same WhatsApp share flow already used for ledger reminders, sent by you, to a contact you choose.
 
-The reverse direction works the same way: for a party you owe money to, an optional "Pay via UPI" button opens a `upi://pay` link built from that party's own UPI ID (if you've entered one for them) directly in your own UPI app — again with no payment gateway, server, or app-of-ours in the middle.
+The reverse direction works the same way: for a party you owe money to, an optional "Pay via UPI" button opens a `upi://pay` link built from that party's own UPI ID (if you've entered one for them) directly in your own UPI app — again with no payment gateway, server, or app-of-ours in the middle. To make entering that UPI ID easier, you can scan the party's UPI QR code with your camera instead of typing it; the photo is processed entirely on your device by the same kind of on-device recognition technology used for receipt scanning above, is never uploaded anywhere, and only the UPI ID text extracted from it is saved (in the same local database described above). If a party has a phone number on file but no UPI ID, tapping "Pay via UPI" instead copies that number to your clipboard and opens your UPI app so you can search for the contact yourself — the number never leaves your device except via the clipboard, which only your own UPI app reads when you paste into it.
 
 "Mark as Paid" simply records a payment entry in your local ledger, same as manually logging one — the app has no way to know whether a UPI payment actually succeeded, since UPI apps don't report that back to other apps; you tell it by tapping the button yourself.
 

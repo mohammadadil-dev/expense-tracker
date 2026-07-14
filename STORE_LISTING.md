@@ -90,6 +90,25 @@ Still no account required, and your data still never leaves your device unless y
 ```
 (423 characters)
 
+## Release notes — v1.8.0 (max 500 characters)
+
+Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+Covers everything shipped since the live v1.7.0 (versionCode 17, published July 9 2026) — this
+release also folds in the v1.7.1 Glance CVE-2024-7254 security fix, which was built but never
+actually published. Update this section again for the next version rather than reusing it.
+
+```
+Big update to the Khata ledger:
+
+• Request or pay via UPI right from a Khata entry — scan someone's UPI QR to add their ID instantly, or one-tap pay if you owe them
+• New: Subscriptions — track rent, memberships, and recurring bills with accurate renewal dates
+• Mark any ledger entry as paid in one tap
+• Security and stability improvements
+
+Your data still never leaves your device unless you choose to export it.
+```
+(415 characters)
+
 ## Notes
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
