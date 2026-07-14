@@ -412,7 +412,18 @@
     <string name="error_loan_type_required">অনুগ্রহ করে একটি ঋণের ধরন নির্বাচন করুন</string>
     <string name="test_reminder_button">পরীক্ষামূলক বিজ্ঞপ্তি পাঠান</string>
     <string name="repeat_monthly_label">প্রতি মাসে পুনরাবৃত্তি করুন</string>
-    <string name="repeat_monthly_hint">প্রতি মাসের ১ তারিখে স্বয়ংক্রিয়ভাবে একটি কপি যোগ হয়</string>
+    <string name="repeat_monthly_hint">প্রতি মাসের %1$d তারিখে স্বয়ংক্রিয়ভাবে একটি কপি যোগ হয়</string>
+    <string name="subscriptions_day_of_month_label">বিলিং দিন</string>
+    <string name="subscriptions_title">সাবস্ক্রিপশন</string>
+    <string name="subscriptions_empty_title">এখনো কোনো সাবস্ক্রিপশন নেই</string>
+    <string name="subscriptions_empty_body">ভাড়া, মেম্বারশিপ ও অন্যান্য মাসিক বিল এখানে ট্র্যাক করুন — নিচে একটি যোগ করুন।</string>
+    <string name="subscriptions_monthly_total_label">মাসিক মোট</string>
+    <string name="subscriptions_count_singular">%1$d সাবস্ক্রিপশন</string>
+    <string name="subscriptions_count_plural">%1$d সাবস্ক্রিপশন</string>
+    <string name="subscriptions_next_renewal">পরবর্তী নবায়ন: %1$s</string>
+    <string name="subscriptions_delete_title">সাবস্ক্রিপশন মুছবেন?</string>
+    <string name="subscriptions_delete_confirm">এটি \"%1$s\"-এর ভবিষ্যৎ কপি যোগ হওয়া বন্ধ করবে। অতীত এন্ট্রিগুলো আপনার ইতিহাসে থাকবে।</string>
+    <string name="subscriptions_dashboard_title">সাবস্ক্রিপশন</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ আপনি আপনার মাসিক বাজেটের 80% ব্যবহার করেছেন</string>

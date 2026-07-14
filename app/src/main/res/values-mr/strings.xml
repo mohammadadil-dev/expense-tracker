@@ -289,7 +289,18 @@
     <string name="test_reminder_button">चाचणी सूचना पाठवा</string>
 
     <string name="repeat_monthly_label">दर महिन्याला पुनरावृत्ती करा</string>
-    <string name="repeat_monthly_hint">दर महिन्याच्या 1 तारखेला एक प्रत आपोआप जोडली जाईल</string>
+    <string name="repeat_monthly_hint">दर महिन्याच्या %1$d तारखेला एक प्रत आपोआप जोडली जाईल</string>
+    <string name="subscriptions_day_of_month_label">बिलिंग दिवस</string>
+    <string name="subscriptions_title">सबस्क्रिप्शन्स</string>
+    <string name="subscriptions_empty_title">अद्याप कोणतेही सबस्क्रिप्शन नाही</string>
+    <string name="subscriptions_empty_body">भाडे, सदस्यत्वे आणि इतर मासिक बिले येथे ट्रॅक करा — खाली एक जोडा.</string>
+    <string name="subscriptions_monthly_total_label">मासिक एकूण</string>
+    <string name="subscriptions_count_singular">%1$d सबस्क्रिप्शन</string>
+    <string name="subscriptions_count_plural">%1$d सबस्क्रिप्शन्स</string>
+    <string name="subscriptions_next_renewal">पुढील नूतनीकरण: %1$s</string>
+    <string name="subscriptions_delete_title">सबस्क्रिप्शन हटवायचे?</string>
+    <string name="subscriptions_delete_confirm">यामुळे \"%1$s\" च्या भविष्यातील प्रती जोडणे थांबेल. जुन्या नोंदी तुमच्या इतिहासात राहतील.</string>
+    <string name="subscriptions_dashboard_title">सबस्क्रिप्शन्स</string>
 
     <string name="debt_direction_label">दिशा</string>
     <string name="debt_direction_owe">मला द्यायचे</string>

@@ -64,6 +64,7 @@ import com.expensetracker.app.ui.screens.SettingsScreen
 import com.expensetracker.app.ui.screens.SplashScreen
 import com.expensetracker.app.ui.screens.SplitsScreen
 import com.expensetracker.app.ui.screens.SplitGroupDetailScreen
+import com.expensetracker.app.ui.screens.SubscriptionsScreen
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -80,6 +81,7 @@ private object Routes {
     const val SPLITS          = "splits"
     const val SPLIT_DETAIL    = "split_detail/{groupId}"
     const val SETTINGS        = "settings"
+    const val SUBSCRIPTIONS   = "subscriptions"
 
     fun khataDetail(partyId: Long) = "khata_detail/$partyId"
     fun splitDetail(groupId: Long) = "split_detail/$groupId"
@@ -102,7 +104,7 @@ private val bottomNavItems = listOf(
 )
 
 // Routes where the bottom nav should be hidden
-private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/")
+private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS)
 
 @Composable
 fun AppNav() {
@@ -347,7 +349,27 @@ fun AppNav() {
                         },
                         onOpenDebts = {
                             navController.navigate(Routes.DEBTS) { launchSingleTop = true }
+                        },
+                        onOpenSubscriptions = {
+                            navController.navigate(Routes.SUBSCRIPTIONS) { launchSingleTop = true }
                         }
+                    )
+                }
+
+                composable(
+                    Routes.SUBSCRIPTIONS,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) {
+                    SubscriptionsScreen(
+                        viewModel = viewModel,
+                        onBack    = { navController.popBackStack() }
                     )
                 }
 

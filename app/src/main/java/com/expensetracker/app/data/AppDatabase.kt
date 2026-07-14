@@ -21,7 +21,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         SplitGroupEntity::class, SplitMemberEntity::class,
         SplitExpenseEntity::class, SplitExpenseShareEntity::class
     ],
-    version = 15,
+    version = 16,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -453,6 +453,17 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v15 -> v16: Subscriptions / recurring-expense day-of-month.
+        //   expenses.recurringDayOfMonth — the day a recurring template (subscription) renews
+        //   on, so auto-generated copies land on the actual billing day instead of always the
+        //   1st. Null on pre-existing templates, which keeps their current "always the 1st"
+        //   behavior unchanged (see ExpenseRepository.createRecurringExpensesForCurrentMonth).
+        private val MIGRATION_15_16 = object : Migration(15, 16) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE expenses ADD COLUMN recurringDayOfMonth INTEGER")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -463,7 +474,7 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
-                    MIGRATION_13_14, MIGRATION_14_15
+                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16
                 ).build().also { INSTANCE = it }
             }
         }

@@ -289,7 +289,18 @@
     <string name="test_reminder_button">పరీక్ష నోటిఫికేషన్ పంపు</string>
 
     <string name="repeat_monthly_label">ప్రతి నెలా పునరావృతం</string>
-    <string name="repeat_monthly_hint">ప్రతి నెల 1వ తేదీన ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది</string>
+    <string name="repeat_monthly_hint">ప్రతి నెల %1$d వ తేదీన ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది</string>
+    <string name="subscriptions_day_of_month_label">బిల్లింగ్ రోజు</string>
+    <string name="subscriptions_title">సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="subscriptions_empty_title">ఇంకా సబ్‌స్క్రిప్షన్‌లు లేవు</string>
+    <string name="subscriptions_empty_body">అద్దె, సభ్యత్వాలు మరియు ఇతర నెలవారీ బిల్లులను ఇక్కడ ట్రాక్ చేయండి — దిగువన ఒకటి జోడించండి.</string>
+    <string name="subscriptions_monthly_total_label">నెలవారీ మొత్తం</string>
+    <string name="subscriptions_count_singular">%1$d సబ్‌స్క్రిప్షన్</string>
+    <string name="subscriptions_count_plural">%1$d సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="subscriptions_next_renewal">తదుపరి రెన్యువల్: %1$s</string>
+    <string name="subscriptions_delete_title">సబ్‌స్క్రిప్షన్‌ను తొలగించాలా?</string>
+    <string name="subscriptions_delete_confirm">ఇది \"%1$s\" యొక్క భవిష్యత్తు కాపీలను జోడించకుండా ఆపుతుంది. గత ఎంట్రీలు మీ చరిత్రలో ఉంటాయి.</string>
+    <string name="subscriptions_dashboard_title">సబ్‌స్క్రిప్షన్‌లు</string>
 
     <string name="debt_direction_label">దిశ</string>
     <string name="debt_direction_owe">నేను చెల్లించాల్సింది</string>

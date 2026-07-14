@@ -68,6 +68,10 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         .flatMapLatest { key -> repository.expensesForMonth(key) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Recurring-expense templates — powers the Subscriptions screen and its dashboard card. */
+    val recurringTemplates: StateFlow<List<ExpenseEntity>> = repository.recurringTemplates
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     /** Refresh the home-screen widget after any data mutation. Fire-and-forget. */
     private fun refreshWidget() {
         viewModelScope.launch { ExpenseWidget.refresh(getApplication()) }
@@ -299,11 +303,15 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         amount: Double,
         date: String,
         isRecurring: Boolean = false,
+        recurringDayOfMonth: Int? = null,
         memberId: Long? = null,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring, memberId = memberId)
+            repository.addOrUpdateExpense(
+                id, categoryId, description, amount, date, isRecurring,
+                recurringDayOfMonth = recurringDayOfMonth, memberId = memberId
+            )
             // Update logging streak only for new expenses, not edits.
             if (id == null) updateLogStreak(date)
             val monthKey = DateUtils.monthKeyFromDate(date)

@@ -33,6 +33,9 @@ class ExpenseRepository(private val db: AppDatabase) {
     fun expensesForMonth(monthKey: String): Flow<List<ExpenseEntity>> =
         db.expenseDao().observeByMonth(monthKey)
 
+    /** Reactive stream of recurring-expense templates — powers the Subscriptions screen. */
+    val recurringTemplates: Flow<List<ExpenseEntity>> = db.expenseDao().observeRecurringTemplates()
+
     /** Total number of expenses ever logged — used only to time the in-app review prompt. */
     suspend fun countExpenses(): Int = db.expenseDao().count()
 
@@ -90,16 +93,19 @@ class ExpenseRepository(private val db: AppDatabase) {
         date: String,
         isRecurring: Boolean = false,
         recurringPeriod: String? = null,
+        recurringDayOfMonth: Int? = null,
         memberId: Long? = null
     ) {
         val monthKey = date.substring(0, 7)
         val period = if (isRecurring) (recurringPeriod ?: "MONTHLY") else null
+        val dayOfMonth = if (isRecurring) recurringDayOfMonth else null
         if (id == null) {
             db.expenseDao().insert(
                 ExpenseEntity(
                     categoryId = categoryId, description = description,
                     amount = amount, date = date, monthKey = monthKey,
                     isRecurring = isRecurring, recurringPeriod = period,
+                    recurringDayOfMonth = dayOfMonth,
                     memberId = memberId
                 )
             )
@@ -109,6 +115,7 @@ class ExpenseRepository(private val db: AppDatabase) {
                     id = id, categoryId = categoryId, description = description,
                     amount = amount, date = date, monthKey = monthKey,
                     isRecurring = isRecurring, recurringPeriod = period,
+                    recurringDayOfMonth = dayOfMonth,
                     memberId = memberId
                 )
             )
@@ -135,12 +142,14 @@ class ExpenseRepository(private val db: AppDatabase) {
                 val alreadyExists =
                     db.expenseDao().countRecurringInstance(template.id, month) > 0
                 if (!alreadyExists) {
+                    val day = (template.recurringDayOfMonth ?: 1).coerceIn(1, DateUtils.daysInMonth(month))
+                    val dayStr = day.toString().padStart(2, '0')
                     db.expenseDao().insert(
                         ExpenseEntity(
                             categoryId        = template.categoryId,
                             description       = template.description,
                             amount            = template.amount,
-                            date              = "$month-01",
+                            date              = "$month-$dayStr",
                             monthKey          = month,
                             isRecurring       = false,
                             recurringPeriod   = null,

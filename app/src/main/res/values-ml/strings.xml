@@ -289,7 +289,18 @@
     <string name="test_reminder_button">ടെസ്‌റ്റ് അറിയിപ്പ് അയക്കൂ</string>
 
     <string name="repeat_monthly_label">ഓരോ മാസവും ആവർത്തിക്കൂ</string>
-    <string name="repeat_monthly_hint">ഓരോ മാസത്തിന്റെ 1-ന് ഒരു കോപ്പി സ്വയം ചേർക്കും</string>
+    <string name="repeat_monthly_hint">ഓരോ മാസത്തിന്റെയും %1$d-ന് ഒരു കോപ്പി സ്വയം ചേർക്കും</string>
+    <string name="subscriptions_day_of_month_label">ബില്ലിംഗ് ദിവസം</string>
+    <string name="subscriptions_title">സബ്സ്ക്രിപ്ഷനുകൾ</string>
+    <string name="subscriptions_empty_title">ഇതുവരെ സബ്സ്ക്രിപ്ഷനുകൾ ഇല്ല</string>
+    <string name="subscriptions_empty_body">വാടക, മെമ്പർഷിപ്പുകൾ, മറ്റ് പ്രതിമാസ ബില്ലുകൾ എന്നിവ ഇവിടെ ട്രാക്ക് ചെയ്യുക — താഴെ ഒന്ന് ചേർക്കുക.</string>
+    <string name="subscriptions_monthly_total_label">പ്രതിമാസ ആകെ</string>
+    <string name="subscriptions_count_singular">%1$d സബ്സ്ക്രിപ്ഷൻ</string>
+    <string name="subscriptions_count_plural">%1$d സബ്സ്ക്രിപ്ഷനുകൾ</string>
+    <string name="subscriptions_next_renewal">അടുത്ത പുതുക്കൽ: %1$s</string>
+    <string name="subscriptions_delete_title">സബ്സ്ക്രിപ്ഷൻ ഇല്ലാതാക്കണോ?</string>
+    <string name="subscriptions_delete_confirm">ഇത് \"%1$s\"-ന്റെ ഭാവി കോപ്പികൾ ചേർക്കുന്നത് നിർത്തും. മുൻകാല എൻട്രികൾ നിങ്ങളുടെ ചരിത്രത്തിൽ തുടരും.</string>
+    <string name="subscriptions_dashboard_title">സബ്സ്ക്രിപ്ഷനുകൾ</string>
 
     <string name="debt_direction_label">ദിശ</string>
     <string name="debt_direction_owe">ഞാൻ നൽകണം</string>

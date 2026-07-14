@@ -408,7 +408,18 @@
     <string name="error_loan_type_required">براہ کرم قرض کی قسم منتخب کریں</string>
     <string name="test_reminder_button">آزمائشی اطلاع بھیجیں</string>
     <string name="repeat_monthly_label">ہر مہینے دہرائیں</string>
-    <string name="repeat_monthly_hint">ہر مہینے کی 1 تاریخ کو خودکار طریقے سے ایک کاپی شامل ہو جاتی ہے</string>
+    <string name="repeat_monthly_hint">ہر مہینے کی %1$d تاریخ کو خودکار طریقے سے ایک کاپی شامل ہو جاتی ہے</string>
+    <string name="subscriptions_day_of_month_label">بلنگ کا دن</string>
+    <string name="subscriptions_title">سبسکرپشنز</string>
+    <string name="subscriptions_empty_title">ابھی تک کوئی سبسکرپشن نہیں</string>
+    <string name="subscriptions_empty_body">کرایہ، ممبرشپس اور دیگر ماہانہ بلز کو یہاں ٹریک کریں — نیچے ایک شامل کریں۔</string>
+    <string name="subscriptions_monthly_total_label">ماہانہ کل</string>
+    <string name="subscriptions_count_singular">%1$d سبسکرپشن</string>
+    <string name="subscriptions_count_plural">%1$d سبسکرپشنز</string>
+    <string name="subscriptions_next_renewal">اگلی تجدید: %1$s</string>
+    <string name="subscriptions_delete_title">سبسکرپشن حذف کریں؟</string>
+    <string name="subscriptions_delete_confirm">یہ \"%1$s\" کی مستقبل کی کاپیوں کو شامل ہونے سے روک دے گا۔ ماضی کی اندراجات آپ کی ہسٹری میں رہیں گی۔</string>
+    <string name="subscriptions_dashboard_title">سبسکرپشنز</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ آپ نے اپنے ماہانہ بجٹ کا 80% استعمال کر لیا ہے</string>

@@ -289,7 +289,18 @@
     <string name="test_reminder_button">ಪರೀಕ್ಷಾ ಅಧಿಸೂಚನೆ ಕಳುಹಿಸಿ</string>
 
     <string name="repeat_monthly_label">ಪ್ರತಿ ತಿಂಗಳು ಪುನರಾವರ್ತಿಸಿ</string>
-    <string name="repeat_monthly_hint">ಪ್ರತಿ ತಿಂಗಳ 1ನೇ ತಾರೀಖು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ನಕಲು ಸೇರಿಸಲಾಗುತ್ತದೆ</string>
+    <string name="repeat_monthly_hint">ಪ್ರತಿ ತಿಂಗಳ %1$d ನೇ ತಾರೀಖಿನಂದು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ನಕಲು ಸೇರಿಸಲಾಗುತ್ತದೆ</string>
+    <string name="subscriptions_day_of_month_label">ಬಿಲ್ಲಿಂಗ್ ದಿನ</string>
+    <string name="subscriptions_title">ಚಂದಾದಾರಿಕೆಗಳು</string>
+    <string name="subscriptions_empty_title">ಇನ್ನೂ ಯಾವುದೇ ಚಂದಾದಾರಿಕೆ ಇಲ್ಲ</string>
+    <string name="subscriptions_empty_body">ಬಾಡಿಗೆ, ಸದಸ್ಯತ್ವಗಳು ಮತ್ತು ಇತರ ಮಾಸಿಕ ಬಿಲ್‌ಗಳನ್ನು ಇಲ್ಲಿ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ — ಕೆಳಗೆ ಒಂದನ್ನು ಸೇರಿಸಿ.</string>
+    <string name="subscriptions_monthly_total_label">ಮಾಸಿಕ ಒಟ್ಟು</string>
+    <string name="subscriptions_count_singular">%1$d ಚಂದಾದಾರಿಕೆ</string>
+    <string name="subscriptions_count_plural">%1$d ಚಂದಾದಾರಿಕೆಗಳು</string>
+    <string name="subscriptions_next_renewal">ಮುಂದಿನ ನವೀಕರಣ: %1$s</string>
+    <string name="subscriptions_delete_title">ಚಂದಾದಾರಿಕೆ ಅಳಿಸಬೇಕೇ?</string>
+    <string name="subscriptions_delete_confirm">ಇದು \"%1$s\" ನ ಭವಿಷ್ಯದ ಪ್ರತಿಗಳನ್ನು ಸೇರಿಸುವುದನ್ನು ನಿಲ್ಲಿಸುತ್ತದೆ. ಹಿಂದಿನ ನಮೂದುಗಳು ನಿಮ್ಮ ಇತಿಹಾಸದಲ್ಲಿ ಉಳಿಯುತ್ತವೆ.</string>
+    <string name="subscriptions_dashboard_title">ಚಂದಾದಾರಿಕೆಗಳು</string>
 
     <string name="debt_direction_label">ದಿಕ್ಕು</string>
     <string name="debt_direction_owe">ನಾನು ಕೊಡಬೇಕಾದದ್ದು</string>

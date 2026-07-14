@@ -412,7 +412,18 @@
     <string name="error_loan_type_required">الرجاء اختيار نوع القرض</string>
     <string name="test_reminder_button">إرسال إشعار تجريبي</string>
     <string name="repeat_monthly_label">تكرار كل شهر</string>
-    <string name="repeat_monthly_hint">تُضاف نسخة تلقائيًا في الأول من كل شهر</string>
+    <string name="repeat_monthly_hint">تُضاف نسخة تلقائيًا في اليوم %1$d من كل شهر</string>
+    <string name="subscriptions_day_of_month_label">يوم الفوترة</string>
+    <string name="subscriptions_title">الاشتراكات</string>
+    <string name="subscriptions_empty_title">لا توجد اشتراكات بعد</string>
+    <string name="subscriptions_empty_body">تتبّع الإيجار والاشتراكات والفواتير الشهرية الأخرى هنا — أضف واحدة أدناه.</string>
+    <string name="subscriptions_monthly_total_label">الإجمالي الشهري</string>
+    <string name="subscriptions_count_singular">%1$d اشتراك</string>
+    <string name="subscriptions_count_plural">%1$d اشتراكات</string>
+    <string name="subscriptions_next_renewal">التجديد القادم: %1$s</string>
+    <string name="subscriptions_delete_title">حذف الاشتراك؟</string>
+    <string name="subscriptions_delete_confirm">سيؤدي هذا إلى إيقاف إضافة نسخ مستقبلية من \"%1$s\". ستبقى الإدخالات السابقة في سجلك.</string>
+    <string name="subscriptions_dashboard_title">الاشتراكات</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ لقد استخدمت 80% من ميزانيتك الشهرية</string>

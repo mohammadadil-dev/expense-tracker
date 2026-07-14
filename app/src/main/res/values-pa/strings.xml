@@ -289,7 +289,18 @@
     <string name="test_reminder_button">ਟੈਸਟ ਸੂਚਨਾ ਭੇਜੋ</string>
 
     <string name="repeat_monthly_label">ਹਰ ਮਹੀਨੇ ਦੁਹਰਾਓ</string>
-    <string name="repeat_monthly_hint">ਹਰ ਮਹੀਨੇ ਦੀ 1 ਤਰੀਕ ਨੂੰ ਇੱਕ ਕਾਪੀ ਆਪੇ ਜੋੜੀ ਜਾਵੇਗੀ</string>
+    <string name="repeat_monthly_hint">ਹਰ ਮਹੀਨੇ ਦੀ %1$d ਤਰੀਕ ਨੂੰ ਇੱਕ ਕਾਪੀ ਆਪੇ ਜੋੜੀ ਜਾਵੇਗੀ</string>
+    <string name="subscriptions_day_of_month_label">ਬਿਲਿੰਗ ਦਿਨ</string>
+    <string name="subscriptions_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscriptions_empty_title">ਹਾਲੇ ਕੋਈ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਨਹੀਂ</string>
+    <string name="subscriptions_empty_body">ਕਿਰਾਇਆ, ਮੈਂਬਰਸ਼ਿਪਾਂ ਅਤੇ ਹੋਰ ਮਾਸਿਕ ਬਿੱਲਾਂ ਨੂੰ ਇੱਥੇ ਟਰੈਕ ਕਰੋ — ਹੇਠਾਂ ਇੱਕ ਜੋੜੋ।</string>
+    <string name="subscriptions_monthly_total_label">ਮਾਸਿਕ ਕੁੱਲ</string>
+    <string name="subscriptions_count_singular">%1$d ਸਬਸਕ੍ਰਿਪਸ਼ਨ</string>
+    <string name="subscriptions_count_plural">%1$d ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscriptions_next_renewal">ਅਗਲੀ ਨਵੀਨੀਕਰਨ: %1$s</string>
+    <string name="subscriptions_delete_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <string name="subscriptions_delete_confirm">ਇਹ \"%1$s\" ਦੀਆਂ ਭਵਿੱਖ ਦੀਆਂ ਕਾਪੀਆਂ ਜੋੜਨ ਤੋਂ ਰੋਕ ਦੇਵੇਗਾ। ਪਿਛਲੀਆਂ ਐਂਟਰੀਆਂ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਰਹਿਣਗੀਆਂ।</string>
+    <string name="subscriptions_dashboard_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
 
     <string name="debt_direction_label">ਦਿਸ਼ਾ</string>
     <string name="debt_direction_owe">ਮੈਂ ਦੇਣਾ ਹੈ</string>

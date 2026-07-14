@@ -289,7 +289,18 @@
     <string name="test_reminder_button">પ્રાયોગિક સૂચના મોકલો</string>
 
     <string name="repeat_monthly_label">દર મહિને પુનરાવર્તન</string>
-    <string name="repeat_monthly_hint">દર મહિનાની 1 તારીખે એક નકલ આપોઆપ ઉમેરાશે</string>
+    <string name="repeat_monthly_hint">દર મહિનાની %1$d તારીખે એક નકલ આપોઆપ ઉમેરાશે</string>
+    <string name="subscriptions_day_of_month_label">બિલિંગ દિવસ</string>
+    <string name="subscriptions_title">સબ્સ્ક્રિપ્શન્સ</string>
+    <string name="subscriptions_empty_title">હજુ સુધી કોઈ સબ્સ્ક્રિપ્શન નથી</string>
+    <string name="subscriptions_empty_body">ભાડું, સભ્યપદો અને અન્ય માસિક બિલ અહીં ટ્રેક કરો — નીચે એક ઉમેરો.</string>
+    <string name="subscriptions_monthly_total_label">માસિક કુલ</string>
+    <string name="subscriptions_count_singular">%1$d સબ્સ્ક્રિપ્શન</string>
+    <string name="subscriptions_count_plural">%1$d સબ્સ્ક્રિપ્શન્સ</string>
+    <string name="subscriptions_next_renewal">આગામી નવીકરણ: %1$s</string>
+    <string name="subscriptions_delete_title">સબ્સ્ક્રિપ્શન ડિલીટ કરવું છે?</string>
+    <string name="subscriptions_delete_confirm">આ \"%1$s\" ની ભવિષ્યની નકલો ઉમેરાતી અટકાવશે. ભૂતકાળની એન્ટ્રીઓ તમારા ઇતિહાસમાં રહેશે.</string>
+    <string name="subscriptions_dashboard_title">સબ્સ્ક્રિપ્શન્સ</string>
 
     <string name="debt_direction_label">દિશા</string>
     <string name="debt_direction_owe">મારે આપવાનું</string>

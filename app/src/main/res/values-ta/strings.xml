@@ -289,7 +289,18 @@
     <string name="test_reminder_button">சோதனை அறிவிப்பு அனுப்பு</string>
 
     <string name="repeat_monthly_label">ஒவ்வொரு மாதமும் திரும்பு</string>
-    <string name="repeat_monthly_hint">ஒவ்வொரு மாதம் 1 ஆம் தேதி தானாக ஒரு நகல் சேர்க்கப்படும்</string>
+    <string name="repeat_monthly_hint">ஒவ்வொரு மாதமும் %1$d ஆம் தேதி தானாக ஒரு நகல் சேர்க்கப்படும்</string>
+    <string name="subscriptions_day_of_month_label">பில்லிங் நாள்</string>
+    <string name="subscriptions_title">சந்தாக்கள்</string>
+    <string name="subscriptions_empty_title">இதுவரை சந்தாக்கள் இல்லை</string>
+    <string name="subscriptions_empty_body">வாடகை, உறுப்பினர் சேவைகள் மற்றும் பிற மாத பில்களை இங்கே கண்காணிக்கவும் — கீழே ஒன்றைச் சேர்க்கவும்.</string>
+    <string name="subscriptions_monthly_total_label">மாத மொத்தம்</string>
+    <string name="subscriptions_count_singular">%1$d சந்தா</string>
+    <string name="subscriptions_count_plural">%1$d சந்தாக்கள்</string>
+    <string name="subscriptions_next_renewal">அடுத்த புதுப்பிப்பு: %1$s</string>
+    <string name="subscriptions_delete_title">சந்தாவை நீக்கவா?</string>
+    <string name="subscriptions_delete_confirm">இது \"%1$s\" இன் எதிர்கால நகல்கள் சேர்க்கப்படுவதை நிறுத்தும். கடந்த பதிவுகள் உங்கள் வரலாற்றில் இருக்கும்.</string>
+    <string name="subscriptions_dashboard_title">சந்தாக்கள்</string>
 
     <string name="debt_direction_label">திசை</string>
     <string name="debt_direction_owe">நான் கொடுக்க வேண்டியது</string>
