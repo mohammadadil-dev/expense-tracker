@@ -82,4 +82,11 @@ object CurrencyLocaleMapper {
     const val SAUDI_RIYAL_SYMBOL = "ر.س"
 
     fun isSaudiRiyalSymbol(symbol: String): Boolean = symbol == SAUDI_RIYAL_SYMBOL
+
+    /** Indian Rupee symbol, as stored by the currency picker (see [OnboardCurrency]/
+     * [CurrencyOption] "₹" entries). Gates India-only features — currently just the
+     * Khata "Request via UPI" flow, since UPI only works with Indian bank accounts. */
+    const val INR_SYMBOL = "₹"
+
+    fun isInrSymbol(symbol: String): Boolean = symbol == INR_SYMBOL
 }

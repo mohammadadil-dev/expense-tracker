@@ -1,5 +1,39 @@
 # Play Console "Data Safety" Form — Answer Key
 
+**Updated 2026-07-14 (v1.8.0, versionCode 19)**: added QR-code scanning to fill in a Khata
+party's UPI ID (`AddEditKhataPartySheet.kt`, ML Kit Barcode Scanning — the **bundled** model, not
+the Google-Play-Services unbundled one, same distinction as the existing receipt-scan OCR entry
+below), a phone-number fallback for "Pay via UPI" when no VPA is on file (copies the number to
+the clipboard and opens the user's UPI app — no new permission, clipboard write requires none on
+modern Android and nothing leaves the device), a Settings-navigation nudge when the user's own
+UPI ID is missing (pure UI, no data implication), and the new Subscriptions screen for recurring
+expenses (just new local Room columns/UI over data already covered under "Financial info").
+**No new Data Safety declaration needed for any of this** — the QR photo is processed by an
+on-device model and never uploaded (identical reasoning to receipt scanning, still using the
+already-declared `CAMERA` permission, no new permission added), the extracted UPI ID is stored in
+the same local `upiId` column already covered by the prior entry below, and the clipboard/
+Subscriptions changes don't touch anything Play's Data Safety form asks about. Also reuses this
+release to fold in the unpublished v1.7.1 Glance CVE-2024-7254 fix (see `STORE_LISTING.md`) — no
+Data Safety impact from that either, it's a transitive dependency version bump only.
+
+**Updated 2026-07-14**: added optional Khata "Request via UPI" payment links/QR (INR-only,
+`FEATURE_SPEC_KHATA_UPI_PAYMENTS.md`), plus the follow-up "Pay via UPI" (reverse direction, opens
+the party's own UPI ID directly) and "Mark as Paid" (manual quick-settle, any currency/direction).
+No new Data Safety declaration needed for any of these — `myUpiId` (Settings) and a party's `upiId`
+(Khata) are stored only in the local Room database, same as phone numbers already stored for
+WhatsApp reminders. The features build `upi://pay` URIs and on-device QR codes (ZXing, no network
+call) and hand them to whatever UPI app is installed or to the existing WhatsApp share flow — the
+app itself never contacts a payment gateway, bank, or server, so there is no new "collection" or
+"sharing" under Play's definition (nothing new leaves the device). "Mark as Paid" just writes a
+ledger entry, already covered under existing Khata data.
+
+**Updated 2026-07-10**: a NotificationListenerService-based background SMS detection feature was
+built and then reverted before release, so no "Notification Listener access" disclosure applies —
+see `SmsConsentManager.kt`'s doc comment for why (Play Console review has historically treated apps
+using notification access to read SMS content as circumventing the restricted READ_SMS/RECEIVE_SMS
+permission policy, which is a real suspension risk for a finance app). SMS detection stays
+foreground-only via the SMS User Consent API, as described below.
+
 **This file was rewritten on 2026-07-09, then corrected again the same day.** The previous version
 of this answer key told you to declare "no ads" and "no data collection" — that stopped being true
 once AdMob (banner + interstitial) was added (currently in v1.7.0, `versionCode 17`). The first
@@ -43,7 +77,8 @@ Drive or a third-party SDK's servers, not just "to the developer." ([Google's ow
    the kind of mismatch that triggers review scrutiny.
 
 Everything else the app touches — expenses, categories, budgets, Khata/debt/split entries, display
-name, or the text of any SMS you approve — never leaves the device unless the user explicitly
+name, UPI IDs entered for the optional Khata payment-request feature, or the text of any SMS you
+approve — never leaves the device unless the user explicitly
 exports/shares it themselves via the PDF/CSV/JSON share sheet (which routes through apps the user
 picks, not through us). The SMS User Consent flow itself is still **not** collection: Android hands
 the message text to the app locally after a per-message tap, and the app never relays it anywhere.

@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -81,8 +82,9 @@ fun AddEditExpenseSheet(
     prefill: ExpensePrefill? = null,
     familyModeEnabled: Boolean = false,
     familyMembers: List<FamilyMemberEntity> = emptyList(),
+    defaultRecurring: Boolean = false,
     onDismiss: () -> Unit,
-    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean, memberId: Long?) -> Unit,
+    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean, memberId: Long?, recurringDayOfMonth: Int?) -> Unit,
     onAddCategory: ((name: String, colorHex: String) -> Unit)? = null
 ) {
     var selectedCategory by remember {
@@ -105,7 +107,12 @@ fun AddEditExpenseSheet(
     var newCategoryColor by remember { mutableStateOf(quickColors[0]) }
     // Recurring: pre-populate from existing record (templates have isRecurring=true; auto-copies
     // have isRecurring=false, so editing a copy keeps the toggle off by default — correct).
-    var isRecurring by remember { mutableStateOf(existing?.isRecurring ?: false) }
+    var isRecurring by remember { mutableStateOf(existing?.isRecurring ?: defaultRecurring) }
+    // Billing/renewal day-of-month for recurring templates — defaults to the day component of
+    // the selected date so a subscription started on the 15th naturally renews on the 15th.
+    var recurringDayOfMonth by remember {
+        mutableStateOf(existing?.recurringDayOfMonth ?: dateIso.takeLast(2).toIntOrNull()?.coerceIn(1, 31) ?: 1)
+    }
     // Family member assignment — pre-populate from existing expense when editing.
     var selectedMemberId by remember { mutableStateOf<Long?>(existing?.memberId) }
     val locale = LocalConfiguration.current.locales[0]
@@ -276,7 +283,7 @@ fun AddEditExpenseSheet(
                             )
                             if (isRecurring) {
                                 Text(
-                                    stringResourceCompat(R.string.repeat_monthly_hint),
+                                    stringResourceCompat(R.string.repeat_monthly_hint, recurringDayOfMonth),
                                     style = MaterialTheme.typography.bodySmall.copy(
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -285,6 +292,37 @@ fun AddEditExpenseSheet(
                         }
                     }
                     Switch(checked = isRecurring, onCheckedChange = { isRecurring = it })
+                }
+                if (isRecurring) {
+                    Spacer(Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            stringResourceCompat(R.string.subscriptions_day_of_month_label),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = {
+                                recurringDayOfMonth = (recurringDayOfMonth - 1).coerceIn(1, 31)
+                            }) {
+                                Icon(Icons.Filled.Remove, contentDescription = null)
+                            }
+                            Text(
+                                recurringDayOfMonth.toString(),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.width(28.dp),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            )
+                            IconButton(onClick = {
+                                recurringDayOfMonth = (recurringDayOfMonth + 1).coerceIn(1, 31)
+                            }) {
+                                Icon(Icons.Filled.Add, contentDescription = null)
+                            }
+                        }
+                    }
                 }
                 Spacer(Modifier.height(12.dp))
             }
@@ -376,7 +414,11 @@ fun AddEditExpenseSheet(
                     }
                     val categoryId = selectedCategory?.id
                     if (categoryId != null) {
-                        onSave(existing?.id, categoryId, description.trim(), amount, dateIso, isRecurring, selectedMemberId)
+                        onSave(
+                            existing?.id, categoryId, description.trim(), amount, dateIso,
+                            isRecurring, selectedMemberId,
+                            if (isRecurring) recurringDayOfMonth else null
+                        )
                     }
                 }) {
                     Text(stringResourceCompat(if (existing == null) R.string.add else R.string.update))
@@ -457,3 +499,7 @@ private fun formatPlain(value: Double): String {
 
 @Composable
 private fun stringResourceCompat(id: Int) = androidx.compose.ui.res.stringResource(id)
+
+@Composable
+private fun stringResourceCompat(id: Int, vararg formatArgs: Any) =
+    androidx.compose.ui.res.stringResource(id, *formatArgs)

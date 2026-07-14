@@ -19,6 +19,14 @@ import com.google.android.gms.common.api.Status
  * there is no silent background reading. It also can't see SMS history — only messages that
  * arrive while [startListening] is active, which in practice means while the app is open, since
  * showing the consent prompt requires a foreground Activity.
+ *
+ * This is deliberately the app's only SMS detection method. A background alternative
+ * (NotificationListenerService, reading the default SMS app's notifications) was built and then
+ * reverted before release: it requires a broad, all-notifications "special app access" grant, and
+ * Play Console review has historically treated that pattern — using notification access to read
+ * SMS content instead of declaring the restricted READ_SMS/RECEIVE_SMS permission — as a policy
+ * circumvention risk for finance apps specifically. Staying foreground-only (detection only works
+ * while the app is open) is the trade-off accepted to avoid that risk.
  */
 class SmsConsentManager(
     private val context: Context,

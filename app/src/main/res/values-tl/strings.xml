@@ -8,6 +8,10 @@
     <string name="your_name_label">Iyong Pangalan</string>
     <string name="your_name_hint">hal. Mohammad</string>
     <string name="your_name_note">Ginagamit lamang para i-personalize ang pagbati sa dashboard. Hindi ipinapadala kahit saan.</string>
+    <string name="upi_section_title">Bayad (UPI)</string>
+    <string name="upi_id_label">Iyong UPI ID</string>
+    <string name="upi_id_hint">hal. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">Ilagay ang tamang UPI ID (hal. name@bank)</string>
 
     <string name="nav_dashboard">Home</string>
     <string name="nav_categories">Mga Kategorya</string>
@@ -164,6 +168,13 @@
     <string name="language_urdu">Urdu (اردو)</string>
     <string name="language_bengali">Bengali (বাংলা)</string>
     <string name="language_tagalog">Tagalog (Filipino)</string>
+    <string name="language_gujarati">Gujarati (ગુજરાતી)</string>
+    <string name="language_kannada">Kannada (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">Malayalam (മലയാളം)</string>
+    <string name="language_marathi">Marathi (मराठी)</string>
+    <string name="language_punjabi">Punjabi (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">Tamil (தமிழ்)</string>
+    <string name="language_telugu">Telugu (తెలుగు)</string>
     <string name="currency_label">Pera</string>
     <string name="currency_custom_hint">Custom na simbolo</string>
     <string name="convert_currency_title">I-convert ang Pera</string>
@@ -329,6 +340,9 @@
     <string name="reminder_toggle_label">Paalala sa araw-araw na paggastos</string>
     <string name="reminder_toggle_desc">Makatanggap ng paalala araw-araw para itala ang iyong mga gastos</string>
     <string name="reminder_time_label">Oras ng paalala</string>
+    <string name="reminder2_toggle_label">Magdagdag ng pangalawang paalala</string>
+    <string name="reminder2_toggle_desc">Kumuha ng dagdag na paalala nang mas maaga sa araw, bukod sa nasa itaas</string>
+    <string name="reminder2_time_label">Oras ng pangalawang paalala</string>
     <string name="reminder_notification_title">Naitala mo na ba ang iyong mga gastos ngayon? 💸</string>
     <string name="reminder_notification_body">I-tap para mabilis na idagdag ang mga napalampas mong gastos ngayon.</string>
 
@@ -344,6 +358,12 @@
     <string name="khata_party_name_hint">Pangalan (tindahan o tao)</string>
     <string name="khata_party_phone_hint">Numero ng telepono (para sa WhatsApp)</string>
     <string name="khata_party_phone_optional">Opsyonal — para lang sa WhatsApp reminders</string>
+    <string name="khata_party_upi_hint">UPI ID nila (opsyonal)</string>
+    <string name="khata_scan_upi_qr">I-scan ang UPI QR code</string>
+    <string name="khata_scan_upi_qr_hint">O i-tap ang icon ng scan para punan ito mula sa kanilang UPI QR code</string>
+    <string name="khata_upi_qr_scan_error">Walang nahanap na UPI ID sa QR code na iyon. Subukang muli o ilagay ito nang manwal.</string>
+    <string name="khata_party_upi_mine_ready">Handa na ang UPI na kahilingan — gagamitin ang UPI ID mo: %1$s</string>
+    <string name="khata_party_upi_mine_missing">Para sila makapagbayad sa iyo gamit ang UPI, itakda ang UPI ID mo sa Settings</string>
     <string name="khata_save_party">I-save</string>
     <string name="khata_delete_party">Burahin ang Party</string>
     <string name="khata_no_parties_i_owe">Wala pang tindahang naidagdag.
@@ -362,20 +382,28 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_delete_entry">Burahin ang entry</string>
     <string name="khata_whatsapp_reminder">Magpadala ng Reminder</string>
     <string name="khata_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
+    <string name="khata_request_via_upi">Humiling sa pamamagitan ng UPI</string>
+    <string name="khata_add_upi_hint">Idagdag ang iyong UPI ID sa Settings para makapagbayad sila sa iyo agad gamit ang UPI</string>
+    <string name="khata_upi_sheet_caption">Puwede nilang i-scan ito nang personal, o pindutin ang link na ibinahagi mo para direktang magbayad.</string>
+    <string name="khata_upi_share_link">Ibahagi ang link ng bayad</string>
+    <string name="khata_pay_via_upi">Magbayad sa pamamagitan ng UPI</string>
+    <string name="khata_no_upi_app">Walang nakitang UPI app sa device na ito.</string>
+    <string name="khata_pay_via_upi_phone_fallback">Nakopya ang numero ng telepono — hanapin ito sa iyong UPI app para bayaran si %1$s.</string>
+    <string name="khata_mark_as_paid">Markahan bilang Bayad na</string>
+    <string name="khata_mark_as_paid_confirm">Markahan ang %1$s bilang bayad na? Magrerehistro ito ng entry ng bayad na magbabayad sa natitirang balanse.</string>
+    <string name="khata_marked_as_paid_note">Minarkahang bayad na</string>
     <string name="khata_reminder_msg_owe">Kamusta %1$s 👋
 
 Paalala lang — mayroon kang natitirang balanse na %2$s.
 
-Mangyaring bayaran kapag maginhawa 🙏
-
-— %3$s</string>
+Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="khata_reminder_msg_credit">Kamusta %1$s 👋
 
 Paalala — mayroon kang %2$s na credit sa aking tindahan.
 
-Gamitin anumang oras!
-
-— %3$s</string>
+Gamitin anumang oras!</string>
+    <string name="khata_reminder_signature">Regards,
+%1$s</string>
     <string name="khata_direction_i_owe_label">May utang ako sa party na ito</string>
     <string name="khata_direction_they_owe_label">May utang ang party na ito sa akin</string>
     <string name="khata_initial_amount_label">Panimulang halaga (opsyonal)</string>
@@ -384,7 +412,18 @@ Gamitin anumang oras!
     <string name="error_loan_type_required">Mangyaring pumili ng uri ng utang</string>
     <string name="test_reminder_button">Magpadala ng Test na Abiso</string>
     <string name="repeat_monthly_label">Ulitin bawat buwan</string>
-    <string name="repeat_monthly_hint">Isang kopya ang awtomatikong idadagdag sa ika-1 ng bawat buwan</string>
+    <string name="repeat_monthly_hint">Isang kopya ang awtomatikong idadagdag sa araw %1$d ng bawat buwan</string>
+    <string name="subscriptions_day_of_month_label">Araw ng Pagsingil</string>
+    <string name="subscriptions_title">Mga Subscription</string>
+    <string name="subscriptions_empty_title">Wala pang subscription</string>
+    <string name="subscriptions_empty_body">I-track ang upa, membership, at iba pang buwanang bayarin dito — magdagdag sa ibaba.</string>
+    <string name="subscriptions_monthly_total_label">Buwanang Kabuuan</string>
+    <string name="subscriptions_count_singular">%1$d subscription</string>
+    <string name="subscriptions_count_plural">%1$d na subscription</string>
+    <string name="subscriptions_next_renewal">Susunod na Pag-renew: %1$s</string>
+    <string name="subscriptions_delete_title">Burahin ang subscription?</string>
+    <string name="subscriptions_delete_confirm">Ihihinto nito ang pagdaragdag ng mga susunod na kopya ng \"%1$s\". Mananatili ang mga nakaraang entry sa iyong history.</string>
+    <string name="subscriptions_dashboard_title">Mga Subscription</string>
     <string name="load_more">Mag-load pa</string>
 
     <!-- ── Budget alerts ── -->
@@ -431,7 +470,6 @@ Gamitin anumang oras!
     <string name="khata_label_all_cleared">Naaayos na ang lahat kay %1$s ✓</string>
     <string name="khata_label_i_owe">Ikaw ay may utang kay %1$s</string>
     <string name="khata_label_they_owe">Si %1$s ay may utang sa iyo</string>
-    <string name="khata_sender_name_default">Ako</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">I-track ang pera na ipinahiram at hiniram mula sa iyong mga contact</string>
@@ -627,4 +665,26 @@ Gamitin anumang oras!
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ Bago Dito</string>
+    <string name="whats_new_subtitle">I-swipe para tuklasin ang mga bagong feature</string>
+    <string name="force_update_title">Kailangan ng Update</string>
+    <string name="force_update_body">May mas bagong bersyon ng app na may mahahalagang pagpapabuti at ayos. Mangyaring mag-update para magpatuloy sa paggamit ng app.</string>
+    <string name="force_update_button">I-update Ngayon</string>
+    <string name="force_update_note">Kailangan mong mag-update para magpatuloy</string>
+    <string name="khata_balance_label">Balanse:</string>
+    <string name="split_hero_settled_label">Nasettle na lahat ✓</string>
+    <string name="split_hero_get_back_label">Babalik sa\'yo</string>
+    <string name="split_hero_you_owe_label">Utang mo</string>
+
+    <string name="whats_new_feature_scan_title">I-scan ang Resibo</string>
+    <string name="whats_new_feature_voice_title">Voice Input</string>
+    <string name="whats_new_feature_split_title">Hatiin ang Bill</string>
+    <string name="whats_new_feature_khata_title">Khata / Ledger</string>
+    <string name="whats_new_feature_goals_title">Mga Layunin at Streak</string>
+    <string name="split_hero_total_spent">Kabuuang Nagastos</string>
+
+    <string name="reminder_hour_decrease">Bawasan ang oras</string>
+    <string name="reminder_hour_increase">Dagdagan ang oras</string>
 </resources>

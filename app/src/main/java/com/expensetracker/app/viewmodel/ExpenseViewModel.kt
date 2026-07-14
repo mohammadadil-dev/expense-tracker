@@ -68,6 +68,10 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         .flatMapLatest { key -> repository.expensesForMonth(key) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Recurring-expense templates — powers the Subscriptions screen and its dashboard card. */
+    val recurringTemplates: StateFlow<List<ExpenseEntity>> = repository.recurringTemplates
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     /** Refresh the home-screen widget after any data mutation. Fire-and-forget. */
     private fun refreshWidget() {
         viewModelScope.launch { ExpenseWidget.refresh(getApplication()) }
@@ -152,6 +156,9 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _displayName = MutableStateFlow(settings.displayName)
     val displayName: StateFlow<String> = _displayName
 
+    private val _myUpiId = MutableStateFlow(settings.myUpiId)
+    val myUpiId: StateFlow<String> = _myUpiId
+
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
 
@@ -160,6 +167,18 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     private val _reminderHour = MutableStateFlow(settings.reminderHour)
     val reminderHour: StateFlow<Int> = _reminderHour
+
+    private val _reminder2Enabled = MutableStateFlow(settings.reminder2Enabled)
+    val reminder2Enabled: StateFlow<Boolean> = _reminder2Enabled
+
+    private val _reminderHour2 = MutableStateFlow(settings.reminderHour2)
+    val reminderHour2: StateFlow<Int> = _reminderHour2
+
+    /** Whether we've ever actually shown the POST_NOTIFICATIONS system prompt — see
+     * [SettingsRepository.notifPermissionRequested]. Read directly (not a StateFlow) since it's
+     * only checked once per Activity lifecycle moment, not observed continuously by UI. */
+    val notifPermissionRequested: Boolean get() = settings.notifPermissionRequested
+    fun markNotifPermissionRequested() { settings.notifPermissionRequested = true }
 
     private val _monthlySalary = MutableStateFlow(settings.monthlySalary)
     val monthlySalary: StateFlow<Double> = _monthlySalary
@@ -284,11 +303,15 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         amount: Double,
         date: String,
         isRecurring: Boolean = false,
+        recurringDayOfMonth: Int? = null,
         memberId: Long? = null,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            repository.addOrUpdateExpense(id, categoryId, description, amount, date, isRecurring, memberId = memberId)
+            repository.addOrUpdateExpense(
+                id, categoryId, description, amount, date, isRecurring,
+                recurringDayOfMonth = recurringDayOfMonth, memberId = memberId
+            )
             // Update logging streak only for new expenses, not edits.
             if (id == null) updateLogStreak(date)
             val monthKey = DateUtils.monthKeyFromDate(date)
@@ -384,6 +407,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         _displayName.value = name
     }
 
+    fun setMyUpiId(upiId: String) {
+        settings.myUpiId = upiId
+        _myUpiId.value = upiId
+    }
+
     fun setCurrencySymbol(symbol: String) {
         settings.currencySymbol = symbol
         _currencySymbol.value = symbol
@@ -417,8 +445,16 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         settings.reminderEnabled = enabled
         _reminderEnabled.value = enabled
         val ctx = getApplication<Application>().applicationContext
-        if (enabled) ReminderScheduler.schedule(ctx, settings.reminderHour, forceReschedule = true)
-        else ReminderScheduler.cancel(ctx)
+        if (enabled) {
+            ReminderScheduler.schedule(ctx, settings.reminderHour, slot = 1, forceReschedule = true)
+            // The master toggle gates the second reminder too — re-arm it if it was already on.
+            if (settings.reminder2Enabled) {
+                ReminderScheduler.schedule(ctx, settings.reminderHour2, slot = 2, forceReschedule = true)
+            }
+        } else {
+            ReminderScheduler.cancel(ctx, slot = 1)
+            ReminderScheduler.cancel(ctx, slot = 2)
+        }
     }
 
     fun setReminderHour(hour: Int) {
@@ -428,6 +464,34 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
             ReminderScheduler.schedule(
                 getApplication<Application>().applicationContext,
                 hour,
+                slot = 1,
+                forceReschedule = true
+            )
+        }
+    }
+
+    /** Toggles the optional second daily reminder. Only takes effect while [reminderEnabled]
+     * (the master toggle) is also on — enabling this alone with the master off just persists
+     * the preference for whenever the master toggle is turned on next. */
+    fun setReminder2Enabled(enabled: Boolean) {
+        settings.reminder2Enabled = enabled
+        _reminder2Enabled.value = enabled
+        val ctx = getApplication<Application>().applicationContext
+        if (enabled && settings.reminderEnabled) {
+            ReminderScheduler.schedule(ctx, settings.reminderHour2, slot = 2, forceReschedule = true)
+        } else {
+            ReminderScheduler.cancel(ctx, slot = 2)
+        }
+    }
+
+    fun setReminderHour2(hour: Int) {
+        settings.reminderHour2 = hour
+        _reminderHour2.value = hour
+        if (settings.reminderEnabled && settings.reminder2Enabled) {
+            ReminderScheduler.schedule(
+                getApplication<Application>().applicationContext,
+                hour,
+                slot = 2,
                 forceReschedule = true
             )
         }

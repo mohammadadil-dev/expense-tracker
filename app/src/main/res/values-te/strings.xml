@@ -8,6 +8,10 @@
     <string name="your_name_label">మీ పేరు</string>
     <string name="your_name_hint">ఉదా. Mohammad</string>
     <string name="your_name_note">మీ డాష్‌బోర్డ్ శుభాకాంక్షలను వ్యక్తిగతీకరించడానికి మాత్రమే ఉపయోగించబడుతుంది. ఎక్కడికీ పంపబడదు.</string>
+    <string name="upi_section_title">చెల్లింపు (UPI)</string>
+    <string name="upi_id_label">మీ UPI ఐడీ</string>
+    <string name="upi_id_hint">ఉదా. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">చెల్లుబాటు అయ్యే UPI ఐడీని నమోదు చేయండి (ఉదా. name@bank)</string>
 
     <string name="nav_dashboard">హోమ్</string>
     <string name="nav_categories">వర్గాలు</string>
@@ -285,7 +289,18 @@
     <string name="test_reminder_button">పరీక్ష నోటిఫికేషన్ పంపు</string>
 
     <string name="repeat_monthly_label">ప్రతి నెలా పునరావృతం</string>
-    <string name="repeat_monthly_hint">ప్రతి నెల 1వ తేదీన ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది</string>
+    <string name="repeat_monthly_hint">ప్రతి నెల %1$d వ తేదీన ఆటోమేటిగ్గా ఒక కాపీ జోడించబడుతుంది</string>
+    <string name="subscriptions_day_of_month_label">బిల్లింగ్ రోజు</string>
+    <string name="subscriptions_title">సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="subscriptions_empty_title">ఇంకా సబ్‌స్క్రిప్షన్‌లు లేవు</string>
+    <string name="subscriptions_empty_body">అద్దె, సభ్యత్వాలు మరియు ఇతర నెలవారీ బిల్లులను ఇక్కడ ట్రాక్ చేయండి — దిగువన ఒకటి జోడించండి.</string>
+    <string name="subscriptions_monthly_total_label">నెలవారీ మొత్తం</string>
+    <string name="subscriptions_count_singular">%1$d సబ్‌స్క్రిప్షన్</string>
+    <string name="subscriptions_count_plural">%1$d సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="subscriptions_next_renewal">తదుపరి రెన్యువల్: %1$s</string>
+    <string name="subscriptions_delete_title">సబ్‌స్క్రిప్షన్‌ను తొలగించాలా?</string>
+    <string name="subscriptions_delete_confirm">ఇది \"%1$s\" యొక్క భవిష్యత్తు కాపీలను జోడించకుండా ఆపుతుంది. గత ఎంట్రీలు మీ చరిత్రలో ఉంటాయి.</string>
+    <string name="subscriptions_dashboard_title">సబ్‌స్క్రిప్షన్‌లు</string>
 
     <string name="debt_direction_label">దిశ</string>
     <string name="debt_direction_owe">నేను చెల్లించాల్సింది</string>
@@ -345,6 +360,9 @@
     <string name="reminder_toggle_label">సాయంత్రం ఖర్చు రిమైండర్</string>
     <string name="reminder_toggle_desc">మీ ఖర్చులు నమోదు చేయడానికి రోజూ రిమైండర్ పొందండి</string>
     <string name="reminder_time_label">రిమైండర్ సమయం</string>
+    <string name="reminder2_toggle_label">రెండవ రిమైండర్ జోడించండి</string>
+    <string name="reminder2_toggle_desc">పైన ఉన్నదానికి అదనంగా, రోజులో ముందుగా అదనపు రిమైండర్ పొందండి</string>
+    <string name="reminder2_time_label">రెండవ రిమైండర్ సమయం</string>
     <string name="reminder_notification_title">ఈరోజు ఖర్చులు నమోదు చేశారా? 💸</string>
     <string name="reminder_notification_body">ఈరోజు మిస్సైన ఖర్చులు త్వరగా జోడించడానికి నొక్కండి.</string>
 
@@ -359,6 +377,12 @@
     <string name="khata_party_name_hint">పేరు (దుకాణం లేదా వ్యక్తి)</string>
     <string name="khata_party_phone_hint">ఫోన్ నంబర్ (WhatsApp కోసం)</string>
     <string name="khata_party_phone_optional">ఐచ్ఛికం — WhatsApp రిమైండర్‌లకు మాత్రమే అవసరం</string>
+    <string name="khata_party_upi_hint">వారి UPI ఐడీ (ఐచ్ఛికం)</string>
+    <string name="khata_scan_upi_qr">UPI QR కోడ్‌ను స్కాన్ చేయండి</string>
+    <string name="khata_scan_upi_qr_hint">లేదా వారి UPI QR కోడ్ నుండి దీన్ని నింపడానికి స్కాన్ చిహ్నాన్ని నొక్కండి</string>
+    <string name="khata_upi_qr_scan_error">ఆ QR కోడ్‌లో UPI ID కనుగొనబడలేదు. మళ్లీ ప్రయత్నించండి లేదా మాన్యువల్‌గా నమోదు చేయండి.</string>
+    <string name="khata_party_upi_mine_ready">UPI అభ్యర్థన సిద్ధంగా ఉంది — మీ UPI ఐడీ ఉపయోగించబడుతుంది: %1$s</string>
+    <string name="khata_party_upi_mine_missing">వారు UPI ద్వారా మీకు చెల్లించడానికి సెట్టింగ్‌లలో మీ UPI ఐడీని సెట్ చేయండి</string>
     <string name="khata_save_party">సేవ్ చేయి</string>
     <string name="khata_delete_party">పార్టీ తొలగించు</string>
     <string name="khata_no_parties_i_owe">ఇంకా దుకాణాలు జోడించలేదు.\nఖాతా ఉన్న దుకాణం జోడించడానికి + నొక్కండి.</string>
@@ -375,20 +399,28 @@
     <string name="khata_delete_entry">నమోదు తొలగించు</string>
     <string name="khata_whatsapp_reminder">రిమైండర్ పంపు</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ఇన్‌స్టాల్ కాలేదు.</string>
+    <string name="khata_request_via_upi">UPI ద్వారా అభ్యర్థించండి</string>
+    <string name="khata_add_upi_hint">వారు మీకు తక్షణమే UPI ద్వారా చెల్లించగలిగేలా మీ UPI IDని సెట్టింగ్‌లలో జోడించండి</string>
+    <string name="khata_upi_sheet_caption">వారు దీన్ని నేరుగా స్కాన్ చేయవచ్చు, లేదా మీరు షేర్ చేసిన లింక్‌ను నొక్కి నేరుగా చెల్లించవచ్చు.</string>
+    <string name="khata_upi_share_link">చెల్లింపు లింక్‌ను షేర్ చేయండి</string>
+    <string name="khata_pay_via_upi">UPI ద్వారా చెల్లించండి</string>
+    <string name="khata_no_upi_app">ఈ పరికరంలో UPI యాప్ కనుగొనబడలేదు.</string>
+    <string name="khata_pay_via_upi_phone_fallback">ఫోన్ నంబర్ కాపీ చేయబడింది — %1$sకి చెల్లించడానికి మీ UPI యాప్‌లో దీన్ని వెతకండి.</string>
+    <string name="khata_mark_as_paid">చెల్లించినట్లు గుర్తించండి</string>
+    <string name="khata_mark_as_paid_confirm">%1$s చెల్లించినట్లు గుర్తించాలా? దీనివల్ల బాకీని తీర్చే చెల్లింపు ఎంట్రీ నమోదవుతుంది.</string>
+    <string name="khata_marked_as_paid_note">చెల్లించినట్లు గుర్తించబడింది</string>
     <string name="khata_reminder_msg_owe">హలో %1$s 👋
 
 ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు %2$s బాకీ ఉంది.
 
-వీలైనప్పుడు పరిష్కరించండి 🙏
-
-— %3$s</string>
+వీలైనప్పుడు పరిష్కరించండి 🙏</string>
     <string name="khata_reminder_msg_credit">హలో %1$s 👋
 
 ఒక గమనిక — నా దుకాణంలో మీకు %2$s క్రెడిట్ ఉంది.
 
-ఎప్పుడైనా ఉపయోగించుకోండి!
-
-— %3$s</string>
+ఎప్పుడైనా ఉపయోగించుకోండి!</string>
+    <string name="khata_reminder_signature">వందనాలతో,
+%1$s</string>
     <string name="khata_direction_i_owe_label">నేను ఈ పార్టీకి చెల్లించాల్సింది</string>
     <string name="khata_direction_they_owe_label">ఈ పార్టీ నాకు చెల్లించాల్సింది</string>
     <string name="khata_initial_amount_label">ప్రారంభ నిల్వ (ఐచ్ఛికం)</string>
@@ -431,7 +463,6 @@
     <string name="khata_label_all_cleared">%1$s తో అన్నీ పరిష్కరించారు ✓</string>
     <string name="khata_label_i_owe">మీరు %1$s కి చెల్లించాల్సింది</string>
     <string name="khata_label_they_owe">%1$s మీకు చెల్లించాల్సింది</string>
-    <string name="khata_sender_name_default">నేను</string>
 
     <string name="khata_subtitle">మీ పరిచయాలతో అప్పుల లావాదేవీలు ట్రాక్ చేయండి</string>
     <string name="debts_subtitle">మీరు చెల్లించాల్సిన మరియు మీకు రావలసిన మొత్తాలు ట్రాక్ చేయండి</string>
@@ -613,4 +644,26 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">చిట్కా: రోజూ నమోదు చేయడం బడ్జెట్ నియంత్రించడం సులభం 📊</string>
     <string name="reminder_action_add_expense">ఖర్చు జోడించు</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ కొత్తగా ఏముంది</string>
+    <string name="whats_new_subtitle">కొత్త ఫీచర్లను చూడటానికి స్వైప్ చేయండి</string>
+    <string name="force_update_title">అప్‌డేట్ అవసరం</string>
+    <string name="force_update_body">ముఖ్యమైన మెరుగుదలలు మరియు ఫిక్స్‌లతో యాప్ యొక్క కొత్త వెర్షన్ అందుబాటులో ఉంది. యాప్‌ను ఉపయోగించడం కొనసాగించడానికి దయచేసి అప్‌డేట్ చేయండి.</string>
+    <string name="force_update_button">ఇప్పుడే అప్‌డేట్ చేయండి</string>
+    <string name="force_update_note">కొనసాగించడానికి మీరు తప్పనిసరిగా అప్‌డేట్ చేయాలి</string>
+    <string name="khata_balance_label">బ్యాలెన్స్:</string>
+    <string name="split_hero_settled_label">అన్నీ పరిష్కరించారు ✓</string>
+    <string name="split_hero_get_back_label">మీకు తిరిగి వస్తుంది</string>
+    <string name="split_hero_you_owe_label">మీరు బాకీ ఉన్నారు</string>
+
+    <string name="whats_new_feature_scan_title">రసీదులు స్కాన్ చేయి</string>
+    <string name="whats_new_feature_voice_title">వాయిస్ ఇన్‌పుట్</string>
+    <string name="whats_new_feature_split_title">బిల్లులు విభజించు</string>
+    <string name="whats_new_feature_khata_title">ఖాతా / లెడ్జర్</string>
+    <string name="whats_new_feature_goals_title">లక్ష్యాలు &amp; స్ట్రీక్</string>
+    <string name="split_hero_total_spent">మొత్తం ఖర్చు</string>
+
+    <string name="reminder_hour_decrease">గంట తగ్గించు</string>
+    <string name="reminder_hour_increase">గంట పెంచు</string>
 </resources>

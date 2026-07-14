@@ -116,13 +116,18 @@ fun SplitsScreen(
 
         Scaffold(
             containerColor = Color.Transparent,
+            // Only shown once there's at least one group — the empty state below already has
+            // its own full-width "Create Group" button as the sole call-to-action, so a FAB
+            // doing the exact same thing on top of it was pure duplication.
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { showNewGroupSheet = true },
-                    shape = CircleShape,
-                    containerColor = MaterialTheme.colorScheme.primary
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                if (groups.isNotEmpty()) {
+                    FloatingActionButton(
+                        onClick = { showNewGroupSheet = true },
+                        shape = CircleShape,
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                    }
                 }
             }
         ) { padding ->
@@ -279,14 +284,14 @@ private fun SplitsHeroHeader(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SplitStatCard(
-                label = "You owe",
+                label = stringResource(R.string.split_hero_you_owe_label),
                 amount = totalYouOwe,
                 currencySymbol = currencySymbol,
                 amountColor = if (totalYouOwe < 0.01) TextMuted else DangerRed,
                 modifier = Modifier.weight(1f)
             )
             SplitStatCard(
-                label = "You get back",
+                label = stringResource(R.string.split_hero_get_back_label),
                 amount = totalYouGetBack,
                 currencySymbol = currencySymbol,
                 amountColor = if (totalYouGetBack < 0.01) TextMuted else SuccessGreen,

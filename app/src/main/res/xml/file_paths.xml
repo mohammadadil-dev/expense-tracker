@@ -7,4 +7,6 @@
     <cache-path name="cache" path="." />
     <!-- Temp images captured by the camera for receipt scanning. -->
     <cache-path name="camera" path="camera/" />
+    <!-- Generated UPI QR code PNGs for the Khata "Request via UPI" share flow. -->
+    <cache-path name="qrcodes" path="qrcodes/" />
 </paths>

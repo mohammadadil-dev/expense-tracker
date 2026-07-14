@@ -61,6 +61,10 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE isRecurring = 1")
     suspend fun recurringTemplatesOnce(): List<ExpenseEntity>
 
+    /** Reactive stream of template rows — powers the Subscriptions screen. */
+    @Query("SELECT * FROM expenses WHERE isRecurring = 1 ORDER BY description ASC")
+    fun observeRecurringTemplates(): Flow<List<ExpenseEntity>>
+
     /**
      * How many auto-generated copies of [sourceId] already exist for [monthKey].
      * Used by the scheduler to avoid duplicates on successive app launches.

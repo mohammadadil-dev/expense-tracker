@@ -9,6 +9,11 @@
     <string name="your_name_hint">e.g. Mohammad</string>
     <string name="your_name_note">Used only to personalize your dashboard greeting. Never sent anywhere.</string>
 
+    <string name="upi_section_title">Payment (UPI)</string>
+    <string name="upi_id_label">Your UPI ID</string>
+    <string name="upi_id_hint">e.g. mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">Enter a valid UPI ID (e.g. name@bank)</string>
+
     <string name="nav_dashboard">Home</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_settings">Settings</string>
@@ -196,7 +201,7 @@
 
     <string name="sms_detection_title">SMS Detection</string>
     <string name="sms_detection_toggle_label">Detect transactions from SMS</string>
-    <string name="sms_detection_description">When you get a bank, UPI, or card SMS, the app asks permission to read just that one message, then adds it to a review queue below — nothing is saved until you confirm it. Detection only works while the app is open.</string>
+    <string name="sms_detection_description">When you get a bank, UPI, or card SMS, it\'s added to a review queue below — nothing is saved until you confirm it. Only works while the app is open.</string>
     <string name="sms_pending_banner">%1$d transaction(s) detected from SMS — tap to review</string>
     <string name="sms_review_title">Review %1$d Transaction(s)</string>
     <string name="sms_review_subtitle">Confirm or edit each one before it\'s saved as an expense.</string>
@@ -291,7 +296,18 @@
 
     <!-- Recurring expenses -->
     <string name="repeat_monthly_label">Repeat every month</string>
-    <string name="repeat_monthly_hint">A copy is added automatically on the 1st of each month</string>
+    <string name="repeat_monthly_hint">A copy is added automatically on day %1$d of each month</string>
+    <string name="subscriptions_day_of_month_label">Billing day</string>
+    <string name="subscriptions_title">Subscriptions</string>
+    <string name="subscriptions_empty_title">No subscriptions yet</string>
+    <string name="subscriptions_empty_body">Track rent, memberships, and other monthly bills here — add one below.</string>
+    <string name="subscriptions_monthly_total_label">Monthly total</string>
+    <string name="subscriptions_count_singular">%1$d subscription</string>
+    <string name="subscriptions_count_plural">%1$d subscriptions</string>
+    <string name="subscriptions_next_renewal">Next renewal: %1$s</string>
+    <string name="subscriptions_delete_title">Delete subscription?</string>
+    <string name="subscriptions_delete_confirm">This stops future copies of \"%1$s\" from being added. Past entries stay in your history.</string>
+    <string name="subscriptions_dashboard_title">Subscriptions</string>
 
     <string name="debt_direction_label">Direction</string>
     <string name="debt_direction_owe">I Owe</string>
@@ -353,6 +369,9 @@
     <string name="reminder_toggle_label">Evening spending reminder</string>
     <string name="reminder_toggle_desc">Get a daily nudge to log your expenses</string>
     <string name="reminder_time_label">Reminder time</string>
+    <string name="reminder2_toggle_label">Add a second reminder</string>
+    <string name="reminder2_toggle_desc">Get an extra nudge earlier in the day, in addition to the one above</string>
+    <string name="reminder2_time_label">Second reminder time</string>
     <string name="reminder_notification_title">Did you log today\'s expenses? 💸</string>
     <string name="reminder_notification_body">Tap to quickly add any expenses you may have missed today.</string>
 
@@ -368,6 +387,12 @@
     <string name="khata_party_name_hint">Name (shop or person)</string>
     <string name="khata_party_phone_hint">Phone number (for WhatsApp)</string>
     <string name="khata_party_phone_optional">Optional — needed only for WhatsApp reminders</string>
+    <string name="khata_party_upi_hint">Their UPI ID (optional)</string>
+    <string name="khata_scan_upi_qr">Scan UPI QR code</string>
+    <string name="khata_scan_upi_qr_hint">Or tap the scan icon to fill this from their UPI QR code</string>
+    <string name="khata_upi_qr_scan_error">Couldn\'t find a UPI ID in that QR code. Try again or enter it manually.</string>
+    <string name="khata_party_upi_mine_ready">Request via UPI is ready — using your UPI ID: %1$s</string>
+    <string name="khata_party_upi_mine_missing">Set your UPI ID in Settings to let them pay you via UPI</string>
     <string name="khata_save_party">Save</string>
     <string name="khata_delete_party">Delete Party</string>
     <string name="khata_no_parties_i_owe">No shops added yet.
@@ -386,20 +411,28 @@ Tap + to add someone who owes you.</string>
     <string name="khata_delete_entry">Delete entry</string>
     <string name="khata_whatsapp_reminder">Send Reminder</string>
     <string name="khata_whatsapp_not_installed">WhatsApp is not installed.</string>
+    <string name="khata_request_via_upi">Request via UPI</string>
+    <string name="khata_add_upi_hint">Add your UPI ID in Settings so they can pay you instantly via UPI</string>
+    <string name="khata_upi_sheet_caption">They can scan this in person, or tap the link you share to pay you directly.</string>
+    <string name="khata_upi_share_link">Share payment link</string>
+    <string name="khata_pay_via_upi">Pay via UPI</string>
+    <string name="khata_no_upi_app">No UPI app found on this device.</string>
+    <string name="khata_pay_via_upi_phone_fallback">Phone number copied — search for it in your UPI app to pay %1$s.</string>
+    <string name="khata_mark_as_paid">Mark as Paid</string>
+    <string name="khata_mark_as_paid_confirm">Mark %1$s as paid? This logs a payment entry that settles the outstanding balance.</string>
+    <string name="khata_marked_as_paid_note">Marked as paid</string>
     <string name="khata_reminder_msg_owe">Hi %1$s 👋
 
 This is a friendly reminder — you have an outstanding balance of %2$s.
 
-Kindly settle when convenient 🙏
-
-— %3$s</string>
+Kindly settle when convenient 🙏</string>
     <string name="khata_reminder_msg_credit">Hi %1$s 👋
 
 Just a note — you have a credit of %2$s at my shop.
 
-Feel free to use it anytime!
-
-— %3$s</string>
+Feel free to use it anytime!</string>
+    <string name="khata_reminder_signature">Regards,
+%1$s</string>
     <string name="khata_direction_i_owe_label">I owe this party</string>
     <string name="khata_direction_they_owe_label">They owe me</string>
     <string name="khata_initial_amount_label">Opening balance (optional)</string>
@@ -448,7 +481,6 @@ Feel free to use it anytime!
     <string name="khata_label_all_cleared">All cleared with %1$s ✓</string>
     <string name="khata_label_i_owe">You owe %1$s</string>
     <string name="khata_label_they_owe">%1$s owes you</string>
-    <string name="khata_sender_name_default">Me</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">Track money lent &amp; borrowed with your contacts</string>
@@ -645,4 +677,26 @@ Feel free to use it anytime!
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨  What\'s New</string>
+    <string name="whats_new_subtitle">Swipe to explore new features</string>
+    <string name="force_update_title">Update Required</string>
+    <string name="force_update_body">A newer version of the app is available with important improvements and fixes. Please update to continue using the app.</string>
+    <string name="force_update_button">Update Now</string>
+    <string name="force_update_note">You must update to continue</string>
+    <string name="khata_balance_label">Bal:</string>
+    <string name="split_hero_settled_label">All settled ✓</string>
+    <string name="split_hero_get_back_label">You get back</string>
+    <string name="split_hero_you_owe_label">You owe</string>
+
+    <string name="whats_new_feature_scan_title">Scan Receipts</string>
+    <string name="whats_new_feature_voice_title">Voice Input</string>
+    <string name="whats_new_feature_split_title">Split Bills</string>
+    <string name="whats_new_feature_khata_title">Khata / Ledger</string>
+    <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
+    <string name="split_hero_total_spent">Total spent</string>
+
+    <string name="reminder_hour_decrease">Decrease hour</string>
+    <string name="reminder_hour_increase">Increase hour</string>
 </resources>

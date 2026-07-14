@@ -37,6 +37,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Backup
@@ -98,6 +101,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
+import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 // import com.expensetracker.app.ui.components.FamilySetupSheet  // reserved for Family Mode re-enable
@@ -113,8 +117,6 @@ import com.expensetracker.app.ui.theme.OnAccent
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextSecondary
 import android.app.Activity
-import android.provider.Settings
-import androidx.core.app.NotificationManagerCompat
 import com.expensetracker.app.util.BackupManager
 import com.expensetracker.app.util.DriveBackupManager
 import com.expensetracker.app.util.ReminderReceiver
@@ -160,23 +162,28 @@ fun SettingsScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val activity = context as? android.app.Activity
     val clipboardManager = LocalClipboardManager.current
     val languagePref by viewModel.languagePref.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val smsDetectionEnabled by viewModel.smsDetectionEnabled.collectAsState()
     val reminderEnabled by viewModel.reminderEnabled.collectAsState()
     val reminderHour by viewModel.reminderHour.collectAsState()
+    val reminder2Enabled by viewModel.reminder2Enabled.collectAsState()
+    val reminderHour2 by viewModel.reminderHour2.collectAsState()
     val paydayDayOfMonth by viewModel.paydayDayOfMonth.collectAsState()
     @Suppress("UNUSED_VARIABLE") val familyModeEnabled by viewModel.familyModeEnabled.collectAsState()  // reserved for Family Mode re-enable
     @Suppress("UNUSED_VARIABLE") val familyMembers by viewModel.familyMembers.collectAsState()          // reserved for Family Mode re-enable
     val allExpenses by viewModel.allExpenses.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
+    val myUpiId by viewModel.myUpiId.collectAsState()
+    var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
     var showResetStep1 by remember { mutableStateOf(false) }
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
     var pickerHour by remember { mutableStateOf(reminderHour) }
+    // Which reminder the open time-picker dialog is editing — 1 = main, 2 = optional second.
+    var pickerSlot by remember { mutableStateOf(1) }
     var showPaydayPicker by remember { mutableStateOf(false) }
     var pendingCurrencySymbol by remember { mutableStateOf<String?>(null) }
     var rateText by remember { mutableStateOf("") }
@@ -251,14 +258,24 @@ fun SettingsScreen(
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { contentVisible = true }
 
-    // Switching the in-app language needs the Activity to be torn down and rebuilt so
-    // every stringResource() call re-reads from the new locale's resources. The OS does
-    // this automatically on API 33+, but we also force it explicitly so it's instant and
-    // reliable across emulators/devices instead of waiting on the framework callback.
+    // Switching the in-app language needs the Activity to be torn down and rebuilt so every
+    // stringResource() call re-reads from the new locale's resources. AppCompatDelegate.
+    // setApplicationLocales() (called inside setLanguagePref -> LocaleHelper) already
+    // schedules that recreate itself -- on API 33+ via the system LocaleManager, on older
+    // versions via AppCompat's own compat layer -- same as the onboarding language step,
+    // which relies on it alone.
+    //
+    // This used to ALSO call activity?.recreate() immediately afterward, to make the switch
+    // feel "instant" instead of waiting on that callback. That backfired: the manual recreate
+    // fired before the new locale had fully propagated to the Activity's resources, so the
+    // rebuilt screen still resolved most stringResource() calls against the OLD locale (only
+    // things reading Locale.getDefault() directly, like date formatting, updated right away).
+    // AppCompat's own recreate then fired moments later and silently fixed it -- which is what
+    // showed up as "translation happens, but only after a delay." Removing the manual call
+    // fixes it: there's only ever one recreate, and it happens with the locale already applied.
     fun changeLanguage(pref: String) {
         viewModel.setLanguagePref(pref)
-        onBack()  // Pop back to dashboard before recreating so the back stack is clean
-        activity?.recreate()
+        onBack()  // Pop back to dashboard so the back stack is clean once the recreate happens
     }
 
     // Changing currency normally opens a dialog asking for an exchange rate, then rescales
@@ -376,6 +393,42 @@ fun SettingsScreen(
             }
 
             Spacer(Modifier.height(24.dp))
+
+            // India-only: UPI only works with Indian bank accounts, so this section (and the
+            // "Request via UPI" flow it powers on Khata entries) is hidden for every other
+            // currency rather than showing a payment method that can't actually be used.
+            if (CurrencyLocaleMapper.isInrSymbol(currencySymbol)) {
+                AnimatedSection(visible = contentVisible, delayMillis = 22) {
+                    SettingsSectionHeader(icon = Icons.Filled.AccountBalance, title = stringResource(R.string.upi_section_title))
+                    Spacer(Modifier.height(8.dp))
+                    val upiValid = upiInput.isBlank() || UpiPaymentHelper.isValidVpa(upiInput)
+                    OutlinedTextField(
+                        value = upiInput,
+                        onValueChange = { upiInput = it },
+                        label = { Text(stringResource(R.string.upi_id_label)) },
+                        placeholder = { Text(stringResource(R.string.upi_id_hint)) },
+                        singleLine = true,
+                        isError = !upiValid,
+                        supportingText = if (!upiValid) {
+                            { Text(stringResource(R.string.upi_id_invalid), color = DangerRed) }
+                        } else null,
+                        trailingIcon = {
+                            IconButton(
+                                enabled = upiValid,
+                                onClick = {
+                                    viewModel.setMyUpiId(upiInput.trim())
+                                    onBack()
+                                }
+                            ) {
+                                Icon(Icons.Filled.Check, contentDescription = stringResource(R.string.done))
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                Spacer(Modifier.height(24.dp))
+            }
 
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))
@@ -571,7 +624,11 @@ fun SettingsScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { pickerHour = reminderHour; showTimePicker = true }
+                                    .clickable {
+                                        pickerHour = reminderHour
+                                        pickerSlot = 1
+                                        showTimePicker = true
+                                    }
                                     .padding(vertical = 4.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
@@ -587,6 +644,58 @@ fun SettingsScreen(
                                 )
                             }
                             // Test notification button — hidden for now
+
+                            // ── Optional second daily reminder ──────────────────────────
+                            Spacer(Modifier.height(12.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant)
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(R.string.reminder2_toggle_label),
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.reminder2_toggle_desc),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = TextSecondary
+                                    )
+                                }
+                                Spacer(Modifier.width(8.dp))
+                                Switch(
+                                    checked = reminder2Enabled,
+                                    onCheckedChange = { enabled -> viewModel.setReminder2Enabled(enabled) }
+                                )
+                            }
+                            if (reminder2Enabled) {
+                                Spacer(Modifier.height(8.dp))
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            pickerHour = reminderHour2
+                                            pickerSlot = 2
+                                            showTimePicker = true
+                                        }
+                                        .padding(vertical = 4.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.reminder2_time_label),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                    Text(
+                                        text = formatReminderHour(reminderHour2),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = AccentIndigo
+                                    )
+                                }
+                            }
                         }
                         // Payday picker — always visible
                         Spacer(Modifier.height(12.dp))
@@ -864,7 +973,14 @@ fun SettingsScreen(
     if (showTimePicker) {
         AlertDialog(
             onDismissRequest = { showTimePicker = false },
-            title = { Text(stringResource(R.string.reminder_time_label)) },
+            title = {
+                Text(
+                    stringResource(
+                        if (pickerSlot == 2) R.string.reminder2_time_label
+                        else R.string.reminder_time_label
+                    )
+                )
+            },
             text = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -872,17 +988,36 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.headlineMedium
                     )
                     Spacer(Modifier.height(8.dp))
-                    Slider(
-                        value = pickerHour.toFloat(),
-                        onValueChange = { pickerHour = it.toInt() },
-                        valueRange = 0f..23f,
-                        steps = 22
-                    )
+                    // The slider alone can't reliably land on every one of the 24 discrete
+                    // hour stops — dragging across a narrow track packed with that many steps
+                    // means a normal swipe can overshoot the exact tick you're aiming for
+                    // (e.g. landing on 8 when dragging toward 7). The +/- buttons give an
+                    // always-exact way to nudge one hour at a time; the slider stays for
+                    // quick coarse scrubbing.
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        IconButton(onClick = { pickerHour = (pickerHour - 1 + 24) % 24 }) {
+                            Icon(Icons.Filled.Remove, contentDescription = stringResource(R.string.reminder_hour_decrease))
+                        }
+                        Slider(
+                            value = pickerHour.toFloat(),
+                            onValueChange = { pickerHour = it.toInt() },
+                            valueRange = 0f..23f,
+                            steps = 22,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(onClick = { pickerHour = (pickerHour + 1) % 24 }) {
+                            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.reminder_hour_increase))
+                        }
+                    }
                 }
             },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.setReminderHour(pickerHour)
+                    if (pickerSlot == 2) viewModel.setReminderHour2(pickerHour)
+                    else viewModel.setReminderHour(pickerHour)
                     showTimePicker = false
                 }) { Text(stringResource(R.string.done)) }
             },

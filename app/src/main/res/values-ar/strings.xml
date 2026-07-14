@@ -8,6 +8,10 @@
     <string name="your_name_label">اسمك</string>
     <string name="your_name_hint">مثال: محمد</string>
     <string name="your_name_note">يُستخدم فقط لتخصيص تحية لوحتك الرئيسية. لا يُرسل إلى أي مكان.</string>
+    <string name="upi_section_title">الدفع (UPI)</string>
+    <string name="upi_id_label">معرف UPI الخاص بك</string>
+    <string name="upi_id_hint">مثال: mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">أدخل معرف UPI صالحًا (مثال: name@bank)</string>
 
     <string name="nav_dashboard">الرئيسية</string>
     <string name="nav_categories">الفئات</string>
@@ -164,6 +168,13 @@
     <string name="language_urdu">الأردية (اردو)</string>
     <string name="language_bengali">البنغالية (বাংলা)</string>
     <string name="language_tagalog">التاغالوغية (Filipino)</string>
+    <string name="language_gujarati">الغوجاراتية (ગુજરાતી)</string>
+    <string name="language_kannada">الكانادية (ಕನ್ನಡ)</string>
+    <string name="language_malayalam">المالايالامية (മലയാളം)</string>
+    <string name="language_marathi">الماراثية (मराठी)</string>
+    <string name="language_punjabi">البنجابية (ਪੰਜਾਬੀ)</string>
+    <string name="language_tamil">التاميلية (தமிழ்)</string>
+    <string name="language_telugu">التيلوغوية (తెలుగు)</string>
     <string name="currency_label">العملة</string>
     <string name="currency_custom_hint">رمز مخصص</string>
     <string name="convert_currency_title">تحويل العملة</string>
@@ -334,6 +345,9 @@
     <string name="reminder_toggle_label">تذكير يومي بالإنفاق</string>
     <string name="reminder_toggle_desc">احصل على تذكير يومي لتسجيل نفقاتك</string>
     <string name="reminder_time_label">وقت التذكير</string>
+    <string name="reminder2_toggle_label">إضافة تذكير ثانٍ</string>
+    <string name="reminder2_toggle_desc">احصل على تذكير إضافي في وقت مبكر من اليوم، بالإضافة إلى التذكير أعلاه</string>
+    <string name="reminder2_time_label">وقت التذكير الثاني</string>
     <string name="reminder_notification_title">هل سجّلت نفقات اليوم؟ 💸</string>
     <string name="reminder_notification_body">اضغط لإضافة أي نفقات قد فاتتك اليوم.</string>
 
@@ -349,6 +363,12 @@
     <string name="khata_party_name_hint">الاسم (محل أو شخص)</string>
     <string name="khata_party_phone_hint">رقم الهاتف (للواتساب)</string>
     <string name="khata_party_phone_optional">اختياري — مطلوب فقط لتذكيرات واتساب</string>
+    <string name="khata_party_upi_hint">معرف UPI الخاص بهم (اختياري)</string>
+    <string name="khata_scan_upi_qr">مسح رمز UPI QR</string>
+    <string name="khata_scan_upi_qr_hint">أو اضغط على أيقونة المسح لملء هذا الحقل من رمز UPI QR الخاص بهم</string>
+    <string name="khata_upi_qr_scan_error">لم يتم العثور على معرّف UPI في رمز QR هذا. حاول مرة أخرى أو أدخله يدويًا.</string>
+    <string name="khata_party_upi_mine_ready">طلب الدفع عبر UPI جاهز — سيتم استخدام معرف UPI الخاص بك: %1$s</string>
+    <string name="khata_party_upi_mine_missing">لتمكينهم من الدفع لك عبر UPI، عيّن معرف UPI الخاص بك في الإعدادات</string>
     <string name="khata_save_party">حفظ</string>
     <string name="khata_delete_party">حذف الطرف</string>
     <string name="khata_no_parties_i_owe">لم تتم إضافة أي محل بعد.
@@ -367,20 +387,28 @@
     <string name="khata_delete_entry">حذف الإدخال</string>
     <string name="khata_whatsapp_reminder">إرسال تذكير</string>
     <string name="khata_whatsapp_not_installed">واتساب غير مثبت.</string>
+    <string name="khata_request_via_upi">الطلب عبر UPI</string>
+    <string name="khata_add_upi_hint">أضف معرّف UPI الخاص بك في الإعدادات حتى يتمكنوا من دفع المبلغ لك فورًا عبر UPI</string>
+    <string name="khata_upi_sheet_caption">يمكنهم مسح هذا شخصيًا، أو النقر على الرابط الذي تشاركه للدفع مباشرة.</string>
+    <string name="khata_upi_share_link">مشاركة رابط الدفع</string>
+    <string name="khata_pay_via_upi">الدفع عبر UPI</string>
+    <string name="khata_no_upi_app">لم يتم العثور على أي تطبيق UPI على هذا الجهاز.</string>
+    <string name="khata_pay_via_upi_phone_fallback">تم نسخ رقم الهاتف — ابحث عنه في تطبيق UPI الخاص بك لدفع المبلغ إلى %1$s.</string>
+    <string name="khata_mark_as_paid">وضع علامة كمدفوع</string>
+    <string name="khata_mark_as_paid_confirm">هل تريد وضع علامة على %1$s كمدفوع؟ سيؤدي هذا إلى تسجيل عملية دفع تسوّي الرصيد المستحق.</string>
+    <string name="khata_marked_as_paid_note">تم وضع علامة كمدفوع</string>
     <string name="khata_reminder_msg_owe">مرحباً %1$s 👋
 
 تذكير ودي — لديك رصيد مستحق بقيمة %2$s.
 
-يرجى السداد عند الإمكان 🙏
-
-— %3$s</string>
+يرجى السداد عند الإمكان 🙏</string>
     <string name="khata_reminder_msg_credit">مرحباً %1$s 👋
 
 ملاحظة — لديك رصيد دائن بقيمة %2$s في محلي.
 
-استخدمه في أي وقت!
-
-— %3$s</string>
+استخدمه في أي وقت!</string>
+    <string name="khata_reminder_signature">مع التحية،
+%1$s</string>
     <string name="khata_direction_i_owe_label">أنا مدين لهذا الطرف</string>
     <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
     <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
@@ -389,7 +417,18 @@
     <string name="error_loan_type_required">الرجاء اختيار نوع القرض</string>
     <string name="test_reminder_button">إرسال إشعار تجريبي</string>
     <string name="repeat_monthly_label">تكرار كل شهر</string>
-    <string name="repeat_monthly_hint">تُضاف نسخة تلقائيًا في الأول من كل شهر</string>
+    <string name="repeat_monthly_hint">تُضاف نسخة تلقائيًا في اليوم %1$d من كل شهر</string>
+    <string name="subscriptions_day_of_month_label">يوم الفوترة</string>
+    <string name="subscriptions_title">الاشتراكات</string>
+    <string name="subscriptions_empty_title">لا توجد اشتراكات بعد</string>
+    <string name="subscriptions_empty_body">تتبّع الإيجار والاشتراكات والفواتير الشهرية الأخرى هنا — أضف واحدة أدناه.</string>
+    <string name="subscriptions_monthly_total_label">الإجمالي الشهري</string>
+    <string name="subscriptions_count_singular">%1$d اشتراك</string>
+    <string name="subscriptions_count_plural">%1$d اشتراكات</string>
+    <string name="subscriptions_next_renewal">التجديد القادم: %1$s</string>
+    <string name="subscriptions_delete_title">حذف الاشتراك؟</string>
+    <string name="subscriptions_delete_confirm">سيؤدي هذا إلى إيقاف إضافة نسخ مستقبلية من \"%1$s\". ستبقى الإدخالات السابقة في سجلك.</string>
+    <string name="subscriptions_dashboard_title">الاشتراكات</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ لقد استخدمت 80% من ميزانيتك الشهرية</string>
@@ -435,7 +474,6 @@
     <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
     <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
     <string name="khata_label_they_owe">%1$s مدين لك</string>
-    <string name="khata_sender_name_default">أنا</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">تتبع الأموال المُقرضة والمُقترضة مع جهات الاتصال</string>
@@ -639,4 +677,26 @@
     <string name="split_wa_footer">متتبع المصاريف</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ الجديد</string>
+    <string name="whats_new_subtitle">مرر لاستكشاف الميزات الجديدة</string>
+    <string name="force_update_title">التحديث مطلوب</string>
+    <string name="force_update_body">يتوفر إصدار أحدث من التطبيق يتضمن تحسينات وإصلاحات مهمة. يرجى التحديث لمتابعة استخدام التطبيق.</string>
+    <string name="force_update_button">التحديث الآن</string>
+    <string name="force_update_note">يجب عليك التحديث للمتابعة</string>
+    <string name="khata_balance_label">الرصيد:</string>
+    <string name="split_hero_settled_label">تمت التسوية بالكامل ✓</string>
+    <string name="split_hero_get_back_label">لك عندهم</string>
+    <string name="split_hero_you_owe_label">عليك</string>
+
+    <string name="whats_new_feature_scan_title">مسح الإيصالات</string>
+    <string name="whats_new_feature_voice_title">الإدخال الصوتي</string>
+    <string name="whats_new_feature_split_title">تقسيم الفواتير</string>
+    <string name="whats_new_feature_khata_title">الخاطة / الدفتر</string>
+    <string name="whats_new_feature_goals_title">الأهداف والسلاسل</string>
+    <string name="split_hero_total_spent">إجمالي الإنفاق</string>
+
+    <string name="reminder_hour_decrease">تقليل الساعة</string>
+    <string name="reminder_hour_increase">زيادة الساعة</string>
 </resources>

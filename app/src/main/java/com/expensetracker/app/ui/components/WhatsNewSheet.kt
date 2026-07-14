@@ -34,10 +34,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.expensetracker.app.R
 import com.expensetracker.app.ui.theme.AccentGreen
 import kotlinx.coroutines.launch
 
@@ -48,41 +50,53 @@ private data class Feature(
     val accentColor: Color
 )
 
-private val features = listOf(
-    Feature(
-        emoji = "📷",
-        title = "Scan Receipts",
-        description = "Point your camera at any bill or receipt. The app reads the amount and logs the expense instantly — no typing needed.",
-        accentColor = Color(0xFF2D6A4F)
-    ),
-    Feature(
-        emoji = "🎤",
-        title = "Voice Input",
-        description = "Just say \"spent 50 on food\" and it's logged. Hands-free expense tracking for when you're on the go.",
-        accentColor = Color(0xFF1565C0)
-    ),
-    Feature(
-        emoji = "👥",
-        title = "Split Bills",
-        description = "Create groups, add shared expenses, and let the app calculate who owes what. Settle up with one WhatsApp message.",
-        accentColor = Color(0xFF6A1B9A)
-    ),
-    Feature(
-        emoji = "📒",
-        title = "Khata / Ledger",
-        description = "Track who owes you money and what you owe others. Send payment reminders directly on WhatsApp with one tap.",
-        accentColor = Color(0xFFB71C1C)
-    ),
-    Feature(
-        emoji = "🎯",
-        title = "Goals & Streaks",
-        description = "Set savings goals and track your progress. Build a daily logging habit and keep your streak going!",
-        accentColor = Color(0xFFE65100)
-    ),
-)
+@Composable
+private fun rememberFeatures(): List<Feature> {
+    // Titles/descriptions reuse the same copy as the guided coachmark tour (tour_step6-10),
+    // which is already translated in every supported locale — kept in sync manually since
+    // this sheet renders emoji separately in its own circle rather than inline with the title.
+    val scanDesc = stringResource(R.string.tour_step6_body)
+    val voiceDesc = stringResource(R.string.tour_step7_body)
+    val splitDesc = stringResource(R.string.tour_step8_body)
+    val khataDesc = stringResource(R.string.tour_step9_body)
+    val goalsDesc = stringResource(R.string.tour_step10_body)
+    return listOf(
+        Feature(
+            emoji = "📷",
+            title = stringResource(R.string.whats_new_feature_scan_title),
+            description = scanDesc,
+            accentColor = Color(0xFF2D6A4F)
+        ),
+        Feature(
+            emoji = "🎤",
+            title = stringResource(R.string.whats_new_feature_voice_title),
+            description = voiceDesc,
+            accentColor = Color(0xFF1565C0)
+        ),
+        Feature(
+            emoji = "👥",
+            title = stringResource(R.string.whats_new_feature_split_title),
+            description = splitDesc,
+            accentColor = Color(0xFF6A1B9A)
+        ),
+        Feature(
+            emoji = "📒",
+            title = stringResource(R.string.whats_new_feature_khata_title),
+            description = khataDesc,
+            accentColor = Color(0xFFB71C1C)
+        ),
+        Feature(
+            emoji = "🎯",
+            title = stringResource(R.string.whats_new_feature_goals_title),
+            description = goalsDesc,
+            accentColor = Color(0xFFE65100)
+        ),
+    )
+}
 
 @Composable
 fun WhatsNewSheet(onDismiss: () -> Unit) {
+    val features = rememberFeatures()
     val pagerState = rememberPagerState(pageCount = { features.size })
     val scope = rememberCoroutineScope()
     val isLastPage = pagerState.currentPage == features.size - 1
@@ -110,14 +124,14 @@ fun WhatsNewSheet(onDismiss: () -> Unit) {
 
                 // ── Header ───────────────────────────────────────────────────
                 Text(
-                    text = "✨  What's New",
+                    text = stringResource(R.string.whats_new_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontSize = 22.sp
                 )
                 Text(
-                    text = "Swipe to explore new features",
+                    text = stringResource(R.string.whats_new_subtitle),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.5f),
                     modifier = Modifier.padding(top = 4.dp, bottom = 28.dp)
@@ -218,7 +232,7 @@ fun WhatsNewSheet(onDismiss: () -> Unit) {
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Text(
-                                text = "Skip",
+                                text = stringResource(R.string.tour_skip),
                                 color = Color.White.copy(alpha = 0.6f)
                             )
                         }

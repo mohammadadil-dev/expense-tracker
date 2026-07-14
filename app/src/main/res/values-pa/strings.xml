@@ -8,6 +8,10 @@
     <string name="your_name_label">ਤੁਹਾਡਾ ਨਾਮ</string>
     <string name="your_name_hint">ਜਿਵੇਂ Mohammad</string>
     <string name="your_name_note">ਸਿਰਫ਼ ਡੈਸ਼ਬੋਰਡ ਸਵਾਗਤ ਨੂੰ ਨਿੱਜੀ ਬਣਾਉਣ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ। ਕਿਤੇ ਭੇਜਿਆ ਨਹੀਂ ਜਾਂਦਾ।</string>
+    <string name="upi_section_title">ਭੁਗਤਾਨ (UPI)</string>
+    <string name="upi_id_label">ਤੁਹਾਡੀ UPI ID</string>
+    <string name="upi_id_hint">ਜਿਵੇਂ mohammad@okhdfcbank</string>
+    <string name="upi_id_invalid">ਇੱਕ ਵੈਧ UPI ID ਦਰਜ ਕਰੋ (ਜਿਵੇਂ name@bank)</string>
 
     <string name="nav_dashboard">ਹੋਮ</string>
     <string name="nav_categories">ਸ਼੍ਰੇਣੀਆਂ</string>
@@ -285,7 +289,18 @@
     <string name="test_reminder_button">ਟੈਸਟ ਸੂਚਨਾ ਭੇਜੋ</string>
 
     <string name="repeat_monthly_label">ਹਰ ਮਹੀਨੇ ਦੁਹਰਾਓ</string>
-    <string name="repeat_monthly_hint">ਹਰ ਮਹੀਨੇ ਦੀ 1 ਤਰੀਕ ਨੂੰ ਇੱਕ ਕਾਪੀ ਆਪੇ ਜੋੜੀ ਜਾਵੇਗੀ</string>
+    <string name="repeat_monthly_hint">ਹਰ ਮਹੀਨੇ ਦੀ %1$d ਤਰੀਕ ਨੂੰ ਇੱਕ ਕਾਪੀ ਆਪੇ ਜੋੜੀ ਜਾਵੇਗੀ</string>
+    <string name="subscriptions_day_of_month_label">ਬਿਲਿੰਗ ਦਿਨ</string>
+    <string name="subscriptions_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscriptions_empty_title">ਹਾਲੇ ਕੋਈ ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਨਹੀਂ</string>
+    <string name="subscriptions_empty_body">ਕਿਰਾਇਆ, ਮੈਂਬਰਸ਼ਿਪਾਂ ਅਤੇ ਹੋਰ ਮਾਸਿਕ ਬਿੱਲਾਂ ਨੂੰ ਇੱਥੇ ਟਰੈਕ ਕਰੋ — ਹੇਠਾਂ ਇੱਕ ਜੋੜੋ।</string>
+    <string name="subscriptions_monthly_total_label">ਮਾਸਿਕ ਕੁੱਲ</string>
+    <string name="subscriptions_count_singular">%1$d ਸਬਸਕ੍ਰਿਪਸ਼ਨ</string>
+    <string name="subscriptions_count_plural">%1$d ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscriptions_next_renewal">ਅਗਲੀ ਨਵੀਨੀਕਰਨ: %1$s</string>
+    <string name="subscriptions_delete_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <string name="subscriptions_delete_confirm">ਇਹ \"%1$s\" ਦੀਆਂ ਭਵਿੱਖ ਦੀਆਂ ਕਾਪੀਆਂ ਜੋੜਨ ਤੋਂ ਰੋਕ ਦੇਵੇਗਾ। ਪਿਛਲੀਆਂ ਐਂਟਰੀਆਂ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਰਹਿਣਗੀਆਂ।</string>
+    <string name="subscriptions_dashboard_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
 
     <string name="debt_direction_label">ਦਿਸ਼ਾ</string>
     <string name="debt_direction_owe">ਮੈਂ ਦੇਣਾ ਹੈ</string>
@@ -345,6 +360,9 @@
     <string name="reminder_toggle_label">ਸ਼ਾਮ ਦਾ ਖਰਚ ਯਾਦ</string>
     <string name="reminder_toggle_desc">ਖਰਚ ਦਰਜ ਕਰਨ ਲਈ ਰੋਜ਼ ਯਾਦ ਦਵਾਓ</string>
     <string name="reminder_time_label">ਯਾਦ ਦਾ ਸਮਾਂ</string>
+    <string name="reminder2_toggle_label">ਦੂਜਾ ਰੀਮਾਈਂਡਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="reminder2_toggle_desc">ਉੱਪਰ ਵਾਲੇ ਤੋਂ ਇਲਾਵਾ, ਦਿਨ ਦੇ ਸ਼ੁਰੂ ਵਿੱਚ ਵਾਧੂ ਯਾਦ-ਦਹਾਨੀ ਲਵੋ</string>
+    <string name="reminder2_time_label">ਦੂਜੇ ਰੀਮਾਈਂਡਰ ਦਾ ਸਮਾਂ</string>
     <string name="reminder_notification_title">ਅੱਜ ਦੇ ਖਰਚ ਦਰਜ ਕੀਤੇ? 💸</string>
     <string name="reminder_notification_body">ਅੱਜ ਕੁਝ ਖੁੰਝਿਆ ਨਹੀਂ ਯਕੀਨੀ ਕਰਨ ਲਈ ਦਬਾਓ।</string>
 
@@ -359,6 +377,12 @@
     <string name="khata_party_name_hint">ਨਾਮ (ਦੁਕਾਨ ਜਾਂ ਵਿਅਕਤੀ)</string>
     <string name="khata_party_phone_hint">ਫ਼ੋਨ ਨੰਬਰ (WhatsApp ਲਈ)</string>
     <string name="khata_party_phone_optional">ਵਿਕਲਪਿਕ — ਸਿਰਫ਼ WhatsApp ਯਾਦ ਲਈ</string>
+    <string name="khata_party_upi_hint">ਉਹਨਾਂ ਦੀ UPI ID (ਵਿਕਲਪਿਕ)</string>
+    <string name="khata_scan_upi_qr">UPI QR ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
+    <string name="khata_scan_upi_qr_hint">ਜਾਂ ਉਹਨਾਂ ਦੇ UPI QR ਕੋਡ ਤੋਂ ਇਹ ਭਰਨ ਲਈ ਸਕੈਨ ਆਈਕਨ ਤੇ ਟੈਪ ਕਰੋ</string>
+    <string name="khata_upi_qr_scan_error">ਉਸ QR ਕੋਡ ਵਿੱਚ ਕੋਈ UPI ਆਈਡੀ ਨਹੀਂ ਮਿਲੀ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਇਸਨੂੰ ਖੁਦ ਦਰਜ ਕਰੋ।</string>
+    <string name="khata_party_upi_mine_ready">UPI ਬੇਨਤੀ ਤਿਆਰ ਹੈ — ਤੁਹਾਡੀ UPI ID ਵਰਤੀ ਜਾਵੇਗੀ: %1$s</string>
+    <string name="khata_party_upi_mine_missing">ਉਹਨਾਂ ਨੂੰ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰਨ ਦੇਣ ਲਈ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਆਪਣੀ UPI ID ਸੈੱਟ ਕਰੋ</string>
     <string name="khata_save_party">ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="khata_delete_party">ਪਾਰਟੀ ਮਿਟਾਓ</string>
     <string name="khata_no_parties_i_owe">ਅਜੇ ਕੋਈ ਦੁਕਾਨ ਨਹੀਂ।\nਉਧਾਰ ਵਾਲੀ ਦੁਕਾਨ ਜੋੜਨ ਲਈ + ਦਬਾਓ।</string>
@@ -375,20 +399,28 @@
     <string name="khata_delete_entry">ਐਂਟਰੀ ਮਿਟਾਓ</string>
     <string name="khata_whatsapp_reminder">ਯਾਦ ਭੇਜੋ</string>
     <string name="khata_whatsapp_not_installed">WhatsApp ਸਥਾਪਿਤ ਨਹੀਂ।</string>
+    <string name="khata_request_via_upi">UPI ਰਾਹੀਂ ਬੇਨਤੀ ਕਰੋ</string>
+    <string name="khata_add_upi_hint">ਆਪਣੀ UPI ਆਈਡੀ ਸੈਟਿੰਗਸ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ ਤਾਂ ਜੋ ਉਹ ਤੁਹਾਨੂੰ ਤੁਰੰਤ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰ ਸਕਣ</string>
+    <string name="khata_upi_sheet_caption">ਉਹ ਇਸਨੂੰ ਖੁਦ ਸਕੈਨ ਕਰ ਸਕਦੇ ਹਨ, ਜਾਂ ਤੁਹਾਡੇ ਵੱਲੋਂ ਸਾਂਝੇ ਕੀਤੇ ਲਿੰਕ \'ਤੇ ਟੈਪ ਕਰਕੇ ਸਿੱਧਾ ਭੁਗਤਾਨ ਕਰ ਸਕਦੇ ਹਨ।</string>
+    <string name="khata_upi_share_link">ਭੁਗਤਾਨ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ</string>
+    <string name="khata_pay_via_upi">UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰੋ</string>
+    <string name="khata_no_upi_app">ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਕੋਈ UPI ਐਪ ਨਹੀਂ ਮਿਲੀ।</string>
+    <string name="khata_pay_via_upi_phone_fallback">ਫ਼ੋਨ ਨੰਬਰ ਕਾਪੀ ਹੋ ਗਿਆ — %1$s ਨੂੰ ਭੁਗਤਾਨ ਕਰਨ ਲਈ ਆਪਣੇ UPI ਐਪ ਵਿੱਚ ਇਸਨੂੰ ਖੋਜੋ।</string>
+    <string name="khata_mark_as_paid">ਭੁਗਤਾਨ ਹੋਇਆ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ ਕਰੋ</string>
+    <string name="khata_mark_as_paid_confirm">%1$s ਨੂੰ ਭੁਗਤਾਨ ਹੋਇਆ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ ਕਰਨਾ ਹੈ? ਇਹ ਬਕਾਇਆ ਰਾਸ਼ੀ ਨਿਪਟਾਉਣ ਵਾਲੀ ਭੁਗਤਾਨ ਐਂਟਰੀ ਦਰਜ ਕਰੇਗਾ।</string>
+    <string name="khata_marked_as_paid_note">ਭੁਗਤਾਨ ਹੋਇਆ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ</string>
     <string name="khata_reminder_msg_owe">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
 ਇੱਕ ਦੋਸਤਾਨਾ ਯਾਦ — ਤੁਹਾਡਾ %2$s ਬਾਕੀ ਹੈ।
 
-ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏
-
-— %3$s</string>
+ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏</string>
     <string name="khata_reminder_msg_credit">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
 ਇੱਕ ਨੋਟ — ਮੇਰੀ ਦੁਕਾਨ ਵਿੱਚ ਤੁਹਾਡਾ %2$s ਕ੍ਰੈਡਿਟ ਹੈ।
 
-ਜਦੋਂ ਚਾਹੋ ਵਰਤੋ!
-
-— %3$s</string>
+ਜਦੋਂ ਚਾਹੋ ਵਰਤੋ!</string>
+    <string name="khata_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
+%1$s</string>
     <string name="khata_direction_i_owe_label">ਮੈਂ ਇਸ ਪਾਰਟੀ ਨੂੰ ਦੇਣਾ ਹੈ</string>
     <string name="khata_direction_they_owe_label">ਇਹ ਪਾਰਟੀ ਮੈਨੂੰ ਦੇਣੀ ਹੈ</string>
     <string name="khata_initial_amount_label">ਸ਼ੁਰੂਆਤੀ ਰਕਮ (ਵਿਕਲਪਿਕ)</string>
@@ -431,7 +463,6 @@
     <string name="khata_label_all_cleared">%1$s ਨਾਲ ਸਭ ਨਿਪਟਿਆ ✓</string>
     <string name="khata_label_i_owe">ਤੁਸੀਂ %1$s ਨੂੰ ਦੇਣਾ ਹੈ</string>
     <string name="khata_label_they_owe">%1$s ਤੁਹਾਨੂੰ ਦੇਣਾ ਹੈ</string>
-    <string name="khata_sender_name_default">ਮੈਂ</string>
 
     <string name="khata_subtitle">ਆਪਣੇ ਸੰਪਰਕਾਂ ਨਾਲ ਉਧਾਰ ਟਰੈਕ ਕਰੋ</string>
     <string name="debts_subtitle">ਦੇਣੀ ਅਤੇ ਲੈਣੀ ਰਕਮ ਟਰੈਕ ਕਰੋ</string>
@@ -613,4 +644,26 @@
     <string name="split_wa_footer">Expense Tracker</string>
     <string name="reminder_notification_tip">ਸੁਝਾਅ: ਰੋਜ਼ ਦਰਜ ਕਰਨ ਨਾਲ ਬਜਟ ਕਾਬੂ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ 📊</string>
     <string name="reminder_action_add_expense">ਖਰਚ ਜੋੜੋ</string>
+
+    <!-- What's New sheet, Force Update dialog, Khata balance label, Split hero labels -->
+    <string name="whats_new_title">✨ ਨਵਾਂ ਕੀ ਹੈ</string>
+    <string name="whats_new_subtitle">ਨਵੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵੇਖਣ ਲਈ ਸਵਾਈਪ ਕਰੋ</string>
+    <string name="force_update_title">ਅੱਪਡੇਟ ਲੋੜੀਂਦਾ ਹੈ</string>
+    <string name="force_update_body">ਐਪ ਦਾ ਨਵਾਂ ਵਰਜਨ ਉਪਲਬਧ ਹੈ ਜਿਸ ਵਿੱਚ ਮਹੱਤਵਪੂਰਨ ਸੁਧਾਰ ਅਤੇ ਫਿਕਸ ਸ਼ਾਮਲ ਹਨ। ਐਪ ਦੀ ਵਰਤੋਂ ਜਾਰੀ ਰੱਖਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਅੱਪਡੇਟ ਕਰੋ।</string>
+    <string name="force_update_button">ਹੁਣੇ ਅੱਪਡੇਟ ਕਰੋ</string>
+    <string name="force_update_note">ਜਾਰੀ ਰੱਖਣ ਲਈ ਤੁਹਾਨੂੰ ਅੱਪਡੇਟ ਕਰਨਾ ਜ਼ਰੂਰੀ ਹੈ</string>
+    <string name="khata_balance_label">ਬਕਾਇਆ:</string>
+    <string name="split_hero_settled_label">ਸਭ ਨਿਪਟਿਆ ✓</string>
+    <string name="split_hero_get_back_label">ਤੁਹਾਨੂੰ ਵਾਪਸ ਮਿਲੇਗਾ</string>
+    <string name="split_hero_you_owe_label">ਤੁਹਾਡੇ ਵੱਲ ਬਕਾਇਆ ਹੈ</string>
+
+    <string name="whats_new_feature_scan_title">ਰਸੀਦਾਂ ਸਕੈਨ ਕਰੋ</string>
+    <string name="whats_new_feature_voice_title">ਆਵਾਜ਼ ਇਨਪੁੱਟ</string>
+    <string name="whats_new_feature_split_title">ਬਿੱਲ ਸ਼ੇਅਰ ਕਰੋ</string>
+    <string name="whats_new_feature_khata_title">ਖਾਤਾ / ਲੇਜਰ</string>
+    <string name="whats_new_feature_goals_title">ਟੀਚੇ &amp; ਸਟ੍ਰੀਕ</string>
+    <string name="split_hero_total_spent">ਕੁੱਲ ਖਰਚ</string>
+
+    <string name="reminder_hour_decrease">ਘੰਟਾ ਘਟਾਓ</string>
+    <string name="reminder_hour_increase">ਘੰਟਾ ਵਧਾਓ</string>
 </resources>

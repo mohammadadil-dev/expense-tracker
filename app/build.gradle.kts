@@ -35,8 +35,16 @@ android {
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 17
-        versionName = "1.7.0"
+        // v1.7.1 (versionCode 18) was bumped for the Glance CVE-2024-7254 fix but never
+        // actually published — the live Play Store build is still versionCode 17 (1.7.0),
+        // per the developer as of 2026-07-14. This release folds that unpublished security
+        // fix in along with everything since (Khata UPI close-the-loop: Pay via UPI, QR-scan
+        // to fill a UPI ID, phone-number fallback, "add your UPI ID" nudge; the new
+        // Subscriptions/recurring-expense screen; assorted UI fixes) — bumping straight to
+        // 19/1.8.0 rather than reusing 18, since versionCode must only ever increase and this
+        // avoids any doubt about whether 18 was ever uploaded to a testing track.
+        versionCode = 19
+        versionName = "1.8.0"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -137,8 +145,9 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
     // Glance — Compose-based home screen widget toolkit.
-    implementation("androidx.glance:glance-appwidget:1.1.0")
-    implementation("androidx.glance:glance-material3:1.1.0")
+    // 1.1.1 fixes CVE-2024-7254 (protobuf-java) — Play Console flagged 1.1.0 for this.
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+    implementation("androidx.glance:glance-material3:1.1.1")
 
     // Play In-App Updates — forces users onto the latest version via a full-screen
     // immediate update flow that can't be dismissed (used to push users off crashing builds).
@@ -151,6 +160,16 @@ dependencies {
     // ML Kit Text Recognition — offline OCR for receipt/bill scanning.
     // On-device model (bundled); no network call needed at scan time.
     implementation("com.google.mlkit:text-recognition:16.0.1")
+
+    // ML Kit Barcode Scanning — offline QR decode, used to scan a party's UPI QR code
+    // and auto-fill their VPA instead of asking the user to type/dictate it. On-device
+    // model (bundled); no network call needed at scan time.
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
+
+    // ZXing — pure on-device QR code generation for Khata "Request via UPI" payment
+    // requests (encode only). Actual scanning/decoding of QR codes is handled by
+    // ML Kit Barcode Scanning above, not this library.
+    implementation("com.google.zxing:core:3.5.3")
 
     // Google Drive API — used for cloud backup / restore.
     // SETUP REQUIRED before using: go to console.cloud.google.com, enable the Drive API,

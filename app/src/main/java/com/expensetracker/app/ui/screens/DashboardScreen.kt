@@ -45,6 +45,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Tune
@@ -164,7 +165,8 @@ import kotlin.math.abs
 fun DashboardScreen(
     viewModel: ExpenseViewModel,
     onOpenSettings: () -> Unit,
-    onOpenDebts: () -> Unit
+    onOpenDebts: () -> Unit,
+    onOpenSubscriptions: () -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
     val monthExpenses by viewModel.monthExpenses.collectAsState()
@@ -173,6 +175,7 @@ fun DashboardScreen(
     val currentMonthKey by viewModel.currentMonthKey.collectAsState()
     val debts by viewModel.debts.collectAsState()
     val debtPayments by viewModel.debtPayments.collectAsState()
+    val recurringTemplates by viewModel.recurringTemplates.collectAsState()
     val debtNetPosition = remember(debts, debtPayments) { DebtInsights.computeNetPosition(debts, debtPayments) }
     val pendingSmsExpenses by viewModel.pendingSmsExpenses.collectAsState()
     val budgets by viewModel.budgets.collectAsState()
@@ -706,6 +709,31 @@ fun DashboardScreen(
                 }
             }
 
+            // ── item 2b ────────────────────────────────────────────────────────
+            // Recurring-expense templates (subscriptions, rent, EMIs marked "Repeat every
+            // month") — distinct from the category-based "Subscription Cost" card above.
+            // Hidden entirely when the user has no templates yet, to avoid an empty-looking
+            // card cluttering the dashboard.
+            if (recurringTemplates.isNotEmpty()) {
+                item {
+                    BentoCard(
+                        title = stringResource(R.string.subscriptions_dashboard_title),
+                        value = Formatters.money(recurringTemplates.sumOf { it.amount }, currencySymbol),
+                        subtitle = stringResource(
+                            if (recurringTemplates.size == 1) R.string.subscriptions_count_singular
+                            else R.string.subscriptions_count_plural,
+                            recurringTemplates.size
+                        ),
+                        icon = Icons.Filled.Repeat,
+                        gradientColors = listOf(NeonViolet, NeonCyan),
+                        onClick = onOpenSubscriptions,
+                        visible = contentVisible,
+                        entranceDelayMillis = 90,
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 100.dp)
+                    )
+                }
+            }
+
             // ── item 3 ─────────────────────────────────────────────────────────
             // AI Insights Feed — on-device rule-based intelligence cards.
             item {
@@ -1148,8 +1176,8 @@ fun DashboardScreen(
             familyModeEnabled = familyModeEnabled,
             familyMembers = familyMembers,
             onDismiss = { showAddSheet = false; voicePrefill = null },
-            onSave = { id, catId, desc, amt, date, recurring, memberId ->
-                viewModel.saveExpense(id, catId, desc, amt, date, recurring, memberId) {
+            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay ->
+                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId) {
                     showAddSheet = false
                     voicePrefill = null
                 }
@@ -1352,7 +1380,7 @@ fun DashboardScreen(
                 date = item.date
             ),
             onDismiss = { smsItemBeingAccepted = null },
-            onSave = { _, catId, desc, amt, date, _, _ ->
+            onSave = { _, catId, desc, amt, date, _, _, _ ->
                 // SMS-detected expenses are never recurring — ignore the toggle value.
                 viewModel.acceptPendingSms(item, catId, desc, amt, date) {
                     smsItemBeingAccepted = null

@@ -37,13 +37,15 @@ class KhataRepository(private val db: AppDatabase) {
         id: Long?,
         name: String,
         phone: String,
-        direction: String
+        direction: String,
+        upiId: String? = null
     ): Long {
         val entity = KhataPartyEntity(
             id = id ?: 0,
             name = name.trim(),
             phone = phone.trim(),
-            direction = direction
+            direction = direction,
+            upiId = upiId?.trim()?.takeIf { it.isNotBlank() }
         )
         return if (id == null) {
             // New party — insert and return auto-generated id

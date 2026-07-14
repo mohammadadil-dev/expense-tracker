@@ -21,6 +21,13 @@ import androidx.room.PrimaryKey
  *
  * [recurringPeriod] is reserved for future daily/weekly cadences; for now only
  * "MONTHLY" is used.
+ *
+ * [recurringDayOfMonth] (template rows only) is the day of the month this recurs on —
+ * used by [ExpenseRepository.createRecurringExpensesForCurrentMonth] to date each
+ * auto-generated copy accurately (e.g. a subscription that renews on the 15th) instead
+ * of always defaulting to the 1st. Clamped to the shorter month's last day when needed
+ * (e.g. day 31 in a 30-day month). Null on pre-existing templates from before this field
+ * was added — treated as day 1, matching their original behavior exactly.
  */
 @Entity(tableName = "expenses", indices = [Index("monthKey"), Index("categoryId")])
 data class ExpenseEntity(
@@ -33,6 +40,7 @@ data class ExpenseEntity(
     val isRecurring: Boolean = false,
     val recurringPeriod: String? = null,   // "MONTHLY" when isRecurring = true
     val recurringSourceId: Long? = null,   // non-null on auto-created copies
+    val recurringDayOfMonth: Int? = null,  // template rows only — see class doc
     // Family / Couple Mode — null when family mode is off or expense is "shared household".
     val memberId: Long? = null
 )
