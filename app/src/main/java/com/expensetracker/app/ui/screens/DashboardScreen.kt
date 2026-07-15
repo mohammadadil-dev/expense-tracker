@@ -58,7 +58,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -539,16 +539,18 @@ fun DashboardScreen(
                         contentDescription = stringResource(R.string.voice_tap_to_speak)
                     )
                 }
-                // Primary add FAB
-                FloatingActionButton(
+                // Primary add FAB — labeled (not icon-only) so the main action on the app's
+                // most-visited screen is self-explanatory at a glance, same reasoning as the
+                // Ledger screen's "Add Party" FAB.
+                ExtendedFloatingActionButton(
                     onClick = {
                         editingExpense = null
                         showAddSheet = true
                     },
+                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
+                    text = { Text(stringResource(R.string.add_expense)) },
                     modifier = Modifier.onGloballyPositioned { viewModel.fabBounds = it.boundsInWindow() }
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_expense))
-                }
+                )
             }
         }
     ) { innerPadding ->
