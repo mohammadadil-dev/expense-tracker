@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">কাস্টমার আইডি: %1$s</string>
     <string name="export_started">আপনার PDF রিপোর্ট তৈরি হচ্ছে…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">খাতা বিবরণী</string>
+    <string name="khata_export_balance_label">বকেয়া ব্যালেন্স: %1$s</string>
+    <string name="khata_export_col_type">ধরন</string>
+    <string name="khata_export_type_credit">বাকি</string>
+    <string name="khata_export_type_payment">পরিশোধ</string>
+    <string name="khata_export_total_label">ব্যালেন্স</string>
+    <string name="khata_export_no_entries">এখনও কোনো এন্ট্রি নেই।</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">পরিশোধ করেছেন</string>
+    <string name="split_export_settlement_label">নিষ্পত্তি</string>
+    <string name="split_export_members_label">সদস্য: %1$s</string>
+    <string name="split_export_no_expenses">এখনও কোনো খরচ নেই।</string>
+
     <string name="add_category">বিভাগ যোগ করুন</string>
     <string name="new_category_hint">নতুন বিভাগের নাম</string>
     <string name="delete_category_confirm">এই বিভাগ ব্যবহারকারী খরচগুলো প্রথম অবশিষ্ট বিভাগে স্থানান্তরিত হবে। চালিয়ে যাবেন?</string>

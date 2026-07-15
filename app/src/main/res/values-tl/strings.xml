@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">Customer ID: %1$s</string>
     <string name="export_started">Inihahanda ang iyong PDF na ulat…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">Pahayag sa Ledger</string>
+    <string name="khata_export_balance_label">Natitirang Balanse: %1$s</string>
+    <string name="khata_export_col_type">Uri</string>
+    <string name="khata_export_type_credit">Utang</string>
+    <string name="khata_export_type_payment">Bayad</string>
+    <string name="khata_export_total_label">Balanse</string>
+    <string name="khata_export_no_entries">Wala pang entry.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">Binayaran Ni</string>
+    <string name="split_export_settlement_label">Pag-aayos ng Utang</string>
+    <string name="split_export_members_label">Mga Miyembro: %1$s</string>
+    <string name="split_export_no_expenses">Wala pang gastos.</string>
+
     <string name="add_category">Magdagdag ng Kategorya</string>
     <string name="new_category_hint">Pangalan ng bagong kategorya</string>
     <string name="delete_category_confirm">Ang mga gastos na gumagamit ng kategoryang ito ay itatakda sa unang natitirang kategorya. Magpatuloy?</string>

@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
@@ -93,7 +94,9 @@ import com.expensetracker.app.ui.theme.SuccessGreen
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
+import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -296,6 +299,65 @@ fun KhataDetailScreen(
         showMarkPaidConfirm = false
     }
 
+    // ── PDF statement export ────────────────────────────────────────────────────
+    // Same PdfExporter/ExportRow the Dashboard's monthly report uses (see DashboardScreen.kt).
+    // Rows are signed so they sum to the outstanding balance like a real ledger: a CREDIT entry
+    // shows as a positive amount (adds to what's owed), a PAYMENT shows as negative (reduces
+    // it) — the Type column spells out which, so the sign alone never has to carry the meaning.
+    val exportReportTitle = stringResource(R.string.khata_export_report_title)
+    val exportColDate = stringResource(R.string.date_label)
+    val exportColType = stringResource(R.string.khata_export_col_type)
+    val exportColDescription = stringResource(R.string.description_label)
+    val exportColAmount = stringResource(R.string.amount_label)
+    val exportTotalLabel = stringResource(R.string.khata_export_total_label)
+    val exportEmptyLabel = stringResource(R.string.khata_export_no_entries)
+    val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
+    val exportStartedLabel = stringResource(R.string.export_started)
+    val appNameStr = stringResource(R.string.app_name)
+    val poweredByFooter = stringResource(R.string.powered_by_footer)
+    val creditTypeLabel = stringResource(R.string.khata_export_type_credit)
+    val paymentTypeLabel = stringResource(R.string.khata_export_type_payment)
+    // Resolved here (composable scope) rather than inside exportStatementAsPdf() below, since
+    // stringResource() can only be called from composable code and that function is a plain fun.
+    val exportBalanceLabel = stringResource(R.string.khata_export_balance_label, Formatters.money(balance, currencySymbol))
+
+    val exportRows = remember(entries, currencySymbol) {
+        entries.sortedByDescending { it.date }.map { e ->
+            val isCredit = e.type == KhataEntryEntity.TYPE_CREDIT
+            ExportRow(
+                dateLabel = e.date,
+                categoryLabel = if (isCredit) creditTypeLabel else paymentTypeLabel,
+                description = e.note,
+                amountLabel = Formatters.money(if (isCredit) e.amount else -e.amount, currencySymbol)
+            )
+        }
+    }
+
+    fun exportStatementAsPdf() {
+        if (exportRows.isEmpty()) {
+            Toast.makeText(context, exportEmptyLabel, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
+        val uri = PdfExporter.export(
+            context = context,
+            appName = appNameStr,
+            reportTitle = exportReportTitle,
+            monthLabel = party.name,
+            customerIdLabel = exportBalanceLabel,
+            colDate = exportColDate,
+            colCategory = exportColType,
+            colDescription = exportColDescription,
+            colAmount = exportColAmount,
+            totalLabel = exportTotalLabel,
+            totalValue = Formatters.money(balance, currencySymbol),
+            footerText = poweredByFooter,
+            emptyLabel = exportEmptyLabel,
+            rows = exportRows
+        )
+        PdfExporter.shareOrSave(context, uri, exportChooserTitle)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         AnimatedBlobBackground(
             blobColors = listOf(NeonCyan, NeonPink, NeonTeal),
@@ -313,6 +375,9 @@ fun KhataDetailScreen(
                         }
                     },
                     actions = {
+                        IconButton(onClick = { exportStatementAsPdf() }) {
+                            Icon(Icons.Filled.PictureAsPdf, contentDescription = stringResource(R.string.export_pdf))
+                        }
                         IconButton(onClick = { showEditParty = true }) {
                             Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.edit))
                         }

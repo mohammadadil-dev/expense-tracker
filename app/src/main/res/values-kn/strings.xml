@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">ಗ್ರಾಹಕ ID: %1$s</string>
     <string name="export_started">ನಿಮ್ಮ PDF ವರದಿ ತಯಾರಿಸಲಾಗುತ್ತಿದೆ…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">ಲೆಡ್ಜರ್ ಸ್ಟೇಟ್‌ಮೆಂಟ್</string>
+    <string name="khata_export_balance_label">ಬಾಕಿ ಮೊತ್ತ: %1$s</string>
+    <string name="khata_export_col_type">ವಿಧ</string>
+    <string name="khata_export_type_credit">ಕ್ರೆಡಿಟ್</string>
+    <string name="khata_export_type_payment">ಪಾವತಿ</string>
+    <string name="khata_export_total_label">ಬಾಕಿ</string>
+    <string name="khata_export_no_entries">ಇನ್ನೂ ಯಾವುದೇ ನಮೂದುಗಳಿಲ್ಲ.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">ಪಾವತಿಸಿದವರು</string>
+    <string name="split_export_settlement_label">ಇತ್ಯರ್ಥ</string>
+    <string name="split_export_members_label">ಸದಸ್ಯರು: %1$s</string>
+    <string name="split_export_no_expenses">ಇನ್ನೂ ಯಾವುದೇ ಖರ್ಚುಗಳಿಲ್ಲ.</string>
+
     <string name="add_category">ವರ್ಗ ಸೇರಿಸಿ</string>
     <string name="new_category_hint">ಹೊಸ ವರ್ಗ ಹೆಸರು</string>
     <string name="delete_category_confirm">ಈ ವರ್ಗ ಬಳಸಿದ ವೆಚ್ಚಗಳು ಮೊದಲ ಉಳಿದ ವರ್ಗಕ್ಕೆ ಹೋಗುತ್ತವೆ. ಮುಂದುವರಿಸಬೇಕೇ?</string>

@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">வாடிக்கையாளர் ID: %1$s</string>
     <string name="export_started">உங்கள் PDF ரிப்போர்ட் தயாரிக்கப்படுகிறது…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">லெட்ஜர் அறிக்கை</string>
+    <string name="khata_export_balance_label">நிலுவைத் தொகை: %1$s</string>
+    <string name="khata_export_col_type">வகை</string>
+    <string name="khata_export_type_credit">கடன்</string>
+    <string name="khata_export_type_payment">கட்டணம்</string>
+    <string name="khata_export_total_label">நிலுவை</string>
+    <string name="khata_export_no_entries">இதுவரை எந்த பதிவும் இல்லை.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">செலுத்தியவர்</string>
+    <string name="split_export_settlement_label">தீர்வு</string>
+    <string name="split_export_members_label">உறுப்பினர்கள்: %1$s</string>
+    <string name="split_export_no_expenses">இதுவரை செலவுகள் இல்லை.</string>
+
     <string name="add_category">வகை சேர்</string>
     <string name="new_category_hint">புதிய வகை பெயர்</string>
     <string name="delete_category_confirm">இந்த வகையை பயன்படுத்தும் செலவுகள் முதல் மீதமுள்ள வகைக்கு மாற்றப்படும். தொடரவா?</string>

@@ -156,6 +156,24 @@
     <string name="export_customer_id_label">Customer ID: %1$s</string>
     <string name="export_started">Preparing your PDF report…</string>
 
+    <!-- Ledger (Khata) PDF statement — reuses date_label/description_label/amount_label/
+         export_total_label/export_pdf/export_pdf_chooser_title/export_started/powered_by_footer -->
+    <string name="khata_export_report_title">Ledger Statement</string>
+    <string name="khata_export_balance_label">Outstanding Balance: %1$s</string>
+    <string name="khata_export_col_type">Type</string>
+    <string name="khata_export_type_credit">Credit</string>
+    <string name="khata_export_type_payment">Payment</string>
+    <string name="khata_export_total_label">Balance</string>
+    <string name="khata_export_no_entries">No entries yet.</string>
+
+    <!-- Split group PDF report — reuses split_wa_header/date_label/description_label/
+         amount_label/export_total_label/export_pdf/export_pdf_chooser_title/export_started/
+         powered_by_footer -->
+    <string name="split_export_col_paid_by">Paid By</string>
+    <string name="split_export_settlement_label">Settlement</string>
+    <string name="split_export_members_label">Members: %1$s</string>
+    <string name="split_export_no_expenses">No expenses yet.</string>
+
     <string name="add_category">Add Category</string>
     <string name="new_category_hint">New category name</string>
     <string name="delete_category_confirm">Expenses using this category will be reassigned to the first remaining category. Continue?</string>

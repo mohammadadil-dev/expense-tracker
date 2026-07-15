@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">رقم العميل: %1$s</string>
     <string name="export_started">يتم تجهيز تقرير PDF…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">كشف حساب الدفتر</string>
+    <string name="khata_export_balance_label">الرصيد المستحق: %1$s</string>
+    <string name="khata_export_col_type">النوع</string>
+    <string name="khata_export_type_credit">دين</string>
+    <string name="khata_export_type_payment">دفعة</string>
+    <string name="khata_export_total_label">الرصيد</string>
+    <string name="khata_export_no_entries">لا توجد إدخالات بعد.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">دفع بواسطة</string>
+    <string name="split_export_settlement_label">تسوية</string>
+    <string name="split_export_members_label">الأعضاء: %1$s</string>
+    <string name="split_export_no_expenses">لا توجد مصروفات بعد.</string>
+
     <string name="add_category">إضافة فئة</string>
     <string name="new_category_hint">اسم الفئة الجديدة</string>
     <string name="delete_category_confirm">سيتم نقل المصروفات المرتبطة بهذه الفئة إلى أول فئة متبقية. هل تريد الاستمرار؟</string>

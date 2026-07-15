@@ -1,5 +1,6 @@
 package com.expensetracker.app.ui.screens
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,6 +37,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -52,6 +55,9 @@ import com.expensetracker.app.ui.components.SettleUpSheet
 import com.expensetracker.app.ui.theme.BrandAmber
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.SuccessGreen
+import com.expensetracker.app.util.ExportRow
+import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.Settlement
 import com.expensetracker.app.viewmodel.SplitViewModel
 import kotlinx.coroutines.launch
@@ -141,6 +147,66 @@ fun SplitGroupDetailScreen(
         if (filterMemberId == null) base else base.filter { it.paidByMemberId == filterMemberId }
     }
 
+    // ── PDF report export ───────────────────────────────────────────────────────
+    // Same PdfExporter/ExportRow the Dashboard's monthly report and the Ledger's per-party
+    // statement both use. Includes settlement rows too (labeled distinctly) so the PDF is a
+    // full record of the group, not just the split expenses — matching what the in-app list
+    // already shows before any member/date filter is applied.
+    val context = LocalContext.current
+    val exportReportTitle = stringResource(R.string.split_wa_header)
+    val exportMembersLabel = stringResource(R.string.split_export_members_label, members.joinToString(", ") { it.name })
+    val exportColDate = stringResource(R.string.date_label)
+    val exportColPaidBy = stringResource(R.string.split_export_col_paid_by)
+    val exportColDescription = stringResource(R.string.description_label)
+    val exportColAmount = stringResource(R.string.amount_label)
+    val exportTotalLabel = stringResource(R.string.export_total_label)
+    val exportEmptyLabel = stringResource(R.string.split_export_no_expenses)
+    val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
+    val exportStartedLabel = stringResource(R.string.export_started)
+    val appNameStr = stringResource(R.string.app_name)
+    val poweredByFooter = stringResource(R.string.powered_by_footer)
+    val settlementLabel = stringResource(R.string.split_export_settlement_label)
+
+    val exportRows = remember(expenses, memberMap, currencySymbol) {
+        expenses.sortedByDescending { it.date }.map { e ->
+            // "Paid By" always names whoever actually paid, settlement or not — the Description
+            // column is what distinguishes a settlement row (its raw description is the literal,
+            // unlocalized "Settlement" set in SplitRepository.markSettlementPaid, so it's
+            // replaced here with the localized settlementLabel instead of shown as-is).
+            ExportRow(
+                dateLabel = e.date,
+                categoryLabel = memberMap[e.paidByMemberId]?.name ?: "",
+                description = if (e.isSettlement) settlementLabel else e.description.ifBlank { "—" },
+                amountLabel = Formatters.money(e.amount, currencySymbol)
+            )
+        }
+    }
+
+    fun exportGroupAsPdf() {
+        if (exportRows.isEmpty()) {
+            Toast.makeText(context, exportEmptyLabel, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
+        val uri = PdfExporter.export(
+            context = context,
+            appName = appNameStr,
+            reportTitle = exportReportTitle,
+            monthLabel = group.name,
+            customerIdLabel = exportMembersLabel,
+            colDate = exportColDate,
+            colCategory = exportColPaidBy,
+            colDescription = exportColDescription,
+            colAmount = exportColAmount,
+            totalLabel = exportTotalLabel,
+            totalValue = Formatters.money(totalSpent, currencySymbol),
+            footerText = poweredByFooter,
+            emptyLabel = exportEmptyLabel,
+            rows = exportRows
+        )
+        PdfExporter.shareOrSave(context, uri, exportChooserTitle)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         // ── Animated blob background ──────────────────────────────────────────
         AnimatedBlobBackground(
@@ -190,6 +256,16 @@ fun SplitGroupDetailScreen(
                                 Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.split_more_options))
                             }
                             DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.export_pdf)) },
+                                    onClick = {
+                                        menuExpanded = false
+                                        exportGroupAsPdf()
+                                    },
+                                    leadingIcon = {
+                                        Icon(Icons.Filled.PictureAsPdf, contentDescription = null)
+                                    }
+                                )
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.split_delete_group)) },
                                     onClick = {

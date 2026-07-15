@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">కస్టమర్ ID: %1$s</string>
     <string name="export_started">మీ PDF నివేదిక తయారవుతోంది…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">లెడ్జర్ స్టేట్‌మెంట్</string>
+    <string name="khata_export_balance_label">బాకీ మొత్తం: %1$s</string>
+    <string name="khata_export_col_type">రకం</string>
+    <string name="khata_export_type_credit">క్రెడిట్</string>
+    <string name="khata_export_type_payment">చెల్లింపు</string>
+    <string name="khata_export_total_label">బాకీ</string>
+    <string name="khata_export_no_entries">ఇంకా ఎంట్రీలు లేవు.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">చెల్లించినవారు</string>
+    <string name="split_export_settlement_label">పరిష్కారం</string>
+    <string name="split_export_members_label">సభ్యులు: %1$s</string>
+    <string name="split_export_no_expenses">ఇంకా ఖర్చులు లేవు.</string>
+
     <string name="add_category">వర్గం జోడించు</string>
     <string name="new_category_hint">కొత్త వర్గం పేరు</string>
     <string name="delete_category_confirm">ఈ వర్గాన్ని ఉపయోగించే ఖర్చులు మొదటి మిగిలిన వర్గానికి మారుతాయి. కొనసాగించాలా?</string>

@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">کسٹمر ID: %1$s</string>
     <string name="export_started">آپ کی PDF رپورٹ تیار ہو رہی ہے…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">لیجر بیان</string>
+    <string name="khata_export_balance_label">باقی رقم: %1$s</string>
+    <string name="khata_export_col_type">قسم</string>
+    <string name="khata_export_type_credit">ادھار</string>
+    <string name="khata_export_type_payment">ادائیگی</string>
+    <string name="khata_export_total_label">باقی</string>
+    <string name="khata_export_no_entries">ابھی تک کوئی اندراج نہیں ہے۔</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">ادائیگی کنندہ</string>
+    <string name="split_export_settlement_label">تصفیہ</string>
+    <string name="split_export_members_label">اراکین: %1$s</string>
+    <string name="split_export_no_expenses">ابھی تک کوئی خرچہ نہیں ہے۔</string>
+
     <string name="add_category">زمرہ شامل کریں</string>
     <string name="new_category_hint">نئے زمرے کا نام</string>
     <string name="delete_category_confirm">اس زمرے کے اخراجات پہلے موجود زمرے کو تفویض ہو جائیں گے۔ جاری رکھیں؟</string>

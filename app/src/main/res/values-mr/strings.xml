@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">ग्राहक ID: %1$s</string>
     <string name="export_started">तुमचा PDF रिपोर्ट तयार केला जात आहे…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">लेजर स्टेटमेंट</string>
+    <string name="khata_export_balance_label">थकीत शिल्लक: %1$s</string>
+    <string name="khata_export_col_type">प्रकार</string>
+    <string name="khata_export_type_credit">क्रेडिट</string>
+    <string name="khata_export_type_payment">देयता</string>
+    <string name="khata_export_total_label">शिल्लक</string>
+    <string name="khata_export_no_entries">अद्याप कोणतीही नोंद नाही.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">दिले</string>
+    <string name="split_export_settlement_label">समझोता</string>
+    <string name="split_export_members_label">सदस्य: %1$s</string>
+    <string name="split_export_no_expenses">अद्याप कोणताही खर्च नाही.</string>
+
     <string name="add_category">श्रेणी जोडा</string>
     <string name="new_category_hint">नवीन श्रेणीचे नाव</string>
     <string name="delete_category_confirm">या श्रेणीचा वापर करणारे खर्च पहिल्या उरलेल्या श्रेणीत जातील. सुरू ठेवायचे का?</string>

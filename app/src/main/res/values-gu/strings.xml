@@ -154,6 +154,21 @@
     <string name="export_customer_id_label">ગ્રાહક ID: %1$s</string>
     <string name="export_started">તમારો PDF રિપોર્ટ તૈયાર થઈ રહ્યો છે…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">ખાતાવહી નિવેદન</string>
+    <string name="khata_export_balance_label">બાકી બેલેન્સ: %1$s</string>
+    <string name="khata_export_col_type">પ્રકાર</string>
+    <string name="khata_export_type_credit">ક્રેડિટ</string>
+    <string name="khata_export_type_payment">ચૂકવણી</string>
+    <string name="khata_export_total_label">બેલેન્સ</string>
+    <string name="khata_export_no_entries">હજુ સુધી કોઈ એન્ટ્રી નથી.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">ચૂકવનાર</string>
+    <string name="split_export_settlement_label">પતાવટ</string>
+    <string name="split_export_members_label">સભ્યો: %1$s</string>
+    <string name="split_export_no_expenses">હજુ સુધી કોઈ ખર્ચ નથી.</string>
+
     <string name="add_category">કેટેગરી ઉમેરો</string>
     <string name="new_category_hint">નવી કેટેગરીનું નામ</string>
     <string name="delete_category_confirm">આ કેટેગરી વાપરતા ખર્ચ પ્રથમ બાકી કેટેગરીમાં જશે. ચાલુ રાખવું છે?</string>
