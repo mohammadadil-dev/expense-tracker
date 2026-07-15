@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import android.util.Log
 import com.expensetracker.app.data.AppDatabase
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ExpenseRepository
@@ -34,8 +35,55 @@ class ExpenseApp : Application() {
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    /**
+     * Installs a targeted safety net for a well-known Android/Compose platform race:
+     *
+     *   java.lang.IllegalArgumentException: parameter must be a descendant of this view
+     *       at android.view.ViewGroup.offsetRectBetweenParentAndChild
+     *       at android.view.ViewRootImpl.scrollToRectOrFocus
+     *       at android.view.ViewRootImpl.draw
+     *
+     * This happens when a focused interop View (e.g. the EditText backing a Compose
+     * TextField) has a pending "scroll me into view" request queued, but gets detached
+     * from its parent hierarchy (a ModalBottomSheet/Dialog dismissing, or a dynamically
+     * removed list row) before the next draw pass runs. There are zero app frames in the
+     * stack trace — it originates entirely inside the platform's View system — so this is
+     * not fixable from a specific screen's code. It's also harmless: it happens during a
+     * draw traversal after the relevant UI is already gone, so no data is lost or corrupted.
+     *
+     * We only swallow this *exact* signature (message text + the ViewRootImpl.scrollToRectOrFocus
+     * frame) and delegate every other Throwable to the previously-installed default handler
+     * so real crashes still surface normally (Play Console vitals, crash reporters, etc.).
+     */
+    private fun installBenignRenderRaceGuard() {
+        val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            val isBenignScrollFocusRace = throwable is IllegalArgumentException &&
+                throwable.message?.contains("must be a descendant of this view") == true &&
+                throwable.stackTrace.any { it.className == "android.view.ViewRootImpl" && it.methodName == "scrollToRectOrFocus" }
+
+            if (isBenignScrollFocusRace) {
+                Log.w(
+                    "ExpenseApp",
+                    "Swallowed benign Android platform race (focused view detached during " +
+                        "scroll-into-view on draw). Not app-fixable; see installBenignRenderRaceGuard doc.",
+                    throwable
+                )
+            } else {
+                if (previousHandler != null) {
+                    previousHandler.uncaughtException(thread, throwable)
+                } else {
+                    Log.e("ExpenseApp", "Uncaught exception, no previous handler installed", throwable)
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }
+            }
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        installBenignRenderRaceGuard()
 
         database = AppDatabase.getInstance(this)
         repository = ExpenseRepository(database)

@@ -18,7 +18,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -76,6 +78,12 @@ fun AddSplitExpenseSheet(
     // Starts with one blank row so the "+ Add item" affordance is obvious immediately.
     var itemRows by remember { mutableStateOf(listOf(ItemRow(key = 0))) }
     var nextItemKey by remember { mutableStateOf(1) }
+
+    // Clearing focus before an item row (with its own TextFields) is removed from composition
+    // avoids a known Android/Compose platform race — a focused row's pending scroll-into-view
+    // request can otherwise fire after the row's View is detached, throwing
+    // "IllegalArgumentException: parameter must be a descendant of this view" during draw.
+    val focusManager: FocusManager = LocalFocusManager.current
 
     val scrollState = rememberScrollState()
     val memberMap = remember(members) { members.associateBy { it.id } }
@@ -279,6 +287,11 @@ fun AddSplitExpenseSheet(
                             }
                         },
                         onRemove = {
+                            // Clear focus first — if a field inside this row currently has
+                            // focus, removing the row out from under it can otherwise trigger
+                            // the platform-level "must be a descendant of this view" crash
+                            // (see focusManager comment above / installBenignRenderRaceGuard).
+                            focusManager.clearFocus(force = true)
                             itemRows = itemRows.filter { it.key != row.key }
                         }
                     )
