@@ -11,6 +11,10 @@ interface SplitGroupDao {
     @Query("SELECT * FROM split_groups WHERE id = :id")
     suspend fun getById(id: Long): SplitGroupEntity?
 
+    /** Unscoped snapshot of every group — used by BackupManager's full-database export. */
+    @Query("SELECT * FROM split_groups")
+    suspend fun getAllOnce(): List<SplitGroupEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(group: SplitGroupEntity): Long
 

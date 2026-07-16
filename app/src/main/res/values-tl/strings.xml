@@ -497,7 +497,7 @@ Gamitin anumang oras!</string>
     <string name="drive_restore_success">Naibalik ang data mula sa Google Drive</string>
     <string name="drive_no_backup">Wala pang backup sa Drive</string>
     <string name="drive_backup_error">Google Drive error</string>
-    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, at utang</string>
+    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, utang, split, payment account, at goal. Hindi kasama ang mga larawan ng resibo.</string>
     <string name="khata_label_all_cleared">Naaayos na ang lahat kay %1$s ✓</string>
     <string name="khata_label_i_owe">Ikaw ay may utang kay %1$s</string>
     <string name="khata_label_they_owe">Si %1$s ay may utang sa iyo</string>

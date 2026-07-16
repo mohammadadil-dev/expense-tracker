@@ -501,7 +501,7 @@
     <string name="drive_restore_success">Google Drive থেকে ডেটা পুনরুদ্ধার হয়েছে</string>
     <string name="drive_no_backup">Drive-এ এখনো কোনো ব্যাকআপ নেই</string>
     <string name="drive_backup_error">Google Drive ত্রুটি</string>
-    <string name="backup_scope_note">ব্যয়, বিভাগ, বাজেট, খাতা এবং ঋণ অন্তর্ভুক্ত</string>
+    <string name="backup_scope_note">ব্যয়, বিভাগ, বাজেট, খাতা, ঋণ, স্প্লিট, পেমেন্ট অ্যাকাউন্ট এবং লক্ষ্য অন্তর্ভুক্ত। রসিদের ছবি অন্তর্ভুক্ত নয়।</string>
     <string name="khata_label_all_cleared">%1$s-এর সাথে সব পরিষ্কার ✓</string>
     <string name="khata_label_i_owe">আপনি %1$s-এর কাছে ঋণী</string>
     <string name="khata_label_they_owe">%1$s আপনার কাছে ঋণী</string>

@@ -13,6 +13,11 @@ interface SplitExpenseShareDao {
     """)
     suspend fun getAllSharesForGroup(groupId: Long): List<SplitExpenseShareEntity>
 
+    /** Unscoped snapshot of every share row across every expense — used by BackupManager's
+     *  full-database export. */
+    @Query("SELECT * FROM split_expense_shares")
+    suspend fun getAllOnce(): List<SplitExpenseShareEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(shares: List<SplitExpenseShareEntity>)
 

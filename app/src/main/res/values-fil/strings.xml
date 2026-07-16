@@ -481,7 +481,7 @@ Gamitin anumang oras!</string>
     <string name="backup_section_title">Backup ng Data</string>
     <string name="backup_export_label">I-export ang Backup</string>
     <string name="backup_import_label">Mag-import ng Backup</string>
-    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, at utang</string>
+    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, utang, split, payment account, at goal. Hindi kasama ang mga larawan ng resibo.</string>
     <string name="backup_chooser_title">I-save o ibahagi ang backup</string>
     <string name="backup_success">Na-export ang backup</string>
     <string name="backup_error">Nabigo ang backup</string>

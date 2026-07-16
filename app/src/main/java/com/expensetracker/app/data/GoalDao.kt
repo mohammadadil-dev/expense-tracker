@@ -19,6 +19,10 @@ interface GoalDao {
     @Query("SELECT * FROM savings_goals ORDER BY createdAt ASC")
     fun allGoals(): Flow<List<GoalEntity>>
 
+    /** Suspend snapshot (not a Flow) — used by BackupManager's full-database export. */
+    @Query("SELECT * FROM savings_goals")
+    suspend fun getAllOnce(): List<GoalEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(goal: GoalEntity): Long
 

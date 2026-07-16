@@ -473,7 +473,7 @@
     <string name="backup_section_title">ડેટા બૅકઅપ</string>
     <string name="backup_export_label">બૅકઅપ નિકાસ</string>
     <string name="backup_import_label">બૅકઅપ આયાત</string>
-    <string name="backup_scope_note">ખર્ચ, કેટેગરી, બજેટ, ખાતું, દેવા સહિત</string>
+    <string name="backup_scope_note">ખર્ચ, કેટેગરી, બજેટ, ખાતું, દેવા, સ્પ્લિટ, પેમેન્ટ એકાઉન્ટ અને ગોલ સહિત. રસીદ ફોટા સામેલ નથી.</string>
     <string name="backup_chooser_title">બૅકઅપ સાચવો અથવા શેર કરો</string>
     <string name="backup_success">બૅકઅપ નિકાસ થઈ</string>
     <string name="backup_error">બૅકઅપ નિષ્ફળ</string>

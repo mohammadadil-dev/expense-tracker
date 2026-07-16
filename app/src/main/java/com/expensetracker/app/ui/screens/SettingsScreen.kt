@@ -224,7 +224,7 @@ fun SettingsScreen(
             onSuccess = { result ->
                 Toast.makeText(
                     context,
-                    "$restoreSuccessLabel (${result.expenses} exp, ${result.khataParties} khata, ${result.debts} debts)",
+                    "$restoreSuccessLabel (${result.expenses} exp, ${result.khataParties} khata, ${result.debts} debts, ${result.splitGroups} splits, ${result.goals} goals)",
                     Toast.LENGTH_LONG
                 ).show()
             },

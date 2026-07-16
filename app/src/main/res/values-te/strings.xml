@@ -473,7 +473,7 @@
     <string name="backup_section_title">డేటా బ్యాకప్</string>
     <string name="backup_export_label">బ్యాకప్ ఎగుమతి</string>
     <string name="backup_import_label">బ్యాకప్ దిగుమతి</string>
-    <string name="backup_scope_note">ఖర్చులు, వర్గాలు, బడ్జెట్, ఖాతా, అప్పులు కవర్ చేస్తుంది</string>
+    <string name="backup_scope_note">ఖర్చులు, వర్గాలు, బడ్జెట్, ఖాతా, అప్పులు, స్ప్లిట్‌లు, పేమెంట్ ఖాతాలు మరియు లక్ష్యాలు కవర్ చేస్తుంది. రసీదు ఫోటోలు చేర్చబడలేదు.</string>
     <string name="backup_chooser_title">బ్యాకప్ సేవ్ చేయి లేదా పంచుకో</string>
     <string name="backup_success">బ్యాకప్ ఎగుమతి అయింది</string>
     <string name="backup_error">బ్యాకప్ విఫలమైంది</string>

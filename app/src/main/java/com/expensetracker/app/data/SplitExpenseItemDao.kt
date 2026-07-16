@@ -17,6 +17,13 @@ interface SplitExpenseItemDao {
     @Query("SELECT * FROM split_expense_items WHERE expenseId = :expenseId")
     suspend fun getItemsForExpense(expenseId: Long): List<SplitExpenseItemEntity>
 
+    /** Unscoped snapshots across every expense — used by BackupManager's full-database export. */
+    @Query("SELECT * FROM split_expense_items")
+    suspend fun getAllItemsOnce(): List<SplitExpenseItemEntity>
+
+    @Query("SELECT * FROM split_expense_item_members")
+    suspend fun getAllItemMembersOnce(): List<SplitExpenseItemMemberEntity>
+
     @Query("""
         SELECT * FROM split_expense_item_members
         WHERE itemId IN (SELECT id FROM split_expense_items WHERE expenseId = :expenseId)

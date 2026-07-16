@@ -473,7 +473,7 @@
     <string name="backup_section_title">ഡേറ്റ ബാക്കപ്പ്</string>
     <string name="backup_export_label">ബാക്കപ്പ് എക്‌സ്‌പോർട്ട്</string>
     <string name="backup_import_label">ബാക്കപ്പ് ഇമ്പോർട്ട്</string>
-    <string name="backup_scope_note">ചെലവുകൾ, വിഭാഗങ്ങൾ, ബജറ്റ്, ഖാതാ, കടങ്ങൾ ഉൾപ്പെടുന്നു</string>
+    <string name="backup_scope_note">ചെലവുകൾ, വിഭാഗങ്ങൾ, ബജറ്റ്, ഖാതാ, കടങ്ങൾ, സ്പ്ലിറ്റുകൾ, പേയ്‌മെന്റ് അക്കൗണ്ടുകൾ, ലക്ഷ്യങ്ങൾ എന്നിവ ഉൾപ്പെടുന്നു. രസീത് ഫോട്ടോകൾ ഉൾപ്പെടുന്നില്ല.</string>
     <string name="backup_chooser_title">ബാക്കപ്പ് സേവ് ചെയ്യൂ അല്ലെങ്കിൽ ഷെയർ ചെയ്യൂ</string>
     <string name="backup_success">ബാക്കപ്പ് എക്‌സ്‌പോർട്ട് ചെയ്തു</string>
     <string name="backup_error">ബാക്കപ്പ് പരാജയം</string>

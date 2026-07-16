@@ -473,7 +473,7 @@
     <string name="backup_section_title">ಡೇಟಾ ಬ್ಯಾಕಪ್</string>
     <string name="backup_export_label">ಬ್ಯಾಕಪ್ ರಫ್ತು</string>
     <string name="backup_import_label">ಬ್ಯಾಕಪ್ ಆಮದು</string>
-    <string name="backup_scope_note">ವೆಚ್ಚಗಳು, ವರ್ಗಗಳು, ಬಜೆಟ್, ಖಾತೆ, ಸಾಲಗಳು ಒಳಗೊಂಡಿದೆ</string>
+    <string name="backup_scope_note">ವೆಚ್ಚಗಳು, ವರ್ಗಗಳು, ಬಜೆಟ್, ಖಾತೆ, ಸಾಲಗಳು, ಸ್ಪ್ಲಿಟ್‌ಗಳು, ಪೇಮೆಂಟ್ ಖಾತೆಗಳು ಮತ್ತು ಗುರಿಗಳು ಒಳಗೊಂಡಿದೆ. ರಸೀದಿ ಫೋಟೋಗಳು ಸೇರಿಲ್ಲ.</string>
     <string name="backup_chooser_title">ಬ್ಯಾಕಪ್ ಉಳಿಸಿ ಅಥವಾ ಹಂಚಿ</string>
     <string name="backup_success">ಬ್ಯಾಕಪ್ ರಫ್ತಾಗಿದೆ</string>
     <string name="backup_error">ಬ್ಯಾಕಪ್ ವಿಫಲ</string>

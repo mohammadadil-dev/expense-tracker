@@ -493,7 +493,7 @@ Feel free to use it anytime!</string>
     <string name="backup_section_title">Data Backup</string>
     <string name="backup_export_label">Export Backup</string>
     <string name="backup_import_label">Import Backup</string>
-    <string name="backup_scope_note">Covers expenses, categories, budgets, Khata, and debts</string>
+    <string name="backup_scope_note">Covers expenses, categories, budgets, Khata, debts, splits, payment accounts, and goals. Receipt photos aren\'t included.</string>
     <string name="backup_chooser_title">Save or share backup</string>
     <string name="backup_success">Backup exported</string>
     <string name="backup_error">Backup failed</string>

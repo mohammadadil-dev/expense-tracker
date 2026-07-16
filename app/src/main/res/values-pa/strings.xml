@@ -473,7 +473,7 @@
     <string name="backup_section_title">ਡੇਟਾ ਬੈਕਅੱਪ</string>
     <string name="backup_export_label">ਬੈਕਅੱਪ ਨਿਰਯਾਤ</string>
     <string name="backup_import_label">ਬੈਕਅੱਪ ਆਯਾਤ</string>
-    <string name="backup_scope_note">ਖਰਚ, ਸ਼੍ਰੇਣੀਆਂ, ਬਜਟ, ਖਾਤਾ, ਕਰਜ਼ੇ ਸ਼ਾਮਲ</string>
+    <string name="backup_scope_note">ਖਰਚ, ਸ਼੍ਰੇਣੀਆਂ, ਬਜਟ, ਖਾਤਾ, ਕਰਜ਼ੇ, ਸਪਲਿਟ, ਭੁਗਤਾਨ ਖਾਤੇ ਅਤੇ ਟੀਚੇ ਸ਼ਾਮਲ। ਰਸੀਦ ਦੀਆਂ ਫੋਟੋਆਂ ਸ਼ਾਮਲ ਨਹੀਂ ਹਨ।</string>
     <string name="backup_chooser_title">ਬੈਕਅੱਪ ਸੁਰੱਖਿਅਤ ਜਾਂ ਸ਼ੇਅਰ ਕਰੋ</string>
     <string name="backup_success">ਬੈਕਅੱਪ ਨਿਰਯਾਤ ਹੋਇਆ</string>
     <string name="backup_error">ਬੈਕਅੱਪ ਅਸਫਲ</string>

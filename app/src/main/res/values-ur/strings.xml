@@ -497,7 +497,7 @@
     <string name="drive_restore_success">Google Drive سے ڈیٹا بحال ہو گیا</string>
     <string name="drive_no_backup">Drive پر ابھی کوئی بیک اپ نہیں ہے</string>
     <string name="drive_backup_error">Google Drive خرابی</string>
-    <string name="backup_scope_note">اخراجات، زمرے، بجٹ، کھاتہ اور قرض شامل ہیں</string>
+    <string name="backup_scope_note">اخراجات، زمرے، بجٹ، کھاتہ، قرض، اسپلٹس، ادائیگی کے اکاؤنٹس اور مقاصد شامل ہیں۔ رسید کی تصاویر شامل نہیں ہیں۔</string>
     <string name="khata_label_all_cleared">%1$s کے ساتھ تصفیہ ✓</string>
     <string name="khata_label_i_owe">آپ %1$s کے مقروض ہیں</string>
     <string name="khata_label_they_owe">%1$s آپ کے مقروض ہیں</string>

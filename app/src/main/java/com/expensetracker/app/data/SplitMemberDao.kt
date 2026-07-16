@@ -11,6 +11,11 @@ interface SplitMemberDao {
     @Query("SELECT * FROM split_members WHERE groupId = :groupId ORDER BY id ASC")
     suspend fun getMembersSnapshot(groupId: Long): List<SplitMemberEntity>
 
+    /** Unscoped snapshot of every member across every group — used by BackupManager's
+     *  full-database export. */
+    @Query("SELECT * FROM split_members")
+    suspend fun getAllOnce(): List<SplitMemberEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(member: SplitMemberEntity): Long
 

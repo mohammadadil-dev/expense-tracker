@@ -473,7 +473,7 @@
     <string name="backup_section_title">डेटा बॅकअप</string>
     <string name="backup_export_label">बॅकअप निर्यात</string>
     <string name="backup_import_label">बॅकअप आयात</string>
-    <string name="backup_scope_note">खर्च, श्रेण्या, बजेट, खाता, कर्जे समाविष्ट</string>
+    <string name="backup_scope_note">खर्च, श्रेण्या, बजेट, खाता, कर्जे, स्प्लिट्स, पेमेंट खाती आणि उद्दिष्टे समाविष्ट. पावतीचे फोटो समाविष्ट नाहीत.</string>
     <string name="backup_chooser_title">बॅकअप जतन करा किंवा शेअर करा</string>
     <string name="backup_success">बॅकअप निर्यात झाला</string>
     <string name="backup_error">बॅकअप अयशस्वी</string>

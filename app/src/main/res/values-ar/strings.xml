@@ -501,7 +501,7 @@
     <string name="drive_restore_success">تمت استعادة البيانات من Google Drive</string>
     <string name="drive_no_backup">لا توجد نسخة احتياطية على Drive بعد</string>
     <string name="drive_backup_error">خطأ في Google Drive</string>
-    <string name="backup_scope_note">يغطي المصروفات والفئات والميزانيات والخاطة والديون</string>
+    <string name="backup_scope_note">يغطي المصروفات والفئات والميزانيات والخاطة والديون والتقسيمات وحسابات الدفع والأهداف. صور الفواتير غير مشمولة.</string>
     <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
     <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
     <string name="khata_label_they_owe">%1$s مدين لك</string>

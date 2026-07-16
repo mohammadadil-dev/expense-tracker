@@ -473,7 +473,7 @@
     <string name="backup_section_title">தரவு காப்புப்பிரதி</string>
     <string name="backup_export_label">காப்புப்பிரதி ஏற்றுமதி</string>
     <string name="backup_import_label">காப்புப்பிரதி இறக்குமதி</string>
-    <string name="backup_scope_note">செலவுகள், வகைகள், பட்ஜெட், கட்டா, கடன்கள் உள்ளடங்கும்</string>
+    <string name="backup_scope_note">செலவுகள், வகைகள், பட்ஜெட், கட்டா, கடன்கள், ஸ்ப்ளிட்கள், பேமெண்ட் கணக்குகள் மற்றும் இலக்குகள் உள்ளடங்கும். ரசீது புகைப்படங்கள் சேர்க்கப்படவில்லை.</string>
     <string name="backup_chooser_title">காப்புப்பிரதி சேமி அல்லது பகிர்</string>
     <string name="backup_success">காப்புப்பிரதி ஏற்றுமதி செய்யப்பட்டது</string>
     <string name="backup_error">காப்புப்பிரதி தோல்வி</string>
