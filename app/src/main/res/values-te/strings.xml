@@ -452,7 +452,7 @@
 ఎప్పుడైనా ఉపయోగించుకోండి!</string>
     <string name="khata_reminder_signature">వందనాలతో,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">నేను ఈ పార్టీకి చెల్లించాల్సింది</string>
+    <string name="khata_direction_i_owe_label">ఒకటి ఎంచుకోండి:</string>
     <string name="khata_direction_they_owe_label">ఈ పార్టీ నాకు చెల్లించాల్సింది</string>
     <string name="khata_initial_amount_label">ప్రారంభ నిల్వ (ఐచ్ఛికం)</string>
 

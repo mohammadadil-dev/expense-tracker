@@ -397,10 +397,10 @@
     <!-- ── Khata / Local Shop Credit Tracker ───────────────────────────────── -->
     <string name="khata_tab_label">Ledger</string>
     <string name="khata_screen_title">Ledger</string>
-    <string name="khata_i_owe">I Owe</string>
-    <string name="khata_they_owe">They Owe Me</string>
-    <string name="khata_total_i_owe">Total I Owe</string>
-    <string name="khata_total_they_owe">Total Owed to Me</string>
+    <string name="khata_i_owe">I Will Pay</string>
+    <string name="khata_they_owe">I Will Get</string>
+    <string name="khata_total_i_owe">Total I\'ll Pay</string>
+    <string name="khata_total_they_owe">Total I\'ll Get</string>
     <string name="khata_add_party">Add Party</string>
     <string name="khata_edit_party">Edit Party</string>
     <string name="khata_party_name_hint">Name (shop or person)</string>
@@ -424,7 +424,7 @@
     <string name="khata_no_parties_i_owe">No shops added yet.
 Tap + to add a shop you have a tab at.</string>
     <string name="khata_no_parties_they_owe">No customers added yet.
-Tap + to add someone who owes you.</string>
+Tap + to add someone you\'ll get money from.</string>
     <string name="khata_outstanding">Outstanding</string>
     <string name="khata_settled">Settled ✓</string>
     <string name="khata_add_entry">Add Entry</string>
@@ -467,7 +467,7 @@ Just a note — you have a credit of %2$s at my shop.
 Feel free to use it anytime!</string>
     <string name="khata_reminder_signature">Regards,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">I owe this party</string>
+    <string name="khata_direction_i_owe_label">Choose one:</string>
     <string name="khata_direction_they_owe_label">They owe me</string>
     <string name="khata_initial_amount_label">Opening balance (optional)</string>
 
@@ -513,8 +513,8 @@ Feel free to use it anytime!</string>
     <string name="drive_no_backup">No backup found on Drive yet</string>
     <string name="drive_backup_error">Google Drive error</string>
     <string name="khata_label_all_cleared">All cleared with %1$s ✓</string>
-    <string name="khata_label_i_owe">You owe %1$s</string>
-    <string name="khata_label_they_owe">%1$s owes you</string>
+    <string name="khata_label_i_owe">You\'ll pay %1$s</string>
+    <string name="khata_label_they_owe">You\'ll get from %1$s</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">Track money lent &amp; borrowed with your contacts</string>

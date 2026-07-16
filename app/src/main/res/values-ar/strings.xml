@@ -440,7 +440,7 @@
 استخدمه في أي وقت!</string>
     <string name="khata_reminder_signature">مع التحية،
 %1$s</string>
-    <string name="khata_direction_i_owe_label">أنا مدين لهذا الطرف</string>
+    <string name="khata_direction_i_owe_label">اختر أحد الخيارين:</string>
     <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
     <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
 

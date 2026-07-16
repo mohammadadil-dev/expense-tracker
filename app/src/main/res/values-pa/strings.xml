@@ -452,7 +452,7 @@
 ਜਦੋਂ ਚਾਹੋ ਵਰਤੋ!</string>
     <string name="khata_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">ਮੈਂ ਇਸ ਪਾਰਟੀ ਨੂੰ ਦੇਣਾ ਹੈ</string>
+    <string name="khata_direction_i_owe_label">ਇੱਕ ਚੁਣੋ:</string>
     <string name="khata_direction_they_owe_label">ਇਹ ਪਾਰਟੀ ਮੈਨੂੰ ਦੇਣੀ ਹੈ</string>
     <string name="khata_initial_amount_label">ਸ਼ੁਰੂਆਤੀ ਰਕਮ (ਵਿਕਲਪਿਕ)</string>
 

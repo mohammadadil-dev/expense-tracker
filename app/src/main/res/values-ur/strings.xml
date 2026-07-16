@@ -436,7 +436,7 @@
 جب چاہیں استعمال کریں!</string>
     <string name="khata_reminder_signature">ادب کے ساتھ،
 %1$s</string>
-    <string name="khata_direction_i_owe_label">میں نے اس فریق کو دینا ہے</string>
+    <string name="khata_direction_i_owe_label">ایک منتخب کریں:</string>
     <string name="khata_direction_they_owe_label">اس فریق نے مجھے دینا ہے</string>
     <string name="khata_initial_amount_label">ابتدائی رقم (اختیاری)</string>
 

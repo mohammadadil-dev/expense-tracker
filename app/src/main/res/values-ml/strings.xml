@@ -452,7 +452,7 @@
 ഏപ്പോൾ വേണമെങ്കിലും ഉപയോഗിക്കൂ!</string>
     <string name="khata_reminder_signature">ആശംസകളോടെ,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">ഞാൻ ഈ പാർട്ടിക്ക് നൽകണം</string>
+    <string name="khata_direction_i_owe_label">ഒന്ന് തിരഞ്ഞെടുക്കുക:</string>
     <string name="khata_direction_they_owe_label">ഈ പാർട്ടി എനിക്ക് നൽകണം</string>
     <string name="khata_initial_amount_label">ആദ്യ തുക (ഓപ്ഷണൽ)</string>
 

@@ -435,7 +435,7 @@ Paalala — mayroon kang %2$s na credit sa aking tindahan.
 Gamitin anumang oras!</string>
     <string name="khata_reminder_signature">Regards,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">May utang ako sa party na ito</string>
+    <string name="khata_direction_i_owe_label">Pumili ng isa:</string>
     <string name="khata_direction_they_owe_label">May utang ang party na ito sa akin</string>
     <string name="khata_initial_amount_label">Panimulang halaga (opsyonal)</string>
 

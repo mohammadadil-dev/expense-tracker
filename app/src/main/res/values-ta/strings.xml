@@ -452,7 +452,7 @@
 எப்போது வேண்டுமானாலும் பயன்படுத்திக்கொள்ளுங்கள்!</string>
     <string name="khata_reminder_signature">வணக்கத்துடன்,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">நான் இந்த தரப்பிடம் கொடுக்க வேண்டியது</string>
+    <string name="khata_direction_i_owe_label">ஒன்றைத் தேர்ந்தெடுக்கவும்:</string>
     <string name="khata_direction_they_owe_label">இந்த தரப்பு என்னிடம் கொடுக்க வேண்டியது</string>
     <string name="khata_initial_amount_label">தொடக்க இருப்பு (விருப்பமானது)</string>
 

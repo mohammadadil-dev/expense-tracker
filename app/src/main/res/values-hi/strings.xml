@@ -440,7 +440,7 @@
 कभी भी उपयोग करें!</string>
     <string name="khata_reminder_signature">सादर,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">मुझे इस पार्टी को देना है</string>
+    <string name="khata_direction_i_owe_label">एक चुनें:</string>
     <string name="khata_direction_they_owe_label">इस पार्टी को मुझे देना है</string>
     <string name="khata_initial_amount_label">शुरुआती राशि (वैकल्पिक)</string>
 
