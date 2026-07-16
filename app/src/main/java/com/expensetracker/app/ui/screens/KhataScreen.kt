@@ -179,6 +179,8 @@ fun KhataScreen(
 
     val totalIOwe    = khataViewModel.totalIOwe(allParties, allEntries)
     val totalTheyOwe = khataViewModel.totalTheyOwe(allParties, allEntries)
+    val todaysCollections = khataViewModel.todaysCollections(allParties, allEntries)
+    val todaysCreditGiven  = khataViewModel.todaysCreditGiven(allParties, allEntries)
 
     LaunchedEffect(Unit) { heroVisible = true }
 
@@ -216,7 +218,9 @@ fun KhataScreen(
                         totalTheyOwe = totalTheyOwe,
                         iOweCount    = iOweParties.size,
                         theyOweCount = theyOweParties.size,
-                        currencySymbol = currencySymbol
+                        currencySymbol = currencySymbol,
+                        todaysCollections = todaysCollections,
+                        todaysCreditGiven = todaysCreditGiven
                     )
                 }
 
@@ -515,7 +519,9 @@ private fun KhataHeroHeader(
     totalTheyOwe: Double,
     iOweCount: Int,
     theyOweCount: Int,
-    currencySymbol: String
+    currencySymbol: String,
+    todaysCollections: Double = 0.0,
+    todaysCreditGiven: Double = 0.0
 ) {
     val netAmount      = abs(totalTheyOwe - totalIOwe)
     val netIsPositive  = totalTheyOwe >= totalIOwe
@@ -598,7 +604,76 @@ private fun KhataHeroHeader(
             }
         }
 
+        // ── Today's summary — only surfaced once there's actually been activity today, so a
+        // quiet morning doesn't clutter the header with a row of zeroes. ──────────────────
+        if (todaysCollections > 0.0 || todaysCreditGiven > 0.0) {
+            Spacer(Modifier.height(10.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (todaysCollections > 0.0) {
+                    KhataTodayChip(
+                        icon = Icons.Filled.TrendingUp,
+                        label = stringResource(R.string.khata_today_collected),
+                        amount = todaysCollections,
+                        currencySymbol = currencySymbol,
+                        color = SuccessGreen,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                if (todaysCreditGiven > 0.0) {
+                    KhataTodayChip(
+                        icon = Icons.Filled.TrendingDown,
+                        label = stringResource(R.string.khata_today_credit_given),
+                        amount = todaysCreditGiven,
+                        currencySymbol = currencySymbol,
+                        color = AccentIndigo,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+
         Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun KhataTodayChip(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    amount: Double,
+    currencySymbol: String,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = color.copy(alpha = 0.08f),
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(14.dp))
+            Spacer(Modifier.width(6.dp))
+            Column {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextMuted,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                MoneyText(
+                    formatted = Formatters.money(amount, currencySymbol),
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+                    color = color
+                )
+            }
+        }
     }
 }
 

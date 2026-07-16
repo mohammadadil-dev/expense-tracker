@@ -374,6 +374,8 @@
     <string name="khata_they_owe">मुझे मिलना है</string>
     <string name="khata_total_i_owe">कुल देना</string>
     <string name="khata_total_they_owe">कुल मिलना</string>
+    <string name="khata_today_collected">आज वसूला गया</string>
+    <string name="khata_today_credit_given">आज उधार दिया गया</string>
     <string name="khata_add_party">पार्टी जोड़ें</string>
     <string name="khata_edit_party">पार्टी संपादित करें</string>
     <string name="khata_party_name_hint">नाम (दुकान या व्यक्ति)</string>

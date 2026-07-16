@@ -124,7 +124,12 @@ fun AddKhataEntrySheet(
         contract = ActivityResultContracts.TakePicture()
     ) { saved ->
         if (saved) {
-            photoPath = pendingCameraFile?.absolutePath
+            pendingCameraFile?.let { file ->
+                // Downscale/re-encode the full-resolution capture before keeping it — see
+                // ReceiptPhotoStore's class doc for why (storage on budget devices).
+                ReceiptPhotoStore.compressCapturedPhoto(file.absolutePath)
+                photoPath = file.absolutePath
+            }
         }
         pendingCameraFile = null
     }

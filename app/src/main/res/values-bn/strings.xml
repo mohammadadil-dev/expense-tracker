@@ -374,6 +374,8 @@
     <string name="khata_they_owe">আমি পাব</string>
     <string name="khata_total_i_owe">মোট দেওয়ার পরিমাণ</string>
     <string name="khata_total_they_owe">মোট পাওয়ার পরিমাণ</string>
+    <string name="khata_today_collected">আজ সংগ্রহ</string>
+    <string name="khata_today_credit_given">আজ বাকিতে দেওয়া</string>
     <string name="khata_add_party">পার্টি যোগ করুন</string>
     <string name="khata_edit_party">পার্টি সম্পাদনা করুন</string>
     <string name="khata_party_name_hint">নাম (দোকান বা ব্যক্তি)</string>

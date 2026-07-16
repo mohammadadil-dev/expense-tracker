@@ -370,6 +370,8 @@
     <string name="khata_they_owe">Utang Sa Akin</string>
     <string name="khata_total_i_owe">Kabuuang Utang Ko</string>
     <string name="khata_total_they_owe">Kabuuang Utang Sa Akin</string>
+    <string name="khata_today_collected">Nakolekta ngayon</string>
+    <string name="khata_today_credit_given">Ibinigay sa utang ngayon</string>
     <string name="khata_add_party">Magdagdag ng Party</string>
     <string name="khata_edit_party">I-edit ang Party</string>
     <string name="khata_party_name_hint">Pangalan (tindahan o tao)</string>

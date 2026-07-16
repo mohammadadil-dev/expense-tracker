@@ -388,6 +388,8 @@
     <string name="khata_they_owe">என்னிடம் வரவேண்டியது</string>
     <string name="khata_total_i_owe">மொத்தம் கொடுக்க வேண்டியது</string>
     <string name="khata_total_they_owe">மொத்தம் வரவேண்டியது</string>
+    <string name="khata_today_collected">இன்று வசூலானது</string>
+    <string name="khata_today_credit_given">இன்று கடனாக கொடுத்தது</string>
     <string name="khata_add_party">தரப்பு சேர்</string>
     <string name="khata_edit_party">தரப்பை திருத்து</string>
     <string name="khata_party_name_hint">பெயர் (கடை அல்லது நபர்)</string>

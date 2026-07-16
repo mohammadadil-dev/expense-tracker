@@ -370,6 +370,8 @@
     <string name="khata_they_owe">مجھے ملنا ہے</string>
     <string name="khata_total_i_owe">کل دینا</string>
     <string name="khata_total_they_owe">کل ملنا</string>
+    <string name="khata_today_collected">آج وصول ہوا</string>
+    <string name="khata_today_credit_given">آج ادھار دیا گیا</string>
     <string name="khata_add_party">فریق شامل کریں</string>
     <string name="khata_edit_party">فریق میں ترمیم کریں</string>
     <string name="khata_party_name_hint">نام (دکان یا شخص)</string>

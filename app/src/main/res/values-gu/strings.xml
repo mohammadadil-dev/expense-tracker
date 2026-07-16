@@ -388,6 +388,8 @@
     <string name="khata_they_owe">મને મળવાનું</string>
     <string name="khata_total_i_owe">કુલ આપવાનું</string>
     <string name="khata_total_they_owe">કુલ મળવાનું</string>
+    <string name="khata_today_collected">આજે વસૂલ થયું</string>
+    <string name="khata_today_credit_given">આજે ઉધાર આપ્યું</string>
     <string name="khata_add_party">પાર્ટી ઉમેરો</string>
     <string name="khata_edit_party">પાર્ટી સંપાદિત કરો</string>
     <string name="khata_party_name_hint">નામ (દુકાન અથવા વ્યક્તિ)</string>

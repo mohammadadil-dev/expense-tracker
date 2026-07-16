@@ -401,6 +401,8 @@
     <string name="khata_they_owe">I Will Get</string>
     <string name="khata_total_i_owe">Total I\'ll Pay</string>
     <string name="khata_total_they_owe">Total I\'ll Get</string>
+    <string name="khata_today_collected">Collected today</string>
+    <string name="khata_today_credit_given">Given on credit today</string>
     <string name="khata_add_party">Add Party</string>
     <string name="khata_edit_party">Edit Party</string>
     <string name="khata_party_name_hint">Name (shop or person)</string>

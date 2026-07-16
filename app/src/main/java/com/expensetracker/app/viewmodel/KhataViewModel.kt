@@ -175,6 +175,34 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         else       -> 3
     }
 
+    // ── Today's summary (KhataScreen hero header) ───────────────────────────────
+    // Scoped to THEY_OWE parties only — this is meant to answer the two questions a
+    // shopkeeper actually wants at the end of the day: "how much cash did I collect today"
+    // and "how much did I let go on credit today." I_OWE-side activity (what the shop owner
+    // paid suppliers) is a separate concern and isn't folded into these two numbers.
+
+    /** Total PAYMENT amount logged today against THEY_OWE parties — cash/UPI actually
+     *  collected from customers today. */
+    fun todaysCollections(parties: List<KhataPartyEntity>, entries: List<KhataEntryEntity>): Double {
+        val theyOweIds = parties.filter { it.direction == KhataPartyEntity.DIRECTION_THEY_OWE }
+            .map { it.id }.toSet()
+        val today = DateUtils.todayIso()
+        return entries.filter {
+            it.partyId in theyOweIds && it.type == KhataEntryEntity.TYPE_PAYMENT && it.date == today
+        }.sumOf { it.amount }
+    }
+
+    /** Total CREDIT amount logged today against THEY_OWE parties — new tabs/purchases-on-
+     *  credit extended to customers today. */
+    fun todaysCreditGiven(parties: List<KhataPartyEntity>, entries: List<KhataEntryEntity>): Double {
+        val theyOweIds = parties.filter { it.direction == KhataPartyEntity.DIRECTION_THEY_OWE }
+            .map { it.id }.toSet()
+        val today = DateUtils.todayIso()
+        return entries.filter {
+            it.partyId in theyOweIds && it.type == KhataEntryEntity.TYPE_CREDIT && it.date == today
+        }.sumOf { it.amount }
+    }
+
     // ── Detail screen: entries for one party ──────────────────────────────────
 
     /** Returns a hot StateFlow of entries for a specific party. Each call creates a new

@@ -374,6 +374,8 @@
     <string name="khata_they_owe">ما لي</string>
     <string name="khata_total_i_owe">إجمالي ما عليّ</string>
     <string name="khata_total_they_owe">إجمالي ما لي</string>
+    <string name="khata_today_collected">تم تحصيله اليوم</string>
+    <string name="khata_today_credit_given">أُعطي على الحساب اليوم</string>
     <string name="khata_add_party">إضافة طرف</string>
     <string name="khata_edit_party">تعديل الطرف</string>
     <string name="khata_party_name_hint">الاسم (محل أو شخص)</string>
