@@ -79,6 +79,7 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.KhataEntryEntity
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AddEditKhataPartySheet
+import com.expensetracker.app.ui.components.AddKhataEntrySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.components.RequestUpiPaymentSheet
@@ -127,6 +128,9 @@ fun KhataScreen(
     var upiRequestParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     // Party pending a "Mark as Paid" confirm dialog.
     var markPaidParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    // Party currently showing the row-level "Quick Add" entry sheet — lets a shopkeeper log a
+    // partial credit/payment straight from the list, without navigating into the detail screen.
+    var quickAddParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
     val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
@@ -316,7 +320,8 @@ fun KhataScreen(
                                     showPayUpiButton   = showPayUpiButton,
                                     onPayUpi           = { payViaUpi(party, balance) },
                                     showMarkPaidButton = showMarkPaidButton,
-                                    onMarkPaid         = { markPaidParty = party }
+                                    onMarkPaid         = { markPaidParty = party },
+                                    onQuickAdd         = { quickAddParty = party }
                                 )
                             }
                         }
@@ -470,6 +475,18 @@ fun KhataScreen(
             dismissButton = {
                 TextButton(onClick = { markPaidParty = null }) { Text(stringResource(R.string.cancel)) }
             }
+        )
+    }
+
+    // ── Quick Add sheet — reuses the same AddKhataEntrySheet the detail screen's FAB opens
+    // (full fields + voice input), just skips the trip through KhataDetailScreen.
+    quickAddParty?.let { party ->
+        AddKhataEntrySheet(
+            onSave = { amount, note, date, type, dueDate, photoPath ->
+                khataViewModel.addEntry(party.id, amount, note, date, type, dueDate, photoPath)
+                quickAddParty = null
+            },
+            onDismiss = { quickAddParty = null }
         )
     }
 
@@ -701,7 +718,8 @@ private fun KhataPartyCard(
     showPayUpiButton: Boolean = false,
     onPayUpi: () -> Unit = {},
     showMarkPaidButton: Boolean = false,
-    onMarkPaid: () -> Unit = {}
+    onMarkPaid: () -> Unit = {},
+    onQuickAdd: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
     Card(
@@ -795,7 +813,18 @@ private fun KhataPartyCard(
                 }
             }
             // Compact 32dp action icons (smaller than IconButton's 48dp default touch target)
-            // so up to two of these plus the arrow don't crowd out the party name column.
+            // so up to three of these plus the arrow don't crowd out the party name column.
+            // Quick Add is always shown first — a fast way to log a credit/payment straight
+            // from the list, without navigating into the detail screen (reuses the same
+            // AddKhataEntrySheet as the detail screen's own FAB, voice input included).
+            IconButton(onClick = onQuickAdd, modifier = Modifier.size(32.dp)) {
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.khata_add_entry),
+                    tint = AccentIndigo,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
             if (showUpiButton) {
                 IconButton(onClick = onRequestUpi, modifier = Modifier.size(32.dp)) {
                     Icon(
