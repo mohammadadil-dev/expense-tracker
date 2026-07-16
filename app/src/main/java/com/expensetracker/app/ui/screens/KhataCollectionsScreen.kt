@@ -78,6 +78,7 @@ import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.ui.theme.WarningAmber
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
 
@@ -169,7 +170,11 @@ fun KhataCollectionsScreen(
             try {
                 context.startActivity(intent2)
             } catch (e2: ActivityNotFoundException) {
-                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                // WhatsApp isn't installed — fall back to a plain SMS (see SmsFallback's doc
+                // comment for why this is text-only and why that's fine for this audience).
+                if (!SmsFallback.send(context, row.party.phone, message)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

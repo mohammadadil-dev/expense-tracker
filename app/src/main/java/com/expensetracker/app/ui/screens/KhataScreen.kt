@@ -94,6 +94,7 @@ import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.ReceiptPhotoStore
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -406,7 +407,11 @@ fun KhataScreen(
                         try {
                             context.startActivity(fallbackIntent)
                         } catch (e2: ActivityNotFoundException) {
-                            Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            // WhatsApp isn't installed — the QR image can't ride over SMS, but
+                            // the reminder text still can (see SmsFallback's doc comment).
+                            if (!SmsFallback.send(context, party.phone, caption)) {
+                                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 } else {
@@ -431,7 +436,11 @@ fun KhataScreen(
                         try {
                             context.startActivity(fallbackIntent)
                         } catch (e2: ActivityNotFoundException) {
-                            Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            // WhatsApp isn't installed — the QR image (and any bill photos)
+                            // can't ride over SMS, but the reminder text still can.
+                            if (!SmsFallback.send(context, party.phone, caption)) {
+                                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }

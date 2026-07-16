@@ -98,6 +98,7 @@ import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.ReceiptPhotoStore
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -222,7 +223,11 @@ fun KhataDetailScreen(
                 try {
                     context.startActivity(intent2)
                 } catch (e2: ActivityNotFoundException) {
-                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    // WhatsApp isn't installed — fall back to a plain SMS (see SmsFallback's doc
+                    // comment for why this is text-only and why that's fine for this audience).
+                    if (!SmsFallback.send(context, party.phone, message)) {
+                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             return
@@ -251,7 +256,11 @@ fun KhataDetailScreen(
             try {
                 context.startActivity(fallbackIntent)
             } catch (e2: ActivityNotFoundException) {
-                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                // WhatsApp isn't installed — fall back to a plain SMS with just the text; the
+                // bill photo(s) can't ride along over SMS (see SmsFallback's doc comment).
+                if (!SmsFallback.send(context, party.phone, message)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -287,7 +296,11 @@ fun KhataDetailScreen(
                 try {
                     context.startActivity(fallbackIntent)
                 } catch (e2: ActivityNotFoundException) {
-                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    // WhatsApp isn't installed — the QR image itself can't ride over SMS, but
+                    // the reminder text still can (see SmsFallback's doc comment).
+                    if (!SmsFallback.send(context, party.phone, caption)) {
+                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             showUpiSheet = false
@@ -315,7 +328,11 @@ fun KhataDetailScreen(
             try {
                 context.startActivity(fallbackIntent)
             } catch (e2: ActivityNotFoundException) {
-                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                // WhatsApp isn't installed — the QR image (and any bill photos) can't ride
+                // over SMS, but the reminder text still can (see SmsFallback's doc comment).
+                if (!SmsFallback.send(context, party.phone, caption)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         showUpiSheet = false
