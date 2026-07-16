@@ -92,6 +92,7 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.ReceiptPhotoStore
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -325,6 +326,14 @@ fun KhataScreen(
             R.string.khata_reminder_msg_owe, party.name, plainAmount
         ) + signature + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
+        // Bill/receipt photos on this party's CREDIT entries — see KhataDetailScreen.kt's
+        // matching comment for why this is every CREDIT entry's photo, not just "unpaid" ones.
+        val billPhotoUris = remember(party.id, allEntries) {
+            allEntries.filter {
+                it.partyId == party.id && it.type == KhataEntryEntity.TYPE_CREDIT && !it.photoPath.isNullOrBlank()
+            }.map { ReceiptPhotoStore.uriFor(context, it.photoPath!!) }
+        }
+
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
             // Not falling back to "Me" here — that's fine as a signed reminder line (above),
@@ -338,30 +347,59 @@ fun KhataScreen(
             // http(s) URLs, so that link shows up as inert, ugly percent-encoded plain text with
             // no functional benefit once the scannable QR is attached, so it's left out of the
             // caption. The image goes out via a generic ACTION_SEND (no phone-number prefill
-            // possible for image shares), so WhatsApp opens its own contact picker here.
+            // possible for image shares), so WhatsApp opens its own contact picker here. Any bill
+            // photos on file ride along in the same multi-image share (see KhataDetailScreen.kt's
+            // sendUpiPaymentQr for the same pattern).
             onShareQr = { qrUri ->
                 val caption = reminderMsg
-                val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "image/png"
-                    putExtra(Intent.EXTRA_STREAM, qrUri)
-                    putExtra(Intent.EXTRA_TEXT, caption)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    setPackage("com.whatsapp")
-                }
-                try {
-                    context.startActivity(sendIntent)
-                } catch (e: ActivityNotFoundException) {
-                    val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                if (billPhotoUris.isEmpty()) {
+                    val sendIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "image/png"
                         putExtra(Intent.EXTRA_STREAM, qrUri)
                         putExtra(Intent.EXTRA_TEXT, caption)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        setPackage("com.whatsapp.w4b")
+                        setPackage("com.whatsapp")
                     }
                     try {
-                        context.startActivity(fallbackIntent)
-                    } catch (e2: ActivityNotFoundException) {
-                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                        context.startActivity(sendIntent)
+                    } catch (e: ActivityNotFoundException) {
+                        val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "image/png"
+                            putExtra(Intent.EXTRA_STREAM, qrUri)
+                            putExtra(Intent.EXTRA_TEXT, caption)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            setPackage("com.whatsapp.w4b")
+                        }
+                        try {
+                            context.startActivity(fallbackIntent)
+                        } catch (e2: ActivityNotFoundException) {
+                            Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    val images = ArrayList(listOf(qrUri) + billPhotoUris)
+                    val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                        type = "image/*"
+                        putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                        putExtra(Intent.EXTRA_TEXT, caption)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        setPackage("com.whatsapp")
+                    }
+                    try {
+                        context.startActivity(sendIntent)
+                    } catch (e: ActivityNotFoundException) {
+                        val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                            type = "image/*"
+                            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                            putExtra(Intent.EXTRA_TEXT, caption)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            setPackage("com.whatsapp.w4b")
+                        }
+                        try {
+                            context.startActivity(fallbackIntent)
+                        } catch (e2: ActivityNotFoundException) {
+                            Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 upiRequestParty = null

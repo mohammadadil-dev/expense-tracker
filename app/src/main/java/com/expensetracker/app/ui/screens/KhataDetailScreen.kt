@@ -97,6 +97,7 @@ import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.PdfExporter
+import com.expensetracker.app.util.ReceiptPhotoStore
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -183,26 +184,72 @@ fun KhataDetailScreen(
     val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) + signature +
         "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
-    // Shared by the plain reminder and the "Request via UPI" share — both hand off to
-    // WhatsApp via Intent.ACTION_VIEW, never touching the message content or transport.
+    // Bill/receipt photos attached to this party's CREDIT entries (see AddKhataEntrySheet's
+    // photo attach UI) — collected here so both WhatsApp share paths below can attach them.
+    // Khata has no per-entry "settled" flag (payments reduce the whole-party balance, not a
+    // specific credit), so this is every CREDIT entry's photo, not just "unpaid" ones; that
+    // matches what "Send Reminder" already means here — it's only ever shown while the party
+    // has a positive balance (see KhataBalanceCard's `!isSettled` gate above).
+    val billPhotoUris = remember(entries) {
+        entries.filter { it.type == KhataEntryEntity.TYPE_CREDIT && !it.photoPath.isNullOrBlank() }
+            .map { ReceiptPhotoStore.uriFor(context, it.photoPath!!) }
+    }
+
+    // Shared by the plain reminder and the "Request via UPI" share. Both prefer
+    // Intent.ACTION_VIEW's phone-prefilled click-to-chat link when there's nothing to attach —
+    // it opens straight into the right conversation. But that API is text-only; the moment
+    // there's an image to attach (a bill photo here, the UPI QR in sendUpiPaymentQr below) this
+    // switches to ACTION_SEND(_MULTIPLE), which can carry images but can't pre-fill a recipient,
+    // so WhatsApp opens its own contact/chat picker instead — same trade-off already made by
+    // the QR share, now made consistently whenever a photo is actually being sent.
     fun sendWhatsAppMessage(message: String) {
-        // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
-        // e.g. "+966 51 234 5678" → "96651234567"
-        val phone = party.phone
-            .replace("+", "")
-            .replace(" ", "")
-            .replace("-", "")
-            .replace("(", "")
-            .replace(")", "")
-        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
-        val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
-        try {
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            // WhatsApp Business fallback
-            val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+        if (billPhotoUris.isEmpty()) {
+            // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
+            // e.g. "+966 51 234 5678" → "96651234567"
+            val phone = party.phone
+                .replace("+", "")
+                .replace(" ", "")
+                .replace("-", "")
+                .replace("(", "")
+                .replace(")", "")
+            val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
             try {
-                context.startActivity(intent2)
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // WhatsApp Business fallback
+                val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+                try {
+                    context.startActivity(intent2)
+                } catch (e2: ActivityNotFoundException) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
+            }
+            return
+        }
+
+        // Bill photo(s) attached — ACTION_SEND_MULTIPLE so WhatsApp gets every bill in one
+        // share (it supports multi-image sends with a single caption).
+        val images = ArrayList(billPhotoUris)
+        val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "image/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+            putExtra(Intent.EXTRA_TEXT, message)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setPackage("com.whatsapp")
+        }
+        try {
+            context.startActivity(sendIntent)
+        } catch (e: ActivityNotFoundException) {
+            val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "image/*"
+                putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                putExtra(Intent.EXTRA_TEXT, message)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp.w4b")
+            }
+            try {
+                context.startActivity(fallbackIntent)
             } catch (e2: ActivityNotFoundException) {
                 Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
             }
@@ -216,11 +263,41 @@ fun KhataDetailScreen(
     // plain text in a chat bubble (percent-encoded characters and all), with zero functional
     // benefit once the scannable QR is already attached — so it's deliberately left out of the
     // caption. No copy-link fallback: sharing always goes through this same WhatsApp flow (§10.3).
+    // Bill photos (if any) ride along with the QR in the same multi-image share.
     fun sendUpiPaymentQr(qrImageUri: Uri) {
         val caption = reminderMsg
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "image/png"
-            putExtra(Intent.EXTRA_STREAM, qrImageUri)
+        if (billPhotoUris.isEmpty()) {
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                putExtra(Intent.EXTRA_STREAM, qrImageUri)
+                putExtra(Intent.EXTRA_TEXT, caption)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp")
+            }
+            try {
+                context.startActivity(sendIntent)
+            } catch (e: ActivityNotFoundException) {
+                val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    putExtra(Intent.EXTRA_STREAM, qrImageUri)
+                    putExtra(Intent.EXTRA_TEXT, caption)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    setPackage("com.whatsapp.w4b")
+                }
+                try {
+                    context.startActivity(fallbackIntent)
+                } catch (e2: ActivityNotFoundException) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
+            }
+            showUpiSheet = false
+            return
+        }
+
+        val images = ArrayList(listOf(qrImageUri) + billPhotoUris)
+        val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "image/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
             putExtra(Intent.EXTRA_TEXT, caption)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setPackage("com.whatsapp")
@@ -228,9 +305,9 @@ fun KhataDetailScreen(
         try {
             context.startActivity(sendIntent)
         } catch (e: ActivityNotFoundException) {
-            val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "image/png"
-                putExtra(Intent.EXTRA_STREAM, qrImageUri)
+            val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "image/*"
+                putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
                 putExtra(Intent.EXTRA_TEXT, caption)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 setPackage("com.whatsapp.w4b")

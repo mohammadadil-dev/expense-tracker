@@ -59,6 +59,15 @@ object ReceiptPhotoStore {
         }
     }
 
+    /**
+     * FileProvider [Uri] for an already-stored receipt photo at [path] (as saved on
+     * [com.expensetracker.app.data.KhataEntryEntity.photoPath]) — for handing an existing
+     * photo to another app (e.g. attaching it to a WhatsApp share), as opposed to
+     * [newPhotoUriForCamera] which is for writing a brand-new one.
+     */
+    fun uriFor(context: Context, path: String): Uri =
+        FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", File(path))
+
     /** Deletes the photo file at [path], if any — safe to call with a null/blank/missing path. */
     fun delete(path: String?) {
         if (path.isNullOrBlank()) return
