@@ -743,4 +743,22 @@
     <string name="business_name_hint">ಉದಾ. ಶರ್ಮಾ ಜನರಲ್ ಸ್ಟೋರ್</string>
     <string name="business_address_label">ವಿಳಾಸ (ಐಚ್ಛಿಕ)</string>
     <string name="business_phone_label">ಫೋನ್ (ಐಚ್ಛಿಕ)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">ವಯಸ್ಸಾಗುವಿಕೆ ಮತ್ತು ಜ್ಞಾಪನೆಗಳು</string>
+    <string name="khata_collections_title">ಸಂಗ್ರಹಣೆ</string>
+    <string name="khata_collections_subtitle">ಬಾಕಿ ಬ್ಯಾಲೆನ್ಸ್, ಒಂದೇ ನೋಟದಲ್ಲಿ</string>
+    <string name="khata_aging_bucket_0_30">0–30 ದಿನಗಳು</string>
+    <string name="khata_aging_bucket_31_60">31–60 ದಿನಗಳು</string>
+    <string name="khata_aging_bucket_61_90">61–90 ದಿನಗಳು</string>
+    <string name="khata_aging_bucket_90_plus">90+ ದಿನಗಳು</string>
+    <string name="khata_collections_empty">ಇದೀಗ ಏನೂ ಬಾಕಿ ಇಲ್ಲ — ನೀವು ಎಲ್ಲವನ್ನೂ ಪೂರ್ಣಗೊಳಿಸಿದ್ದೀರಿ!</string>
+    <string name="khata_collections_select_all">ಎಲ್ಲಾ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="khata_collections_no_phone">ಫೋನ್ ನಂಬರ್ ಇಲ್ಲ</string>
+    <string name="khata_collections_days_overdue">%1$d ದಿನಗಳು</string>
+    <string name="khata_collections_remind_selected">ಆಯ್ಕೆಮಾಡಿದವರಿಗೆ ಜ್ಞಾಪನೆ (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%2$d ರಲ್ಲಿ %1$d</string>
+    <string name="khata_bulk_reminder_send">WhatsApp ಮೂಲಕ ಕಳುಹಿಸಿ</string>
+    <string name="khata_bulk_reminder_skip">ಸ್ಕಿಪ್ ಮಾಡಿ</string>
+    <string name="khata_bulk_reminder_stop">ನಿಲ್ಲಿಸಿ</string>
+    <string name="khata_bulk_reminder_done">%2$d ರಲ್ಲಿ %1$d ಜ್ಞಾಪನೆಗಳನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ</string>
 </resources>

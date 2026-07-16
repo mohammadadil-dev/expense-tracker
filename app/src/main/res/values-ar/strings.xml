@@ -776,4 +776,22 @@
     <string name="business_name_hint">مثال: بقالة الشرقية</string>
     <string name="business_address_label">العنوان (اختياري)</string>
     <string name="business_phone_label">الهاتف (اختياري)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">التقادم والتذكيرات</string>
+    <string name="khata_collections_title">التحصيلات</string>
+    <string name="khata_collections_subtitle">الأرصدة المتأخرة، بلمحة واحدة</string>
+    <string name="khata_aging_bucket_0_30">0–30 يومًا</string>
+    <string name="khata_aging_bucket_31_60">31–60 يومًا</string>
+    <string name="khata_aging_bucket_61_90">61–90 يومًا</string>
+    <string name="khata_aging_bucket_90_plus">+90 يومًا</string>
+    <string name="khata_collections_empty">لا يوجد شيء متأخر الآن — كل شيء تمام!</string>
+    <string name="khata_collections_select_all">تحديد الكل</string>
+    <string name="khata_collections_no_phone">لا يوجد رقم هاتف</string>
+    <string name="khata_collections_days_overdue">%1$d يومًا</string>
+    <string name="khata_collections_remind_selected">تذكير المحددين (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d من %2$d</string>
+    <string name="khata_bulk_reminder_send">إرسال عبر واتساب</string>
+    <string name="khata_bulk_reminder_skip">تخطي</string>
+    <string name="khata_bulk_reminder_stop">إيقاف</string>
+    <string name="khata_bulk_reminder_done">تم إرسال %1$d من %2$d تذكيرات</string>
 </resources>

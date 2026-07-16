@@ -769,4 +769,22 @@
     <string name="business_name_hint">जैसे: शर्मा जनरल स्टोर</string>
     <string name="business_address_label">पता (वैकल्पिक)</string>
     <string name="business_phone_label">फ़ोन (वैकल्पिक)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">एजिंग और रिमाइंडर</string>
+    <string name="khata_collections_title">कलेक्शन</string>
+    <string name="khata_collections_subtitle">बकाया शेष राशि, एक नज़र में</string>
+    <string name="khata_aging_bucket_0_30">0–30 दिन</string>
+    <string name="khata_aging_bucket_31_60">31–60 दिन</string>
+    <string name="khata_aging_bucket_61_90">61–90 दिन</string>
+    <string name="khata_aging_bucket_90_plus">90+ दिन</string>
+    <string name="khata_collections_empty">अभी कुछ भी बकाया नहीं है — सब कुछ ठीक है!</string>
+    <string name="khata_collections_select_all">सभी चुनें</string>
+    <string name="khata_collections_no_phone">कोई फ़ोन नंबर दर्ज नहीं</string>
+    <string name="khata_collections_days_overdue">%1$d दिन</string>
+    <string name="khata_collections_remind_selected">चयनितों को रिमाइंडर भेजें (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%2$d में से %1$d</string>
+    <string name="khata_bulk_reminder_send">WhatsApp के ज़रिए भेजें</string>
+    <string name="khata_bulk_reminder_skip">छोड़ें</string>
+    <string name="khata_bulk_reminder_stop">रोकें</string>
+    <string name="khata_bulk_reminder_done">%2$d में से %1$d रिमाइंडर भेजे गए</string>
 </resources>

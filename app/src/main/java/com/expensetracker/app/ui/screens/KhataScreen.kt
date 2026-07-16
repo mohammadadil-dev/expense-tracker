@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TrendingDown
@@ -103,7 +104,8 @@ import kotlin.math.abs
 fun KhataScreen(
     khataViewModel: KhataViewModel,
     expenseViewModel: ExpenseViewModel,
-    onOpenDetail: (Long) -> Unit
+    onOpenDetail: (Long) -> Unit,
+    onOpenCollections: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val currencySymbol  by expenseViewModel.currencySymbol.collectAsState()
@@ -222,7 +224,38 @@ fun KhataScreen(
                     modifier      = Modifier.padding(horizontal = 16.dp)
                 )
 
-                Spacer(Modifier.height(12.dp))
+                // ── Collections entry point (aging view + bulk reminders) ──────
+                // Only meaningful for "They Owe" — collecting money is the whole point of
+                // this feature, so it stays out of the way entirely on the "I Owe" tab.
+                if (!showIOwe && theyOweParties.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(AccentIndigo.copy(alpha = 0.08f))
+                            .clickable(onClick = onOpenCollections)
+                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.History,
+                            contentDescription = null,
+                            tint = AccentIndigo,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.khata_collections_entry_label),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = AccentIndigo,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(Icons.Filled.ArrowForward, contentDescription = null, tint = AccentIndigo, modifier = Modifier.size(16.dp))
+                    }
+                } else {
+                    Spacer(Modifier.height(12.dp))
+                }
 
                 // ── Party list ─────────────────────────────────────────────────
                 val displayedParties = if (showIOwe) iOweParties else theyOweParties

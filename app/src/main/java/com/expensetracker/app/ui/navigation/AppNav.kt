@@ -58,6 +58,7 @@ import com.expensetracker.app.ui.screens.CurrencySetupScreen
 import com.expensetracker.app.ui.screens.OnboardingScreen
 import com.expensetracker.app.ui.screens.DashboardScreen
 import com.expensetracker.app.ui.screens.DebtsScreen
+import com.expensetracker.app.ui.screens.KhataCollectionsScreen
 import com.expensetracker.app.ui.screens.KhataDetailScreen
 import com.expensetracker.app.ui.screens.KhataScreen
 import com.expensetracker.app.ui.screens.SettingsScreen
@@ -77,6 +78,7 @@ private object Routes {
     const val DASHBOARD       = "dashboard"
     const val KHATA           = "khata"
     const val KHATA_DETAIL    = "khata_detail/{partyId}"
+    const val KHATA_COLLECTIONS = "khata_collections"
     const val DEBTS           = "debts"
     const val SPLITS          = "splits"
     const val SPLIT_DETAIL    = "split_detail/{groupId}"
@@ -104,7 +106,7 @@ private val bottomNavItems = listOf(
 )
 
 // Routes where the bottom nav should be hidden
-private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS)
+private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS, Routes.KHATA_COLLECTIONS)
 
 @Composable
 fun AppNav() {
@@ -389,7 +391,28 @@ fun AppNav() {
                         expenseViewModel = viewModel,
                         onOpenDetail     = { partyId ->
                             navController.navigate(Routes.khataDetail(partyId))
+                        },
+                        onOpenCollections = {
+                            navController.navigate(Routes.KHATA_COLLECTIONS)
                         }
+                    )
+                }
+
+                composable(
+                    Routes.KHATA_COLLECTIONS,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) {
+                    KhataCollectionsScreen(
+                        khataViewModel   = khataViewModel,
+                        expenseViewModel = viewModel,
+                        onBack           = { navController.popBackStack() }
                     )
                 }
 

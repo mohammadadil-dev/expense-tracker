@@ -781,4 +781,25 @@ Feel free to use it anytime!</string>
     <string name="business_name_hint">e.g. Sharma General Store</string>
     <string name="business_address_label">Address (optional)</string>
     <string name="business_phone_label">Phone (optional)</string>
+
+    <!-- ── Collections: aging view + bulk WhatsApp reminders (THEY_OWE parties only) ──
+         See KhataCollectionsScreen.kt. Bulk sending is one-tap-per-party (no automated
+         background sending) — each WhatsApp send still requires the user to tap "Send". -->
+    <string name="khata_collections_entry_label">Aging &amp; Reminders</string>
+    <string name="khata_collections_title">Collections</string>
+    <string name="khata_collections_subtitle">Overdue balances, at a glance</string>
+    <string name="khata_aging_bucket_0_30">0–30 days</string>
+    <string name="khata_aging_bucket_31_60">31–60 days</string>
+    <string name="khata_aging_bucket_61_90">61–90 days</string>
+    <string name="khata_aging_bucket_90_plus">90+ days</string>
+    <string name="khata_collections_empty">Nothing overdue right now — you\'re all caught up!</string>
+    <string name="khata_collections_select_all">Select all</string>
+    <string name="khata_collections_no_phone">No phone on file</string>
+    <string name="khata_collections_days_overdue">%1$d days</string>
+    <string name="khata_collections_remind_selected">Remind Selected (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d of %2$d</string>
+    <string name="khata_bulk_reminder_send">Send via WhatsApp</string>
+    <string name="khata_bulk_reminder_skip">Skip</string>
+    <string name="khata_bulk_reminder_stop">Stop</string>
+    <string name="khata_bulk_reminder_done">Sent %1$d of %2$d reminders</string>
 </resources>

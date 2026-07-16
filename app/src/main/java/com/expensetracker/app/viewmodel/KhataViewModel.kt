@@ -145,6 +145,36 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // ── Collections: aging / bulk reminders (THEY_OWE parties) ─────────────────
+
+    /**
+     * How many days [partyId]'s outstanding balance has been aging, or null if the party is
+     * settled (balance <= 0). Khata has no per-entry "paid" flag (see [balanceForParty]'s doc),
+     * so this is a simplification consistent with [isOverdue]/[isDueSoon]: it prefers the
+     * earliest *already-passed* due date among the party's CREDIT entries (the clearest signal
+     * something is actually late), and falls back to the date of the oldest CREDIT entry when
+     * no due dates were ever set — i.e. "how long since this party's tab was first opened."
+     */
+    fun agingDaysForParty(partyId: Long, entries: List<KhataEntryEntity>): Int? {
+        val balance = balanceForParty(partyId, entries)
+        if (balance <= 0.0) return null
+        val credits = entries.filter { it.partyId == partyId && it.type == KhataEntryEntity.TYPE_CREDIT }
+        if (credits.isEmpty()) return null
+        val today = DateUtils.todayIso()
+        val refDate = credits.mapNotNull { it.dueDate }.filter { it < today }.minOrNull()
+            ?: credits.map { it.date }.minOrNull()
+            ?: return null
+        return DateUtils.daysBetween(refDate, today).toInt().coerceAtLeast(0)
+    }
+
+    /** Aging bucket index for [days]: 0 = 0–30, 1 = 31–60, 2 = 61–90, 3 = 90+. */
+    fun agingBucket(days: Int): Int = when {
+        days <= 30 -> 0
+        days <= 60 -> 1
+        days <= 90 -> 2
+        else       -> 3
+    }
+
     // ── Detail screen: entries for one party ──────────────────────────────────
 
     /** Returns a hot StateFlow of entries for a specific party. Each call creates a new

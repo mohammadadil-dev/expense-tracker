@@ -764,4 +764,22 @@
     <string name="business_name_hint">مثال: شرما جنرل اسٹور</string>
     <string name="business_address_label">پتہ (اختیاری)</string>
     <string name="business_phone_label">فون (اختیاری)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">عمر رسیدگی اور یاد دہانیاں</string>
+    <string name="khata_collections_title">وصولیاں</string>
+    <string name="khata_collections_subtitle">بقایا رقوم، ایک نظر میں</string>
+    <string name="khata_aging_bucket_0_30">0–30 دن</string>
+    <string name="khata_aging_bucket_31_60">31–60 دن</string>
+    <string name="khata_aging_bucket_61_90">61–90 دن</string>
+    <string name="khata_aging_bucket_90_plus">+90 دن</string>
+    <string name="khata_collections_empty">ابھی کچھ بھی واجب الادا نہیں — سب کچھ درست ہے!</string>
+    <string name="khata_collections_select_all">سب منتخب کریں</string>
+    <string name="khata_collections_no_phone">کوئی فون نمبر درج نہیں</string>
+    <string name="khata_collections_days_overdue">%1$d دن</string>
+    <string name="khata_collections_remind_selected">منتخب افراد کو یاد دہانی (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%2$d میں سے %1$d</string>
+    <string name="khata_bulk_reminder_send">واٹس ایپ کے ذریعے بھیجیں</string>
+    <string name="khata_bulk_reminder_skip">نظر انداز کریں</string>
+    <string name="khata_bulk_reminder_stop">روکیں</string>
+    <string name="khata_bulk_reminder_done">%2$d میں سے %1$d یاد دہانیاں بھیجی گئیں</string>
 </resources>

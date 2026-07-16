@@ -753,4 +753,22 @@ Gamitin anumang oras!</string>
     <string name="business_name_hint">hal. Sharma General Store</string>
     <string name="business_address_label">Address (opsyonal)</string>
     <string name="business_phone_label">Telepono (opsyonal)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">Edad ng Utang at Paalala</string>
+    <string name="khata_collections_title">Koleksyon</string>
+    <string name="khata_collections_subtitle">Mga overdue na balanse, sa isang tingin</string>
+    <string name="khata_aging_bucket_0_30">0–30 araw</string>
+    <string name="khata_aging_bucket_31_60">31–60 araw</string>
+    <string name="khata_aging_bucket_61_90">61–90 araw</string>
+    <string name="khata_aging_bucket_90_plus">90+ araw</string>
+    <string name="khata_collections_empty">Walang overdue sa ngayon — up to date ka!</string>
+    <string name="khata_collections_select_all">Piliin lahat</string>
+    <string name="khata_collections_no_phone">Walang naka-record na numero</string>
+    <string name="khata_collections_days_overdue">%1$d araw</string>
+    <string name="khata_collections_remind_selected">Paalalahanan ang Napili (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d sa %2$d</string>
+    <string name="khata_bulk_reminder_send">Ipadala sa pamamagitan ng WhatsApp</string>
+    <string name="khata_bulk_reminder_skip">Laktawan</string>
+    <string name="khata_bulk_reminder_stop">Ihinto</string>
+    <string name="khata_bulk_reminder_done">Naipadala ang %1$d sa %2$d na paalala</string>
 </resources>

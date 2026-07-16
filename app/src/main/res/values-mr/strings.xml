@@ -743,4 +743,22 @@
     <string name="business_name_hint">उदा. शर्मा जनरल स्टोअर</string>
     <string name="business_address_label">पत्ता (पर्यायी)</string>
     <string name="business_phone_label">फोन (पर्यायी)</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">एजिंग आणि रिमाइंडर</string>
+    <string name="khata_collections_title">कलेक्शन</string>
+    <string name="khata_collections_subtitle">थकीत शिल्लक, एका दृष्टीक्षेपात</string>
+    <string name="khata_aging_bucket_0_30">0–30 दिवस</string>
+    <string name="khata_aging_bucket_31_60">31–60 दिवस</string>
+    <string name="khata_aging_bucket_61_90">61–90 दिवस</string>
+    <string name="khata_aging_bucket_90_plus">90+ दिवस</string>
+    <string name="khata_collections_empty">सध्या काहीही थकीत नाही — सर्व काही अद्ययावत आहे!</string>
+    <string name="khata_collections_select_all">सर्व निवडा</string>
+    <string name="khata_collections_no_phone">फोन नंबर नाही</string>
+    <string name="khata_collections_days_overdue">%1$d दिवस</string>
+    <string name="khata_collections_remind_selected">निवडलेल्यांना स्मरणपत्र (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%2$d पैकी %1$d</string>
+    <string name="khata_bulk_reminder_send">WhatsApp द्वारे पाठवा</string>
+    <string name="khata_bulk_reminder_skip">वगळा</string>
+    <string name="khata_bulk_reminder_stop">थांबवा</string>
+    <string name="khata_bulk_reminder_done">%2$d पैकी %1$d स्मरणपत्रे पाठवली</string>
 </resources>
