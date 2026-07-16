@@ -756,4 +756,12 @@ Gamitin anumang oras!</string>
     <string name="payment_account_not_set">Hindi naka-set</string>
     <string name="account_breakdown_title">Ayon sa Account</string>
     <string name="export_col_account">Account</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">Profile ng Negosyo</string>
+    <string name="settings_business_profile_hint">Ipinapakita sa iyong na-export na mga PDF na ulat sa halip na pangalan ng app — kapaki-pakinabang kung nagpapatakbo ka ng tindahan.</string>
+    <string name="business_name_label">Pangalan ng Negosyo</string>
+    <string name="business_name_hint">hal. Sharma General Store</string>
+    <string name="business_address_label">Address (opsyonal)</string>
+    <string name="business_phone_label">Telepono (opsyonal)</string>
 </resources>

@@ -391,6 +391,16 @@ fun KhataDetailScreen(
     val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
     val exportStartedLabel = stringResource(R.string.export_started)
     val appNameStr = stringResource(R.string.app_name)
+    // Optional business profile (Settings) — stamped onto the export in place of appNameStr
+    // when set. See PdfExporter.kt's businessContactLine doc comment.
+    val businessName by expenseViewModel.businessName.collectAsState()
+    val businessAddress by expenseViewModel.businessAddress.collectAsState()
+    val businessPhone by expenseViewModel.businessPhone.collectAsState()
+    val exportAppName = businessName.ifBlank { appNameStr }
+    val exportBusinessContactLine = listOfNotNull(
+        businessAddress.takeIf { it.isNotBlank() },
+        businessPhone.takeIf { it.isNotBlank() }
+    ).joinToString("   •   ").takeIf { it.isNotBlank() }
     val poweredByFooter = stringResource(R.string.powered_by_footer)
     val creditTypeLabel = stringResource(R.string.khata_export_type_credit)
     val paymentTypeLabel = stringResource(R.string.khata_export_type_payment)
@@ -418,10 +428,11 @@ fun KhataDetailScreen(
         Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
         val uri = PdfExporter.export(
             context = context,
-            appName = appNameStr,
+            appName = exportAppName,
             reportTitle = exportReportTitle,
             monthLabel = party.name,
             customerIdLabel = exportBalanceLabel,
+            businessContactLine = exportBusinessContactLine,
             colDate = exportColDate,
             colCategory = exportColType,
             colDescription = exportColDescription,

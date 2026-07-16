@@ -56,6 +56,7 @@ import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.CloudUpload
@@ -89,6 +90,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -179,6 +182,12 @@ fun SettingsScreen(
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
     val myUpiId by viewModel.myUpiId.collectAsState()
     var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
+    val businessName by viewModel.businessName.collectAsState()
+    var businessNameInput by remember(businessName) { mutableStateOf(businessName) }
+    val businessAddress by viewModel.businessAddress.collectAsState()
+    var businessAddressInput by remember(businessAddress) { mutableStateOf(businessAddress) }
+    val businessPhone by viewModel.businessPhone.collectAsState()
+    var businessPhoneInput by remember(businessPhone) { mutableStateOf(businessPhone) }
     val paymentAccounts by viewModel.paymentAccounts.collectAsState()
     var showAccountManageSheet by remember { mutableStateOf(false) }
     var showResetStep1 by remember { mutableStateOf(false) }
@@ -393,6 +402,61 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.labelSmall,
                     color = TextSecondary
                 )
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            // Optional — stamped onto exported PDF reports (Ledger statement, Split report,
+            // Dashboard monthly report) in place of the app's own name/branding, so a shop
+            // owner's export reads like it's from their business. All blank by default;
+            // PdfExporter call sites fall back to today's behavior when businessName is blank.
+            AnimatedSection(visible = contentVisible, delayMillis = 11) {
+                SettingsSectionHeader(icon = Icons.Filled.Store, title = stringResource(R.string.settings_business_profile_title))
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.settings_business_profile_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(10.dp))
+                OutlinedTextField(
+                    value = businessNameInput,
+                    onValueChange = { businessNameInput = it },
+                    label = { Text(stringResource(R.string.business_name_label)) },
+                    placeholder = { Text(stringResource(R.string.business_name_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = businessAddressInput,
+                    onValueChange = { businessAddressInput = it },
+                    label = { Text(stringResource(R.string.business_address_label)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = businessPhoneInput,
+                    onValueChange = { businessPhoneInput = it },
+                    label = { Text(stringResource(R.string.business_phone_label)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = {
+                        viewModel.setBusinessName(businessNameInput.trim())
+                        viewModel.setBusinessAddress(businessAddressInput.trim())
+                        viewModel.setBusinessPhone(businessPhoneInput.trim())
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.save))
+                }
             }
 
             Spacer(Modifier.height(24.dp))

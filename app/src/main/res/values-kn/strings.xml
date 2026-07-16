@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">ಹೊಂದಿಸಿಲ್ಲ</string>
     <string name="account_breakdown_title">ಖಾತೆವಾರು</string>
     <string name="export_col_account">ಖಾತೆ</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">ವ್ಯಾಪಾರ ಪ್ರೊಫೈಲ್</string>
+    <string name="settings_business_profile_hint">ನಿಮ್ಮ ಎಕ್ಸ್‌ಪೋರ್ಟ್ ಮಾಡಿದ PDF ವರದಿಗಳಲ್ಲಿ ಆ್ಯಪ್ ಹೆಸರಿನ ಬದಲು ಇದನ್ನು ತೋರಿಸಲಾಗುತ್ತದೆ — ನೀವು ಅಂಗಡಿ ನಡೆಸುತ್ತಿದ್ದರೆ ಉಪಯುಕ್ತ.</string>
+    <string name="business_name_label">ವ್ಯಾಪಾರದ ಹೆಸರು</string>
+    <string name="business_name_hint">ಉದಾ. ಶರ್ಮಾ ಜನರಲ್ ಸ್ಟೋರ್</string>
+    <string name="business_address_label">ವಿಳಾಸ (ಐಚ್ಛಿಕ)</string>
+    <string name="business_phone_label">ಫೋನ್ (ಐಚ್ಛಿಕ)</string>
 </resources>

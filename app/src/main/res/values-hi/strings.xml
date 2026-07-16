@@ -761,4 +761,12 @@
     <string name="payment_account_not_set">सेट नहीं है</string>
     <string name="account_breakdown_title">खाते के अनुसार</string>
     <string name="export_col_account">खाता</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">व्यवसाय प्रोफ़ाइल</string>
+    <string name="settings_business_profile_hint">आपकी एक्सपोर्ट की गई PDF रिपोर्ट पर ऐप के नाम की जगह यह दिखाया जाता है — अगर आप दुकान चलाते हैं तो उपयोगी।</string>
+    <string name="business_name_label">व्यवसाय का नाम</string>
+    <string name="business_name_hint">जैसे: शर्मा जनरल स्टोर</string>
+    <string name="business_address_label">पता (वैकल्पिक)</string>
+    <string name="business_phone_label">फ़ोन (वैकल्पिक)</string>
 </resources>

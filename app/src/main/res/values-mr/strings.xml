@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">सेट नाही</string>
     <string name="account_breakdown_title">खात्यानुसार</string>
     <string name="export_col_account">खाते</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">व्यवसाय प्रोफाइल</string>
+    <string name="settings_business_profile_hint">तुमच्या एक्सपोर्ट केलेल्या PDF अहवालांवर अ‍ॅपच्या नावाऐवजी हे दाखवले जाते — तुम्ही दुकान चालवत असल्यास उपयुक्त.</string>
+    <string name="business_name_label">व्यवसायाचे नाव</string>
+    <string name="business_name_hint">उदा. शर्मा जनरल स्टोअर</string>
+    <string name="business_address_label">पत्ता (पर्यायी)</string>
+    <string name="business_phone_label">फोन (पर्यायी)</string>
 </resources>

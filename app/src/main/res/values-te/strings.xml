@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">సెట్ చేయలేదు</string>
     <string name="account_breakdown_title">ఖాతా వారీగా</string>
     <string name="export_col_account">ఖాతా</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">వ్యాపార ప్రొఫైల్</string>
+    <string name="settings_business_profile_hint">మీ ఎగుమతి చేసిన PDF నివేదికలలో యాప్ పేరుకు బదులుగా ఇది చూపబడుతుంది — మీరు దుకాణం నడుపుతుంటే ఉపయోగకరం.</string>
+    <string name="business_name_label">వ్యాపార పేరు</string>
+    <string name="business_name_hint">ఉదా. శర్మ జనరల్ స్టోర్</string>
+    <string name="business_address_label">చిరునామా (ఐచ్ఛికం)</string>
+    <string name="business_phone_label">ఫోన్ (ఐచ్ఛికం)</string>
 </resources>

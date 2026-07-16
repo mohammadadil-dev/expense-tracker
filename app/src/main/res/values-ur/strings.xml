@@ -756,4 +756,12 @@
     <string name="payment_account_not_set">سیٹ نہیں</string>
     <string name="account_breakdown_title">اکاؤنٹ کے مطابق</string>
     <string name="export_col_account">اکاؤنٹ</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">کاروباری پروفائل</string>
+    <string name="settings_business_profile_hint">آپ کی ایکسپورٹ کردہ PDF رپورٹس پر ایپ کے نام کی بجائے یہ دکھایا جاتا ہے — اگر آپ دکان چلاتے ہیں تو مفید ہے۔</string>
+    <string name="business_name_label">کاروبار کا نام</string>
+    <string name="business_name_hint">مثال: شرما جنرل اسٹور</string>
+    <string name="business_address_label">پتہ (اختیاری)</string>
+    <string name="business_phone_label">فون (اختیاری)</string>
 </resources>

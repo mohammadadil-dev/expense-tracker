@@ -164,6 +164,16 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _myUpiId = MutableStateFlow(settings.myUpiId)
     val myUpiId: StateFlow<String> = _myUpiId
 
+    // ── Business profile (optional, cosmetic — see SettingsRepository) ────────
+    private val _businessName = MutableStateFlow(settings.businessName)
+    val businessName: StateFlow<String> = _businessName
+
+    private val _businessAddress = MutableStateFlow(settings.businessAddress)
+    val businessAddress: StateFlow<String> = _businessAddress
+
+    private val _businessPhone = MutableStateFlow(settings.businessPhone)
+    val businessPhone: StateFlow<String> = _businessPhone
+
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
 
@@ -438,6 +448,21 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun setMyUpiId(upiId: String) {
         settings.myUpiId = upiId
         _myUpiId.value = upiId
+    }
+
+    fun setBusinessName(name: String) {
+        settings.businessName = name
+        _businessName.value = name
+    }
+
+    fun setBusinessAddress(address: String) {
+        settings.businessAddress = address
+        _businessAddress.value = address
+    }
+
+    fun setBusinessPhone(phone: String) {
+        settings.businessPhone = phone
+        _businessPhone.value = phone
     }
 
     fun setCurrencySymbol(symbol: String) {

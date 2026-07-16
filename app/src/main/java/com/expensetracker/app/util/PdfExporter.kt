@@ -105,6 +105,10 @@ object PdfExporter {
         reportTitle: String,
         monthLabel: String,
         customerIdLabel: String,
+        /** Optional address/phone line drawn right under [appName] when non-null/non-blank —
+         *  lets a business profile (see SettingsRepository.businessName/Address/Phone) put its
+         *  own contact details on the exported report. Null/blank = today's layout, unchanged. */
+        businessContactLine: String? = null,
         colDate: String,
         colCategory: String,
         colDescription: String,
@@ -198,6 +202,10 @@ object PdfExporter {
             if (isFirst) {
                 cursorY += 16f
                 c.drawText(appName, MARGIN, cursorY, titlePaint)
+                if (!businessContactLine.isNullOrBlank()) {
+                    cursorY += 15f
+                    c.drawText(businessContactLine, MARGIN, cursorY, subtitlePaint)
+                }
                 cursorY += 18f
                 c.drawText(reportTitle, MARGIN, cursorY, subtitlePaint)
                 cursorY += 15f

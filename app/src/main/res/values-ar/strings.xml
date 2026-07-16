@@ -768,4 +768,12 @@
     <string name="payment_account_not_set">غير محدد</string>
     <string name="account_breakdown_title">حسب الحساب</string>
     <string name="export_col_account">الحساب</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">الملف التجاري</string>
+    <string name="settings_business_profile_hint">يظهر في تقارير PDF المُصدَّرة بدلاً من اسم التطبيق — مفيد إذا كنت تدير متجرًا.</string>
+    <string name="business_name_label">اسم المتجر</string>
+    <string name="business_name_hint">مثال: بقالة الشرقية</string>
+    <string name="business_address_label">العنوان (اختياري)</string>
+    <string name="business_phone_label">الهاتف (اختياري)</string>
 </resources>

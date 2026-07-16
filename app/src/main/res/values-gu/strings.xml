@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">સેટ નથી</string>
     <string name="account_breakdown_title">ખાતા પ્રમાણે</string>
     <string name="export_col_account">ખાતું</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">બિઝનેસ પ્રોફાઇલ</string>
+    <string name="settings_business_profile_hint">તમારા એક્સપોર્ટ કરેલા PDF રિપોર્ટ પર એપના નામને બદલે આ બતાવવામાં આવે છે — જો તમે દુકાન ચલાવો છો તો ઉપયોગી.</string>
+    <string name="business_name_label">વ્યવસાયનું નામ</string>
+    <string name="business_name_hint">દા.ત. શર્મા જનરલ સ્ટોર</string>
+    <string name="business_address_label">સરનામું (વૈકલ્પિક)</string>
+    <string name="business_phone_label">ફોન (વૈકલ્પિક)</string>
 </resources>

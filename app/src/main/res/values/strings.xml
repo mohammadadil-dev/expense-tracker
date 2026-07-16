@@ -771,4 +771,14 @@ Feel free to use it anytime!</string>
     <string name="payment_account_not_set">Not set</string>
     <string name="account_breakdown_title">By Account</string>
     <string name="export_col_account">Account</string>
+
+    <!-- Business Profile (Settings) — optional, stamped onto exported PDF reports in place
+         of the app's own name; see PdfExporter.kt / DashboardScreen.kt / KhataDetailScreen.kt /
+         SplitGroupDetailScreen.kt call sites. -->
+    <string name="settings_business_profile_title">Business Profile</string>
+    <string name="settings_business_profile_hint">Shown on your exported PDF reports instead of the app name — handy if you run a shop.</string>
+    <string name="business_name_label">Business Name</string>
+    <string name="business_name_hint">e.g. Sharma General Store</string>
+    <string name="business_address_label">Address (optional)</string>
+    <string name="business_phone_label">Phone (optional)</string>
 </resources>

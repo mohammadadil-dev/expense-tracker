@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">സജ്ജമാക്കിയിട്ടില്ല</string>
     <string name="account_breakdown_title">അക്കൗണ്ട് പ്രകാരം</string>
     <string name="export_col_account">അക്കൗണ്ട്</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">ബിസിനസ് പ്രൊഫൈൽ</string>
+    <string name="settings_business_profile_hint">നിങ്ങളുടെ എക്സ്പോർട്ട് ചെയ്ത PDF റിപ്പോർട്ടുകളിൽ ആപ്പിന്റെ പേരിന് പകരം ഇത് കാണിക്കും — നിങ്ങൾ ഒരു കട നടത്തുന്നുണ്ടെങ്കിൽ ഉപകാരപ്രദം.</string>
+    <string name="business_name_label">ബിസിനസ് പേര്</string>
+    <string name="business_name_hint">ഉദാ. ശർമ്മ ജനറൽ സ്റ്റോർ</string>
+    <string name="business_address_label">വിലാസം (ഐച്ഛികം)</string>
+    <string name="business_phone_label">ഫോൺ (ഐച്ഛികം)</string>
 </resources>

@@ -116,6 +116,9 @@ fun AppNav() {
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val displayName    by viewModel.displayName.collectAsState()
     val myUpiId        by viewModel.myUpiId.collectAsState()
+    val businessName    by viewModel.businessName.collectAsState()
+    val businessAddress by viewModel.businessAddress.collectAsState()
+    val businessPhone   by viewModel.businessPhone.collectAsState()
 
     // POST_NOTIFICATIONS (Android 13+) request for the daily reminder — shared by onboarding
     // completion and the Dashboard catch-up check below. Mirrors Settings screen's own toggle
@@ -463,6 +466,9 @@ fun AppNav() {
                         currencySymbol   = currencySymbol,
                         myUpiId          = myUpiId,
                         ownerDisplayName = displayName.ifBlank { "Me" },
+                        businessName     = businessName,
+                        businessAddress  = businessAddress,
+                        businessPhone    = businessPhone,
                         onOpenSettings   = {
                             navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
                         },

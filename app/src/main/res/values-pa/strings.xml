@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">ਸੈੱਟ ਨਹੀਂ</string>
     <string name="account_breakdown_title">ਖਾਤੇ ਅਨੁਸਾਰ</string>
     <string name="export_col_account">ਖਾਤਾ</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">ਵਪਾਰ ਪ੍ਰੋਫਾਈਲ</string>
+    <string name="settings_business_profile_hint">ਤੁਹਾਡੀ ਐਕਸਪੋਰਟ ਕੀਤੀ PDF ਰਿਪੋਰਟ \'ਤੇ ਐਪ ਦੇ ਨਾਮ ਦੀ ਬਜਾਏ ਇਹ ਦਿਖਾਇਆ ਜਾਂਦਾ ਹੈ — ਜੇ ਤੁਸੀਂ ਦੁਕਾਨ ਚਲਾਉਂਦੇ ਹੋ ਤਾਂ ਲਾਭਦਾਇਕ।</string>
+    <string name="business_name_label">ਵਪਾਰ ਦਾ ਨਾਮ</string>
+    <string name="business_name_hint">ਜਿਵੇਂ ਸ਼ਰਮਾ ਜਨਰਲ ਸਟੋਰ</string>
+    <string name="business_address_label">ਪਤਾ (ਵਿਕਲਪਿਕ)</string>
+    <string name="business_phone_label">ਫ਼ੋਨ (ਵਿਕਲਪਿਕ)</string>
 </resources>

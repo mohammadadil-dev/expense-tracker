@@ -760,4 +760,12 @@
     <string name="payment_account_not_set">সেট করা নেই</string>
     <string name="account_breakdown_title">অ্যাকাউন্ট অনুযায়ী</string>
     <string name="export_col_account">অ্যাকাউন্ট</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">ব্যবসার প্রোফাইল</string>
+    <string name="settings_business_profile_hint">আপনার এক্সপোর্ট করা PDF রিপোর্টে অ্যাপের নামের বদলে এটি দেখানো হয় — আপনি দোকান চালালে কাজে লাগবে।</string>
+    <string name="business_name_label">দোকানের নাম</string>
+    <string name="business_name_hint">যেমন: শর্মা জেনারেল স্টোর</string>
+    <string name="business_address_label">ঠিকানা (ঐচ্ছিক)</string>
+    <string name="business_phone_label">ফোন (ঐচ্ছিক)</string>
 </resources>

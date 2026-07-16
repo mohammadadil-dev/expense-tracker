@@ -735,4 +735,12 @@
     <string name="payment_account_not_set">அமைக்கப்படவில்லை</string>
     <string name="account_breakdown_title">கணக்கு வாரியாக</string>
     <string name="export_col_account">கணக்கு</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">வணிக சுயவிவரம்</string>
+    <string name="settings_business_profile_hint">உங்கள் ஏற்றுமதி செய்யப்பட்ட PDF அறிக்கைகளில் ஆப் பெயருக்குப் பதிலாக இது காட்டப்படும் — நீங்கள் ஒரு கடை நடத்தினால் பயனுள்ளது.</string>
+    <string name="business_name_label">வணிகத்தின் பெயர்</string>
+    <string name="business_name_hint">எ.கா. சர்மா ஜெனரல் ஸ்டோர்</string>
+    <string name="business_address_label">முகவரி (விருப்பத்தேர்வு)</string>
+    <string name="business_phone_label">தொலைபேசி (விருப்பத்தேர்வு)</string>
 </resources>

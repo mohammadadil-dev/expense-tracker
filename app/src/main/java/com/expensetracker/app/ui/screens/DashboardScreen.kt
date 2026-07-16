@@ -380,6 +380,16 @@ fun DashboardScreen(
     val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
     val exportStartedLabel = stringResource(R.string.export_started)
     val appNameStr = stringResource(R.string.app_name)
+    // Optional business profile (Settings) — stamped onto the export in place of appNameStr
+    // when set. See PdfExporter.kt's businessContactLine doc comment.
+    val businessName by viewModel.businessName.collectAsState()
+    val businessAddress by viewModel.businessAddress.collectAsState()
+    val businessPhone by viewModel.businessPhone.collectAsState()
+    val exportAppName = businessName.ifBlank { appNameStr }
+    val exportBusinessContactLine = listOfNotNull(
+        businessAddress.takeIf { it.isNotBlank() },
+        businessPhone.takeIf { it.isNotBlank() }
+    ).joinToString("   •   ").takeIf { it.isNotBlank() }
     val noExpensesLabel = stringResource(R.string.no_expenses_this_month)
     val exportCustomerIdLabel = stringResource(R.string.export_customer_id_label, viewModel.customerId)
     val monthLabelForExport = DateUtils.monthLabel(currentMonthKey, locale)
@@ -403,10 +413,11 @@ fun DashboardScreen(
         Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
         val uri = PdfExporter.export(
             context = context,
-            appName = appNameStr,
+            appName = exportAppName,
             reportTitle = exportReportTitle,
             monthLabel = monthLabelForExport,
             customerIdLabel = exportCustomerIdLabel,
+            businessContactLine = exportBusinessContactLine,
             colDate = exportColDate,
             colCategory = exportColCategory,
             colDescription = exportColDescription,

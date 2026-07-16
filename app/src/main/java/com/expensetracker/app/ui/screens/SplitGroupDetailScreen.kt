@@ -76,6 +76,12 @@ fun SplitGroupDetailScreen(
     currencySymbol: String,
     myUpiId: String = "",
     ownerDisplayName: String = "",
+    // Optional business profile (Settings) — stamped onto the PDF export in place of the app
+    // name when set. Threaded from AppNav.kt (this screen has no direct ExpenseViewModel
+    // reference), same pattern as myUpiId/ownerDisplayName above.
+    businessName: String = "",
+    businessAddress: String = "",
+    businessPhone: String = "",
     onOpenSettings: () -> Unit = {},
     onBack: () -> Unit
 ) {
@@ -164,6 +170,11 @@ fun SplitGroupDetailScreen(
     val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
     val exportStartedLabel = stringResource(R.string.export_started)
     val appNameStr = stringResource(R.string.app_name)
+    val exportAppName = businessName.ifBlank { appNameStr }
+    val exportBusinessContactLine = listOfNotNull(
+        businessAddress.takeIf { it.isNotBlank() },
+        businessPhone.takeIf { it.isNotBlank() }
+    ).joinToString("   •   ").takeIf { it.isNotBlank() }
     val poweredByFooter = stringResource(R.string.powered_by_footer)
     val settlementLabel = stringResource(R.string.split_export_settlement_label)
 
@@ -190,10 +201,11 @@ fun SplitGroupDetailScreen(
         Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
         val uri = PdfExporter.export(
             context = context,
-            appName = appNameStr,
+            appName = exportAppName,
             reportTitle = exportReportTitle,
             monthLabel = group.name,
             customerIdLabel = exportMembersLabel,
+            businessContactLine = exportBusinessContactLine,
             colDate = exportColDate,
             colCategory = exportColPaidBy,
             colDescription = exportColDescription,
