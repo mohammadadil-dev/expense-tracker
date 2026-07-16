@@ -417,6 +417,9 @@
     <string name="khata_payment_label">చెల్లింపు (పరిష్కారం)</string>
     <string name="khata_amount_hint">మొత్తం</string>
     <string name="khata_note_hint">గమనిక (ఐచ్ఛికం)</string>
+    <string name="khata_voice_add_entry">వాయిస్ ద్వారా జోడించండి</string>
+    <string name="khata_voice_hint">మొత్తం మరియు ఎవరి కోసం అని చెప్పండి — ఉదా. \"రమేష్, ఐదు వందల రూపాయలు\"</string>
+    <string name="khata_voice_confirm">దీన్ని ఉపయోగించండి</string>
     <string name="khata_entry_date">తేదీ</string>
     <string name="khata_due_date_label">గడువు తేదీ</string>
     <string name="khata_due_date_optional">ఐచ్ఛికం — దీన్ని ఎప్పుడు చెల్లించాలి/వసూలు చేయాలి</string>

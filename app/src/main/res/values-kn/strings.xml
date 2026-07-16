@@ -417,6 +417,9 @@
     <string name="khata_payment_label">ಪಾವತಿ (ತೀರಿಸಿದ)</string>
     <string name="khata_amount_hint">ಮೊತ್ತ</string>
     <string name="khata_note_hint">ಟಿಪ್ಪಣಿ (ಐಚ್ಛಿಕ)</string>
+    <string name="khata_voice_add_entry">ಧ್ವನಿಯ ಮೂಲಕ ಸೇರಿಸಿ</string>
+    <string name="khata_voice_hint">ಮೊತ್ತ ಮತ್ತು ಯಾರಿಗೆ ಎಂದು ಹೇಳಿ — ಉದಾ. \"ರಮೇಶ್, ಐನೂರು ರೂಪಾಯಿ\"</string>
+    <string name="khata_voice_confirm">ಇದನ್ನು ಬಳಸಿ</string>
     <string name="khata_entry_date">ದಿನಾಂಕ</string>
     <string name="khata_due_date_label">ಬಾಕಿ ದಿನಾಂಕ</string>
     <string name="khata_due_date_optional">ಐಚ್ಛಿಕ — ಇದನ್ನು ಯಾವಾಗ ಪಾವತಿಸಬೇಕು/ಸಂಗ್ರಹಿಸಬೇಕು</string>

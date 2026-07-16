@@ -417,6 +417,9 @@
     <string name="khata_payment_label">ਭੁਗਤਾਨ (ਨਿਪਟਿਆ)</string>
     <string name="khata_amount_hint">ਰਕਮ</string>
     <string name="khata_note_hint">ਨੋਟ (ਵਿਕਲਪਿਕ)</string>
+    <string name="khata_voice_add_entry">ਆਵਾਜ਼ ਨਾਲ ਜੋੜੋ</string>
+    <string name="khata_voice_hint">ਰਕਮ ਅਤੇ ਕਿਸ ਲਈ ਹੈ ਬੋਲੋ — ਜਿਵੇਂ \"ਰਮੇਸ਼, ਪੰਜ ਸੌ ਰੁਪਏ\"</string>
+    <string name="khata_voice_confirm">ਇਹ ਵਰਤੋ</string>
     <string name="khata_entry_date">ਮਿਤੀ</string>
     <string name="khata_due_date_label">ਨਿਯਤ ਮਿਤੀ</string>
     <string name="khata_due_date_optional">ਵਿਕਲਪਿਕ — ਇਹ ਕਦੋਂ ਅਦਾ/ਇਕੱਠਾ ਕਰਨਾ ਹੈ</string>

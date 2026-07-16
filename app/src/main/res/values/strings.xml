@@ -432,6 +432,9 @@ Tap + to add someone you\'ll get money from.</string>
     <string name="khata_payment_label">Payment (settled)</string>
     <string name="khata_amount_hint">Amount</string>
     <string name="khata_note_hint">Note (optional)</string>
+    <string name="khata_voice_add_entry">Add by voice</string>
+    <string name="khata_voice_hint">Say the amount and who it\'s for — e.g. \"Ramesh, five hundred rupees\"</string>
+    <string name="khata_voice_confirm">Use This</string>
     <string name="khata_entry_date">Date</string>
     <string name="khata_due_date_label">Due date</string>
     <string name="khata_due_date_optional">Optional — when this should be paid/collected by</string>

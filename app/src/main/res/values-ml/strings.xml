@@ -417,6 +417,9 @@
     <string name="khata_payment_label">പേയ്‌മെന്റ് (തീർന്നു)</string>
     <string name="khata_amount_hint">തുക</string>
     <string name="khata_note_hint">കുറിപ്പ് (ഓപ്ഷണൽ)</string>
+    <string name="khata_voice_add_entry">ശബ്ദത്തിലൂടെ ചേർക്കുക</string>
+    <string name="khata_voice_hint">തുകയും ആർക്കാണെന്നും പറയൂ — ഉദാ. \"രമേഷ്, അഞ്ഞൂറ് രൂപ\"</string>
+    <string name="khata_voice_confirm">ഇത് ഉപയോഗിക്കുക</string>
     <string name="khata_entry_date">തീയതി</string>
     <string name="khata_due_date_label">അവസാന തീയതി</string>
     <string name="khata_due_date_optional">ഐച്ഛികം — ഇത് എപ്പോൾ അടയ്ക്കണം/ശേഖരിക്കണം</string>

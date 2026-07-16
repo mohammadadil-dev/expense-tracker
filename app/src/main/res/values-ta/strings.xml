@@ -417,6 +417,9 @@
     <string name="khata_payment_label">கட்டணம் (தீர்வு)</string>
     <string name="khata_amount_hint">தொகை</string>
     <string name="khata_note_hint">குறிப்பு (விருப்பமானது)</string>
+    <string name="khata_voice_add_entry">குரல் மூலம் சேர்க்கவும்</string>
+    <string name="khata_voice_hint">தொகையையும் யாருக்கு என்பதையும் சொல்லுங்கள் — உதா. \"ரமேஷ், ஐநூறு ரூபாய்\"</string>
+    <string name="khata_voice_confirm">இதைப் பயன்படுத்து</string>
     <string name="khata_entry_date">தேதி</string>
     <string name="khata_due_date_label">நிலுவைத் தேதி</string>
     <string name="khata_due_date_optional">விருப்பத்தேர்வு — இது எப்போது செலுத்த/வசூலிக்க வேண்டும்</string>

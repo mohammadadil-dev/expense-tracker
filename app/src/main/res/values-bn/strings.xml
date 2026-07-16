@@ -405,6 +405,9 @@
     <string name="khata_payment_label">পরিশোধ (দেওয়া হয়েছে)</string>
     <string name="khata_amount_hint">পরিমাণ</string>
     <string name="khata_note_hint">নোট (ঐচ্ছিক)</string>
+    <string name="khata_voice_add_entry">ভয়েসে যোগ করুন</string>
+    <string name="khata_voice_hint">পরিমাণ ও কার জন্য তা বলুন — যেমন: \"রমেশ, পাঁচশো টাকা\"</string>
+    <string name="khata_voice_confirm">এটি ব্যবহার করুন</string>
     <string name="khata_entry_date">তারিখ</string>
     <string name="khata_due_date_label">নির্ধারিত তারিখ</string>
     <string name="khata_due_date_optional">ঐচ্ছিক — কখন এটি পরিশোধ/সংগ্রহ করতে হবে</string>

@@ -405,6 +405,9 @@
     <string name="khata_payment_label">دفعة (تمت التسوية)</string>
     <string name="khata_amount_hint">المبلغ</string>
     <string name="khata_note_hint">ملاحظة (اختياري)</string>
+    <string name="khata_voice_add_entry">أضف بالصوت</string>
+    <string name="khata_voice_hint">قل المبلغ ولمن هو — مثال: \"رامش، خمسمائة روبية\"</string>
+    <string name="khata_voice_confirm">استخدم هذا</string>
     <string name="khata_entry_date">التاريخ</string>
     <string name="khata_due_date_label">تاريخ الاستحقاق</string>
     <string name="khata_due_date_optional">اختياري — متى يجب سداده/تحصيله</string>

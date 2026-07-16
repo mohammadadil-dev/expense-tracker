@@ -401,6 +401,9 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_payment_label">Bayad (nabayaran na)</string>
     <string name="khata_amount_hint">Halaga</string>
     <string name="khata_note_hint">Tala (opsyonal)</string>
+    <string name="khata_voice_add_entry">Idagdag sa pamamagitan ng boses</string>
+    <string name="khata_voice_hint">Sabihin ang halaga at para kanino — hal. \"Ramesh, limandaang piso\"</string>
+    <string name="khata_voice_confirm">Gamitin Ito</string>
     <string name="khata_entry_date">Petsa</string>
     <string name="khata_due_date_label">Takdang petsa</string>
     <string name="khata_due_date_optional">Opsyonal — kailan ito dapat bayaran/kolektahin</string>

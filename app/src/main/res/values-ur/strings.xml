@@ -401,6 +401,9 @@
     <string name="khata_payment_label">ادائیگی (چکا دیا)</string>
     <string name="khata_amount_hint">رقم</string>
     <string name="khata_note_hint">نوٹ (اختیاری)</string>
+    <string name="khata_voice_add_entry">آواز سے شامل کریں</string>
+    <string name="khata_voice_hint">رقم اور کس کے لیے ہے بولیں — مثلاً \"رمیش، پانچ سو روپے\"</string>
+    <string name="khata_voice_confirm">یہ استعمال کریں</string>
     <string name="khata_entry_date">تاریخ</string>
     <string name="khata_due_date_label">مقررہ تاریخ</string>
     <string name="khata_due_date_optional">اختیاری — یہ کب ادا/وصول کرنا ہے</string>

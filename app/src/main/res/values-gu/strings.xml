@@ -417,6 +417,9 @@
     <string name="khata_payment_label">ચૂકવણી (પૂર્ણ)</string>
     <string name="khata_amount_hint">રકમ</string>
     <string name="khata_note_hint">નોંધ (વૈકલ્પિક)</string>
+    <string name="khata_voice_add_entry">અવાજથી ઉમેરો</string>
+    <string name="khata_voice_hint">રકમ અને કોના માટે છે તે બોલો — દા.ત. \"રમેશ, પાંચસો રૂપિયા\"</string>
+    <string name="khata_voice_confirm">આ વાપરો</string>
     <string name="khata_entry_date">તારીખ</string>
     <string name="khata_due_date_label">નિયત તારીખ</string>
     <string name="khata_due_date_optional">વૈકલ્પિક — આ ક્યારે ચૂકવવાનું/વસૂલવાનું છે</string>

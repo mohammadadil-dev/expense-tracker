@@ -405,6 +405,9 @@
     <string name="khata_payment_label">भुगतान</string>
     <string name="khata_amount_hint">राशि</string>
     <string name="khata_note_hint">नोट (वैकल्पिक)</string>
+    <string name="khata_voice_add_entry">आवाज़ से जोड़ें</string>
+    <string name="khata_voice_hint">राशि और किसके लिए है बोलें — जैसे \"रमेश, पांच सौ रुपये\"</string>
+    <string name="khata_voice_confirm">इसे उपयोग करें</string>
     <string name="khata_entry_date">तारीख</string>
     <string name="khata_due_date_label">नियत तारीख</string>
     <string name="khata_due_date_optional">वैकल्पिक — इसे कब चुकाना/वसूलना है</string>

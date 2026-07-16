@@ -1,6 +1,9 @@
 package com.expensetracker.app.ui.components
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +30,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.Button
@@ -57,6 +61,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import com.expensetracker.app.R
 import com.expensetracker.app.data.KhataEntryEntity
@@ -95,6 +100,25 @@ fun AddKhataEntrySheet(
     // under this app's private filesDir/receipts/, never a transient content:// Uri.
     var photoPath      by remember { mutableStateOf<String?>(null) }
     var pendingCameraFile by remember { mutableStateOf<File?>(null) }
+
+    // Voice entry — fills amount + note only (never guesses Credit vs Payment; see
+    // VoiceKhataResult's doc comment for why). Stays entirely local to this sheet: no new
+    // params needed, the voice sheet just stacks on top the same way CalendarDatePickerDialog
+    // already does below for the due-date picker.
+    var showVoiceSheet by remember { mutableStateOf(false) }
+    val voiceSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val micPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) showVoiceSheet = true
+        else Toast.makeText(context, context.getString(R.string.voice_permission_denied), Toast.LENGTH_SHORT).show()
+    }
+    fun onMicClick() {
+        val hasPerm = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+        if (hasPerm) showVoiceSheet = true else micPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+    }
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
@@ -167,6 +191,11 @@ fun AddKhataEntrySheet(
                 supportingText = if (amountError) {
                     { Text(stringResource(R.string.error_invalid_rate)) }
                 } else null,
+                trailingIcon = {
+                    IconButton(onClick = { onMicClick() }) {
+                        Icon(Icons.Filled.Mic, contentDescription = stringResource(R.string.khata_voice_add_entry))
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Next
@@ -322,6 +351,22 @@ fun AddKhataEntrySheet(
             onConfirm = { newDateIso ->
                 dueDate = newDateIso
                 showDueDatePicker = false
+            }
+        )
+    }
+
+    if (showVoiceSheet) {
+        VoiceKhataInputSheet(
+            sheetState = voiceSheetState,
+            locale     = locale,
+            onDismiss  = { showVoiceSheet = false },
+            onConfirm  = { result ->
+                showVoiceSheet = false
+                result.amount?.let { amt ->
+                    amountText = if (amt % 1.0 == 0.0) amt.toLong().toString() else amt.toString()
+                    amountError = false
+                }
+                if (result.note.isNotBlank()) note = result.note
             }
         )
     }

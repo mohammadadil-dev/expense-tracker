@@ -417,6 +417,9 @@
     <string name="khata_payment_label">देयता (निपटले)</string>
     <string name="khata_amount_hint">रक्कम</string>
     <string name="khata_note_hint">नोट (वैकल्पिक)</string>
+    <string name="khata_voice_add_entry">आवाजाने जोडा</string>
+    <string name="khata_voice_hint">रक्कम आणि कोणासाठी आहे ते सांगा — उदा. \"रमेश, पाचशे रुपये\"</string>
+    <string name="khata_voice_confirm">हे वापरा</string>
     <string name="khata_entry_date">तारीख</string>
     <string name="khata_due_date_label">देय तारीख</string>
     <string name="khata_due_date_optional">पर्यायी — हे कधी द्यायचे/जमा करायचे आहे</string>
