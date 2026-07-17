@@ -1,6 +1,7 @@
 package com.expensetracker.app.data
 
 import com.expensetracker.app.util.Settlement
+import com.expensetracker.app.util.SplitMath
 import com.expensetracker.app.util.SplitSettlementCalculator
 import kotlinx.coroutines.flow.Flow
 
@@ -130,8 +131,11 @@ class SplitRepository(
             val totals = mutableMapOf<Long, Double>()
             itemDrafts.forEach { item ->
                 if (item.memberIds.isNotEmpty()) {
-                    val perMember = item.amount / item.memberIds.size
-                    item.memberIds.forEach { memberId ->
+                    // SplitMath.splitEvenly (not item.amount / size) — see its doc for why: raw
+                    // division leaves a repeating-decimal remainder that quietly shortchanges
+                    // the item's total, and that error compounds across every itemized line.
+                    val perMemberValues = SplitMath.splitEvenly(item.amount, item.memberIds.size)
+                    item.memberIds.zip(perMemberValues).forEach { (memberId, perMember) ->
                         totals[memberId] = (totals[memberId] ?: 0.0) + perMember
                     }
                 }
@@ -141,8 +145,11 @@ class SplitRepository(
 
         val shares: Map<Long, Double> = sharesFromItems ?: customShares ?: run {
             val effectiveSplitIds = splitAmongIds.ifEmpty { listOf(paidByMemberId) }
-            val shareAmount = amount / effectiveSplitIds.size
-            effectiveSplitIds.associateWith { shareAmount }
+            // SplitMath.splitEvenly (not amount / size) — plain division doesn't divide evenly
+            // for most bills (SAR 100 / 3 = 33.33 × 3 = 99.99, a cent short of the real total),
+            // which left group balances never fully zeroing out. See SplitMath's doc comment.
+            val splitValues = SplitMath.splitEvenly(amount, effectiveSplitIds.size)
+            effectiveSplitIds.zip(splitValues).toMap()
         }
         shareDao.insertAll(
             shares.map { (memberId, shareAmount) ->

@@ -30,6 +30,7 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ItemDraft
 import com.expensetracker.app.data.SplitMemberEntity
+import com.expensetracker.app.util.SplitMath
 import kotlin.math.abs
 
 /** How the total amount is divided among the selected members. */
@@ -94,6 +95,13 @@ fun AddSplitExpenseSheet(
     // Sums used for validation — recomputed on every recomposition (cheap, small lists).
     val exactSum = splitAmongIds.sumOf { exactAmounts[it]?.toDoubleOrNull() ?: 0.0 }
     val percentSum = splitAmongIds.sumOf { percentInputs[it]?.toDoubleOrNull() ?: 0.0 }
+    // Per-member EQUAL-mode preview — must match SplitRepository.addExpense's actual save logic
+    // (SplitMath.splitEvenly, not amount / size) or this preview lies about what gets charged:
+    // plain division shows the same rounded amount for everyone even when it doesn't actually
+    // add up to the bill (e.g. SAR 100 / 3 previewing as 33.33 × 3 = 99.99).
+    val equalShareByMemberId: Map<Long, Double> = if (splitMode == SplitMode.EQUAL && splitAmongIds.isNotEmpty())
+        splitAmongIds.zip(SplitMath.splitEvenly(amount, splitAmongIds.size)).toMap()
+    else emptyMap()
     val exactMatches = amount > 0 && abs(exactSum - amount) < 0.01
     val percentMatches = abs(percentSum - 100.0) < 0.01
     val itemizedMatches = itemRows.isNotEmpty() && itemRows.all { row ->
@@ -352,7 +360,7 @@ fun AddSplitExpenseSheet(
 
                         when (splitMode) {
                             SplitMode.EQUAL -> {
-                                val share = if (splitAmongIds.size > 0 && checked) amount / splitAmongIds.size else 0.0
+                                val share = if (checked) equalShareByMemberId[member.id] ?: 0.0 else 0.0
                                 if (share > 0) {
                                     MoneyText(
                                         formatted = "$currencySymbol${"%.2f".format(share)}",
