@@ -39,6 +39,14 @@ interface SplitExpenseItemDao {
     """)
     suspend fun deleteItemMembersForExpense(expenseId: Long)
 
+    /** Deletes every item-assignment row for [memberId] regardless of which item/expense it's
+     *  on — used when a member is removed from a group so an itemized-expense breakdown never
+     *  shows a stale assignment to a member who no longer exists (see
+     *  SplitRepository.deleteMember). Purely a display-record cleanup: settlement math reads
+     *  split_expense_shares, not this table, so it doesn't affect balances. */
+    @Query("DELETE FROM split_expense_item_members WHERE memberId = :memberId")
+    suspend fun deleteItemMemberRowsForMember(memberId: Long)
+
     @Query("""
         DELETE FROM split_expense_item_members
         WHERE itemId IN (

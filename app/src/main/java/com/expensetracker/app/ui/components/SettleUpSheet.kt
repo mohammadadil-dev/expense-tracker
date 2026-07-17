@@ -75,6 +75,20 @@ fun SettleUpSheet(
     // The settlement that triggered the phone-number prompt, so the reminder can be sent
     // immediately once a number is saved instead of making the user tap the icon twice.
     var pendingReminderSettlement by remember { mutableStateOf<Settlement?>(null) }
+    // Settlements currently mid-flight through onMarkPaid — guards against double-tap.
+    // markSettlementPaid is fired via a fire-and-forget viewModelScope.launch, and this sheet's
+    // `settlements` list is only refreshed by a *separate* coroutine after that DB write lands
+    // (see SplitGroupDetailScreen's onMarkPaid), so without this, two taps inside that window
+    // insert two "Settlement" rows for the same debt — doubling the credit to the debtor and
+    // the debit to the creditor. Settlement is a data class (value equality), so this correctly
+    // keys off (fromMemberId, toMemberId, amount) rather than object identity.
+    var markingPaidSettlements by remember { mutableStateOf(setOf<Settlement>()) }
+    // Once the caller supplies a fresh `settlements` list (the post-write refresh in
+    // SplitGroupDetailScreen), any settlement still sitting in the guard has either resolved
+    // (it's gone from the new list — harmless leftover) or genuinely needs re-enabling — either
+    // way, holding onto a stale guard entry forever would permanently disable a legitimate
+    // future "Mark Paid" that happens to match the same (from, to, amount) by coincidence.
+    LaunchedEffect(settlements) { markingPaidSettlements = emptySet() }
 
     fun payMemberViaUpi(toMember: SplitMemberEntity, amount: Double) {
         val vpa = toMember.upiId
@@ -246,10 +260,18 @@ fun SettleUpSheet(
                     // someone *other* than the device owner is the one who needs to pay.
                     val canRemind = meMemberId == null || settlement.fromMemberId != meMemberId
 
+                    val isMarkingPaid = settlement in markingPaidSettlements
+
                     SettlementRow(
                         settlement = settlement,
                         currencySymbol = currencySymbol,
-                        onMarkPaid = { onMarkPaid(settlement) },
+                        onMarkPaid = {
+                            if (settlement !in markingPaidSettlements) {
+                                markingPaidSettlements = markingPaidSettlements + settlement
+                                onMarkPaid(settlement)
+                            }
+                        },
+                        markPaidEnabled = !isMarkingPaid,
                         onRemind = if (canRemind) { { sendSettlementReminder(settlement) } } else null,
                         payUpiAction = when {
                             iOwe && !toMember?.upiId.isNullOrBlank() -> {
@@ -389,6 +411,7 @@ private fun SettlementRow(
     settlement: Settlement,
     currencySymbol: String,
     onMarkPaid: () -> Unit,
+    markPaidEnabled: Boolean = true,
     onRemind: (() -> Unit)? = null,
     payUpiAction: (() -> Unit)? = null,
     payUpiLabel: String? = null
@@ -445,6 +468,7 @@ private fun SettlementRow(
 
                 OutlinedButton(
                     onClick = onMarkPaid,
+                    enabled = markPaidEnabled,
                     shape = RoundedCornerShape(10.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
                 ) {

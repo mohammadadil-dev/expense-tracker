@@ -64,7 +64,39 @@ class SplitRepository(
 
     suspend fun updateMember(member: SplitMemberEntity) = memberDao.update(member)
 
-    suspend fun deleteMember(member: SplitMemberEntity) = memberDao.delete(member)
+    /**
+     * Removes [member] and cascades everything tied to them — there's no `@ForeignKey`/cascade
+     * in the schema (paidByMemberId, share memberId, and item-member memberId are all plain
+     * `Long` columns), so leaving this as a bare `memberDao.delete(member)` orphaned
+     * [SplitExpenseShareEntity] rows and [SplitExpenseEntity.paidByMemberId] values pointing at
+     * a now-missing id. [SplitSettlementCalculator] seeds its running balance map from the
+     * *current* member list but then folds in every expense/share unconditionally, so a
+     * dangling reference produced a phantom, blank-named balance that could never be resolved
+     * or settled through the UI — the money was real, just permanently unattributed.
+     *
+     * No screen currently exposes "remove member" (this is a latent public API, not an active
+     * bug today), but fixing it now means that landmine isn't waiting for whoever wires that up.
+     *
+     * Expenses this member *paid for* are deleted outright (same "cascade order: item members →
+     * items → shares → expenses" as [deleteGroup], scoped to just those expenses) rather than
+     * reassigned — there's no sensible automatic reassignment, and a partial cascade that kept
+     * the expense but dropped its payer would be worse. Expenses paid by *other* members simply
+     * lose this member's own share row.
+     */
+    suspend fun deleteMember(member: SplitMemberEntity) {
+        val expensesPaidByMember = expenseDao.getExpensesSnapshot(member.groupId)
+            .filter { it.paidByMemberId == member.id }
+        expensesPaidByMember.forEach { expense ->
+            expense.linkedExpenseId?.let { db.expenseDao().deleteById(it) }
+            itemDao.deleteItemMembersForExpense(expense.id)
+            itemDao.deleteItemsForExpense(expense.id)
+            shareDao.deleteForExpense(expense.id)
+            expenseDao.delete(expense)
+        }
+        itemDao.deleteItemMemberRowsForMember(member.id)
+        shareDao.deleteForMember(member.id)
+        memberDao.delete(member)
+    }
 
     /** Sets (or clears, if blank) a member's UPI ID — used by the Settle Up sheet's inline
      * "add their UPI ID" prompt so a settlement can be paid directly instead of only ever

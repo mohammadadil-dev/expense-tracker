@@ -101,6 +101,17 @@ fun AddKhataEntrySheet(
     var photoPath      by remember { mutableStateOf<String?>(null) }
     var pendingCameraFile by remember { mutableStateOf<File?>(null) }
 
+    // Cancelling (Cancel button, swipe-down, or back press) must clean up any photo already
+    // written to permanent storage — otherwise a captured/picked receipt photo that's never
+    // actually saved on an entry leaks forever under filesDir/receipts/ (that directory is
+    // never OS-cleared; see ReceiptPhotoStore's class doc). Only the explicit "×" remove-photo
+    // button did this before; Save doesn't route through here, so it can't double-delete a
+    // photo that's about to be persisted on the new entry.
+    val dismissAndCleanup: () -> Unit = {
+        ReceiptPhotoStore.delete(photoPath)
+        onDismiss()
+    }
+
     // Voice entry — fills amount + note only (never guesses Credit vs Payment; see
     // VoiceKhataResult's doc comment for why). Stays entirely local to this sheet: no new
     // params needed, the voice sheet just stacks on top the same way CalendarDatePickerDialog
@@ -143,7 +154,7 @@ fun AddKhataEntrySheet(
     }
 
     ModalBottomSheet(
-        onDismissRequest = onDismiss,
+        onDismissRequest = dismissAndCleanup,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ) {
         Column(
@@ -328,7 +339,7 @@ fun AddKhataEntrySheet(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+                TextButton(onClick = dismissAndCleanup) { Text(stringResource(R.string.cancel)) }
                 Spacer(Modifier.width(8.dp))
                 Button(
                     onClick = {

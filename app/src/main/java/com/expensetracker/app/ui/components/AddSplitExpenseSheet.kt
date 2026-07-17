@@ -103,7 +103,15 @@ fun AddSplitExpenseSheet(
         splitAmongIds.zip(SplitMath.splitEvenly(amount, splitAmongIds.size)).toMap()
     else emptyMap()
     val exactMatches = amount > 0 && abs(exactSum - amount) < 0.01
-    val percentMatches = abs(percentSum - 100.0) < 0.01
+    // Tolerance here must be in CURRENCY units, not raw percentage points — unlike EXACT mode
+    // (whose shares are typed directly in currency, so its own < 0.01 epsilon already caps the
+    // real error at 1 cent) and unlike EQUAL/itemized (protected by SplitMath.splitEvenly),
+    // PERCENT-mode shares are used verbatim with no cent-rounding pass (see addExpense's doc
+    // comment). A flat "< 0.01 percentage points" check let a large bill through with a real,
+    // multi-unit currency gap — e.g. amount = 100,000 and percentSum = 100.005% (well within a
+    // flat 0.01-point tolerance) actually leaves SAR 5 uncredited/undebited across the group,
+    // which the settlement calculator would then surface as a stray balance nobody can resolve.
+    val percentMatches = amount <= 0 || abs(amount * (percentSum - 100.0) / 100.0) < 0.01
     val itemizedMatches = itemRows.isNotEmpty() && itemRows.all { row ->
         row.name.isNotBlank() && (row.amountText.toDoubleOrNull() ?: 0.0) > 0.0 && row.memberIds.isNotEmpty()
     }

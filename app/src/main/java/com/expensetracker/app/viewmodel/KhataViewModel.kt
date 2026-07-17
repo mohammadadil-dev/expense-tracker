@@ -150,10 +150,15 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * How many days [partyId]'s outstanding balance has been aging, or null if the party is
      * settled (balance <= 0). Khata has no per-entry "paid" flag (see [balanceForParty]'s doc),
-     * so this is a simplification consistent with [isOverdue]/[isDueSoon]: it prefers the
-     * earliest *already-passed* due date among the party's CREDIT entries (the clearest signal
-     * something is actually late), and falls back to the date of the oldest CREDIT entry when
-     * no due dates were ever set — i.e. "how long since this party's tab was first opened."
+     * so this is a simplification consistent with [isOverdue]/[isDueSoon]: among the party's
+     * CREDIT entries, it takes the *older* of (a) the earliest already-passed due date and
+     * (b) the earliest entry date overall — i.e. "how long since the oldest still-unpaid signal
+     * appeared" — rather than just always preferring a passed due date.
+     *
+     * Bug fixed here: an earlier version preferred the earliest passed due date *unconditionally*,
+     * even when the party had a much older un-due-dated CREDIT entry — e.g. a credit from over a
+     * year ago with no due date, plus a small recent credit whose due date passed last week, would
+     * report "7 days" instead of "365+ days" and hide the party from urgent-collections buckets.
      */
     fun agingDaysForParty(partyId: Long, entries: List<KhataEntryEntity>): Int? {
         val balance = balanceForParty(partyId, entries)
@@ -161,9 +166,9 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
         val credits = entries.filter { it.partyId == partyId && it.type == KhataEntryEntity.TYPE_CREDIT }
         if (credits.isEmpty()) return null
         val today = DateUtils.todayIso()
-        val refDate = credits.mapNotNull { it.dueDate }.filter { it < today }.minOrNull()
-            ?: credits.map { it.date }.minOrNull()
-            ?: return null
+        val earliestPassedDueDate = credits.mapNotNull { it.dueDate }.filter { it < today }.minOrNull()
+        val earliestEntryDate = credits.map { it.date }.minOrNull()
+        val refDate = listOfNotNull(earliestPassedDueDate, earliestEntryDate).minOrNull() ?: return null
         return DateUtils.daysBetween(refDate, today).toInt().coerceAtLeast(0)
     }
 
