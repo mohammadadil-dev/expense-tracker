@@ -733,6 +733,12 @@ Gamitin anumang oras!</string>
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Mga Layunin at Streak</string>
     <string name="split_hero_total_spent">Kabuuang Nagastos</string>
+    <string name="split_member_gets_back">matatanggap</string>
+    <string name="split_member_owes">dapat bayaran</string>
+    <string name="split_net_owed">Sa kabuuan, may matatanggap ka</string>
+    <string name="split_net_owe">Sa kabuuan, may utang ka</string>
+    <string name="split_net_settled">Nasettle na lahat ✓</string>
+    <string name="split_net_group_count">sa %d grupo</string>
 
     <string name="reminder_hour_decrease">Bawasan ang oras</string>
     <string name="reminder_hour_increase">Dagdagan ang oras</string>

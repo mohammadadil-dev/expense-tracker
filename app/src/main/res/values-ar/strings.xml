@@ -756,6 +756,12 @@
     <string name="whats_new_feature_khata_title">الخاطة / الدفتر</string>
     <string name="whats_new_feature_goals_title">الأهداف والسلاسل</string>
     <string name="split_hero_total_spent">إجمالي الإنفاق</string>
+    <string name="split_member_gets_back">يسترد</string>
+    <string name="split_member_owes">مدين</string>
+    <string name="split_net_owed">بالإجمالي، لك مستحق</string>
+    <string name="split_net_owe">بالإجمالي، عليك مستحق</string>
+    <string name="split_net_settled">تمت التسوية بالكامل ✓</string>
+    <string name="split_net_group_count">عبر %d مجموعة (مجموعات)</string>
 
     <string name="reminder_hour_decrease">تقليل الساعة</string>
     <string name="reminder_hour_increase">زيادة الساعة</string>

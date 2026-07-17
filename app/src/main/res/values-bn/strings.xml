@@ -748,6 +748,12 @@
     <string name="whats_new_feature_khata_title">খাতা / লেজার</string>
     <string name="whats_new_feature_goals_title">লক্ষ্য ও স্ট্রিক</string>
     <string name="split_hero_total_spent">মোট খরচ</string>
+    <string name="split_member_gets_back">পাবেন</string>
+    <string name="split_member_owes">দেবেন</string>
+    <string name="split_net_owed">সামগ্রিকভাবে আপনি পাবেন</string>
+    <string name="split_net_owe">সামগ্রিকভাবে আপনি দেবেন</string>
+    <string name="split_net_settled">সব মিটমাট হয়েছে ✓</string>
+    <string name="split_net_group_count">%d গ্রুপ জুড়ে</string>
 
     <string name="reminder_hour_decrease">ঘণ্টা কমান</string>
     <string name="reminder_hour_increase">ঘণ্টা বাড়ান</string>

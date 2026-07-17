@@ -451,9 +451,9 @@ private fun SplitsNetCard(
             Column {
                 Text(
                     text = when {
-                        net > 0.01  -> "Overall you're owed"
-                        net < -0.01 -> "Overall you owe"
-                        else        -> "All settled up ✓"
+                        net > 0.01  -> stringResource(R.string.split_net_owed)
+                        net < -0.01 -> stringResource(R.string.split_net_owe)
+                        else        -> stringResource(R.string.split_net_settled)
                     },
                     style = MaterialTheme.typography.labelLarge,
                     color = OnAccent.copy(alpha = 0.85f)
@@ -466,7 +466,7 @@ private fun SplitsNetCard(
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text  = "across $groupCount ${if (groupCount == 1) "group" else "groups"}",
+                    text  = stringResource(R.string.split_net_group_count, groupCount),
                     style = MaterialTheme.typography.bodySmall,
                     color = OnAccent.copy(alpha = 0.75f)
                 )

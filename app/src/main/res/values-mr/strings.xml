@@ -723,6 +723,12 @@
     <string name="whats_new_feature_khata_title">खाता / लेजर</string>
     <string name="whats_new_feature_goals_title">लक्ष्ये &amp; स्ट्रीक</string>
     <string name="split_hero_total_spent">एकूण खर्च</string>
+    <string name="split_member_gets_back">मिळेल</string>
+    <string name="split_member_owes">द्यायचे</string>
+    <string name="split_net_owed">एकूण तुम्हाला मिळणार आहे</string>
+    <string name="split_net_owe">एकूण तुम्हाला द्यायचे आहे</string>
+    <string name="split_net_settled">सर्व निपटले ✓</string>
+    <string name="split_net_group_count">%d गटांमध्ये</string>
 
     <string name="reminder_hour_decrease">तास कमी करा</string>
     <string name="reminder_hour_increase">तास वाढवा</string>

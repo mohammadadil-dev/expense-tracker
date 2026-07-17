@@ -723,6 +723,12 @@
     <string name="whats_new_feature_khata_title">ಖಾತೆ / ಲೆಡ್ಜರ್</string>
     <string name="whats_new_feature_goals_title">ಗುರಿಗಳು &amp; ಸ್ಟ್ರೀಕ್</string>
     <string name="split_hero_total_spent">ಒಟ್ಟು ಖರ್ಚು</string>
+    <string name="split_member_gets_back">ಪಡೆಯುತ್ತಾರೆ</string>
+    <string name="split_member_owes">ಕೊಡಬೇಕು</string>
+    <string name="split_net_owed">ಒಟ್ಟಾರೆ ನಿಮಗೆ ಸಿಗಬೇಕು</string>
+    <string name="split_net_owe">ಒಟ್ಟಾರೆ ನೀವು ಕೊಡಬೇಕು</string>
+    <string name="split_net_settled">ಎಲ್ಲಾ ಇತ್ಯರ್ಥವಾಗಿದೆ ✓</string>
+    <string name="split_net_group_count">%d ಗುಂಪುಗಳಲ್ಲಿ</string>
 
     <string name="reminder_hour_decrease">ಗಂಟೆ ಕಡಿಮೆ ಮಾಡಿ</string>
     <string name="reminder_hour_increase">ಗಂಟೆ ಹೆಚ್ಚಿಸಿ</string>

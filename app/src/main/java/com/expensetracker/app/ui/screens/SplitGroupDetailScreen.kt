@@ -807,7 +807,7 @@ private fun MemberBalanceRow(
                     )
                     if (!isSettled) {
                         Text(
-                            if (balance > 0) "gets back" else "owes",
+                            stringResource(if (balance > 0) R.string.split_member_gets_back else R.string.split_member_owes),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

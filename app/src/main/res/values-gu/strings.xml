@@ -723,6 +723,12 @@
     <string name="whats_new_feature_khata_title">ખાતું / ચોપડો</string>
     <string name="whats_new_feature_goals_title">લક્ષ્ય &amp; સ્ટ્રીક</string>
     <string name="split_hero_total_spent">કુલ ખર્ચ</string>
+    <string name="split_member_gets_back">મળશે</string>
+    <string name="split_member_owes">આપવાનું</string>
+    <string name="split_net_owed">એકંદરે તમને મળશે</string>
+    <string name="split_net_owe">એકંદરે તમારે આપવાનું છે</string>
+    <string name="split_net_settled">બધું પતાવેલ છે ✓</string>
+    <string name="split_net_group_count">%d ગ્રુપમાં</string>
 
     <string name="reminder_hour_decrease">કલાક ઘટાડો</string>
     <string name="reminder_hour_increase">કલાક વધારો</string>

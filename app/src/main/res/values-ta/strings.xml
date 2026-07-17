@@ -723,6 +723,12 @@
     <string name="whats_new_feature_khata_title">கட்டா / லெட்ஜர்</string>
     <string name="whats_new_feature_goals_title">இலக்குகள் &amp; ஸ்ட்ரீக்</string>
     <string name="split_hero_total_spent">மொத்த செலவு</string>
+    <string name="split_member_gets_back">பெறுவார்</string>
+    <string name="split_member_owes">கொடுக்க வேண்டும்</string>
+    <string name="split_net_owed">மொத்தமாக உங்களுக்கு கிடைக்க வேண்டும்</string>
+    <string name="split_net_owe">மொத்தமாக நீங்கள் கொடுக்க வேண்டும்</string>
+    <string name="split_net_settled">அனைத்தும் தீர்வு ✓</string>
+    <string name="split_net_group_count">%d குழுக்களில்</string>
 
     <string name="reminder_hour_decrease">மணி நேரத்தை குறை</string>
     <string name="reminder_hour_increase">மணி நேரத்தை அதிகரி</string>

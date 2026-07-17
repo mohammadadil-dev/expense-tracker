@@ -723,6 +723,12 @@
     <string name="whats_new_feature_khata_title">ਖਾਤਾ / ਲੇਜਰ</string>
     <string name="whats_new_feature_goals_title">ਟੀਚੇ &amp; ਸਟ੍ਰੀਕ</string>
     <string name="split_hero_total_spent">ਕੁੱਲ ਖਰਚ</string>
+    <string name="split_member_gets_back">ਮਿਲੇਗਾ</string>
+    <string name="split_member_owes">ਦੇਣਾ ਹੈ</string>
+    <string name="split_net_owed">ਕੁੱਲ ਮਿਲਾ ਕੇ ਤੁਹਾਨੂੰ ਮਿਲੇਗਾ</string>
+    <string name="split_net_owe">ਕੁੱਲ ਮਿਲਾ ਕੇ ਤੁਹਾਨੂੰ ਦੇਣਾ ਹੈ</string>
+    <string name="split_net_settled">ਸਭ ਨਿਪਟਿਆ ✓</string>
+    <string name="split_net_group_count">%d ਗਰੁੱਪਾਂ ਵਿੱਚ</string>
 
     <string name="reminder_hour_decrease">ਘੰਟਾ ਘਟਾਓ</string>
     <string name="reminder_hour_increase">ਘੰਟਾ ਵਧਾਓ</string>

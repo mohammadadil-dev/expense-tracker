@@ -744,6 +744,12 @@
     <string name="whats_new_feature_khata_title">کھاتہ / بہی</string>
     <string name="whats_new_feature_goals_title">اہداف اور سلسلہ</string>
     <string name="split_hero_total_spent">کل خرچ</string>
+    <string name="split_member_gets_back">ملیں گے</string>
+    <string name="split_member_owes">واجب الادا</string>
+    <string name="split_net_owed">مجموعی طور پر آپ کو ملیں گے</string>
+    <string name="split_net_owe">مجموعی طور پر آپ پر واجب ہے</string>
+    <string name="split_net_settled">سب طے ✓</string>
+    <string name="split_net_group_count">%d گروپس میں</string>
 
     <string name="reminder_hour_decrease">گھنٹہ کم کریں</string>
     <string name="reminder_hour_increase">گھنٹہ بڑھائیں</string>

@@ -759,6 +759,12 @@ Feel free to use it anytime!</string>
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
     <string name="split_hero_total_spent">Total spent</string>
+    <string name="split_member_gets_back">gets back</string>
+    <string name="split_member_owes">owes</string>
+    <string name="split_net_owed">Overall you\'re owed</string>
+    <string name="split_net_owe">Overall you owe</string>
+    <string name="split_net_settled">All settled up ✓</string>
+    <string name="split_net_group_count">across %d group(s)</string>
 
     <string name="reminder_hour_decrease">Decrease hour</string>
     <string name="reminder_hour_increase">Increase hour</string>

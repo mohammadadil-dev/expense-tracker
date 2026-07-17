@@ -749,6 +749,12 @@
     <string name="whats_new_feature_khata_title">खाता / बही</string>
     <string name="whats_new_feature_goals_title">लक्ष्य और स्ट्रीक</string>
     <string name="split_hero_total_spent">कुल खर्च</string>
+    <string name="split_member_gets_back">मिलेंगे</string>
+    <string name="split_member_owes">देना है</string>
+    <string name="split_net_owed">कुल मिलाकर आपको मिलेंगे</string>
+    <string name="split_net_owe">कुल मिलाकर आपको देना है</string>
+    <string name="split_net_settled">सब निपटा दिया ✓</string>
+    <string name="split_net_group_count">%d ग्रुप में</string>
 
     <string name="reminder_hour_decrease">घंटा घटाएं</string>
     <string name="reminder_hour_increase">घंटा बढ़ाएं</string>
