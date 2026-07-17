@@ -512,6 +512,9 @@
     <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
     <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
     <string name="khata_label_they_owe">%1$s مدين لك</string>
+    <string name="khata_label_credit_they_owe">%1$s مدين لك برصيد ائتماني</string>
+    <string name="khata_label_credit_i_owe">أنت مدين لـ %1$s برصيد ائتماني</string>
+    <string name="khata_credit_pill">رصيد دائن ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">تتبع الأموال المُقرضة والمُقترضة مع جهات الاتصال</string>

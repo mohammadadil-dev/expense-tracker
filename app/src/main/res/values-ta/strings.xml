@@ -501,6 +501,9 @@
     <string name="khata_label_all_cleared">%1$s உடன் எல்லாம் தீர்வு ✓</string>
     <string name="khata_label_i_owe">நீங்கள் %1$s க்கு கொடுக்க வேண்டியது</string>
     <string name="khata_label_they_owe">%1$s உங்களுக்கு கொடுக்க வேண்டியது</string>
+    <string name="khata_label_credit_they_owe">%1$s உங்களுக்கு கடன் தொகை கொடுக்க வேண்டியது</string>
+    <string name="khata_label_credit_i_owe">நீங்கள் %1$s க்கு கடன் தொகை கொடுக்க வேண்டியது</string>
+    <string name="khata_credit_pill">கிரெடிட்டில் ✓</string>
 
     <string name="khata_subtitle">உங்கள் தொடர்புகளுடன் கடன் கொடுக்கல் வாங்கலை கண்காணி</string>
     <string name="debts_subtitle">நீங்கள் கொடுக்க மற்றும் பெற வேண்டியவற்றை கண்காணி</string>

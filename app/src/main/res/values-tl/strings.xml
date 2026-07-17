@@ -508,6 +508,9 @@ Gamitin anumang oras!</string>
     <string name="khata_label_all_cleared">Naaayos na ang lahat kay %1$s ✓</string>
     <string name="khata_label_i_owe">Ikaw ay may utang kay %1$s</string>
     <string name="khata_label_they_owe">Si %1$s ay may utang sa iyo</string>
+    <string name="khata_label_credit_they_owe">May kredito sa iyo si %1$s</string>
+    <string name="khata_label_credit_i_owe">May kredito ka kay %1$s</string>
+    <string name="khata_credit_pill">May Kredito ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">I-track ang pera na ipinahiram at hiniram mula sa iyong mga contact</string>

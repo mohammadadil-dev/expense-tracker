@@ -517,6 +517,7 @@ fun KhataDetailScreen(
                 KhataBalanceCard(
                     partyName = party.name,
                     balance = balance,
+                    creditBalance = khataViewModel.creditBalanceForParty(partyId, allEntries),
                     currencySymbol = currencySymbol,
                     isIOwe = isIOwe,
                     hasPhone = party.phone.isNotBlank(),
@@ -726,6 +727,7 @@ fun KhataDetailScreen(
 private fun KhataBalanceCard(
     partyName: String,
     balance: Double,
+    creditBalance: Double = 0.0,
     currencySymbol: String,
     isIOwe: Boolean,
     hasPhone: Boolean,
@@ -742,6 +744,10 @@ private fun KhataBalanceCard(
     onMarkPaid: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
+    // Overpaid: payments exceeded credits. balance is already clamped to 0 by the caller (see
+    // KhataViewModel.balanceForParty's doc), so without this the card would show a flat
+    // "Settled ✓" with no way to see the money now owed back the other way.
+    val hasCredit = creditBalance > 0.01
 
     // Gradient colors: red for "I owe", green for "they owe me", teal-green for settled
     val gradientStart = when {
@@ -755,8 +761,12 @@ private fun KhataBalanceCard(
         else      -> NeonCyan
     }
 
-    // Context-aware label so the user immediately understands direction
+    // Context-aware label so the user immediately understands direction. Note credit flips the
+    // usual direction: on an I_OWE party (a supplier), overpaying them means *they* now owe the
+    // shop back; on a THEY_OWE party (a customer), them overpaying means the *shop* owes them.
     val contextLabel = when {
+        hasCredit && isIOwe -> stringResource(R.string.khata_label_credit_they_owe, partyName)
+        hasCredit           -> stringResource(R.string.khata_label_credit_i_owe, partyName)
         isSettled -> stringResource(R.string.khata_label_all_cleared, partyName)
         isIOwe    -> stringResource(R.string.khata_label_i_owe, partyName)
         else      -> stringResource(R.string.khata_label_they_owe, partyName)
@@ -822,9 +832,10 @@ private fun KhataBalanceCard(
 
             Spacer(Modifier.height(6.dp))
 
-            // Big balance amount
+            // Big balance amount — shows the credit owed back when overpaid, otherwise the
+            // normal outstanding balance (0 when settled).
             MoneyText(
-                formatted = Formatters.money(balance, currencySymbol),
+                formatted = Formatters.money(if (hasCredit) creditBalance else balance, currencySymbol),
                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
                 color = Color.White
             )
@@ -870,7 +881,21 @@ private fun KhataBalanceCard(
                 Spacer(Modifier.height(12.dp))
             }
 
-            if (isSettled) {
+            if (hasCredit) {
+                // Credit badge pill — distinct from "Settled" so an overpayment doesn't read as
+                // "nothing to see here" (see hasCredit's doc comment above).
+                Surface(
+                    shape = RoundedCornerShape(50),
+                    color = Color.White.copy(alpha = 0.20f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.khata_credit_pill),
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                        color = Color.White,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                    )
+                }
+            } else if (isSettled) {
                 // Settled badge pill
                 Surface(
                     shape = RoundedCornerShape(50),

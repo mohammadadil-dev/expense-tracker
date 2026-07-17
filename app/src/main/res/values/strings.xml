@@ -522,6 +522,9 @@ Feel free to use it anytime!</string>
     <string name="khata_label_all_cleared">All cleared with %1$s ✓</string>
     <string name="khata_label_i_owe">You\'ll pay %1$s</string>
     <string name="khata_label_they_owe">You\'ll get from %1$s</string>
+    <string name="khata_label_credit_they_owe">%1$s owes you a credit</string>
+    <string name="khata_label_credit_i_owe">You owe %1$s a credit</string>
+    <string name="khata_credit_pill">In Credit ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">Track money lent &amp; borrowed with your contacts</string>

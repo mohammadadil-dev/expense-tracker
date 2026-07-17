@@ -512,6 +512,9 @@
     <string name="khata_label_all_cleared">%1$s-এর সাথে সব পরিষ্কার ✓</string>
     <string name="khata_label_i_owe">আপনি %1$s-এর কাছে ঋণী</string>
     <string name="khata_label_they_owe">%1$s আপনার কাছে ঋণী</string>
+    <string name="khata_label_credit_they_owe">%1$s আপনাকে ক্রেডিট ফেরত দেবে</string>
+    <string name="khata_label_credit_i_owe">আপনি %1$s-কে ক্রেডিট ফেরত দেবেন</string>
+    <string name="khata_credit_pill">ক্রেডিটে ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">আপনার পরিচিতদের সাথে ধার দেওয়া ও নেওয়া অর্থ ট্র্যাক করুন</string>

@@ -508,6 +508,9 @@
     <string name="khata_label_all_cleared">%1$s کے ساتھ تصفیہ ✓</string>
     <string name="khata_label_i_owe">آپ %1$s کے مقروض ہیں</string>
     <string name="khata_label_they_owe">%1$s آپ کے مقروض ہیں</string>
+    <string name="khata_label_credit_they_owe">%1$s پر آپ کا کریڈٹ واجب ہے</string>
+    <string name="khata_label_credit_i_owe">آپ پر %1$s کا کریڈٹ واجب ہے</string>
+    <string name="khata_credit_pill">کریڈٹ میں ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">اپنے رابطوں کے ساتھ قرض اور ادھار کو ٹریک کریں</string>

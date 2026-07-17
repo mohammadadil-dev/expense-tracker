@@ -501,6 +501,9 @@
     <string name="khata_label_all_cleared">%1$s सोबत सर्व निपटले ✓</string>
     <string name="khata_label_i_owe">तुम्ही %1$s ला द्यायचे</string>
     <string name="khata_label_they_owe">%1$s तुम्हाला द्यायचे</string>
+    <string name="khata_label_credit_they_owe">%1$s तुम्हाला क्रेडिट द्यायचे</string>
+    <string name="khata_label_credit_i_owe">तुम्ही %1$s ला क्रेडिट द्यायचे</string>
+    <string name="khata_credit_pill">क्रेडिटमध्ये ✓</string>
 
     <string name="khata_subtitle">तुमच्या संपर्कांसोबत उधार व्यवहार ट्रॅक करा</string>
     <string name="debts_subtitle">द्यायची आणि घ्यायची रक्कम ट्रॅक करा</string>

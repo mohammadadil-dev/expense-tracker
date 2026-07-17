@@ -38,14 +38,31 @@ class KhataViewModel(application: Application) : AndroidViewModel(application) {
 
     /**
      * Outstanding balance for [partyId] derived from the already-loaded [allEntries] snapshot.
-     * Credits add to the balance; payments reduce it. Clamp to 0 — a negative balance just
-     * means overpaid, which is surfaced as SAR 0.00 rather than a confusing negative number.
+     * Credits add to the balance; payments reduce it. Clamp to 0 — every consumer of this value
+     * (Mark Paid amount, credit-limit checks, dashboard/collections totals, aging) means "how
+     * much is currently owed", which is never negative. The overpaid case (payments > credits)
+     * isn't lost, though — see [creditBalanceForParty], which exposes exactly that residual for
+     * the one place that needs to show it back to the user: the party balance card.
      */
     fun balanceForParty(partyId: Long, entries: List<KhataEntryEntity>): Double {
         val partyEntries = entries.filter { it.partyId == partyId }
         val credits  = partyEntries.filter { it.type == KhataEntryEntity.TYPE_CREDIT  }.sumOf { it.amount }
         val payments = partyEntries.filter { it.type == KhataEntryEntity.TYPE_PAYMENT }.sumOf { it.amount }
         return (credits - payments).coerceAtLeast(0.0)
+    }
+
+    /**
+     * The mirror image of [balanceForParty]'s clamp: how much [partyId] has *overpaid* beyond
+     * what they actually owed — i.e. the credit this shop now owes back to them. 0.0 whenever
+     * they're not in credit (including exactly settled). Used only by the party balance card,
+     * so an overpayment doesn't silently disappear behind a flat "Settled ✓" with no way to see
+     * or act on the money now owed the other way.
+     */
+    fun creditBalanceForParty(partyId: Long, entries: List<KhataEntryEntity>): Double {
+        val partyEntries = entries.filter { it.partyId == partyId }
+        val credits  = partyEntries.filter { it.type == KhataEntryEntity.TYPE_CREDIT  }.sumOf { it.amount }
+        val payments = partyEntries.filter { it.type == KhataEntryEntity.TYPE_PAYMENT }.sumOf { it.amount }
+        return (payments - credits).coerceAtLeast(0.0)
     }
 
     /** Total outstanding balance across all I-OWE parties. */

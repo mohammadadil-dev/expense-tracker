@@ -501,6 +501,9 @@
     <string name="khata_label_all_cleared">%1$s-യുമായി എല്ലാം തീർന്നു ✓</string>
     <string name="khata_label_i_owe">നിങ്ങൾ %1$s-ക്ക് നൽകണം</string>
     <string name="khata_label_they_owe">%1$s നിങ്ങൾക്ക് നൽകണം</string>
+    <string name="khata_label_credit_they_owe">%1$s നിങ്ങൾക്ക് ക്രെഡിറ്റ് നൽകണം</string>
+    <string name="khata_label_credit_i_owe">നിങ്ങൾ %1$s-ക്ക് ക്രെഡിറ്റ് നൽകണം</string>
+    <string name="khata_credit_pill">ക്രെഡിറ്റിൽ ✓</string>
 
     <string name="khata_subtitle">നിങ്ങളുടെ കോൺടാക്ടുകളുമായി കടം കൊടുക്കൽ ട്രാക്ക് ചെയ്യൂ</string>
     <string name="debts_subtitle">നൽകേണ്ടതും ലഭിക്കേണ്ടതും ട്രാക്ക് ചെയ്യൂ</string>
