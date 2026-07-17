@@ -678,8 +678,8 @@ Feel free to use it anytime!</string>
     <string name="split_add_member_hint">Add member name</string>
     <string name="split_member_count">%d members</string>
     <string name="split_settled">Settled ✓</string>
-    <string name="split_you_owe">You owe %1$s%2$.2f</string>
-    <string name="split_you_get">You get %1$s%2$.2f</string>
+    <string name="split_you_owe">You\'ll pay %1$s%2$.2f</string>
+    <string name="split_you_get">You\'ll get %1$s%2$.2f</string>
     <string name="split_settle_up">Settle Up</string>
     <string name="split_member_balances">Member Balances</string>
     <string name="split_expenses_label">Expenses</string>
@@ -710,8 +710,8 @@ Feel free to use it anytime!</string>
     <string name="split_wa_paid_by">Paid by: %s</string>
     <string name="split_wa_total">Total: %s</string>
     <string name="split_wa_balances">Balances</string>
-    <string name="split_wa_gets">gets</string>
-    <string name="split_wa_owes">owes</string>
+    <string name="split_wa_gets">will get</string>
+    <string name="split_wa_owes">will pay</string>
     <string name="split_wa_member_settled">Settled</string>
     <string name="split_wa_to_pay">To Pay</string>
     <string name="split_wa_all_settled">Everyone is settled! 🎉</string>
@@ -750,8 +750,8 @@ Feel free to use it anytime!</string>
     <string name="force_update_note">You must update to continue</string>
     <string name="khata_balance_label">Bal:</string>
     <string name="split_hero_settled_label">All settled ✓</string>
-    <string name="split_hero_get_back_label">You get back</string>
-    <string name="split_hero_you_owe_label">You owe</string>
+    <string name="split_hero_get_back_label">You\'ll Get</string>
+    <string name="split_hero_you_owe_label">You\'ll Pay</string>
 
     <string name="whats_new_feature_scan_title">Scan Receipts</string>
     <string name="whats_new_feature_voice_title">Voice Input</string>
@@ -759,10 +759,10 @@ Feel free to use it anytime!</string>
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
     <string name="split_hero_total_spent">Total spent</string>
-    <string name="split_member_gets_back">gets back</string>
-    <string name="split_member_owes">owes</string>
-    <string name="split_net_owed">Overall you\'re owed</string>
-    <string name="split_net_owe">Overall you owe</string>
+    <string name="split_member_gets_back">will get</string>
+    <string name="split_member_owes">will pay</string>
+    <string name="split_net_owed">Overall you\'ll get</string>
+    <string name="split_net_owe">Overall you\'ll pay</string>
     <string name="split_net_settled">All settled up ✓</string>
     <string name="split_net_group_count">across %d group(s)</string>
 

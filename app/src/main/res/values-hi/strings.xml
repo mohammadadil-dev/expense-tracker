@@ -668,8 +668,8 @@
     <string name="split_add_member_hint">सदस्य का नाम जोड़ें</string>
     <string name="split_member_count">%d सदस्य</string>
     <string name="split_settled">निपटा ✓</string>
-    <string name="split_you_owe">आप बकाया हैं %1%212f</string>
-    <string name="split_you_get">आपको मिलेगा %1%212f</string>
+    <string name="split_you_owe">आप बकाया हैं %1$s%2$.2f</string>
+    <string name="split_you_get">आपको मिलेगा %1$s%2$.2f</string>
     <string name="split_settle_up">हिसाब चुकाएं</string>
     <string name="split_member_balances">सदस्यों का बैलेंस</string>
     <string name="split_expenses_label">खर्च</string>
