@@ -126,7 +126,7 @@ Your data still never leaves your device unless you choose to export it.
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
 - Screenshots and a feature graphic still need to be captured from a real build (see the main README's "Publishing to the Play Store" section) — that requires running the app on a device or emulator, which isn't something that can be produced from here.
 - **This file lags the actual live Play Store listing.** As of this writing the live listing's title is still "Expense & Budget Tracker" (developer "AG Tech") — paste the new "Baqaya: Budget & Khata" title and description above into Play Console to make this real. The live listing also still mentions "Google Drive cloud backup" as a feature; since that feature's UI is currently disabled, remove that line directly in Play Console too, not just here.
-- **The Arabic/Hindi translated listings below (title lines especially) still say "خرچ اور بجٹ ٹریکر"/"खर्च और बजट ट्रैकर" — they need updating to match the new brand name too**, but exactly how "Baqaya" should render in each script (kept in Latin letters as a brand name, vs. transliterated/written natively — it's originally an Arabic word) is a judgment call worth confirming before it's finalized, since it's the kind of decision that's expensive to reverse once it's live and indexed.
+- The Arabic/Hindi translated listings below are updated to match: "باقي" in the Arabic listing (its actual Arabic-script origin) and "बकाया" in the Hindi listing (the same word, already a common Hindi/Urdu financial term for an outstanding balance — not a foreign loanword needing transliteration). Confirmed choice: native script per language rather than keeping "Baqaya" in Latin letters everywhere.
 
 ## Translated listings — Arabic and Hindi
 
@@ -147,17 +147,19 @@ literal correctness.
 
 **Title (max 30 characters)**
 ```
-متابع المصروفات والميزانية
+باقي: الميزانية والحساب
 ```
+("Baqaya: Budget & Ledger" — "باقي" is genuinely the Arabic word this brand name comes from, so
+it's written in Arabic script here rather than transliterated, per the "native script" choice.)
 
 **Short description (max 80 characters)**
 ```
-تتبع المصاريف والميزانية والديون والحساب (الخاتا) وتقسيم الفواتير — بدون إنترنت
+تتبع المصاريف، قسّم الفواتير مع الأصدقاء، واحتفظ بحساب (خاتا) للمستحقات
 ```
 
 **Full description**
 ```
-متابع المصروفات هو تطبيق مالي شامل — تتبع مصاريفك، قسّم الفواتير مع الأصدقاء، أدر حساب (خاتا) لمن يدين لك ومن تدين له، وسدّد ديونك — كل ذلك دون حساب، وبياناتك تبقى على هاتفك فقط.
+باقي تطبيق مالي شامل — تتبع مصاريفك وميزانيتك، قسّم الفواتير مع الأصدقاء، وأدر حساب (خاتا) لمن يدين لك ومن تدين له — كل ذلك دون حساب، وبياناتك تبقى على هاتفك فقط.
 
 ما يمكنك فعله
 • سجّل مصاريفك في ثوانٍ — بالكتابة، أو بتصوير الفاتورة بالكاميرا، أو حتى بقول "صرفت 50 على الطعام"
@@ -188,17 +190,20 @@ literal correctness.
 
 **Title (max 30 characters)**
 ```
-खर्च और बजट ट्रैकर
+बकाया: बजट और खाता
 ```
+("Baqaya: Budget & Khata" — "बकाया" is a widely understood Hindi/Urdu financial word for an
+outstanding/remaining balance, so it's written in Devanagari here rather than transliterated from
+Latin, per the "native script" choice.)
 
 **Short description (max 80 characters)**
 ```
-खर्च, बजट, कर्ज, खाता और बिल विभाजन — पूरी तरह ऑफलाइन, बिना अकाउंट के
+खर्च, बजट, बिल विभाजन और खाता — पूरी तरह ऑफलाइन, बिना अकाउंट के
 ```
 
 **Full description**
 ```
-खर्च और बजट ट्रैकर एक ऑल-इन-वन मनी ऐप है — खर्च ट्रैक करें, दोस्तों के साथ बिल बांटें, खाता (उधार-जमा) मैनेज करें, और कर्ज चुकाएं — बिना किसी अकाउंट के, और आपका हर आंकड़ा सिर्फ आपके फोन में रहता है।
+बकाया एक ऑल-इन-वन मनी ऐप है — खर्च और बजट ट्रैक करें, दोस्तों के साथ बिल बांटें, और खाता (उधार-जमा) मैनेज करें — बिना किसी अकाउंट के, और आपका हर आंकड़ा सिर्फ आपके फोन में रहता है।
 
 आप क्या कर सकते हैं
 • सेकंडों में खर्च लॉग करें — टाइप करके, कैमरे से बिल स्कैन करके, या बस बोलकर "खाने पर 50 खर्च किए"
@@ -217,7 +222,7 @@ literal correctness.
 • हिंदी सहित कई भारतीय भाषाओं में पूरी तरह उपलब्ध
 
 आपकी प्राइवेसी का पूरा ध्यान
-खर्च ट्रैकर का कोई सर्वर या यूज़र अकाउंट नहीं है। हर खर्च, बजट और खाता एंट्री सिर्फ आपके डिवाइस पर लोकल स्टोर होती है, और यह हम तक कभी नहीं पहुंचती। ऐप विज्ञापनों से चलता है, इसी वजह से यह बिना सब्सक्रिप्शन के मुफ्त है — लेकिन आपका फाइनेंशियल डेटा कभी किसी विज्ञापनदाता या किसी और के साथ शेयर नहीं होता।
+बकाया का कोई सर्वर या यूज़र अकाउंट नहीं है। हर खर्च, बजट और खाता एंट्री सिर्फ आपके डिवाइस पर लोकल स्टोर होती है, और यह हम तक कभी नहीं पहुंचती। ऐप विज्ञापनों से चलता है, इसी वजह से यह बिना सब्सक्रिप्शन के मुफ्त है — लेकिन आपका फाइनेंशियल डेटा कभी किसी विज्ञापनदाता या किसी और के साथ शेयर नहीं होता।
 
 सबके लिए बना
 बड़ा और साफ टेक्स्ट, हाई-कॉन्ट्रास्ट स्क्रीन, और आसान नेविगेशन — यह ऐप पहली बार बजट बनाने वाले के लिए भी उतना ही आसान है जितना डिटेल्ड मंथली रिपोर्ट चाहने वाले के लिए। किसी फाइनेंस बैकग्राउंड की ज़रूरत नहीं।
