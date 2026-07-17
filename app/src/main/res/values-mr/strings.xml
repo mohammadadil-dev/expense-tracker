@@ -412,6 +412,8 @@
     <string name="khata_delete_party">पार्टी हटवा</string>
     <string name="khata_no_parties_i_owe">अजून दुकाने नाहीत.\nउधार असलेले दुकान जोडण्यासाठी + दाबा.</string>
     <string name="khata_no_parties_they_owe">अजून ग्राहक नाहीत.\nज्यांनी द्यायचे त्यांना जोडण्यासाठी + दाबा.</string>
+    <string name="khata_search_hint">नाव किंवा फोन नंबरने शोधा…</string>
+    <string name="khata_search_no_results">काही जुळले नाही. दुसरे नाव किंवा नंबर वापरून पहा.</string>
     <string name="khata_outstanding">बाकी</string>
     <string name="khata_settled">निपटले ✓</string>
     <string name="khata_add_entry">नोंद जोडा</string>

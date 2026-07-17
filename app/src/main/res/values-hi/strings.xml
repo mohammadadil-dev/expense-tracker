@@ -400,6 +400,8 @@
 उधार वाली दुकान जोड़ने के लिए + दबाएं।</string>
     <string name="khata_no_parties_they_owe">अभी कोई ग्राहक नहीं जोड़ा गया।
 जिसने उधार लिया हो उसे जोड़ने के लिए + दबाएं।</string>
+    <string name="khata_search_hint">नाम या फ़ोन नंबर से खोजें…</string>
+    <string name="khata_search_no_results">कोई परिणाम नहीं। दूसरा नाम या नंबर आज़माएं।</string>
     <string name="khata_outstanding">बकाया</string>
     <string name="khata_settled">भुगतान हो गया ✓</string>
     <string name="khata_add_entry">एंट्री जोड़ें</string>

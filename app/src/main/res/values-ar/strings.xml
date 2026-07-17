@@ -400,6 +400,8 @@
 اضغط + لإضافة محل لديك رصيد به.</string>
     <string name="khata_no_parties_they_owe">لم تتم إضافة أي عملاء بعد.
 اضغط + لإضافة شخص مدين لك.</string>
+    <string name="khata_search_hint">ابحث بالاسم أو رقم الهاتف…</string>
+    <string name="khata_search_no_results">لا توجد نتائج. جرّب اسمًا أو رقمًا آخر.</string>
     <string name="khata_outstanding">المستحق</string>
     <string name="khata_settled">تمت التسوية ✓</string>
     <string name="khata_add_entry">إضافة إدخال</string>

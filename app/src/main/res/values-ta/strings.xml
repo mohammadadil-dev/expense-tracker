@@ -412,6 +412,8 @@
     <string name="khata_delete_party">தரப்பை நீக்கு</string>
     <string name="khata_no_parties_i_owe">இன்னும் கடைகள் சேர்க்கவில்லை.\nகடன் உள்ள கடையை சேர்க்க + தட்டுங்கள்.</string>
     <string name="khata_no_parties_they_owe">இன்னும் வாடிக்கையாளர்கள் சேர்க்கவில்லை.\nகடன்பட்டவரை சேர்க்க + தட்டுங்கள்.</string>
+    <string name="khata_search_hint">பெயர் அல்லது தொலைபேசி எண் மூலம் தேடுங்கள்…</string>
+    <string name="khata_search_no_results">பொருத்தமில்லை. வேறு பெயர் அல்லது எண்ணை முயற்சிக்கவும்.</string>
     <string name="khata_outstanding">நிலுவை</string>
     <string name="khata_settled">தீர்வு ✓</string>
     <string name="khata_add_entry">உள்ளீடு சேர்</string>

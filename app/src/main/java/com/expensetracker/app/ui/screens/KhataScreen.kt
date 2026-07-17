@@ -14,6 +14,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,8 +39,10 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TrendingDown
 import androidx.compose.material.icons.filled.TrendingUp
@@ -53,6 +56,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -131,6 +135,10 @@ fun KhataScreen(
     // Party currently showing the row-level "Quick Add" entry sheet — lets a shopkeeper log a
     // partial credit/payment straight from the list, without navigating into the detail screen.
     var quickAddParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    // Search — matters most here of anywhere in the app: a shop's whole Khata list can run
+    // into the hundreds of regular customers, with no other way to jump straight to one.
+    var searchActive by remember { mutableStateOf(false) }
+    var searchQuery  by remember { mutableStateOf("") }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
     val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
@@ -220,7 +228,45 @@ fun KhataScreen(
                         theyOweCount = theyOweParties.size,
                         currencySymbol = currencySymbol,
                         todaysCollections = todaysCollections,
-                        todaysCreditGiven = todaysCreditGiven
+                        todaysCreditGiven = todaysCreditGiven,
+                        searchActive = searchActive,
+                        onToggleSearch = {
+                            searchActive = !searchActive
+                            if (!searchActive) searchQuery = ""
+                        }
+                    )
+                }
+
+                // ── Party search — collapses to a single icon until tapped ─────
+                AnimatedVisibility(
+                    visible = searchActive || searchQuery.isNotBlank(),
+                    enter = fadeIn(tween(180)) + slideInVertically(tween(180)) { -it / 2 },
+                    exit  = fadeOut(tween(180)) + slideOutVertically(tween(180)) { -it / 2 }
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text(stringResource(R.string.khata_search_hint)) },
+                        leadingIcon = {
+                            Icon(Icons.Filled.Search, contentDescription = null, modifier = Modifier.size(20.dp))
+                        },
+                        trailingIcon = {
+                            if (searchQuery.isNotBlank()) {
+                                IconButton(onClick = { searchQuery = ""; searchActive = false }) {
+                                    Icon(
+                                        Icons.Filled.Close,
+                                        contentDescription = stringResource(R.string.cd_clear_search),
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            }
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(24.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp)
                     )
                 }
 
@@ -267,11 +313,19 @@ fun KhataScreen(
                 }
 
                 // ── Party list ─────────────────────────────────────────────────
-                val displayedParties = if (showIOwe) iOweParties else theyOweParties
-                val emptyMsg = if (showIOwe)
-                    stringResource(R.string.khata_no_parties_i_owe)
-                else
-                    stringResource(R.string.khata_no_parties_they_owe)
+                val directionParties = if (showIOwe) iOweParties else theyOweParties
+                val trimmedQuery = searchQuery.trim()
+                val displayedParties = if (trimmedQuery.isBlank()) directionParties else {
+                    directionParties.filter {
+                        it.name.contains(trimmedQuery, ignoreCase = true) ||
+                            (it.phone.isNotBlank() && it.phone.contains(trimmedQuery, ignoreCase = true))
+                    }
+                }
+                val emptyMsg = when {
+                    trimmedQuery.isNotBlank() -> stringResource(R.string.khata_search_no_results)
+                    showIOwe -> stringResource(R.string.khata_no_parties_i_owe)
+                    else -> stringResource(R.string.khata_no_parties_they_owe)
+                }
 
                 AnimatedContent(
                     targetState = displayedParties,
@@ -521,7 +575,9 @@ private fun KhataHeroHeader(
     theyOweCount: Int,
     currencySymbol: String,
     todaysCollections: Double = 0.0,
-    todaysCreditGiven: Double = 0.0
+    todaysCreditGiven: Double = 0.0,
+    searchActive: Boolean = false,
+    onToggleSearch: () -> Unit = {}
 ) {
     val netAmount      = abs(totalTheyOwe - totalIOwe)
     val netIsPositive  = totalTheyOwe >= totalIOwe
@@ -533,11 +589,25 @@ private fun KhataHeroHeader(
             .padding(horizontal = 16.dp)
             .padding(top = 20.dp, bottom = 12.dp)
     ) {
-        Text(
-            text  = stringResource(R.string.khata_screen_title),
-            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            color = TextPrimary
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text  = stringResource(R.string.khata_screen_title),
+                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                color = TextPrimary,
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(onClick = onToggleSearch, modifier = Modifier.size(36.dp)) {
+                Icon(
+                    if (searchActive) Icons.Filled.Close else Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.khata_search_hint),
+                    tint = if (searchActive) AccentIndigo else TextMuted,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
+        }
         Text(
             text  = stringResource(R.string.khata_subtitle),
             style = MaterialTheme.typography.bodySmall,

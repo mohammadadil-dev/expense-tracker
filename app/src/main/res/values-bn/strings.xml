@@ -400,6 +400,8 @@
 বাকি আছে এমন দোকান যোগ করতে + চাপুন।</string>
     <string name="khata_no_parties_they_owe">এখনো কোনো গ্রাহক যোগ করা হয়নি।
 যে ধার নিয়েছে তাকে যোগ করতে + চাপুন।</string>
+    <string name="khata_search_hint">নাম বা ফোন নম্বর দিয়ে খুঁজুন…</string>
+    <string name="khata_search_no_results">কোনো ফলাফল নেই। অন্য নাম বা নম্বর চেষ্টা করুন।</string>
     <string name="khata_outstanding">বকেয়া</string>
     <string name="khata_settled">পরিশোধ হয়েছে ✓</string>
     <string name="khata_add_entry">এন্ট্রি যোগ করুন</string>

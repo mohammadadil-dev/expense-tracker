@@ -412,6 +412,8 @@
     <string name="khata_delete_party">ಪಾರ್ಟಿ ಅಳಿಸಿ</string>
     <string name="khata_no_parties_i_owe">ಇನ್ನೂ ಅಂಗಡಿಗಳಿಲ್ಲ.\nಸಾಲ ಇರುವ ಅಂಗಡಿ ಸೇರಿಸಲು + ಒತ್ತಿ.</string>
     <string name="khata_no_parties_they_owe">ಇನ್ನೂ ಗ್ರಾಹಕರಿಲ್ಲ.\nನಿಮಗೆ ಕೊಡಬೇಕಾದವರನ್ನು ಸೇರಿಸಲು + ಒತ್ತಿ.</string>
+    <string name="khata_search_hint">ಹೆಸರು ಅಥವಾ ಫೋನ್ ನಂಬರ್ ಮೂಲಕ ಹುಡುಕಿ…</string>
+    <string name="khata_search_no_results">ಯಾವುದೇ ಫಲಿತಾಂಶವಿಲ್ಲ. ಬೇರೆ ಹೆಸರು ಅಥವಾ ನಂಬರ್ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="khata_outstanding">ಬಾಕಿ</string>
     <string name="khata_settled">ತೀರಿಸಲಾಗಿದೆ ✓</string>
     <string name="khata_add_entry">ನಮೂದು ಸೇರಿಸಿ</string>

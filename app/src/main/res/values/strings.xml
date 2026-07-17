@@ -427,6 +427,8 @@
 Tap + to add a shop you have a tab at.</string>
     <string name="khata_no_parties_they_owe">No customers added yet.
 Tap + to add someone you\'ll get money from.</string>
+    <string name="khata_search_hint">Search by name or phone…</string>
+    <string name="khata_search_no_results">No matches. Try a different name or number.</string>
     <string name="khata_outstanding">Outstanding</string>
     <string name="khata_settled">Settled ✓</string>
     <string name="khata_add_entry">Add Entry</string>

@@ -396,6 +396,8 @@
 Pindutin ang + para magdagdag ng tindahan.</string>
     <string name="khata_no_parties_they_owe">Wala pang customer na naidagdag.
 Pindutin ang + para magdagdag ng may utang sa iyo.</string>
+    <string name="khata_search_hint">Maghanap gamit ang pangalan o numero…</string>
+    <string name="khata_search_no_results">Walang nahanap. Subukan ang ibang pangalan o numero.</string>
     <string name="khata_outstanding">Natitirang Utang</string>
     <string name="khata_settled">Nabayaran na ✓</string>
     <string name="khata_add_entry">Magdagdag ng Entry</string>

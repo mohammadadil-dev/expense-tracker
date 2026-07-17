@@ -396,6 +396,8 @@
 ادھار والی دکان جوڑنے کے لیے + دبائیں۔</string>
     <string name="khata_no_parties_they_owe">ابھی کوئی گاہک نہیں جوڑا گیا۔
 جس نے ادھار لیا ہو اسے جوڑنے کے لیے + دبائیں۔</string>
+    <string name="khata_search_hint">نام یا فون نمبر سے تلاش کریں…</string>
+    <string name="khata_search_no_results">کوئی نتیجہ نہیں۔ کوئی اور نام یا نمبر آزمائیں۔</string>
     <string name="khata_outstanding">باقی</string>
     <string name="khata_settled">ادائیگی ہو گئی ✓</string>
     <string name="khata_add_entry">اندراج شامل کریں</string>

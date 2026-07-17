@@ -412,6 +412,8 @@
     <string name="khata_delete_party">പാർട്ടി ഡിലീറ്റ് ചെയ്യൂ</string>
     <string name="khata_no_parties_i_owe">ഇനി കടകൾ ഇല്ല.\nകടം ഉള്ള ഒരു കട ചേർക്കൂ + ഞെക്കൂ.</string>
     <string name="khata_no_parties_they_owe">ഇനി ഉപഭോക്താക്കൾ ഇല്ല.\nനൽകേണ്ടവരെ ചേർക്കൂ + ഞെക്കൂ.</string>
+    <string name="khata_search_hint">പേരോ ഫോൺ നമ്പറോ ഉപയോഗിച്ച് തിരയുക…</string>
+    <string name="khata_search_no_results">ഫലങ്ങളൊന്നുമില്ല. മറ്റൊരു പേരോ നമ്പറോ ശ്രമിക്കൂ.</string>
     <string name="khata_outstanding">ബാക്കി</string>
     <string name="khata_settled">തീർന്നു ✓</string>
     <string name="khata_add_entry">എൻട്രി ചേർക്കൂ</string>

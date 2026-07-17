@@ -412,6 +412,8 @@
     <string name="khata_delete_party">పార్టీ తొలగించు</string>
     <string name="khata_no_parties_i_owe">ఇంకా దుకాణాలు జోడించలేదు.\nఖాతా ఉన్న దుకాణం జోడించడానికి + నొక్కండి.</string>
     <string name="khata_no_parties_they_owe">ఇంకా కస్టమర్లు జోడించలేదు.\nఎవరైనా మీకు బాకీ పడిన వారిని జోడించడానికి + నొక్కండి.</string>
+    <string name="khata_search_hint">పేరు లేదా ఫోన్ నంబర్‌తో వెతకండి…</string>
+    <string name="khata_search_no_results">ఫలితాలు లేవు. వేరే పేరు లేదా నంబర్ ప్రయత్నించండి.</string>
     <string name="khata_outstanding">బాకీ</string>
     <string name="khata_settled">పరిష్కరించారు ✓</string>
     <string name="khata_add_entry">నమోదు జోడించు</string>
