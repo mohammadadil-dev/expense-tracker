@@ -723,6 +723,17 @@ Gamitin anumang oras!</string>
     <string name="split_add_their_upi">Idagdag ang UPI ID nila</string>
     <string name="split_request_via_upi">Humingi gamit ang UPI</string>
     <string name="split_set_your_upi">Itakda ang iyong UPI ID</string>
+    <string name="split_remind_member">Paalalahanan</string>
+    <string name="split_add_their_phone">Idagdag ang numero ng telepono nila</string>
+    <string name="split_member_phone_hint">Numero ng telepono (para sa WhatsApp)</string>
+    <string name="split_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
+    <string name="split_reminder_msg">Kamusta %1$s 👋
+
+Paalala mula sa "%2$s" — dapat kang magbayad ng %3$s kay %4$s.
+
+Mangyaring bayaran kapag maginhawa 🙏</string>
+    <string name="split_reminder_signature">Regards,
+%1$s</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
 

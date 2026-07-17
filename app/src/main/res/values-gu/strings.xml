@@ -702,6 +702,17 @@
     <string name="split_add_their_upi">તેમનું UPI ID ઉમેરો</string>
     <string name="split_request_via_upi">UPI દ્વારા વિનંતી કરો</string>
     <string name="split_set_your_upi">તમારું UPI ID સેટ કરો</string>
+    <string name="split_remind_member">યાદ અપાવો</string>
+    <string name="split_add_their_phone">તેમનો ફોન નંબર ઉમેરો</string>
+    <string name="split_member_phone_hint">ફોન નંબર (WhatsApp માટે)</string>
+    <string name="split_whatsapp_not_installed">WhatsApp ઇન્સ્ટૉલ નથી.</string>
+    <string name="split_reminder_msg">નમસ્તે %1$s 👋
+
+"%2$s" તરફથી યાદ — તમારે %4$s ને %3$s આપવાના છે.
+
+અનુકૂળ હોય ત્યારે ચૂકવો 🙏</string>
+    <string name="split_reminder_signature">સાદર,
+%1$s</string>
     <string name="reminder_notification_tip">ટિપ: રોજ નોંધ કરવાથી બજેટ નિયંત્રણ સુધારે 📊</string>
     <string name="reminder_action_add_expense">ખર્ચ ઉમેરો</string>
 

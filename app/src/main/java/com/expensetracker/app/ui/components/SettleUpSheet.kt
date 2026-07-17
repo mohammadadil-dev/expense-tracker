@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
@@ -31,6 +32,7 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.SplitExpenseEntity
 import com.expensetracker.app.data.SplitMemberEntity
 import com.expensetracker.app.util.Settlement
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import kotlin.math.abs
 
@@ -51,6 +53,7 @@ fun SettleUpSheet(
     myUpiId: String = "",
     ownerDisplayName: String = "",
     onSetMemberUpiId: (SplitMemberEntity, String) -> Unit = { _, _ -> },
+    onSetMemberPhone: (SplitMemberEntity, String) -> Unit = { _, _ -> },
     onOpenSettings: () -> Unit = {},
     onDismiss: () -> Unit,
     onMarkPaid: (Settlement) -> Unit
@@ -60,11 +63,18 @@ fun SettleUpSheet(
     val memberMap = remember(members) { members.associateBy { it.id } }
     val showUpiActions = CurrencyLocaleMapper.isInrSymbol(currencySymbol)
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
+    val whatsappNotInstalled = stringResource(R.string.split_whatsapp_not_installed)
 
     // Settlement currently showing the "Request via UPI" QR sheet (someone owes "me").
     var requestUpiSettlement by remember { mutableStateOf<Settlement?>(null) }
     // Member currently showing the inline "set their UPI ID" dialog (before I can pay them).
     var editingUpiForMember by remember { mutableStateOf<SplitMemberEntity?>(null) }
+    // Member currently showing the inline "set their phone number" dialog (before I can
+    // send them an individual settlement reminder).
+    var editingPhoneForMember by remember { mutableStateOf<SplitMemberEntity?>(null) }
+    // The settlement that triggered the phone-number prompt, so the reminder can be sent
+    // immediately once a number is saved instead of making the user tap the icon twice.
+    var pendingReminderSettlement by remember { mutableStateOf<Settlement?>(null) }
 
     fun payMemberViaUpi(toMember: SplitMemberEntity, amount: Double) {
         val vpa = toMember.upiId
@@ -75,6 +85,54 @@ fun SettleUpSheet(
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, noUpiAppInstalled, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // Builds and sends the individual reminder once we definitely have a phone number —
+    // shared by the normal "already has a phone" path and the "just typed one into the
+    // dialog" path below (which can't wait for a recomposition to see the saved member).
+    fun sendReminderTo(fromName: String, phone: String, toName: String, amount: Double) {
+        val amountText = run {
+            val formatted = String.format(java.util.Locale.US, "%.2f", amount)
+            if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) "SAR $formatted"
+            else "$currencySymbol $formatted"
+        }
+        val message = context.getString(
+            R.string.split_reminder_msg, fromName, groupName, amountText, toName
+        ) + (if (ownerDisplayName.isNotBlank())
+            "\n\n" + context.getString(R.string.split_reminder_signature, ownerDisplayName)
+        else "") + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+
+        // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
+        val phoneDigits = phone
+            .replace("+", "").replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phoneDigits&text=${Uri.encode(message)}")
+        val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+            try {
+                context.startActivity(intent2)
+            } catch (e2: ActivityNotFoundException) {
+                if (!SmsFallback.send(context, phone, message)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    // Nudges the member who owes money on this one settlement — as opposed to the header's
+    // "Share via WhatsApp" button, which dumps the whole group summary on whoever receives it.
+    // Prompts for a phone number first (via editingPhoneForMember) if this member doesn't have
+    // one on file yet, same "ask once, reuse after" flow as payMemberViaUpi's UPI-ID prompt.
+    fun sendSettlementReminder(settlement: Settlement) {
+        val fromMember = memberMap[settlement.fromMemberId] ?: return
+        if (fromMember.phone.isNullOrBlank()) {
+            pendingReminderSettlement = settlement
+            editingPhoneForMember = fromMember
+            return
+        }
+        sendReminderTo(fromMember.name, fromMember.phone!!, settlement.toMemberName, settlement.amount)
     }
 
     ModalBottomSheet(
@@ -184,11 +242,15 @@ fun SettleUpSheet(
                     val iOwe   = showUpiActions && meMemberId != null && settlement.fromMemberId == meMemberId
                     val owedToMe = showUpiActions && meMemberId != null && settlement.toMemberId == meMemberId
                     val toMember = memberMap[settlement.toMemberId]
+                    // No point nudging myself — only offer the reminder for settlements where
+                    // someone *other* than the device owner is the one who needs to pay.
+                    val canRemind = meMemberId == null || settlement.fromMemberId != meMemberId
 
                     SettlementRow(
                         settlement = settlement,
                         currencySymbol = currencySymbol,
                         onMarkPaid = { onMarkPaid(settlement) },
+                        onRemind = if (canRemind) { { sendSettlementReminder(settlement) } } else null,
                         payUpiAction = when {
                             iOwe && !toMember?.upiId.isNullOrBlank() -> {
                                 { payMemberViaUpi(toMember!!, settlement.amount) }
@@ -255,6 +317,48 @@ fun SettleUpSheet(
         )
     }
 
+    // ── Inline "set their phone number" dialog ───────────────────────────────
+    editingPhoneForMember?.let { member ->
+        var phoneInput by remember(member.id) { mutableStateOf(member.phone ?: "") }
+        AlertDialog(
+            onDismissRequest = { editingPhoneForMember = null; pendingReminderSettlement = null },
+            title = { Text(stringResource(R.string.split_add_their_phone)) },
+            text = {
+                OutlinedTextField(
+                    value = phoneInput,
+                    onValueChange = { phoneInput = it },
+                    label = { Text(stringResource(R.string.split_member_phone_hint)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = phoneInput.isNotBlank(),
+                    onClick = {
+                        val trimmedPhone = phoneInput.trim()
+                        onSetMemberPhone(member, trimmedPhone)
+                        // Fire the reminder immediately with the freshly-typed number, rather
+                        // than waiting for the recomposition that would carry the saved member
+                        // back in — the caller (SplitGroupDetailScreen) re-fetches members
+                        // asynchronously, so `member` here would still show the old blank phone.
+                        pendingReminderSettlement?.let { settlement ->
+                            sendReminderTo(member.name, trimmedPhone, settlement.toMemberName, settlement.amount)
+                        }
+                        editingPhoneForMember = null
+                        pendingReminderSettlement = null
+                    }
+                ) { Text(stringResource(R.string.done)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingPhoneForMember = null; pendingReminderSettlement = null }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
     // ── "Request via UPI" QR sheet (someone owes "me") ───────────────────────
     requestUpiSettlement?.let { settlement ->
         val fromName = memberMap[settlement.fromMemberId]?.name ?: ""
@@ -285,6 +389,7 @@ private fun SettlementRow(
     settlement: Settlement,
     currencySymbol: String,
     onMarkPaid: () -> Unit,
+    onRemind: (() -> Unit)? = null,
     payUpiAction: (() -> Unit)? = null,
     payUpiLabel: String? = null
 ) {
@@ -325,6 +430,17 @@ private fun SettlementRow(
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                         color = MaterialTheme.colorScheme.primary
                     )
+                }
+
+                if (onRemind != null) {
+                    IconButton(onClick = onRemind, modifier = Modifier.size(36.dp)) {
+                        Icon(
+                            Icons.Filled.NotificationsActive,
+                            contentDescription = stringResource(R.string.split_remind_member),
+                            tint = Color(0xFF25D366),
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
                 }
 
                 OutlinedButton(

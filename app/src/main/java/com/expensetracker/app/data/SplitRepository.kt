@@ -72,6 +72,13 @@ class SplitRepository(
         memberDao.update(member.copy(upiId = upiId.trim().takeIf { it.isNotBlank() }))
     }
 
+    /** Sets (or clears, if blank) a member's phone number — used by the Settle Up sheet's
+     * inline "add their phone number" prompt so an individual settlement can be nudged with
+     * its own WhatsApp/SMS reminder instead of only ever sharing one combined group summary. */
+    suspend fun setMemberPhone(member: SplitMemberEntity, phone: String) {
+        memberDao.update(member.copy(phone = phone.trim().takeIf { it.isNotBlank() }))
+    }
+
     // ── Expenses ─────────────────────────────────────────────────────────────
 
     fun getExpensesForGroup(groupId: Long): Flow<List<SplitExpenseEntity>> =

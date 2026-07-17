@@ -23,7 +23,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         PaymentAccountEntity::class,
         SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class
     ],
-    version = 20,
+    version = 21,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -627,6 +627,16 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v20 -> v21: per-member phone on Splits, so an individual settlement can be nudged
+        // with its own WhatsApp/SMS reminder instead of only ever sharing one combined group
+        // summary (mirrors khata_parties.phone). Nullable/additive — every existing member
+        // simply has no phone until someone fills it in via the Settle Up sheet.
+        private val MIGRATION_20_21 = object : Migration(20, 21) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE split_members ADD COLUMN phone TEXT")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -638,7 +648,7 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
                     MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
-                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20
+                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21
                 ).build().also { INSTANCE = it }
             }
         }

@@ -471,7 +471,8 @@ object BackupManager {
                         colorHex = obj.optString("colorHex", "#4CAF50"),
                         emoji    = obj.optString("emoji", ""),
                         isMe     = obj.optBoolean("isMe", false),
-                        upiId    = obj.optString("upiId").takeIf { it.isNotBlank() }
+                        upiId    = obj.optString("upiId").takeIf { it.isNotBlank() },
+                        phone    = obj.optString("phone").takeIf { it.isNotBlank() }
                     )
                 )
                 idRemapSplitMember[oldId] = newId
@@ -722,6 +723,7 @@ object BackupManager {
         put("emoji",    emoji)
         put("isMe",     isMe)
         if (upiId != null) put("upiId", upiId)
+        if (phone != null) put("phone", phone)
     }
 
     private fun SplitExpenseEntity.toJson() = JSONObject().apply {

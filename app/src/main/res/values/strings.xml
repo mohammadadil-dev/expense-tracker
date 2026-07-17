@@ -738,6 +738,19 @@ Feel free to use it anytime!</string>
     <string name="split_add_their_upi">Add their UPI ID</string>
     <string name="split_request_via_upi">Request via UPI</string>
     <string name="split_set_your_upi">Set your UPI ID</string>
+
+    <!-- Individual settlement reminders in Split settle-up -->
+    <string name="split_remind_member">Remind</string>
+    <string name="split_add_their_phone">Add their phone number</string>
+    <string name="split_member_phone_hint">Phone number (for WhatsApp)</string>
+    <string name="split_whatsapp_not_installed">WhatsApp is not installed.</string>
+    <string name="split_reminder_msg">Hi %1$s 👋
+
+A friendly reminder from \"%2$s\" — you owe %3$s to %4$s.
+
+Kindly settle when convenient 🙏</string>
+    <string name="split_reminder_signature">Regards,
+%1$s</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
 

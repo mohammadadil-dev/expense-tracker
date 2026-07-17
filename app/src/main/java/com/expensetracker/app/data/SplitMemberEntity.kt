@@ -20,5 +20,9 @@ data class SplitMemberEntity(
     /** Optional UPI ID (India-only) so a settlement owed *to* this member can be paid
      *  directly from the Settle Up sheet, instead of only ever recording "Mark Paid"
      *  after paying them some other way. Mirrors [KhataPartyEntity.upiId]. */
-    val upiId: String? = null
+    val upiId: String? = null,
+    /** Optional phone number so a settlement this member *owes* can be nudged with an
+     *  individual WhatsApp/SMS reminder from the Settle Up sheet, instead of only ever
+     *  sharing one combined group summary. Mirrors [KhataPartyEntity.phone]. */
+    val phone: String? = null
 )

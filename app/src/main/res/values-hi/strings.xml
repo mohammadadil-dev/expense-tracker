@@ -728,6 +728,17 @@
     <string name="split_add_their_upi">उनकी UPI ID जोड़ें</string>
     <string name="split_request_via_upi">UPI से अनुरोध करें</string>
     <string name="split_set_your_upi">अपनी UPI ID सेट करें</string>
+    <string name="split_remind_member">याद दिलाएं</string>
+    <string name="split_add_their_phone">उनका फ़ोन नंबर जोड़ें</string>
+    <string name="split_member_phone_hint">फ़ोन नंबर (WhatsApp के लिए)</string>
+    <string name="split_whatsapp_not_installed">WhatsApp इंस्टॉल नहीं है।</string>
+    <string name="split_reminder_msg">हेलो %1$s 👋
+
+"%2$s" की ओर से याद दिला दें — आपको %4$s को %3$s देना है।
+
+कृपया सुविधानुसार चुका दें 🙏</string>
+    <string name="split_reminder_signature">सादर,
+%1$s</string>
     <string name="reminder_notification_tip">सुझाव: रोज़ाना लॉग करने से बजट पर नज़र रहती है 📊</string>
     <string name="reminder_action_add_expense">खर्च जोड़ें</string>
 

@@ -723,6 +723,17 @@
     <string name="split_add_their_upi">ان کی UPI ID شامل کریں</string>
     <string name="split_request_via_upi">UPI کے ذریعے درخواست کریں</string>
     <string name="split_set_your_upi">اپنی UPI ID سیٹ کریں</string>
+    <string name="split_remind_member">یاد دلائیں</string>
+    <string name="split_add_their_phone">ان کا فون نمبر شامل کریں</string>
+    <string name="split_member_phone_hint">فون نمبر (واٹس ایپ کے لیے)</string>
+    <string name="split_whatsapp_not_installed">واٹس ایپ انسٹال نہیں ہے۔</string>
+    <string name="split_reminder_msg">السلام علیکم %1$s 👋
+
+"%2$s" کی طرف سے یاد دہانی — آپ کو %4$s کو %3$s دینا ہے۔
+
+براہ کرم جب آسانی ہو ادا کر دیں 🙏</string>
+    <string name="split_reminder_signature">ادب کے ساتھ،
+%1$s</string>
     <string name="reminder_notification_tip">مشورہ: روزانہ لاگ کرنے سے بجٹ کا خیال رہتا ہے 📊</string>
     <string name="reminder_action_add_expense">خرچ شامل کریں</string>
 

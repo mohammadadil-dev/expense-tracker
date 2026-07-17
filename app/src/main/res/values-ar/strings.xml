@@ -735,6 +735,17 @@
     <string name="split_add_their_upi">أضف معرف UPI الخاص بهم</string>
     <string name="split_request_via_upi">طلب عبر UPI</string>
     <string name="split_set_your_upi">عيّن معرف UPI الخاص بك</string>
+    <string name="split_remind_member">تذكير</string>
+    <string name="split_add_their_phone">أضف رقم هاتفهم</string>
+    <string name="split_member_phone_hint">رقم الهاتف (للواتساب)</string>
+    <string name="split_whatsapp_not_installed">واتساب غير مثبت.</string>
+    <string name="split_reminder_msg">مرحباً %1$s 👋
+
+تذكير ودي من "%2$s" — عليك دفع %3$s إلى %4$s.
+
+يرجى السداد عند الإمكان 🙏</string>
+    <string name="split_reminder_signature">مع التحية،
+%1$s</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
 

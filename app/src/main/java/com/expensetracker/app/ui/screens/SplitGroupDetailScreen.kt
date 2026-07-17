@@ -485,6 +485,7 @@ fun SplitGroupDetailScreen(
             myUpiId          = myUpiId,
             ownerDisplayName = ownerDisplayName.ifBlank { meMember?.name ?: "Me" },
             onSetMemberUpiId = { member, upiId -> viewModel.setMemberUpiId(member, upiId) },
+            onSetMemberPhone = { member, phone -> viewModel.setMemberPhone(member, phone) },
             onOpenSettings   = onOpenSettings,
             onDismiss        = { showSettleUpSheet = false },
             onMarkPaid     = { settlement ->

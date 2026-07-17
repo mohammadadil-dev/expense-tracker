@@ -95,6 +95,12 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch { repository.setMemberUpiId(member, upiId) }
     }
 
+    /** Sets/clears a member's phone number — used by the Settle Up sheet's inline prompt
+     *  before sending that member an individual settlement reminder. */
+    fun setMemberPhone(member: SplitMemberEntity, phone: String) {
+        viewModelScope.launch { repository.setMemberPhone(member, phone) }
+    }
+
     // ── Expense CRUD ─────────────────────────────────────────────────────────
 
     fun addExpense(
