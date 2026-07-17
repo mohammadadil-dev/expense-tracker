@@ -5,21 +5,32 @@ Paste these directly into Play Console → your app → **Grow → Store presenc
 ## App name (max 30 characters)
 
 ```
-Expense Tracker
+Baqaya: Budget & Khata
 ```
-(15 characters)
+(22 characters)
+
+Renamed from "Expense Tracker" / the live listing's current "Expense & Budget Tracker" — that
+category is extremely saturated (Wallet, Expense Manager, Expense AI, dozens more all rank for
+generic "expense tracker" searches), so a distinctive brand name paired with the app's actual
+differentiator (Khata/ledger tracking, a much less contested niche) is meant to both stand out in
+search results and rank for lower-competition, higher-intent queries. "Budget" is kept as the one
+high-volume keyword the title still has room for.
 
 ## Short description (max 80 characters)
 
 ```
-Expenses, budgets, debts, splits & ledger — private, on-device, no account.
+Track expenses, split bills with friends & keep a Khata ledger for tabs owed.
 ```
-(76 characters)
+(77 characters)
+
+Deliberately covers the keyword clusters the title couldn't fit — "expenses", "split bills",
+"Khata", "ledger" — since Google indexes the short description as second-tier keyword weight,
+right below the title.
 
 ## Full description (max 4000 characters)
 
 ```
-Expense Tracker is an all-in-one money app — track spending, split bills with friends, manage a lending/borrowing ledger, and pay down debts — all without an account, and with every number staying on your phone.
+Baqaya is an all-in-one money app — track expenses and budgets, split bills with friends, and keep a Khata (ledger) of who owes you and what you owe — all without an account, and with every number staying on your phone.
 
 WHAT YOU CAN DO
 • Log expenses in seconds — by typing, scanning a receipt with your camera, or just saying "spent 50 on food"
@@ -27,25 +38,26 @@ WHAT YOU CAN DO
 • Set a monthly budget and track how much you have left in real time
 • Get plain-language spending insights — like when you're projected to go over budget, or which category jumped this month
 • Auto-detect expenses from bank/payment SMS messages (optional, and only with your one-tap approval each time — the app never gets blanket access to your messages)
-• Keep a Khata (ledger) of who owes you money and what you owe others, with one-tap WhatsApp payment reminders
+• Keep a Khata — a running ledger of who owes you money and what you owe others — with one-tap WhatsApp or SMS payment reminders, due dates, and credit limits
 • Track loans and debts with a clear payoff view
-• Split group expenses with friends or family and settle up with one WhatsApp message
+• Split group expenses with friends or family: equal, exact-amount, percentage, or itemized receipt splits, then settle up with one WhatsApp message or an individual reminder
 • Set savings goals and build a daily logging streak
-• Export a polished PDF, CSV, or JSON report/backup of any month
+• Track subscriptions and recurring bills with accurate renewal dates
+• Export a polished PDF, CSV, or JSON report/backup of any month, group, or ledger party
 • View your expenses by day, by category, as a grid, or on a calendar
 • Lock the app with your fingerprint or face
 • Add a home-screen widget for an at-a-glance balance
-• Switch between English, Arabic, and Hindi, with full right-to-left support and an Arabic Hijri calendar
+• Switch between English, Arabic, Hindi, and 11 more languages, with full right-to-left support and an Arabic Hijri calendar
 
 BUILT TO RESPECT YOUR PRIVACY
-Expense Tracker has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else.
+Baqaya has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else.
 
 DESIGNED FOR EVERYONE
-Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for someone tracking shared expenses across a family or a friend group — no finance background required.
+Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for a shopkeeper keeping a Khata for regular customers, or a friend group splitting a trip's expenses — no finance background required.
 
 Your currency and language are detected automatically from your phone, and can be changed any time in Settings.
 ```
-(2,231 characters — under the 4,000 limit)
+(2,480 characters — under the 4,000 limit)
 
 ## Release notes — v1.0 (historical, max 500 characters)
 
@@ -113,7 +125,8 @@ Your data still never leaves your device unless you choose to export it.
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
 - Screenshots and a feature graphic still need to be captured from a real build (see the main README's "Publishing to the Play Store" section) — that requires running the app on a device or emulator, which isn't something that can be produced from here.
-- **This file lags the actual live Play Store listing.** The real listing (title "Expense & Budget Tracker", developer "AG Tech") already has a richer description covering more languages than shown here, and — as of this writing — it still mentions "Google Drive cloud backup" as a feature. Since that feature's UI is currently disabled, that line should be removed from the *live* Play Console listing directly (not just this reference file) to avoid users looking for a feature they can't find.
+- **This file lags the actual live Play Store listing.** As of this writing the live listing's title is still "Expense & Budget Tracker" (developer "AG Tech") — paste the new "Baqaya: Budget & Khata" title and description above into Play Console to make this real. The live listing also still mentions "Google Drive cloud backup" as a feature; since that feature's UI is currently disabled, remove that line directly in Play Console too, not just here.
+- **The Arabic/Hindi translated listings below (title lines especially) still say "خرچ اور بجٹ ٹریکر"/"खर्च और बजट ट्रैकर" — they need updating to match the new brand name too**, but exactly how "Baqaya" should render in each script (kept in Latin letters as a brand name, vs. transliterated/written natively — it's originally an Arabic word) is a judgment call worth confirming before it's finalized, since it's the kind of decision that's expensive to reverse once it's live and indexed.
 
 ## Translated listings — Arabic and Hindi
 
