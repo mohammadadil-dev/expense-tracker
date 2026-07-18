@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.expensetracker.app.ExpenseApp
+import com.expensetracker.app.data.ItemDraft
 import com.expensetracker.app.data.SplitExpenseEntity
+import com.expensetracker.app.data.SplitExpenseItemEntity
+import com.expensetracker.app.data.SplitExpenseItemMemberEntity
 import com.expensetracker.app.data.SplitExpenseShareEntity
 import com.expensetracker.app.data.SplitGroupEntity
 import com.expensetracker.app.data.SplitMemberEntity
@@ -23,6 +26,14 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
     // ── Groups list ──────────────────────────────────────────────────────────
 
     val groups: StateFlow<List<SplitGroupEntity>> = repository.allGroups
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    /** Every split expense across every group, reactively — SplitsScreen keys its per-group
+     *  balance summary refresh on this (alongside [groups]) so adding/editing/deleting an
+     *  expense in any group immediately updates that group's "Settled" badge and the aggregate
+     *  You'll Pay / You'll Get cards, instead of only refreshing when a group itself is
+     *  renamed/added/deleted. */
+    val allExpenses: StateFlow<List<SplitExpenseEntity>> = repository.allExpenses
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // ── Selected group (detail screen) ───────────────────────────────────────
@@ -87,6 +98,17 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch { repository.deleteMember(member) }
     }
 
+    /** Sets/clears a member's UPI ID — used by the Settle Up sheet's inline prompt. */
+    fun setMemberUpiId(member: SplitMemberEntity, upiId: String) {
+        viewModelScope.launch { repository.setMemberUpiId(member, upiId) }
+    }
+
+    /** Sets/clears a member's phone number — used by the Settle Up sheet's inline prompt
+     *  before sending that member an individual settlement reminder. */
+    fun setMemberPhone(member: SplitMemberEntity, phone: String) {
+        viewModelScope.launch { repository.setMemberPhone(member, phone) }
+    }
+
     // ── Expense CRUD ─────────────────────────────────────────────────────────
 
     fun addExpense(
@@ -95,7 +117,9 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
         amount: Double,
         paidByMemberId: Long,
         splitAmongIds: List<Long>,
-        date: String
+        date: String,
+        customShares: Map<Long, Double>? = null,
+        items: List<ItemDraft>? = null
     ) {
         viewModelScope.launch {
             repository.addExpense(
@@ -104,7 +128,9 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
                 amount           = amount,
                 paidByMemberId   = paidByMemberId,
                 splitAmongIds    = splitAmongIds,
-                date             = date
+                date             = date,
+                customShares     = customShares,
+                items            = items
             )
         }
     }
@@ -146,4 +172,12 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
     /** Returns a one-shot snapshot of members for the given group (for summary calculations). */
     suspend fun getMembersSnapshot(groupId: Long): List<SplitMemberEntity> =
         repository.getMembersSnapshot(groupId)
+
+    /** Itemized breakdown for one expense — empty if it wasn't itemized. */
+    suspend fun getItemsForExpense(expenseId: Long): List<SplitExpenseItemEntity> =
+        repository.getItemsForExpense(expenseId)
+
+    /** Which members share each item on an itemized expense. */
+    suspend fun getItemMembersForExpense(expenseId: Long): List<SplitExpenseItemMemberEntity> =
+        repository.getItemMembersForExpense(expenseId)
 }

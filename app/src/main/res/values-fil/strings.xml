@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker - Budget Manager</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">Itala ang mga gastusin, subaybayan ang mga kategorya, at tingnan ang mga trend sa paglipas ng panahon.</string>
     <string name="manage_categories">Pamahalaan ang mga Kategorya</string>
     <string name="reset_data">I-reset ang Data</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">%1$s ng buwanang paggastos</string>
 
     <string name="ai_insights_feed_title">Mga AI Insight</string>
+    <string name="insights_show_more">Ipakita ang %1$d pang insight</string>
+    <string name="insights_show_more_plural">Ipakita ang %1$d pang insight</string>
+    <string name="insights_show_less">Ipakita ang mas kaunti</string>
+    <string name="dashboard_engagement_more">Streak, Goals at Higit Pa</string>
+    <string name="dashboard_trend_show">Ipakita ang Trend</string>
     <string name="insight_trend_down">Ang iyong paggastos ay %1$s na mas mababa kaysa noong nakaraang linggo.</string>
     <string name="insight_trend_up">Ang iyong paggastos ay %1$s na mas mataas kaysa noong nakaraang linggo.</string>
     <string name="insight_trend_flat">Ang iyong paggastos ay katulad ng nakaraang linggo.</string>
@@ -154,6 +159,21 @@
     <string name="export_customer_id_label">Customer ID: %1$s</string>
     <string name="export_started">Inihahanda ang iyong PDF na ulat…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">Pahayag sa Ledger</string>
+    <string name="khata_export_balance_label">Natitirang Balanse: %1$s</string>
+    <string name="khata_export_col_type">Uri</string>
+    <string name="khata_export_type_credit">Utang</string>
+    <string name="khata_export_type_payment">Bayad</string>
+    <string name="khata_export_total_label">Balanse</string>
+    <string name="khata_export_no_entries">Wala pang entry.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">Binayaran Ni</string>
+    <string name="split_export_settlement_label">Pag-aayos ng Utang</string>
+    <string name="split_export_members_label">Mga Miyembro: %1$s</string>
+    <string name="split_export_no_expenses">Wala pang gastos.</string>
+
     <string name="add_category">Magdagdag ng Kategorya</string>
     <string name="new_category_hint">Pangalan ng bagong kategorya</string>
     <string name="delete_category_confirm">Ang mga gastos na gumagamit ng kategoryang ito ay itatakda sa unang natitirang kategorya. Magpatuloy?</string>
@@ -238,6 +258,7 @@
     <string name="cat_farming">Pagsasaka</string>
     <string name="cat_khata">Kwenta</string>
     <string name="cat_education">Edukasyon</string>
+    <string name="cat_splits">Hati-hati</string>
     <string name="khata_delete_party_title">Tanggalin ang partido?</string>
     <string name="khata_delete_party_confirm">Permanenteng matatanggal si %1$s at lahat ng kanyang entries.</string>
 
@@ -354,6 +375,8 @@
     <string name="khata_they_owe">Utang Sa Akin</string>
     <string name="khata_total_i_owe">Kabuuang Utang Ko</string>
     <string name="khata_total_they_owe">Kabuuang Utang Sa Akin</string>
+    <string name="khata_today_collected">Nakolekta ngayon</string>
+    <string name="khata_today_credit_given">Ibinigay sa utang ngayon</string>
     <string name="khata_add_party">Magdagdag ng Party</string>
     <string name="khata_edit_party">I-edit ang Party</string>
     <string name="khata_party_name_hint">Pangalan (tindahan o tao)</string>
@@ -365,20 +388,41 @@
     <string name="khata_upi_qr_scan_error">Walang nahanap na UPI ID sa QR code na iyon. Subukang muli o ilagay ito nang manwal.</string>
     <string name="khata_party_upi_mine_ready">Handa na ang kahilingan sa UPI — gagamitin ang UPI ID mo: %1$s</string>
     <string name="khata_party_upi_mine_missing">Para makapagbayad sila sa iyo gamit ang UPI, itakda ang iyong UPI ID sa Settings</string>
+    <string name="khata_credit_limit_label">Limitasyon sa kredito</string>
+    <string name="khata_credit_limit_optional">Opsyonal</string>
+    <string name="khata_credit_limit_of">sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_near">Papalapit sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_over">Lumagpas sa %1$s na limitasyon</string>
+    <string name="khata_credit_limit_near_short">Malapit na sa limitasyon</string>
+    <string name="khata_credit_limit_over_short">Lumagpas sa limitasyon</string>
     <string name="khata_save_party">I-save</string>
     <string name="khata_delete_party">Burahin ang Party</string>
     <string name="khata_no_parties_i_owe">Wala pang tindahang naidagdag.
 Pindutin ang + para magdagdag ng tindahan.</string>
     <string name="khata_no_parties_they_owe">Wala pang customer na naidagdag.
 Pindutin ang + para magdagdag ng may utang sa iyo.</string>
+    <string name="khata_search_hint">Maghanap gamit ang pangalan o numero…</string>
+    <string name="khata_search_no_results">Walang nahanap. Subukan ang ibang pangalan o numero.</string>
     <string name="khata_outstanding">Natitirang Utang</string>
+    <string name="khata_days_outstanding">Natitirang utang sa loob ng %1$d na araw</string>
     <string name="khata_settled">Nabayaran na ✓</string>
     <string name="khata_add_entry">Magdagdag ng Entry</string>
     <string name="khata_credit_label">Utang (kinuha sa kwenta)</string>
     <string name="khata_payment_label">Bayad (nabayaran na)</string>
     <string name="khata_amount_hint">Halaga</string>
     <string name="khata_note_hint">Tala (opsyonal)</string>
+    <string name="khata_voice_add_entry">Idagdag sa pamamagitan ng boses</string>
+    <string name="khata_voice_hint">Sabihin ang halaga at para kanino — hal. \"Ramesh, limandaang piso\"</string>
+    <string name="khata_voice_confirm">Gamitin Ito</string>
     <string name="khata_entry_date">Petsa</string>
+    <string name="khata_due_date_label">Takdang petsa</string>
+    <string name="khata_due_date_optional">Opsyonal — kailan ito dapat bayaran/kolektahin</string>
+    <string name="khata_due_on">Deadline %1$s</string>
+    <string name="khata_due_overdue">Lumipas na — dapat noong %1$s</string>
+    <string name="khata_receipt_photo_label">Larawan ng resibo</string>
+    <string name="khata_take_photo">Camera</string>
+    <string name="khata_choose_photo">Gallery</string>
+    <string name="khata_remove_photo">Alisin ang larawan</string>
     <string name="khata_no_entries">Wala pang entries. Pindutin ang + para mag-log ng credit o bayad.</string>
     <string name="khata_delete_entry">Burahin ang entry</string>
     <string name="khata_whatsapp_reminder">Magpadala ng Reminder</string>
@@ -405,7 +449,7 @@ Paalala — mayroon kang %2$s na credit sa aking tindahan.
 Gamitin anumang oras!</string>
     <string name="khata_reminder_signature">Regards,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">May utang ako sa party na ito</string>
+    <string name="khata_direction_i_owe_label">Pumili ng isa:</string>
     <string name="khata_direction_they_owe_label">May utang ang party na ito sa akin</string>
     <string name="khata_initial_amount_label">Panimulang halaga (opsyonal)</string>
 
@@ -443,14 +487,14 @@ Gamitin anumang oras!</string>
     <string name="export_csv_chooser_title">I-save o ibahagi ang CSV</string>
     <string name="search_expenses_hint">Maghanap ng gastos…</string>
     <string name="security_section_title">Seguridad</string>
-    <string name="biometric_lock_title">I-unlock ang Expense Tracker</string>
+    <string name="biometric_lock_title">I-unlock ang Baqaya</string>
     <string name="biometric_lock_subtitle">Gumamit ng biometrics o PIN ng device para buksan ang app</string>
     <string name="biometric_lock_toggle_label">App lock</string>
     <string name="biometric_lock_description">Kailangan ng biometrics o PIN sa tuwing bubuksan ang app</string>
     <string name="backup_section_title">Backup ng Data</string>
     <string name="backup_export_label">I-export ang Backup</string>
     <string name="backup_import_label">Mag-import ng Backup</string>
-    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, at utang</string>
+    <string name="backup_scope_note">Sinasaklaw ang mga gastos, kategorya, badyet, Khata, utang, split, payment account, at goal. Hindi kasama ang mga larawan ng resibo.</string>
     <string name="backup_chooser_title">I-save o ibahagi ang backup</string>
     <string name="backup_success">Na-export ang backup</string>
     <string name="backup_error">Nabigo ang backup</string>
@@ -459,6 +503,9 @@ Gamitin anumang oras!</string>
     <string name="khata_label_all_cleared">Naaayos na ang lahat kay %1$s ✓</string>
     <string name="khata_label_i_owe">Ikaw ay may utang kay %1$s</string>
     <string name="khata_label_they_owe">Si %1$s ay may utang sa iyo</string>
+    <string name="khata_label_credit_they_owe">May kredito sa iyo si %1$s</string>
+    <string name="khata_label_credit_i_owe">May kredito ka kay %1$s</string>
+    <string name="khata_credit_pill">May Kredito ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">I-track ang pera na ipinahiram at hiniram mula sa iyong mga contact</string>
@@ -621,14 +668,14 @@ Gamitin anumang oras!</string>
     <string name="split_expenses_label">Mga Gastos</string>
     <string name="split_expense_count">%d gastos</string>
     <string name="split_no_expenses">Walang gastos pa — pindutin ang +</string>
-    <string name="split_add_expense">Magdagdag ng Gastos</string>
+    <string name="split_add_expense">Hatiin ang Gastos</string>
     <string name="split_expense_description">Para saan ito?</string>
     <string name="split_expense_amount">Halaga</string>
     <string name="split_paid_by">Binayaran ni</string>
     <string name="split_paid_by_member">Binayaran ni %s</string>
     <string name="split_split_among">Hatiin sa</string>
     <string name="split_split_among_hint">Piliin kung sino ang maghahatiin nito nang pantay</string>
-    <string name="split_save_expense">I-save ang Gastos</string>
+    <string name="split_save_expense">I-save ang Hating Gastos</string>
     <string name="split_delete_expense">Burahin ang Gastos?</string>
     <string name="split_delete_expense_confirm">Burahin ang "%s"? Hindi na mababawi.</string>
     <string name="split_delete_group">Burahin ang Grupo</string>
@@ -651,7 +698,44 @@ Gamitin anumang oras!</string>
     <string name="split_wa_member_settled">Naisaayos na</string>
     <string name="split_wa_to_pay">Babayaran</string>
     <string name="split_wa_all_settled">Lahat ay naisaayos na! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">Bagong gastos sa %1$s</string>
+    <string name="split_notify_whatsapp_title">Ipaalam sa grupo?</string>
+    <string name="split_notify_whatsapp_message">Ibahagi ang gastos na ito sa %1$s sa WhatsApp.</string>
+    <string name="split_notify_whatsapp_not_now">Huwag muna</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">Pantay</string>
+    <string name="split_mode_exact">Eksakto</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">Naipasok na %1$s ng %2$s</string>
+    <string name="split_percent_sum_hint">Naipasok na %1$s%% ng 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">Item-item</string>
+    <string name="split_itemized_hint">Hatiin ang bill sa mga item at pindutin kung sino ang nagbahagi sa bawat isa</string>
+    <string name="split_itemized_amount_hint">Awtomatikong kinakalkula mula sa mga item sa ibaba</string>
+    <string name="split_add_item">Magdagdag ng item</string>
+    <string name="split_item_name_hint">Item</string>
+    <string name="split_remove_item">Alisin ang item</string>
+    <string name="split_itemized_total">Kabuuang item: %1$s</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">Magbayad gamit ang UPI</string>
+    <string name="split_add_their_upi">Idagdag ang UPI ID nila</string>
+    <string name="split_request_via_upi">Humingi gamit ang UPI</string>
+    <string name="split_set_your_upi">Itakda ang iyong UPI ID</string>
+    <string name="split_remind_member">Paalalahanan</string>
+    <string name="split_add_their_phone">Idagdag ang numero ng telepono nila</string>
+    <string name="split_member_phone_hint">Numero ng telepono (para sa WhatsApp)</string>
+    <string name="split_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
+    <string name="split_reminder_msg">Kamusta %1$s 👋
+
+Paalala mula sa "%2$s" — dapat kang magbayad ng %3$s kay %4$s.
+
+Mangyaring bayaran kapag maginhawa 🙏</string>
+    <string name="split_reminder_signature">Regards,
+%1$s</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
 
@@ -673,7 +757,56 @@ Gamitin anumang oras!</string>
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Mga Layunin at Streak</string>
     <string name="split_hero_total_spent">Kabuuang Nagastos</string>
+    <string name="split_member_gets_back">matatanggap</string>
+    <string name="split_member_owes">dapat bayaran</string>
+    <string name="split_net_owed">Sa kabuuan, may matatanggap ka</string>
+    <string name="split_net_owe">Sa kabuuan, may utang ka</string>
+    <string name="split_net_settled">Nasettle na lahat ✓</string>
+    <string name="split_net_group_count">sa %d grupo</string>
 
     <string name="reminder_hour_decrease">Bawasan ang oras</string>
     <string name="reminder_hour_increase">Dagdagan ang oras</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">Cash</string>
+    <string name="account_bank">Bank Account</string>
+    <string name="account_card">Card</string>
+    <string name="settings_section_payment_accounts">Mga Payment Account</string>
+    <string name="manage_payment_accounts">Pamahalaan ang mga Account</string>
+    <string name="payment_accounts_hint">I-tag ang mga gastos gamit ang cash, bank, o card para makita kung saan talaga napupunta ang iyong pera.</string>
+    <string name="add_payment_account">Magdagdag ng account</string>
+    <string name="new_account_name_hint">Pangalan ng bagong account</string>
+    <string name="enter_account_name">Ilagay ang pangalan ng account</string>
+    <string name="delete_payment_account_confirm">Tanggalin ang account na ito? Ang mga gastos na naka-tag dito ay mawawalan lang ng tag — walang matatanggal.</string>
+    <string name="payment_account_label">Pinagbayaran mula sa</string>
+    <string name="payment_account_not_set">Hindi naka-set</string>
+    <string name="account_breakdown_title">Ayon sa Account</string>
+    <string name="export_col_account">Account</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">Profile ng Negosyo</string>
+    <string name="settings_business_profile_hint">Ipinapakita sa iyong na-export na mga PDF na ulat sa halip na pangalan ng app — kapaki-pakinabang kung nagpapatakbo ka ng tindahan.</string>
+    <string name="business_name_label">Pangalan ng Negosyo</string>
+    <string name="business_name_hint">hal. Sharma General Store</string>
+    <string name="business_address_label">Address (opsyonal)</string>
+    <string name="business_phone_label">Telepono (opsyonal)</string>
+    <string name="settings_business_profile_saved">Na-save ang profile ng negosyo</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">Edad ng Utang at Paalala</string>
+    <string name="khata_collections_title">Koleksyon</string>
+    <string name="khata_collections_subtitle">Mga overdue na balanse, sa isang tingin</string>
+    <string name="khata_aging_bucket_0_30">0–30 araw</string>
+    <string name="khata_aging_bucket_31_60">31–60 araw</string>
+    <string name="khata_aging_bucket_61_90">61–90 araw</string>
+    <string name="khata_aging_bucket_90_plus">90+ araw</string>
+    <string name="khata_collections_empty">Walang overdue sa ngayon — up to date ka!</string>
+    <string name="khata_collections_select_all">Piliin lahat</string>
+    <string name="khata_collections_no_phone">Walang naka-record na numero</string>
+    <string name="khata_collections_days_overdue">%1$d araw</string>
+    <string name="khata_collections_remind_selected">Paalalahanan ang Napili (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d sa %2$d</string>
+    <string name="khata_bulk_reminder_send">Ipadala sa pamamagitan ng WhatsApp</string>
+    <string name="khata_bulk_reminder_skip">Laktawan</string>
+    <string name="khata_bulk_reminder_stop">Ihinto</string>
+    <string name="khata_bulk_reminder_done">Naipadala ang %1$d sa %2$d na paalala</string>
 </resources>

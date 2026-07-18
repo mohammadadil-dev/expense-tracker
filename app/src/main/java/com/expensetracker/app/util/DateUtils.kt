@@ -25,6 +25,11 @@ object DateUtils {
 
     fun yesterdayIso(): String = LocalDate.now().minusDays(1).toString()
 
+    /** Whole days between two ISO ("yyyy-MM-dd") dates — positive when [toIso] is later
+     *  than [fromIso]. Used for due-date "N days away" / overdue calculations. */
+    fun daysBetween(fromIso: String, toIso: String): Long =
+        java.time.temporal.ChronoUnit.DAYS.between(LocalDate.parse(fromIso), LocalDate.parse(toIso))
+
     fun currentMonthKey(): String = YearMonth.now().toString()
 
     fun monthKeyFromDate(dateIso: String): String = dateIso.substring(0, 7)

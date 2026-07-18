@@ -14,6 +14,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,6 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -38,7 +40,10 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TrendingDown
 import androidx.compose.material.icons.filled.TrendingUp
@@ -48,10 +53,11 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -78,8 +84,11 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.KhataEntryEntity
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AddEditKhataPartySheet
+import com.expensetracker.app.ui.components.AddKhataEntrySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import com.expensetracker.app.ui.components.RequestUpiPaymentSheet
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
@@ -92,6 +101,8 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.ReceiptPhotoStore
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -102,7 +113,8 @@ import kotlin.math.abs
 fun KhataScreen(
     khataViewModel: KhataViewModel,
     expenseViewModel: ExpenseViewModel,
-    onOpenDetail: (Long) -> Unit
+    onOpenDetail: (Long) -> Unit,
+    onOpenCollections: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val currencySymbol  by expenseViewModel.currencySymbol.collectAsState()
@@ -123,6 +135,13 @@ fun KhataScreen(
     var upiRequestParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
     // Party pending a "Mark as Paid" confirm dialog.
     var markPaidParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    // Party currently showing the row-level "Quick Add" entry sheet — lets a shopkeeper log a
+    // partial credit/payment straight from the list, without navigating into the detail screen.
+    var quickAddParty by remember { mutableStateOf<KhataPartyEntity?>(null) }
+    // Search — matters most here of anywhere in the app: a shop's whole Khata list can run
+    // into the hundreds of regular customers, with no other way to jump straight to one.
+    var searchActive by remember { mutableStateOf(false) }
+    var searchQuery  by remember { mutableStateOf("") }
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
     val noUpiAppInstalled = stringResource(R.string.khata_no_upi_app)
     val markedAsPaidNote = stringResource(R.string.khata_marked_as_paid_note)
@@ -171,6 +190,17 @@ fun KhataScreen(
 
     val totalIOwe    = khataViewModel.totalIOwe(allParties, allEntries)
     val totalTheyOwe = khataViewModel.totalTheyOwe(allParties, allEntries)
+    val todaysCollections = khataViewModel.todaysCollections(allParties, allEntries)
+    val todaysCreditGiven  = khataViewModel.todaysCreditGiven(allParties, allEntries)
+
+    val partyListState = rememberLazyListState()
+    // The "Add Party" FAB (and the bottom nav bar) hide together while scrolling down the
+    // party list, and come back on scroll-up/stop — same cross-screen pattern as Dashboard,
+    // Debts and Splits. Replaces the old top-of-list-only icon collapse.
+    val isScrollingUp by partyListState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
 
     LaunchedEffect(Unit) { heroVisible = true }
 
@@ -184,11 +214,20 @@ fun KhataScreen(
             containerColor = Color.Transparent,
             // ── No TopAppBar — hero header is inline ──
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { editingParty = null; showAddParty = true },
-                    containerColor = AccentIndigo
+                // Hides entirely while scrolling down through the party list (isScrollingUp,
+                // shared with BottomNavVisibility above) instead of the old icon-only collapse —
+                // smaller footprint isn't needed when it's not on screen at all while scrolling.
+                AnimatedVisibility(
+                    visible = isScrollingUp,
+                    enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                    exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
                 ) {
-                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.khata_add_party))
+                ExtendedFloatingActionButton(
+                    onClick = { editingParty = null; showAddParty = true },
+                    containerColor = AccentIndigo,
+                    icon = { Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.khata_add_party)) },
+                    text = { Text(stringResource(R.string.khata_add_party)) }
+                )
                 }
             }
         ) { innerPadding ->
@@ -208,7 +247,47 @@ fun KhataScreen(
                         totalTheyOwe = totalTheyOwe,
                         iOweCount    = iOweParties.size,
                         theyOweCount = theyOweParties.size,
-                        currencySymbol = currencySymbol
+                        currencySymbol = currencySymbol,
+                        todaysCollections = todaysCollections,
+                        todaysCreditGiven = todaysCreditGiven,
+                        searchActive = searchActive,
+                        onToggleSearch = {
+                            searchActive = !searchActive
+                            if (!searchActive) searchQuery = ""
+                        }
+                    )
+                }
+
+                // ── Party search — collapses to a single icon until tapped ─────
+                AnimatedVisibility(
+                    visible = searchActive || searchQuery.isNotBlank(),
+                    enter = fadeIn(tween(180)) + slideInVertically(tween(180)) { -it / 2 },
+                    exit  = fadeOut(tween(180)) + slideOutVertically(tween(180)) { -it / 2 }
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text(stringResource(R.string.khata_search_hint)) },
+                        leadingIcon = {
+                            Icon(Icons.Filled.Search, contentDescription = null, modifier = Modifier.size(20.dp))
+                        },
+                        trailingIcon = {
+                            if (searchQuery.isNotBlank()) {
+                                IconButton(onClick = { searchQuery = ""; searchActive = false }) {
+                                    Icon(
+                                        Icons.Filled.Close,
+                                        contentDescription = stringResource(R.string.cd_clear_search),
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            }
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(24.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp)
                     )
                 }
 
@@ -221,14 +300,53 @@ fun KhataScreen(
                     modifier      = Modifier.padding(horizontal = 16.dp)
                 )
 
-                Spacer(Modifier.height(12.dp))
+                // ── Collections entry point (aging view + bulk reminders) ──────
+                // Only meaningful for "They Owe" — collecting money is the whole point of
+                // this feature, so it stays out of the way entirely on the "I Owe" tab.
+                if (!showIOwe && theyOweParties.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(AccentIndigo.copy(alpha = 0.08f))
+                            .clickable(onClick = onOpenCollections)
+                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.History,
+                            contentDescription = null,
+                            tint = AccentIndigo,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.khata_collections_entry_label),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = AccentIndigo,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(Icons.Filled.ArrowForward, contentDescription = null, tint = AccentIndigo, modifier = Modifier.size(16.dp))
+                    }
+                } else {
+                    Spacer(Modifier.height(12.dp))
+                }
 
                 // ── Party list ─────────────────────────────────────────────────
-                val displayedParties = if (showIOwe) iOweParties else theyOweParties
-                val emptyMsg = if (showIOwe)
-                    stringResource(R.string.khata_no_parties_i_owe)
-                else
-                    stringResource(R.string.khata_no_parties_they_owe)
+                val directionParties = if (showIOwe) iOweParties else theyOweParties
+                val trimmedQuery = searchQuery.trim()
+                val displayedParties = if (trimmedQuery.isBlank()) directionParties else {
+                    directionParties.filter {
+                        it.name.contains(trimmedQuery, ignoreCase = true) ||
+                            (it.phone.isNotBlank() && it.phone.contains(trimmedQuery, ignoreCase = true))
+                    }
+                }
+                val emptyMsg = when {
+                    trimmedQuery.isNotBlank() -> stringResource(R.string.khata_search_no_results)
+                    showIOwe -> stringResource(R.string.khata_no_parties_i_owe)
+                    else -> stringResource(R.string.khata_no_parties_they_owe)
+                }
 
                 AnimatedContent(
                     targetState = displayedParties,
@@ -249,8 +367,11 @@ fun KhataScreen(
                         }
                     } else {
                         LazyColumn(
+                            state = partyListState,
+                            // 112dp clears the extended FAB (56dp) + its 16dp margin + a buffer
+                            // so the last card is never hidden behind it while the FAB is visible.
                             contentPadding = PaddingValues(
-                                start = 16.dp, end = 16.dp, bottom = 88.dp
+                                start = 16.dp, end = 16.dp, bottom = 112.dp
                             ),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -272,6 +393,7 @@ fun KhataScreen(
                                     party          = party,
                                     balance        = balance,
                                     currencySymbol = currencySymbol,
+                                    creditLimitFraction = khataViewModel.creditLimitFraction(party, balance),
                                     onClick        = { onOpenDetail(party.id) },
                                     onEdit         = { editingParty = party; showAddParty = true },
                                     onDelete       = { pendingDelete = party },
@@ -280,7 +402,8 @@ fun KhataScreen(
                                     showPayUpiButton   = showPayUpiButton,
                                     onPayUpi           = { payViaUpi(party, balance) },
                                     showMarkPaidButton = showMarkPaidButton,
-                                    onMarkPaid         = { markPaidParty = party }
+                                    onMarkPaid         = { markPaidParty = party },
+                                    onQuickAdd         = { quickAddParty = party }
                                 )
                             }
                         }
@@ -298,8 +421,8 @@ fun KhataScreen(
                                else KhataPartyEntity.DIRECTION_THEY_OWE,
             currencySymbol   = currencySymbol,
             myUpiId          = myUpiId,
-            onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId ->
-                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId)
+            onSave    = { id, name, phone, direction, initialAmount, initialNote, upiId, creditLimit ->
+                khataViewModel.saveParty(id, name, phone, direction, initialAmount, initialNote, upiId, creditLimit)
                 showAddParty = false; editingParty = null
             },
             onDismiss = { showAddParty = false; editingParty = null }
@@ -324,6 +447,14 @@ fun KhataScreen(
             R.string.khata_reminder_msg_owe, party.name, plainAmount
         ) + signature + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
+        // Bill/receipt photos on this party's CREDIT entries — see KhataDetailScreen.kt's
+        // matching comment for why this is every CREDIT entry's photo, not just "unpaid" ones.
+        val billPhotoUris = remember(party.id, allEntries) {
+            allEntries.filter {
+                it.partyId == party.id && it.type == KhataEntryEntity.TYPE_CREDIT && !it.photoPath.isNullOrBlank()
+            }.map { ReceiptPhotoStore.uriFor(context, it.photoPath!!) }
+        }
+
         RequestUpiPaymentSheet(
             myUpiId = myUpiId,
             // Not falling back to "Me" here — that's fine as a signed reminder line (above),
@@ -337,30 +468,67 @@ fun KhataScreen(
             // http(s) URLs, so that link shows up as inert, ugly percent-encoded plain text with
             // no functional benefit once the scannable QR is attached, so it's left out of the
             // caption. The image goes out via a generic ACTION_SEND (no phone-number prefill
-            // possible for image shares), so WhatsApp opens its own contact picker here.
+            // possible for image shares), so WhatsApp opens its own contact picker here. Any bill
+            // photos on file ride along in the same multi-image share (see KhataDetailScreen.kt's
+            // sendUpiPaymentQr for the same pattern).
             onShareQr = { qrUri ->
                 val caption = reminderMsg
-                val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "image/png"
-                    putExtra(Intent.EXTRA_STREAM, qrUri)
-                    putExtra(Intent.EXTRA_TEXT, caption)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    setPackage("com.whatsapp")
-                }
-                try {
-                    context.startActivity(sendIntent)
-                } catch (e: ActivityNotFoundException) {
-                    val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                if (billPhotoUris.isEmpty()) {
+                    val sendIntent = Intent(Intent.ACTION_SEND).apply {
                         type = "image/png"
                         putExtra(Intent.EXTRA_STREAM, qrUri)
                         putExtra(Intent.EXTRA_TEXT, caption)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        setPackage("com.whatsapp.w4b")
+                        setPackage("com.whatsapp")
                     }
                     try {
-                        context.startActivity(fallbackIntent)
-                    } catch (e2: ActivityNotFoundException) {
-                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                        context.startActivity(sendIntent)
+                    } catch (e: ActivityNotFoundException) {
+                        val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "image/png"
+                            putExtra(Intent.EXTRA_STREAM, qrUri)
+                            putExtra(Intent.EXTRA_TEXT, caption)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            setPackage("com.whatsapp.w4b")
+                        }
+                        try {
+                            context.startActivity(fallbackIntent)
+                        } catch (e2: ActivityNotFoundException) {
+                            // WhatsApp isn't installed — the QR image can't ride over SMS, but
+                            // the reminder text still can (see SmsFallback's doc comment).
+                            if (!SmsFallback.send(context, party.phone, caption)) {
+                                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                } else {
+                    val images = ArrayList(listOf(qrUri) + billPhotoUris)
+                    val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                        type = "image/*"
+                        putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                        putExtra(Intent.EXTRA_TEXT, caption)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        setPackage("com.whatsapp")
+                    }
+                    try {
+                        context.startActivity(sendIntent)
+                    } catch (e: ActivityNotFoundException) {
+                        val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                            type = "image/*"
+                            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                            putExtra(Intent.EXTRA_TEXT, caption)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            setPackage("com.whatsapp.w4b")
+                        }
+                        try {
+                            context.startActivity(fallbackIntent)
+                        } catch (e2: ActivityNotFoundException) {
+                            // WhatsApp isn't installed — the QR image (and any bill photos)
+                            // can't ride over SMS, but the reminder text still can.
+                            if (!SmsFallback.send(context, party.phone, caption)) {
+                                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
                 upiRequestParty = null
@@ -392,6 +560,18 @@ fun KhataScreen(
         )
     }
 
+    // ── Quick Add sheet — reuses the same AddKhataEntrySheet the detail screen's FAB opens
+    // (full fields + voice input), just skips the trip through KhataDetailScreen.
+    quickAddParty?.let { party ->
+        AddKhataEntrySheet(
+            onSave = { amount, note, date, type, dueDate, photoPath ->
+                khataViewModel.addEntry(party.id, amount, note, date, type, dueDate, photoPath)
+                quickAddParty = null
+            },
+            onDismiss = { quickAddParty = null }
+        )
+    }
+
     pendingDelete?.let { party ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
@@ -417,7 +597,11 @@ private fun KhataHeroHeader(
     totalTheyOwe: Double,
     iOweCount: Int,
     theyOweCount: Int,
-    currencySymbol: String
+    currencySymbol: String,
+    todaysCollections: Double = 0.0,
+    todaysCreditGiven: Double = 0.0,
+    searchActive: Boolean = false,
+    onToggleSearch: () -> Unit = {}
 ) {
     val netAmount      = abs(totalTheyOwe - totalIOwe)
     val netIsPositive  = totalTheyOwe >= totalIOwe
@@ -429,11 +613,25 @@ private fun KhataHeroHeader(
             .padding(horizontal = 16.dp)
             .padding(top = 20.dp, bottom = 12.dp)
     ) {
-        Text(
-            text  = stringResource(R.string.khata_screen_title),
-            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            color = TextPrimary
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text  = stringResource(R.string.khata_screen_title),
+                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                color = TextPrimary,
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(onClick = onToggleSearch, modifier = Modifier.size(36.dp)) {
+                Icon(
+                    if (searchActive) Icons.Filled.Close else Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.khata_search_hint),
+                    tint = if (searchActive) AccentIndigo else TextMuted,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
+        }
         Text(
             text  = stringResource(R.string.khata_subtitle),
             style = MaterialTheme.typography.bodySmall,
@@ -500,7 +698,76 @@ private fun KhataHeroHeader(
             }
         }
 
+        // ── Today's summary — only surfaced once there's actually been activity today, so a
+        // quiet morning doesn't clutter the header with a row of zeroes. ──────────────────
+        if (todaysCollections > 0.0 || todaysCreditGiven > 0.0) {
+            Spacer(Modifier.height(10.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (todaysCollections > 0.0) {
+                    KhataTodayChip(
+                        icon = Icons.Filled.TrendingUp,
+                        label = stringResource(R.string.khata_today_collected),
+                        amount = todaysCollections,
+                        currencySymbol = currencySymbol,
+                        color = SuccessGreen,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                if (todaysCreditGiven > 0.0) {
+                    KhataTodayChip(
+                        icon = Icons.Filled.TrendingDown,
+                        label = stringResource(R.string.khata_today_credit_given),
+                        amount = todaysCreditGiven,
+                        currencySymbol = currencySymbol,
+                        color = AccentIndigo,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+
         Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun KhataTodayChip(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    amount: Double,
+    currencySymbol: String,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = color.copy(alpha = 0.08f),
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(14.dp))
+            Spacer(Modifier.width(6.dp))
+            Column {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextMuted,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                MoneyText(
+                    formatted = Formatters.money(amount, currencySymbol),
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+                    color = color
+                )
+            }
+        }
     }
 }
 
@@ -611,6 +878,7 @@ private fun KhataPartyCard(
     party: KhataPartyEntity,
     balance: Double,
     currencySymbol: String,
+    creditLimitFraction: Float? = null,
     onClick: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
@@ -619,7 +887,8 @@ private fun KhataPartyCard(
     showPayUpiButton: Boolean = false,
     onPayUpi: () -> Unit = {},
     showMarkPaidButton: Boolean = false,
-    onMarkPaid: () -> Unit = {}
+    onMarkPaid: () -> Unit = {},
+    onQuickAdd: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
     Card(
@@ -696,10 +965,35 @@ private fun KhataPartyCard(
                         color = TextMuted,
                         maxLines = 1
                     )
+                    // Compact credit-limit warning — only surfaced once the balance gets
+                    // close to or crosses the limit, to avoid cluttering every row with a
+                    // progress bar for parties that don't need it.
+                    if (creditLimitFraction != null && creditLimitFraction >= 0.8f) {
+                        Text(
+                            text = if (creditLimitFraction >= 1f)
+                                stringResource(R.string.khata_credit_limit_over_short)
+                            else
+                                stringResource(R.string.khata_credit_limit_near_short),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = DangerRed,
+                            maxLines = 1
+                        )
+                    }
                 }
             }
             // Compact 32dp action icons (smaller than IconButton's 48dp default touch target)
-            // so up to two of these plus the arrow don't crowd out the party name column.
+            // so up to three of these plus the arrow don't crowd out the party name column.
+            // Quick Add is always shown first — a fast way to log a credit/payment straight
+            // from the list, without navigating into the detail screen (reuses the same
+            // AddKhataEntrySheet as the detail screen's own FAB, voice input included).
+            IconButton(onClick = onQuickAdd, modifier = Modifier.size(32.dp)) {
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.khata_add_entry),
+                    tint = AccentIndigo,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
             if (showUpiButton) {
                 IconButton(onClick = onRequestUpi, modifier = Modifier.size(32.dp)) {
                     Icon(

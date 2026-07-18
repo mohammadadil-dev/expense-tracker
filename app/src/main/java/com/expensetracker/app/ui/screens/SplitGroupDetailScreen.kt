@@ -1,6 +1,10 @@
 package com.expensetracker.app.ui.screens
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -23,6 +27,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PictureAsPdf
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -34,6 +40,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,6 +58,9 @@ import com.expensetracker.app.ui.components.SettleUpSheet
 import com.expensetracker.app.ui.theme.BrandAmber
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.SuccessGreen
+import com.expensetracker.app.util.ExportRow
+import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.Settlement
 import com.expensetracker.app.viewmodel.SplitViewModel
 import kotlinx.coroutines.launch
@@ -61,12 +71,67 @@ private val SplitBlobViolet = Color(0xFF7C4DFF)  // deep violet
 private val SplitBlobTeal   = Color(0xFF00BFA5)  // teal
 private val SplitBlobCoral  = Color(0xFFFF6D00)  // warm orange
 
+/** A just-saved split expense, waiting on the "notify the group?" prompt below. Holds
+ *  already-resolved display names (not ids) since the prompt renders after the save, when the
+ *  member list backing those ids could in principle have already changed. */
+private data class NewExpenseNotice(
+    val description: String,
+    val amount: Double,
+    val paidByName: String,
+    val splitAmongNames: List<String>
+)
+
+/**
+ * WhatsApp message for the "notify the group?" prompt shown right after saving a new split
+ * expense — deliberately just this one expense, not the full running summary
+ * ([SettleUpSheet]'s buildGroupSummaryText already covers that from the Settle Up sheet).
+ *
+ * Currency: SAR is written as "SAR" in plain text (the "ر.س" glyph is unreadable in most
+ * WhatsApp notifications/chat bubbles), matching every other outbound WhatsApp message in
+ * this app. All other currencies use their symbol directly.
+ */
+private fun buildNewExpenseWhatsAppText(
+    context: android.content.Context,
+    groupName: String,
+    notice: NewExpenseNotice,
+    currencySymbol: String
+): String {
+    val formatted = String.format(java.util.Locale.US, "%.2f", notice.amount)
+    val amountText = if (com.expensetracker.app.data.CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol))
+        "SAR $formatted" else "$currencySymbol $formatted"
+
+    val header = context.getString(R.string.split_wa_new_expense_header, groupName)
+    val paidByLine = context.getString(R.string.split_wa_paid_by, notice.paidByName)
+    val splitAmongLabel = context.getString(R.string.split_split_among)
+    val footer = context.getString(R.string.split_wa_footer)
+
+    val sb = StringBuilder()
+    sb.appendLine("💰 *$header*")
+    sb.appendLine()
+    sb.appendLine("*${notice.description} — $amountText*")
+    sb.appendLine(paidByLine)
+    sb.appendLine("$splitAmongLabel: ${notice.splitAmongNames.joinToString(", ")}")
+    sb.appendLine()
+    sb.appendLine("_${footer}_ 🧾")
+    sb.append("play.google.com/store/apps/details?id=${context.packageName}")
+    return sb.toString()
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SplitGroupDetailScreen(
     groupId: Long,
     viewModel: SplitViewModel,
     currencySymbol: String,
+    myUpiId: String = "",
+    ownerDisplayName: String = "",
+    // Optional business profile (Settings) — stamped onto the PDF export in place of the app
+    // name when set. Threaded from AppNav.kt (this screen has no direct ExpenseViewModel
+    // reference), same pattern as myUpiId/ownerDisplayName above.
+    businessName: String = "",
+    businessAddress: String = "",
+    businessPhone: String = "",
+    onOpenSettings: () -> Unit = {},
     onBack: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -87,13 +152,25 @@ fun SplitGroupDetailScreen(
     var showDeleteGroupDialog by remember { mutableStateOf(false) }
     var expenseToDelete       by remember { mutableStateOf<SplitExpenseEntity?>(null) }
     var menuExpanded          by remember { mutableStateOf(false) }
+    // memberIds per expenseId — used to resolve "split among" names when the user taps the
+    // per-expense WhatsApp share icon (see shareExpenseOnWhatsApp below). Sharing is no longer
+    // an automatic post-save prompt; it's a persistent, user-triggered action on each row.
+    var sharesByExpenseId by remember { mutableStateOf<Map<Long, List<Long>>>(emptyMap()) }
 
     // Active member filter — null = all, memberId = only that member's expenses
     var filterMemberId by remember { mutableStateOf<Long?>(null) }
 
+    // Hero slide-in trigger — same LaunchedEffect(Unit) + AnimatedVisibility pattern used by
+    // the main SplitsScreen list (and DebtsScreen/KhataScreen) so opening a group feels like
+    // part of the same animated space rather than a flatter, static sub-screen.
+    var heroVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { heroVisible = true }
+
     LaunchedEffect(expenses, members) {
         settlements = viewModel.getSettlement(groupId)
         netBalances = viewModel.getNetBalances(groupId)
+        sharesByExpenseId = viewModel.getSharesForGroup(groupId)
+            .groupBy({ it.expenseId }, { it.memberId })
     }
 
     val memberMap = remember(members) { members.associateBy { it.id } }
@@ -129,6 +206,111 @@ fun SplitGroupDetailScreen(
     val visibleExpenses = remember(expenses, filterMemberId) {
         val base = expenses.sortedByDescending { it.date }
         if (filterMemberId == null) base else base.filter { it.paidByMemberId == filterMemberId }
+    }
+
+    // ── PDF report export ───────────────────────────────────────────────────────
+    // Same PdfExporter/ExportRow the Dashboard's monthly report and the Ledger's per-party
+    // statement both use. Includes settlement rows too (labeled distinctly) so the PDF is a
+    // full record of the group, not just the split expenses — matching what the in-app list
+    // already shows before any member/date filter is applied.
+    val context = LocalContext.current
+    val exportReportTitle = stringResource(R.string.split_wa_header)
+    val exportMembersLabel = stringResource(R.string.split_export_members_label, members.joinToString(", ") { it.name })
+    val exportColDate = stringResource(R.string.date_label)
+    val exportColPaidBy = stringResource(R.string.split_export_col_paid_by)
+    val exportColDescription = stringResource(R.string.description_label)
+    val exportColAmount = stringResource(R.string.amount_label)
+    val exportTotalLabel = stringResource(R.string.export_total_label)
+    val exportEmptyLabel = stringResource(R.string.split_export_no_expenses)
+    val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
+    val exportStartedLabel = stringResource(R.string.export_started)
+    val appNameStr = stringResource(R.string.app_name)
+    val exportAppName = businessName.ifBlank { appNameStr }
+    val exportBusinessContactLine = listOfNotNull(
+        businessAddress.takeIf { it.isNotBlank() },
+        businessPhone.takeIf { it.isNotBlank() }
+    ).joinToString("   •   ").takeIf { it.isNotBlank() }
+    val poweredByFooter = stringResource(R.string.powered_by_footer)
+    val settlementLabel = stringResource(R.string.split_export_settlement_label)
+
+    val exportRows = remember(expenses, memberMap, currencySymbol) {
+        expenses.sortedByDescending { it.date }.map { e ->
+            // "Paid By" always names whoever actually paid, settlement or not — the Description
+            // column is what distinguishes a settlement row (its raw description is the literal,
+            // unlocalized "Settlement" set in SplitRepository.markSettlementPaid, so it's
+            // replaced here with the localized settlementLabel instead of shown as-is).
+            ExportRow(
+                dateLabel = e.date,
+                categoryLabel = memberMap[e.paidByMemberId]?.name ?: "",
+                description = if (e.isSettlement) settlementLabel else e.description.ifBlank { "—" },
+                amountLabel = Formatters.money(e.amount, currencySymbol)
+            )
+        }
+    }
+
+    fun exportGroupAsPdf() {
+        if (exportRows.isEmpty()) {
+            Toast.makeText(context, exportEmptyLabel, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
+        val uri = PdfExporter.export(
+            context = context,
+            appName = exportAppName,
+            reportTitle = exportReportTitle,
+            monthLabel = group.name,
+            customerIdLabel = exportMembersLabel,
+            businessContactLine = exportBusinessContactLine,
+            colDate = exportColDate,
+            colCategory = exportColPaidBy,
+            colDescription = exportColDescription,
+            colAmount = exportColAmount,
+            totalLabel = exportTotalLabel,
+            totalValue = Formatters.money(totalSpent, currencySymbol),
+            footerText = poweredByFooter,
+            emptyLabel = exportEmptyLabel,
+            rows = exportRows
+        )
+        PdfExporter.shareOrSave(context, uri, exportChooserTitle)
+    }
+
+    // ── Per-expense WhatsApp share, triggered by the share icon on each row ─────────────────
+    // Replaces the old auto-popup that fired right after every save (user feedback: forced an
+    // interruption on every single split; they want a persistent, on-demand affordance instead).
+    // Still "never automated" — this only opens WhatsApp's own send screen for the user to
+    // confirm, same principle as every other outbound WhatsApp message in the app.
+    fun shareExpenseOnWhatsApp(expense: SplitExpenseEntity) {
+        val notice = NewExpenseNotice(
+            description = expense.description,
+            amount = expense.amount,
+            paidByName = memberMap[expense.paidByMemberId]?.name ?: "",
+            splitAmongNames = (sharesByExpenseId[expense.id] ?: emptyList())
+                .mapNotNull { memberMap[it]?.name }
+        )
+        val text = buildNewExpenseWhatsAppText(context, group.name, notice, currencySymbol)
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+            setPackage("com.whatsapp")
+        }
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val fallback = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, text)
+                setPackage("com.whatsapp.w4b")
+            }
+            try {
+                context.startActivity(fallback)
+            } catch (e2: ActivityNotFoundException) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.split_whatsapp_not_installed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -181,6 +363,16 @@ fun SplitGroupDetailScreen(
                             }
                             DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                                 DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.export_pdf)) },
+                                    onClick = {
+                                        menuExpanded = false
+                                        exportGroupAsPdf()
+                                    },
+                                    leadingIcon = {
+                                        Icon(Icons.Filled.PictureAsPdf, contentDescription = null)
+                                    }
+                                )
+                                DropdownMenuItem(
                                     text = { Text(stringResource(R.string.split_delete_group)) },
                                     onClick = {
                                         menuExpanded = false
@@ -220,13 +412,19 @@ fun SplitGroupDetailScreen(
 
                 // ── Hero header ─────────────────────────────────────────────
                 item(key = "hero") {
-                    SplitHeroHeader(
-                        group        = group,
-                        totalSpent   = totalSpent,
-                        meBalance    = meBalance,
-                        currencySymbol = currencySymbol,
-                        expenseCount = expenses.count { !it.isSettlement }
-                    )
+                    AnimatedVisibility(
+                        visible = heroVisible,
+                        enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                                fadeIn(tween(500))
+                    ) {
+                        SplitHeroHeader(
+                            group        = group,
+                            totalSpent   = totalSpent,
+                            meBalance    = meBalance,
+                            currencySymbol = currencySymbol,
+                            expenseCount = expenses.count { !it.isSettlement }
+                        )
+                    }
                 }
 
                 // ── Member avatar filter row ────────────────────────────────
@@ -337,6 +535,7 @@ fun SplitGroupDetailScreen(
                                 paidByMember   = memberMap[expense.paidByMemberId],
                                 currencySymbol = currencySymbol,
                                 onDelete       = { expenseToDelete = expense },
+                                onShare        = { shareExpenseOnWhatsApp(expense) },
                                 modifier       = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                             )
                         }
@@ -353,29 +552,40 @@ fun SplitGroupDetailScreen(
             members = members,
             currencySymbol = currencySymbol,
             onDismiss = { showAddExpenseSheet = false },
-            onSave = { description, amount, paidById, splitIds ->
+            onSave = { description, amount, paidById, splitIds, customShares, items ->
                 viewModel.addExpense(
                     groupId = groupId,
                     description = description,
                     amount = amount,
                     paidByMemberId = paidById,
                     splitAmongIds = splitIds,
-                    date = com.expensetracker.app.util.DateUtils.todayIso()
+                    date = com.expensetracker.app.util.DateUtils.todayIso(),
+                    customShares = customShares,
+                    items = items
                 )
                 showAddExpenseSheet = false
+                // No auto-popup here anymore — the new expense gets its own persistent share
+                // icon in the list (see SplitExpenseRow's onShare), so the user can notify the
+                // group whenever they choose instead of on every single save.
             }
         )
     }
 
     if (showSettleUpSheet) {
         SettleUpSheet(
-            groupName      = group.name,
-            settlements    = settlements,
-            currencySymbol = currencySymbol,
-            expenses       = expenses,
-            members        = members,
-            netBalances    = netBalances,
-            onDismiss      = { showSettleUpSheet = false },
+            groupName        = group.name,
+            settlements      = settlements,
+            currencySymbol   = currencySymbol,
+            expenses         = expenses,
+            members          = members,
+            netBalances      = netBalances,
+            meMemberId       = meMember?.id,
+            myUpiId          = myUpiId,
+            ownerDisplayName = ownerDisplayName.ifBlank { meMember?.name ?: "Me" },
+            onSetMemberUpiId = { member, upiId -> viewModel.setMemberUpiId(member, upiId) },
+            onSetMemberPhone = { member, phone -> viewModel.setMemberPhone(member, phone) },
+            onOpenSettings   = onOpenSettings,
+            onDismiss        = { showSettleUpSheet = false },
             onMarkPaid     = { settlement ->
                 viewModel.markSettlementPaid(
                     groupId        = groupId,
@@ -425,6 +635,7 @@ fun SplitGroupDetailScreen(
             }
         )
     }
+
 }
 
 // ── Hero header ────────────────────────────────────────────────────────────────
@@ -696,7 +907,7 @@ private fun MemberBalanceRow(
                     )
                     if (!isSettled) {
                         Text(
-                            if (balance > 0) "gets back" else "owes",
+                            stringResource(if (balance > 0) R.string.split_member_gets_back else R.string.split_member_owes),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -738,6 +949,7 @@ private fun SplitExpenseRow(
     paidByMember: SplitMemberEntity?,
     currencySymbol: String,
     onDelete: () -> Unit,
+    onShare: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val isSettlement = expense.isSettlement
@@ -817,6 +1029,19 @@ private fun SplitExpenseRow(
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+            if (!isSettlement) {
+                // Persistent, on-demand WhatsApp share for this specific expense — user taps
+                // whenever they want to notify the group, instead of a forced popup on every
+                // save (see shareExpenseOnWhatsApp in SplitGroupDetailScreen).
+                IconButton(onClick = onShare, modifier = Modifier.size(32.dp)) {
+                    Icon(
+                        Icons.Filled.Share,
+                        contentDescription = stringResource(R.string.split_share_whatsapp),
+                        tint = SuccessGreen,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
             IconButton(onClick = onDelete, modifier = Modifier.size(32.dp)) {
                 Icon(

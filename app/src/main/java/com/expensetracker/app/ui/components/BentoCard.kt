@@ -92,10 +92,13 @@ fun BentoCard(
             modifier = modifier
                 .scale(pressScale)
                 .shadow(
-                    elevation = 16.dp,
+                    // Reduced from 16.dp — the dashboard stacks many of these tiles, and the
+                    // heavier shadow made the whole screen feel denser/more "bulky" than the
+                    // content actually is.
+                    elevation = 8.dp,
                     shape = shape,
-                    ambientColor = gradientColors.last().copy(alpha = 0.35f),
-                    spotColor = gradientColors.first().copy(alpha = 0.45f)
+                    ambientColor = gradientColors.last().copy(alpha = 0.3f),
+                    spotColor = gradientColors.first().copy(alpha = 0.35f)
                 )
                 .clip(shape)
                 .drawBehind {
@@ -126,16 +129,16 @@ fun BentoCard(
                     )
             )
 
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(14.dp)) {
                 Box(
                     modifier = Modifier
-                        .size(34.dp)
+                        .size(30.dp)
                         .background(Color.White.copy(alpha = 0.20f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
+                    Icon(icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(16.dp))
                 }
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(10.dp))
                 Text(
                     text = title,
                     style = MaterialTheme.typography.labelMedium,

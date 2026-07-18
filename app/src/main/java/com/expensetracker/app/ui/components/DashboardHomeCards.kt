@@ -1,13 +1,17 @@
 package com.expensetracker.app.ui.components
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.draw.drawBehind
@@ -552,6 +556,11 @@ fun SpendingCategorySection(
     totalThisMonth: Double,
     currencySymbol: String,
     onManageCategories: () -> Unit,
+    // Dashboard trim: collapsed by default — rows only render once the user taps the header.
+    // "View all" (onManageCategories) keeps its own nested click target and isn't affected by
+    // this toggle, same pattern as DashboardIncomeSection's expand/collapse header.
+    expanded: Boolean,
+    onExpandToggle: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val topCategories = remember(categoryTotals, categories) {
@@ -565,9 +574,17 @@ fun SpendingCategorySection(
     }
 
     Column(modifier = modifier) {
-        // Section header
+        // Section header — whole row toggles expand/collapse; "View all" has its own nested
+        // click target so it still opens category management regardless of expand state.
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = LocalIndication.current,
+                    onClick = onExpandToggle
+                )
+                .padding(horizontal = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -588,24 +605,32 @@ fun SpendingCategorySection(
             )
         }
 
-        Spacer(Modifier.height(12.dp))
+        AnimatedVisibility(
+            visible = expanded,
+            enter = fadeIn(tween(200)) + slideInVertically(tween(200)) { -it / 8 },
+            exit = fadeOut(tween(150))
+        ) {
+            Column {
+                Spacer(Modifier.height(12.dp))
 
-        if (topCategories.isEmpty()) {
-            Text(
-                text = stringResource(R.string.no_expenses_breakdown),
-                color = TextSecondary,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 2.dp)
-            )
-        } else {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                topCategories.forEach { (cat, amt) ->
-                    CategorySpendRow(
-                        category       = cat,
-                        amount         = amt,
-                        totalThisMonth = totalThisMonth,
-                        currencySymbol = currencySymbol
+                if (topCategories.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.no_expenses_breakdown),
+                        color = TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(horizontal = 2.dp)
                     )
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        topCategories.forEach { (cat, amt) ->
+                            CategorySpendRow(
+                                category       = cat,
+                                amount         = amt,
+                                totalThisMonth = totalThisMonth,
+                                currencySymbol = currencySymbol
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -706,6 +731,11 @@ fun RecentTransactionsSection(
     categoryById: Map<Long, CategoryEntity>,
     currencySymbol: String,
     onViewAll: () -> Unit,
+    // Dashboard trim: collapsed by default — rows only render once the user taps the header.
+    // "View all" (onViewAll, scrolls to the full expense list) keeps its own nested click
+    // target and isn't affected by this toggle.
+    expanded: Boolean,
+    onExpandToggle: () -> Unit,
     maxItems: Int = 5,
     modifier: Modifier = Modifier
 ) {
@@ -714,9 +744,17 @@ fun RecentTransactionsSection(
     }
 
     Column(modifier = modifier) {
-        // Header
+        // Header — whole row toggles expand/collapse; "View all" has its own nested click
+        // target so it still scrolls to the full list regardless of expand state.
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = LocalIndication.current,
+                    onClick = onExpandToggle
+                )
+                .padding(horizontal = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -739,24 +777,32 @@ fun RecentTransactionsSection(
             }
         }
 
-        Spacer(Modifier.height(12.dp))
+        AnimatedVisibility(
+            visible = expanded,
+            enter = fadeIn(tween(200)) + slideInVertically(tween(200)) { -it / 8 },
+            exit = fadeOut(tween(150))
+        ) {
+            Column {
+                Spacer(Modifier.height(12.dp))
 
-        if (recent.isEmpty()) {
-            Text(
-                text = stringResource(R.string.no_expenses_this_month),
-                color = TextSecondary,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 2.dp)
-            )
-        } else {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                recent.forEach { expense ->
-                    val cat = categoryById[expense.categoryId]
-                    RecentTransactionRow(
-                        expense = expense,
-                        category = cat,
-                        currencySymbol = currencySymbol
+                if (recent.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.no_expenses_this_month),
+                        color = TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(horizontal = 2.dp)
                     )
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        recent.forEach { expense ->
+                            val cat = categoryById[expense.categoryId]
+                            RecentTransactionRow(
+                                expense = expense,
+                                category = cat,
+                                currencySymbol = currencySymbol
+                            )
+                        }
+                    }
                 }
             }
         }

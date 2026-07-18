@@ -5,21 +5,32 @@ Paste these directly into Play Console → your app → **Grow → Store presenc
 ## App name (max 30 characters)
 
 ```
-Expense Tracker
+Baqaya: Budget & Khata
 ```
-(15 characters)
+(22 characters)
+
+Renamed from "Expense Tracker" / the live listing's current "Expense & Budget Tracker" — that
+category is extremely saturated (Wallet, Expense Manager, Expense AI, dozens more all rank for
+generic "expense tracker" searches), so a distinctive brand name paired with the app's actual
+differentiator (Khata/ledger tracking, a much less contested niche) is meant to both stand out in
+search results and rank for lower-competition, higher-intent queries. "Budget" is kept as the one
+high-volume keyword the title still has room for.
 
 ## Short description (max 80 characters)
 
 ```
-Expenses, budgets, debts, splits & ledger — private, on-device, no account.
+Track expenses, split bills with friends & keep a Khata ledger for tabs owed.
 ```
-(76 characters)
+(77 characters)
+
+Deliberately covers the keyword clusters the title couldn't fit — "expenses", "split bills",
+"Khata", "ledger" — since Google indexes the short description as second-tier keyword weight,
+right below the title.
 
 ## Full description (max 4000 characters)
 
 ```
-Expense Tracker is an all-in-one money app — track spending, split bills with friends, manage a lending/borrowing ledger, and pay down debts — all without an account, and with every number staying on your phone.
+Baqaya is an all-in-one money app — track expenses and budgets, split bills with friends, and keep a Khata (ledger) of who owes you and what you owe — all without an account, and with every number staying on your phone.
 
 WHAT YOU CAN DO
 • Log expenses in seconds — by typing, scanning a receipt with your camera, or just saying "spent 50 on food"
@@ -27,25 +38,26 @@ WHAT YOU CAN DO
 • Set a monthly budget and track how much you have left in real time
 • Get plain-language spending insights — like when you're projected to go over budget, or which category jumped this month
 • Auto-detect expenses from bank/payment SMS messages (optional, and only with your one-tap approval each time — the app never gets blanket access to your messages)
-• Keep a Khata (ledger) of who owes you money and what you owe others, with one-tap WhatsApp payment reminders
+• Keep a Khata — a running ledger of who owes you money and what you owe others — with one-tap WhatsApp or SMS payment reminders, due dates, and credit limits
 • Track loans and debts with a clear payoff view
-• Split group expenses with friends or family and settle up with one WhatsApp message
+• Split group expenses with friends or family: equal, exact-amount, percentage, or itemized receipt splits, then settle up with one WhatsApp message or an individual reminder
 • Set savings goals and build a daily logging streak
-• Export a polished PDF, CSV, or JSON report/backup of any month
+• Track subscriptions and recurring bills with accurate renewal dates
+• Export a polished PDF, CSV, or JSON report/backup of any month, group, or ledger party
 • View your expenses by day, by category, as a grid, or on a calendar
 • Lock the app with your fingerprint or face
 • Add a home-screen widget for an at-a-glance balance
-• Switch between English, Arabic, and Hindi, with full right-to-left support and an Arabic Hijri calendar
+• Switch between English, Arabic, Hindi, and 11 more languages, with full right-to-left support and an Arabic Hijri calendar
 
 BUILT TO RESPECT YOUR PRIVACY
-Expense Tracker has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else.
+Baqaya has no servers and no user accounts. Every expense, budget, ledger entry, and setting is stored locally in a database on your device, and we — the developer — never receive, see, or store any of it. The app is supported by ads, which is how it stays free with no subscription — but your financial data is never shared with advertisers or anyone else.
 
 DESIGNED FOR EVERYONE
-Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for someone tracking shared expenses across a family or a friend group — no finance background required.
+Large, legible text, high-contrast screens, and simple navigation mean this app works just as well for a first-time budgeter as it does for a shopkeeper keeping a Khata for regular customers, or a friend group splitting a trip's expenses — no finance background required.
 
 Your currency and language are detected automatically from your phone, and can be changed any time in Settings.
 ```
-(2,231 characters — under the 4,000 limit)
+(2,480 characters — under the 4,000 limit)
 
 ## Release notes — v1.0 (historical, max 500 characters)
 
@@ -109,11 +121,33 @@ Your data still never leaves your device unless you choose to export it.
 ```
 (415 characters)
 
+## Release notes — v1.9.0 (max 500 characters)
+
+Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+Covers everything since the unpublished v1.8.0 (versionCode 19) — the app rename, a lighter
+Dashboard, and Splits fixes. Update this section again for the next version rather than reusing it.
+
+```
+Baqaya (formerly Expense Tracker) — same app, new name and icon.
+
+• Dashboard decluttered — sections collapse until tapped
+• Split expenses: share any expense to WhatsApp anytime, not just right after saving
+• Fixed: a settled Split group could show stale info after a new expense
+• Fixed: currency symbol and phone number display bugs in Splits
+• Nav bar and buttons tuck away while scrolling for more reading room
+
+Your data still never leaves your device unless you choose to export it.
+```
+(489 characters)
+
 ## Notes
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
 - Screenshots and a feature graphic still need to be captured from a real build (see the main README's "Publishing to the Play Store" section) — that requires running the app on a device or emulator, which isn't something that can be produced from here.
-- **This file lags the actual live Play Store listing.** The real listing (title "Expense & Budget Tracker", developer "AG Tech") already has a richer description covering more languages than shown here, and — as of this writing — it still mentions "Google Drive cloud backup" as a feature. Since that feature's UI is currently disabled, that line should be removed from the *live* Play Console listing directly (not just this reference file) to avoid users looking for a feature they can't find.
+- **The in-app name is now "Baqaya"** — `app_name` (all 14 locales) was updated to the single, un-translated brand token "Baqaya" rather than a per-language translation, matching how most multi-language app brands keep one consistent icon label across every locale (WhatsApp, Google, etc. don't translate their own name either). This is what shows under the home-screen icon, in the app switcher, and as the PDF-export fallback name/toolbar titles.
+- **This file still lags the actual live Play Store listing**, which is a *separate* thing from `app_name` above — the Play Store title/description are edited in Play Console, not in code. As of this writing the live listing's title is still "Expense & Budget Tracker" (developer "AG Tech") — paste the new "Baqaya: Budget & Khata" title and description above into Play Console to make that real too. The live listing also still mentions "Google Drive cloud backup" as a feature; since that feature's UI is currently disabled, remove that line directly in Play Console too, not just here.
+- The Arabic/Hindi translated listings below are updated to match: "باقي" in the Arabic listing (its actual Arabic-script origin) and "बकाया" in the Hindi listing (the same word, already a common Hindi/Urdu financial term for an outstanding balance — not a foreign loanword needing transliteration). Confirmed choice: native script per language rather than keeping "Baqaya" in Latin letters everywhere.
+- **The launcher icon was also redesigned** since this file was last touched (white coin + amber checkmark + "BAQAYA" wordmark, replacing the old wallet/coin icon) — the **Play Store listing icon** (512×512 PNG, uploaded separately in Play Console under **Store presence → Main store listing → Graphics**) is a distinct asset from the in-app adaptive icon and needs to be re-exported/re-uploaded to match, or the app icon on the Play Store page will look like a different app from what's on the user's home screen after install. Any existing screenshots were captured against the old icon/dashboard layout too and should be recaptured from a current build before this release goes to Production, for the same reason.
 
 ## Translated listings — Arabic and Hindi
 
@@ -134,17 +168,19 @@ literal correctness.
 
 **Title (max 30 characters)**
 ```
-متابع المصروفات والميزانية
+باقي: الميزانية والحساب
 ```
+("Baqaya: Budget & Ledger" — "باقي" is genuinely the Arabic word this brand name comes from, so
+it's written in Arabic script here rather than transliterated, per the "native script" choice.)
 
 **Short description (max 80 characters)**
 ```
-تتبع المصاريف والميزانية والديون والحساب (الخاتا) وتقسيم الفواتير — بدون إنترنت
+تتبع المصاريف، قسّم الفواتير مع الأصدقاء، واحتفظ بحساب (خاتا) للمستحقات
 ```
 
 **Full description**
 ```
-متابع المصروفات هو تطبيق مالي شامل — تتبع مصاريفك، قسّم الفواتير مع الأصدقاء، أدر حساب (خاتا) لمن يدين لك ومن تدين له، وسدّد ديونك — كل ذلك دون حساب، وبياناتك تبقى على هاتفك فقط.
+باقي تطبيق مالي شامل — تتبع مصاريفك وميزانيتك، قسّم الفواتير مع الأصدقاء، وأدر حساب (خاتا) لمن يدين لك ومن تدين له — كل ذلك دون حساب، وبياناتك تبقى على هاتفك فقط.
 
 ما يمكنك فعله
 • سجّل مصاريفك في ثوانٍ — بالكتابة، أو بتصوير الفاتورة بالكاميرا، أو حتى بقول "صرفت 50 على الطعام"
@@ -175,17 +211,20 @@ literal correctness.
 
 **Title (max 30 characters)**
 ```
-खर्च और बजट ट्रैकर
+बकाया: बजट और खाता
 ```
+("Baqaya: Budget & Khata" — "बकाया" is a widely understood Hindi/Urdu financial word for an
+outstanding/remaining balance, so it's written in Devanagari here rather than transliterated from
+Latin, per the "native script" choice.)
 
 **Short description (max 80 characters)**
 ```
-खर्च, बजट, कर्ज, खाता और बिल विभाजन — पूरी तरह ऑफलाइन, बिना अकाउंट के
+खर्च, बजट, बिल विभाजन और खाता — पूरी तरह ऑफलाइन, बिना अकाउंट के
 ```
 
 **Full description**
 ```
-खर्च और बजट ट्रैकर एक ऑल-इन-वन मनी ऐप है — खर्च ट्रैक करें, दोस्तों के साथ बिल बांटें, खाता (उधार-जमा) मैनेज करें, और कर्ज चुकाएं — बिना किसी अकाउंट के, और आपका हर आंकड़ा सिर्फ आपके फोन में रहता है।
+बकाया एक ऑल-इन-वन मनी ऐप है — खर्च और बजट ट्रैक करें, दोस्तों के साथ बिल बांटें, और खाता (उधार-जमा) मैनेज करें — बिना किसी अकाउंट के, और आपका हर आंकड़ा सिर्फ आपके फोन में रहता है।
 
 आप क्या कर सकते हैं
 • सेकंडों में खर्च लॉग करें — टाइप करके, कैमरे से बिल स्कैन करके, या बस बोलकर "खाने पर 50 खर्च किए"
@@ -204,7 +243,7 @@ literal correctness.
 • हिंदी सहित कई भारतीय भाषाओं में पूरी तरह उपलब्ध
 
 आपकी प्राइवेसी का पूरा ध्यान
-खर्च ट्रैकर का कोई सर्वर या यूज़र अकाउंट नहीं है। हर खर्च, बजट और खाता एंट्री सिर्फ आपके डिवाइस पर लोकल स्टोर होती है, और यह हम तक कभी नहीं पहुंचती। ऐप विज्ञापनों से चलता है, इसी वजह से यह बिना सब्सक्रिप्शन के मुफ्त है — लेकिन आपका फाइनेंशियल डेटा कभी किसी विज्ञापनदाता या किसी और के साथ शेयर नहीं होता।
+बकाया का कोई सर्वर या यूज़र अकाउंट नहीं है। हर खर्च, बजट और खाता एंट्री सिर्फ आपके डिवाइस पर लोकल स्टोर होती है, और यह हम तक कभी नहीं पहुंचती। ऐप विज्ञापनों से चलता है, इसी वजह से यह बिना सब्सक्रिप्शन के मुफ्त है — लेकिन आपका फाइनेंशियल डेटा कभी किसी विज्ञापनदाता या किसी और के साथ शेयर नहीं होता।
 
 सबके लिए बना
 बड़ा और साफ टेक्स्ट, हाई-कॉन्ट्रास्ट स्क्रीन, और आसान नेविगेशन — यह ऐप पहली बार बजट बनाने वाले के लिए भी उतना ही आसान है जितना डिटेल्ड मंथली रिपोर्ट चाहने वाले के लिए। किसी फाइनेंस बैकग्राउंड की ज़रूरत नहीं।

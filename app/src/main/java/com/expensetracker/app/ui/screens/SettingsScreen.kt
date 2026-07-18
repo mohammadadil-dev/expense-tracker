@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Alarm
@@ -55,6 +56,7 @@ import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.CloudUpload
@@ -88,6 +90,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -104,6 +108,8 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
+import com.expensetracker.app.ui.components.BottomNavVisibility
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 // import com.expensetracker.app.ui.components.FamilySetupSheet  // reserved for Family Mode re-enable
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
@@ -155,6 +161,28 @@ private val allCurrencies = listOf(
     CurrencyOption("KSh",  "KSh — Kenyan Shilling (Kenya)"),
 )
 
+/** code, native name (never translated), English name (never translated) — mirrors
+ *  OnboardingScreen's OnboardLanguage, which already gets this right: every language is always
+ *  written in itself and always carries a plain-English anchor, regardless of the app's
+ *  currently active language. See the language dropdown's doc comment below for why. */
+private data class SettingsLanguage(val code: String, val native: String, val english: String)
+
+private val SETTINGS_LANGUAGES = listOf(
+    SettingsLanguage("en", "English",   "English"),
+    SettingsLanguage("ar", "العربية",   "Arabic"),
+    SettingsLanguage("hi", "हिन्दी",     "Hindi"),
+    SettingsLanguage("ur", "اردو",      "Urdu"),
+    SettingsLanguage("tl", "Tagalog",   "Tagalog"),
+    SettingsLanguage("bn", "বাংলা",     "Bengali"),
+    SettingsLanguage("ta", "தமிழ்",     "Tamil"),
+    SettingsLanguage("te", "తెలుగు",    "Telugu"),
+    SettingsLanguage("kn", "ಕನ್ನಡ",     "Kannada"),
+    SettingsLanguage("ml", "മലയാളം",    "Malayalam"),
+    SettingsLanguage("mr", "मराठी",     "Marathi"),
+    SettingsLanguage("gu", "ગુજરાતી",   "Gujarati"),
+    SettingsLanguage("pa", "ਪੰਜਾਬੀ",    "Punjabi"),
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
@@ -178,6 +206,14 @@ fun SettingsScreen(
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
     val myUpiId by viewModel.myUpiId.collectAsState()
     var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
+    val businessName by viewModel.businessName.collectAsState()
+    var businessNameInput by remember(businessName) { mutableStateOf(businessName) }
+    val businessAddress by viewModel.businessAddress.collectAsState()
+    var businessAddressInput by remember(businessAddress) { mutableStateOf(businessAddress) }
+    val businessPhone by viewModel.businessPhone.collectAsState()
+    var businessPhoneInput by remember(businessPhone) { mutableStateOf(businessPhone) }
+    val paymentAccounts by viewModel.paymentAccounts.collectAsState()
+    var showAccountManageSheet by remember { mutableStateOf(false) }
     var showResetStep1 by remember { mutableStateOf(false) }
     var showResetStep2 by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
@@ -212,7 +248,7 @@ fun SettingsScreen(
             onSuccess = { result ->
                 Toast.makeText(
                     context,
-                    "$restoreSuccessLabel (${result.expenses} exp, ${result.khataParties} khata, ${result.debts} debts)",
+                    "$restoreSuccessLabel (${result.expenses} exp, ${result.khataParties} khata, ${result.debts} debts, ${result.splitGroups} splits, ${result.goals} goals)",
                     Toast.LENGTH_LONG
                 ).show()
             },
@@ -340,6 +376,13 @@ fun SettingsScreen(
         BackgroundScrollSignal.pixels.floatValue = scrollState.value.toFloat()
     }
 
+    // Settings has no FAB of its own, but the bottom nav bar still hides while scrolling down
+    // here and comes back on scroll-up/stop, same as every other main screen.
+    val isScrollingUp by scrollState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
+
     // Settings gets its own touch-reactive background instance — cyan/pink/teal instead of
     // Dashboard's violet/indigo/green, so the two screens feel like distinct "places".
     Box(modifier = Modifier.fillMaxSize()) {
@@ -394,6 +437,65 @@ fun SettingsScreen(
 
             Spacer(Modifier.height(24.dp))
 
+            // Optional — stamped onto exported PDF reports (Ledger statement, Split report,
+            // Dashboard monthly report) in place of the app's own name/branding, so a shop
+            // owner's export reads like it's from their business. All blank by default;
+            // PdfExporter call sites fall back to today's behavior when businessName is blank.
+            AnimatedSection(visible = contentVisible, delayMillis = 11) {
+                SettingsSectionHeader(icon = Icons.Filled.Store, title = stringResource(R.string.settings_business_profile_title))
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.settings_business_profile_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(10.dp))
+                OutlinedTextField(
+                    value = businessNameInput,
+                    onValueChange = { businessNameInput = it },
+                    label = { Text(stringResource(R.string.business_name_label)) },
+                    placeholder = { Text(stringResource(R.string.business_name_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = businessAddressInput,
+                    onValueChange = { businessAddressInput = it },
+                    label = { Text(stringResource(R.string.business_address_label)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = businessPhoneInput,
+                    onValueChange = { businessPhoneInput = it },
+                    label = { Text(stringResource(R.string.business_phone_label)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(10.dp))
+                val businessProfileSavedLabel = stringResource(R.string.settings_business_profile_saved)
+                OutlinedButton(
+                    onClick = {
+                        viewModel.setBusinessName(businessNameInput.trim())
+                        viewModel.setBusinessAddress(businessAddressInput.trim())
+                        viewModel.setBusinessPhone(businessPhoneInput.trim())
+                        // Previously silent — tapping Save gave no feedback at all, so there was
+                        // no way to tell it had actually done anything.
+                        Toast.makeText(context, businessProfileSavedLabel, Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.save))
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
+
             // India-only: UPI only works with Indian bank accounts, so this section (and the
             // "Request via UPI" flow it powers on Khata entries) is hidden for every other
             // currency rather than showing a payment method that can't actually be used.
@@ -430,25 +532,42 @@ fun SettingsScreen(
                 Spacer(Modifier.height(24.dp))
             }
 
+            AnimatedSection(visible = contentVisible, delayMillis = 23) {
+                SettingsSectionHeader(icon = Icons.Filled.AccountBalanceWallet, title = stringResource(R.string.settings_section_payment_accounts))
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.payment_accounts_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(10.dp))
+                OutlinedButton(
+                    onClick = { showAccountManageSheet = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Filled.AccountBalanceWallet, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.manage_payment_accounts))
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
+
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))
                 Spacer(Modifier.height(8.dp))
-                val langOptions = listOf(
-                    "en" to stringResource(R.string.language_english),
-                    "ar" to stringResource(R.string.language_arabic),
-                    "hi" to stringResource(R.string.language_hindi),
-                    "ur" to stringResource(R.string.language_urdu),
-                    "tl" to stringResource(R.string.language_tagalog),
-                    "bn" to stringResource(R.string.language_bengali),
-                    "ta" to stringResource(R.string.language_tamil),
-                    "te" to stringResource(R.string.language_telugu),
-                    "kn" to stringResource(R.string.language_kannada),
-                    "ml" to stringResource(R.string.language_malayalam),
-                    "mr" to stringResource(R.string.language_marathi),
-                    "gu" to stringResource(R.string.language_gujarati),
-                    "pa" to stringResource(R.string.language_punjabi),
-                )
-                val currentLangLabel = langOptions.firstOrNull { it.first == languagePref }?.second ?: "English"
+                // Each language is shown in its OWN name — never translated into whatever
+                // language is currently active. This dropdown used to build its labels from
+                // stringResource(), which meant switching to Arabic re-translated "English" into
+                // "الإنجليزية": once someone who can't read Arabic ends up there, there's no
+                // Latin-script "English" left anywhere in the list to tap their way back out.
+                // Every language now always reads the same regardless of the app's current
+                // language — mirrors OnboardingScreen's language step, which already got this
+                // right (native name + small English-name subtitle, both hardcoded).
+                val langOptions = SETTINGS_LANGUAGES
+                val currentLang = langOptions.firstOrNull { it.code == languagePref } ?: langOptions.first()
+                val currentLangLabel = if (currentLang.native == currentLang.english) currentLang.native
+                    else "${currentLang.native} (${currentLang.english})"
                 ExposedDropdownMenuBox(
                     expanded = langExpanded,
                     onExpandedChange = { langExpanded = it }
@@ -465,11 +584,22 @@ fun SettingsScreen(
                         expanded = langExpanded,
                         onDismissRequest = { langExpanded = false }
                     ) {
-                        langOptions.forEach { (code, label) ->
+                        langOptions.forEach { lang ->
                             DropdownMenuItem(
-                                text = { Text(label) },
-                                onClick = { langExpanded = false; changeLanguage(code) },
-                                trailingIcon = if (languagePref == code) {
+                                text = {
+                                    Column {
+                                        Text(lang.native, fontWeight = androidx.compose.ui.text.font.FontWeight.Medium)
+                                        if (lang.native != lang.english) {
+                                            Text(
+                                                lang.english,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = TextSecondary
+                                            )
+                                        }
+                                    }
+                                },
+                                onClick = { langExpanded = false; changeLanguage(lang.code) },
+                                trailingIcon = if (languagePref == lang.code) {
                                     { Icon(Icons.Filled.Check, contentDescription = null, tint = AccentIndigo) }
                                 } else null
                             )
@@ -1062,6 +1192,17 @@ fun SettingsScreen(
             dismissButton = {
                 TextButton(onClick = { showPaydayPicker = false }) { Text(stringResource(R.string.cancel)) }
             }
+        )
+    }
+
+    if (showAccountManageSheet) {
+        com.expensetracker.app.ui.components.PaymentAccountManageSheet(
+            accounts = paymentAccounts,
+            onDismiss = { showAccountManageSheet = false },
+            onRename = { account, name -> viewModel.renameAccount(account, name) },
+            onRecolor = { account, hex -> viewModel.recolorAccount(account, hex) },
+            onAddAccount = { name, hex -> viewModel.addAccount(name, hex) },
+            onDeleteAccount = { account -> viewModel.deleteAccount(account) }
         )
     }
 }

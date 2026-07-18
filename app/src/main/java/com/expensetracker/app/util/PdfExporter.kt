@@ -12,12 +12,19 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 
-/** One printable row of an exported report — already fully resolved to display strings. */
+/** One printable row of an exported report — already fully resolved to display strings.
+ *
+ * [accountLabel] is optional (null when the expense has no payment account tagged, or for
+ * callers that don't pass it at all) and is only consumed by [CsvExporter] — [PdfExporter]'s
+ * fixed 4-column page layout is left untouched by design, since reflowing its hand-tuned
+ * column widths/clipping without a way to visually verify the render would risk a layout
+ * regression in a report real users already rely on. */
 data class ExportRow(
     val dateLabel: String,
     val categoryLabel: String,
     val description: String,
-    val amountLabel: String
+    val amountLabel: String,
+    val accountLabel: String? = null
 )
 
 /**
@@ -98,6 +105,10 @@ object PdfExporter {
         reportTitle: String,
         monthLabel: String,
         customerIdLabel: String,
+        /** Optional address/phone line drawn right under [appName] when non-null/non-blank —
+         *  lets a business profile (see SettingsRepository.businessName/Address/Phone) put its
+         *  own contact details on the exported report. Null/blank = today's layout, unchanged. */
+        businessContactLine: String? = null,
         colDate: String,
         colCategory: String,
         colDescription: String,
@@ -191,6 +202,10 @@ object PdfExporter {
             if (isFirst) {
                 cursorY += 16f
                 c.drawText(appName, MARGIN, cursorY, titlePaint)
+                if (!businessContactLine.isNullOrBlank()) {
+                    cursorY += 15f
+                    c.drawText(businessContactLine, MARGIN, cursorY, subtitlePaint)
+                }
                 cursorY += 18f
                 c.drawText(reportTitle, MARGIN, cursorY, subtitlePaint)
                 cursorY += 15f

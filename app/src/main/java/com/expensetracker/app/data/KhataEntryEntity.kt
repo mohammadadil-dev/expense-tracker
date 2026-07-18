@@ -36,7 +36,15 @@ data class KhataEntryEntity(
     val type: String,
     /** Non-null for I-OWE CREDIT entries — points at the auto-generated ExpenseEntity row so
      *  deleting this entry also removes the linked expense from the dashboard. */
-    val linkedExpenseId: Long? = null
+    val linkedExpenseId: Long? = null,
+    /** Optional "pay/collect by" date (ISO "yyyy-MM-dd") — only meaningful on CREDIT entries.
+     *  Lets a single purchase-on-credit or a customer's tab carry its own due date instead of
+     *  only ever tracking a whole-party balance with no timeline. Null = no due date set. */
+    val dueDate: String? = null,
+    /** Optional absolute path to a receipt/bill photo saved in this app's private storage
+     *  (`filesDir/receipts/`), so a credit entry keeps visual proof of the purchase. Null =
+     *  no photo attached. See [com.expensetracker.app.util.ReceiptPhotoStore]. */
+    val photoPath: String? = null
 ) {
     companion object {
         /** Goods/services taken on credit — increases the outstanding balance. */

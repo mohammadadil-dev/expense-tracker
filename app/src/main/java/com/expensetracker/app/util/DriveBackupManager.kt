@@ -15,7 +15,7 @@ import com.google.api.services.drive.model.File
 import java.io.ByteArrayOutputStream
 
 /**
- * Google Drive cloud backup for Expense Tracker.
+ * Google Drive cloud backup for Baqaya.
  *
  * Uses the DRIVE_APPDATA scope so the backup lives in a private, app-specific
  * folder that is NOT visible in the user's Drive UI — it won't clutter their
@@ -75,7 +75,7 @@ object DriveBackupManager {
             NetHttpTransport(),
             GsonFactory.getDefaultInstance(),
             credential
-        ).setApplicationName("Expense Tracker").build()
+        ).setApplicationName("Baqaya").build()
     }
 
     // ── Upload ────────────────────────────────────────────────────────────────

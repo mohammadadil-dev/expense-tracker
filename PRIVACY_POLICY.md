@@ -1,12 +1,12 @@
-# Privacy Policy for Expense Tracker
+# Privacy Policy for Baqaya
 
 **Effective date: July 14, 2026**
 
-This policy explains what Expense Tracker ("the app") does and does not do with your information. We wrote it to match exactly how the app behaves — there is no hidden data collection beyond what's described here.
+This policy explains what Baqaya ("the app") does and does not do with your information. We wrote it to match exactly how the app behaves — there is no hidden data collection beyond what's described here.
 
 ## The short version
 
-Expense Tracker has no servers and no user accounts. Every expense, category, budget, debt, ledger (Khata) entry, and setting you enter is stored only in a local database on your own device, and we — the developer — never receive, see, or store any of it. The app shows ads (see below), which is currently the only way any information leaves your device — described in full below.
+Baqaya has no servers and no user accounts. Every expense, category, budget, debt, ledger (Khata) entry, and setting you enter is stored only in a local database on your own device, and we — the developer — never receive, see, or store any of it. The app shows ads (see below), which is currently the only way any information leaves your device — described in full below.
 
 ## What the app stores, and where
 
@@ -52,7 +52,7 @@ Your own UPI ID and any UPI ID you optionally enter for a ledger party are store
 
 ## Children's privacy
 
-Expense Tracker is a general-purpose finance utility, not directed at children, and we don't knowingly collect personal information from children. The app itself never receives your financial data regardless of age; the only data leaving the device is the ad-related data described above, handled by Google AdMob, which offers its own controls for treating users as children under COPPA/GDPR-K where applicable.
+Baqaya is a general-purpose finance utility, not directed at children, and we don't knowingly collect personal information from children. The app itself never receives your financial data regardless of age; the only data leaving the device is the ad-related data described above, handled by Google AdMob, which offers its own controls for treating users as children under COPPA/GDPR-K where applicable.
 
 ## Changes to this policy
 

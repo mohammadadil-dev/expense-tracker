@@ -56,7 +56,10 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.CategoryEntity
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.data.FamilyMemberEntity
+import com.expensetracker.app.data.PaymentAccountEntity
 import com.expensetracker.app.util.DateUtils
+import com.expensetracker.app.util.accountDisplayName
+import com.expensetracker.app.util.accountEmoji
 import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.util.categoryEmoji
 
@@ -82,9 +85,10 @@ fun AddEditExpenseSheet(
     prefill: ExpensePrefill? = null,
     familyModeEnabled: Boolean = false,
     familyMembers: List<FamilyMemberEntity> = emptyList(),
+    accounts: List<PaymentAccountEntity> = emptyList(),
     defaultRecurring: Boolean = false,
     onDismiss: () -> Unit,
-    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean, memberId: Long?, recurringDayOfMonth: Int?) -> Unit,
+    onSave: (id: Long?, categoryId: Long, description: String, amount: Double, date: String, isRecurring: Boolean, memberId: Long?, recurringDayOfMonth: Int?, accountId: Long?) -> Unit,
     onAddCategory: ((name: String, colorHex: String) -> Unit)? = null
 ) {
     var selectedCategory by remember {
@@ -115,6 +119,17 @@ fun AddEditExpenseSheet(
     }
     // Family member assignment — pre-populate from existing expense when editing.
     var selectedMemberId by remember { mutableStateOf<Long?>(existing?.memberId) }
+    // Payment account tag — pre-populate from the existing expense when editing; for a brand
+    // new expense, default to whichever account is marked isDefault (normally "Cash"), same
+    // convenience default seen elsewhere (e.g. the category picker defaulting to the first
+    // category). Null ("not set") stays possible via the picker's own "Not set" option.
+    var selectedAccountId by remember {
+        mutableStateOf(
+            if (existing != null) existing.accountId
+            else accounts.firstOrNull { it.isDefault }?.id
+        )
+    }
+    var accountMenuExpanded by remember { mutableStateOf(false) }
     val locale = LocalConfiguration.current.locales[0]
     val scrollState = rememberScrollState()
 
@@ -248,6 +263,62 @@ fun AddEditExpenseSheet(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
+
+            if (accounts.isNotEmpty()) {
+                Spacer(Modifier.height(16.dp))
+                Text(stringResourceCompat(R.string.payment_account_label), style = MaterialTheme.typography.labelLarge)
+                Spacer(Modifier.height(6.dp))
+                val selectedAccount = accounts.firstOrNull { it.id == selectedAccountId }
+                ExposedDropdownMenuBox(
+                    expanded = accountMenuExpanded,
+                    onExpandedChange = { accountMenuExpanded = it }
+                ) {
+                    OutlinedTextField(
+                        value = selectedAccount?.let { accountDisplayName(it) }
+                            ?: stringResourceCompat(R.string.payment_account_not_set),
+                        onValueChange = {},
+                        readOnly = true,
+                        leadingIcon = {
+                            Text(
+                                text = accountEmoji(selectedAccount?.type ?: ""),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = accountMenuExpanded) },
+                        modifier = Modifier.fillMaxWidth().menuAnchor()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = accountMenuExpanded,
+                        onDismissRequest = { accountMenuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResourceCompat(R.string.payment_account_not_set)) },
+                            onClick = {
+                                selectedAccountId = null
+                                accountMenuExpanded = false
+                            }
+                        )
+                        accounts.forEach { account ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        accountDisplayName(account),
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                    )
+                                },
+                                leadingIcon = {
+                                    Text(text = accountEmoji(account.type), style = MaterialTheme.typography.bodyLarge)
+                                },
+                                onClick = {
+                                    selectedAccountId = account.id
+                                    accountMenuExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
 
             Spacer(Modifier.height(16.dp))
             HorizontalDivider(color = Color.Gray.copy(alpha = 0.15f))
@@ -417,7 +488,8 @@ fun AddEditExpenseSheet(
                         onSave(
                             existing?.id, categoryId, description.trim(), amount, dateIso,
                             isRecurring, selectedMemberId,
-                            if (isRecurring) recurringDayOfMonth else null
+                            if (isRecurring) recurringDayOfMonth else null,
+                            selectedAccountId
                         )
                     }
                 }) {

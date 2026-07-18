@@ -11,8 +11,10 @@ import java.io.FileWriter
  * Exports monthly expenses to a CSV file, saved to the app's private cache dir and
  * shared via FileProvider — no storage permission required.
  *
- * Format: Date, Category, Description, Amount
+ * Format: Date, Category, Description, Amount[, Account]
  * First row is a header. Values containing commas or quotes are RFC 4180 quoted.
+ * The Account column is only included when [colAccount] is supplied — callers that don't
+ * pass it get the original 4-column output unchanged.
  */
 object CsvExporter {
 
@@ -23,6 +25,7 @@ object CsvExporter {
         colCategory: String,
         colDescription: String,
         colAmount: String,
+        colAccount: String? = null,
         rows: List<ExportRow>
     ): Uri {
         val fileName = "expenses_${monthLabel.replace(" ", "_")}.csv"
@@ -30,10 +33,20 @@ object CsvExporter {
 
         FileWriter(file, false).use { writer ->
             // Header
-            writer.appendLine(csvRow(colDate, colCategory, colDescription, colAmount))
+            if (colAccount != null) {
+                writer.appendLine(csvRow(colDate, colCategory, colDescription, colAmount, colAccount))
+            } else {
+                writer.appendLine(csvRow(colDate, colCategory, colDescription, colAmount))
+            }
             // Data rows
             rows.forEach { row ->
-                writer.appendLine(csvRow(row.dateLabel, row.categoryLabel, row.description, row.amountLabel))
+                if (colAccount != null) {
+                    writer.appendLine(
+                        csvRow(row.dateLabel, row.categoryLabel, row.description, row.amountLabel, row.accountLabel ?: "")
+                    )
+                } else {
+                    writer.appendLine(csvRow(row.dateLabel, row.categoryLabel, row.description, row.amountLabel))
+                }
             }
         }
 

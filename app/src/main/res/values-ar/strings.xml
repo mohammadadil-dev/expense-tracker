@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">متابع المصروفات - مدير الميزانية</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">سجّل مصروفاتك، وتابع الفئات، وشاهد الاتجاهات بمرور الوقت.</string>
     <string name="manage_categories">إدارة الفئات</string>
     <string name="reset_data">إعادة تعيين البيانات</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">%1$s من إنفاق الشهر</string>
 
     <string name="ai_insights_feed_title">رؤى ذكية</string>
+    <string name="insights_show_more">عرض %1$d رؤية إضافية</string>
+    <string name="insights_show_more_plural">عرض %1$d رؤى إضافية</string>
+    <string name="insights_show_less">عرض أقل</string>
+    <string name="dashboard_engagement_more">المتابعة والأهداف والمزيد</string>
+    <string name="dashboard_trend_show">عرض الاتجاه</string>
     <string name="insight_trend_down">إنفاقك أقل بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="insight_trend_up">إنفاقك أعلى بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="insight_trend_flat">إنفاقك مطابق للأسبوع الماضي.</string>
@@ -154,6 +159,21 @@
     <string name="export_customer_id_label">رقم العميل: %1$s</string>
     <string name="export_started">يتم تجهيز تقرير PDF…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">كشف حساب الدفتر</string>
+    <string name="khata_export_balance_label">الرصيد المستحق: %1$s</string>
+    <string name="khata_export_col_type">النوع</string>
+    <string name="khata_export_type_credit">دين</string>
+    <string name="khata_export_type_payment">دفعة</string>
+    <string name="khata_export_total_label">الرصيد</string>
+    <string name="khata_export_no_entries">لا توجد إدخالات بعد.</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">دفع بواسطة</string>
+    <string name="split_export_settlement_label">تسوية</string>
+    <string name="split_export_members_label">الأعضاء: %1$s</string>
+    <string name="split_export_no_expenses">لا توجد مصروفات بعد.</string>
+
     <string name="add_category">إضافة فئة</string>
     <string name="new_category_hint">اسم الفئة الجديدة</string>
     <string name="delete_category_confirm">سيتم نقل المصروفات المرتبطة بهذه الفئة إلى أول فئة متبقية. هل تريد الاستمرار؟</string>
@@ -239,6 +259,7 @@
     <string name="cat_farming">الزراعة</string>
     <string name="cat_khata">الحساب</string>
     <string name="cat_education">تعليم</string>
+    <string name="cat_splits">التقسيمات</string>
     <string name="khata_delete_party_title">حذف الطرف؟</string>
     <string name="khata_delete_party_confirm">سيتم حذف %1$s وجميع سجلاته نهائياً. لا يمكن التراجع عن هذا.</string>
 
@@ -358,6 +379,8 @@
     <string name="khata_they_owe">ما لي</string>
     <string name="khata_total_i_owe">إجمالي ما عليّ</string>
     <string name="khata_total_they_owe">إجمالي ما لي</string>
+    <string name="khata_today_collected">تم تحصيله اليوم</string>
+    <string name="khata_today_credit_given">أُعطي على الحساب اليوم</string>
     <string name="khata_add_party">إضافة طرف</string>
     <string name="khata_edit_party">تعديل الطرف</string>
     <string name="khata_party_name_hint">الاسم (محل أو شخص)</string>
@@ -369,20 +392,41 @@
     <string name="khata_upi_qr_scan_error">لم يتم العثور على معرّف UPI في رمز QR هذا. حاول مرة أخرى أو أدخله يدويًا.</string>
     <string name="khata_party_upi_mine_ready">طلب الدفع عبر UPI جاهز — سيتم استخدام معرف UPI الخاص بك: %1$s</string>
     <string name="khata_party_upi_mine_missing">لتمكينهم من الدفع لك عبر UPI، عيّن معرف UPI الخاص بك في الإعدادات</string>
+    <string name="khata_credit_limit_label">حد الائتمان</string>
+    <string name="khata_credit_limit_optional">اختياري</string>
+    <string name="khata_credit_limit_of">من حد %1$s</string>
+    <string name="khata_credit_limit_near">يقترب من حد %1$s</string>
+    <string name="khata_credit_limit_over">تجاوز حد %1$s</string>
+    <string name="khata_credit_limit_near_short">قريب من الحد</string>
+    <string name="khata_credit_limit_over_short">تجاوز الحد</string>
     <string name="khata_save_party">حفظ</string>
     <string name="khata_delete_party">حذف الطرف</string>
     <string name="khata_no_parties_i_owe">لم تتم إضافة أي محل بعد.
 اضغط + لإضافة محل لديك رصيد به.</string>
     <string name="khata_no_parties_they_owe">لم تتم إضافة أي عملاء بعد.
 اضغط + لإضافة شخص مدين لك.</string>
+    <string name="khata_search_hint">ابحث بالاسم أو رقم الهاتف…</string>
+    <string name="khata_search_no_results">لا توجد نتائج. جرّب اسمًا أو رقمًا آخر.</string>
     <string name="khata_outstanding">المستحق</string>
+    <string name="khata_days_outstanding">مستحق منذ %1$d يومًا</string>
     <string name="khata_settled">تمت التسوية ✓</string>
     <string name="khata_add_entry">إضافة إدخال</string>
     <string name="khata_credit_label">دين (أُخذ بالأجل)</string>
     <string name="khata_payment_label">دفعة (تمت التسوية)</string>
     <string name="khata_amount_hint">المبلغ</string>
     <string name="khata_note_hint">ملاحظة (اختياري)</string>
+    <string name="khata_voice_add_entry">أضف بالصوت</string>
+    <string name="khata_voice_hint">قل المبلغ ولمن هو — مثال: \"رامش، خمسمائة روبية\"</string>
+    <string name="khata_voice_confirm">استخدم هذا</string>
     <string name="khata_entry_date">التاريخ</string>
+    <string name="khata_due_date_label">تاريخ الاستحقاق</string>
+    <string name="khata_due_date_optional">اختياري — متى يجب سداده/تحصيله</string>
+    <string name="khata_due_on">الاستحقاق %1$s</string>
+    <string name="khata_due_overdue">متأخر — كان مستحقًا في %1$s</string>
+    <string name="khata_receipt_photo_label">صورة الفاتورة</string>
+    <string name="khata_take_photo">الكاميرا</string>
+    <string name="khata_choose_photo">المعرض</string>
+    <string name="khata_remove_photo">إزالة الصورة</string>
     <string name="khata_no_entries">لا توجد إدخالات بعد. اضغط + لتسجيل دين أو دفعة.</string>
     <string name="khata_delete_entry">حذف الإدخال</string>
     <string name="khata_whatsapp_reminder">إرسال تذكير</string>
@@ -409,7 +453,7 @@
 استخدمه في أي وقت!</string>
     <string name="khata_reminder_signature">مع التحية،
 %1$s</string>
-    <string name="khata_direction_i_owe_label">أنا مدين لهذا الطرف</string>
+    <string name="khata_direction_i_owe_label">اختر أحد الخيارين:</string>
     <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
     <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
 
@@ -443,7 +487,7 @@
 
     <!-- ── Security ── -->
     <string name="security_section_title">الأمان</string>
-    <string name="biometric_lock_title">فتح تطبيق المصروفات</string>
+    <string name="biometric_lock_title">فتح Baqaya</string>
     <string name="biometric_lock_subtitle">استخدم القياسات الحيوية أو رمز PIN للدخول</string>
     <string name="biometric_lock_toggle_label">قفل التطبيق</string>
     <string name="biometric_lock_description">طلب القياسات الحيوية أو PIN عند كل فتح للتطبيق</string>
@@ -470,10 +514,13 @@
     <string name="drive_restore_success">تمت استعادة البيانات من Google Drive</string>
     <string name="drive_no_backup">لا توجد نسخة احتياطية على Drive بعد</string>
     <string name="drive_backup_error">خطأ في Google Drive</string>
-    <string name="backup_scope_note">يغطي المصروفات والفئات والميزانيات والخاطة والديون</string>
+    <string name="backup_scope_note">يغطي المصروفات والفئات والميزانيات والخاطة والديون والتقسيمات وحسابات الدفع والأهداف. صور الفواتير غير مشمولة.</string>
     <string name="khata_label_all_cleared">تمت التسوية مع %1$s ✓</string>
     <string name="khata_label_i_owe">أنت مدين لـ %1$s</string>
     <string name="khata_label_they_owe">%1$s مدين لك</string>
+    <string name="khata_label_credit_they_owe">%1$s مدين لك برصيد ائتماني</string>
+    <string name="khata_label_credit_i_owe">أنت مدين لـ %1$s برصيد ائتماني</string>
+    <string name="khata_credit_pill">رصيد دائن ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">تتبع الأموال المُقرضة والمُقترضة مع جهات الاتصال</string>
@@ -644,14 +691,14 @@
     <string name="split_expenses_label">المصاريف</string>
     <string name="split_expense_count">%d مصاريف</string>
     <string name="split_no_expenses">لا توجد مصاريف — اضغط + لإضافة واحدة</string>
-    <string name="split_add_expense">إضافة مصروف</string>
+    <string name="split_add_expense">تقسيم المصروف</string>
     <string name="split_expense_description">ما هذا؟</string>
     <string name="split_expense_amount">المبلغ</string>
     <string name="split_paid_by">دفع بواسطة</string>
     <string name="split_paid_by_member">دفعه %s</string>
     <string name="split_split_among">تقسيم بين</string>
     <string name="split_split_among_hint">اختر من يتشارك هذا المصروف بالتساوي</string>
-    <string name="split_save_expense">حفظ المصروف</string>
+    <string name="split_save_expense">حفظ المصروف المقسم</string>
     <string name="split_delete_expense">حذف المصروف؟</string>
     <string name="split_delete_expense_confirm">حذف "%s"؟ لا يمكن التراجع.</string>
     <string name="split_delete_group">حذف المجموعة</string>
@@ -674,7 +721,44 @@
     <string name="split_wa_member_settled">مسدد</string>
     <string name="split_wa_to_pay">للسداد</string>
     <string name="split_wa_all_settled">الجميع مسدد! 🎉</string>
-    <string name="split_wa_footer">متتبع المصاريف</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">مصروف جديد في %1$s</string>
+    <string name="split_notify_whatsapp_title">تنبيه المجموعة؟</string>
+    <string name="split_notify_whatsapp_message">شارك هذا المصروف مع %1$s عبر واتساب.</string>
+    <string name="split_notify_whatsapp_not_now">ليس الآن</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">متساوٍ</string>
+    <string name="split_mode_exact">دقيق</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">تم إدخال %1$s من %2$s</string>
+    <string name="split_percent_sum_hint">تم إدخال %1$s%% من 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">حسب الأصناف</string>
+    <string name="split_itemized_hint">قسّم الفاتورة إلى أصناف وحدد من شارك كل صنف</string>
+    <string name="split_itemized_amount_hint">يُحسب تلقائيًا من الأصناف أدناه</string>
+    <string name="split_add_item">إضافة صنف</string>
+    <string name="split_item_name_hint">الصنف</string>
+    <string name="split_remove_item">إزالة الصنف</string>
+    <string name="split_itemized_total">إجمالي الأصناف: %1$s</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">الدفع عبر UPI</string>
+    <string name="split_add_their_upi">أضف معرف UPI الخاص بهم</string>
+    <string name="split_request_via_upi">طلب عبر UPI</string>
+    <string name="split_set_your_upi">عيّن معرف UPI الخاص بك</string>
+    <string name="split_remind_member">تذكير</string>
+    <string name="split_add_their_phone">أضف رقم هاتفهم</string>
+    <string name="split_member_phone_hint">رقم الهاتف (للواتساب)</string>
+    <string name="split_whatsapp_not_installed">واتساب غير مثبت.</string>
+    <string name="split_reminder_msg">مرحباً %1$s 👋
+
+تذكير ودي من "%2$s" — عليك دفع %3$s إلى %4$s.
+
+يرجى السداد عند الإمكان 🙏</string>
+    <string name="split_reminder_signature">مع التحية،
+%1$s</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
 
@@ -696,7 +780,56 @@
     <string name="whats_new_feature_khata_title">الخاطة / الدفتر</string>
     <string name="whats_new_feature_goals_title">الأهداف والسلاسل</string>
     <string name="split_hero_total_spent">إجمالي الإنفاق</string>
+    <string name="split_member_gets_back">يسترد</string>
+    <string name="split_member_owes">مدين</string>
+    <string name="split_net_owed">بالإجمالي، لك مستحق</string>
+    <string name="split_net_owe">بالإجمالي، عليك مستحق</string>
+    <string name="split_net_settled">تمت التسوية بالكامل ✓</string>
+    <string name="split_net_group_count">عبر %d مجموعة (مجموعات)</string>
 
     <string name="reminder_hour_decrease">تقليل الساعة</string>
     <string name="reminder_hour_increase">زيادة الساعة</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">نقدًا</string>
+    <string name="account_bank">حساب بنكي</string>
+    <string name="account_card">بطاقة</string>
+    <string name="settings_section_payment_accounts">حسابات الدفع</string>
+    <string name="manage_payment_accounts">إدارة الحسابات</string>
+    <string name="payment_accounts_hint">قم بوسم المصروفات بالنقد أو البنك أو البطاقة لمعرفة أين يذهب مالك فعليًا.</string>
+    <string name="add_payment_account">إضافة حساب</string>
+    <string name="new_account_name_hint">اسم الحساب الجديد</string>
+    <string name="enter_account_name">أدخل اسم الحساب</string>
+    <string name="delete_payment_account_confirm">هل تريد حذف هذا الحساب؟ ستصبح المصروفات الموسومة به بدون وسم فقط — لن يُحذف أي شيء.</string>
+    <string name="payment_account_label">مصدر الدفع</string>
+    <string name="payment_account_not_set">غير محدد</string>
+    <string name="account_breakdown_title">حسب الحساب</string>
+    <string name="export_col_account">الحساب</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">الملف التجاري</string>
+    <string name="settings_business_profile_hint">يظهر في تقارير PDF المُصدَّرة بدلاً من اسم التطبيق — مفيد إذا كنت تدير متجرًا.</string>
+    <string name="business_name_label">اسم المتجر</string>
+    <string name="business_name_hint">مثال: بقالة الشرقية</string>
+    <string name="business_address_label">العنوان (اختياري)</string>
+    <string name="business_phone_label">الهاتف (اختياري)</string>
+    <string name="settings_business_profile_saved">تم حفظ الملف التجاري</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">التقادم والتذكيرات</string>
+    <string name="khata_collections_title">التحصيلات</string>
+    <string name="khata_collections_subtitle">الأرصدة المتأخرة، بلمحة واحدة</string>
+    <string name="khata_aging_bucket_0_30">0–30 يومًا</string>
+    <string name="khata_aging_bucket_31_60">31–60 يومًا</string>
+    <string name="khata_aging_bucket_61_90">61–90 يومًا</string>
+    <string name="khata_aging_bucket_90_plus">+90 يومًا</string>
+    <string name="khata_collections_empty">لا يوجد شيء متأخر الآن — كل شيء تمام!</string>
+    <string name="khata_collections_select_all">تحديد الكل</string>
+    <string name="khata_collections_no_phone">لا يوجد رقم هاتف</string>
+    <string name="khata_collections_days_overdue">%1$d يومًا</string>
+    <string name="khata_collections_remind_selected">تذكير المحددين (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d من %2$d</string>
+    <string name="khata_bulk_reminder_send">إرسال عبر واتساب</string>
+    <string name="khata_bulk_reminder_skip">تخطي</string>
+    <string name="khata_bulk_reminder_stop">إيقاف</string>
+    <string name="khata_bulk_reminder_done">تم إرسال %1$d من %2$d تذكيرات</string>
 </resources>

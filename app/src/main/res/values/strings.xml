@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker - Budget Manager</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">Log expenses, track categories, and watch trends over time.</string>
     <string name="manage_categories">Manage Categories</string>
     <string name="reset_data">Reset Data</string>
@@ -59,6 +59,17 @@
     <string name="bento_subscription_subtitle">%1$s of monthly spend</string>
 
     <string name="ai_insights_feed_title">AI Insights</string>
+    <!-- Dashboard trim: only the top insight shows by default now, with the rest revealed on
+         tap, so the feed doesn't stack N full-height cards on every visit. -->
+    <string name="insights_show_more">Show %1$d more insight</string>
+    <string name="insights_show_more_plural">Show %1$d more insights</string>
+    <string name="insights_show_less">Show less</string>
+    <!-- Dashboard trim: Payday/Goals/Personality/Account-breakdown cards are collapsed by
+         default behind this toggle; only the Streak card stays always-visible. -->
+    <string name="dashboard_engagement_more">Streak, Goals &amp; More</string>
+    <!-- Dashboard trim: the 12-month trend chart is collapsed by default too — just the
+         title + toggle show until tapped. -->
+    <string name="dashboard_trend_show">Show Trend</string>
     <string name="insight_trend_down">Your spending is %1$s lower than last week.</string>
     <string name="insight_trend_up">Your spending is %1$s higher than last week.</string>
     <string name="insight_trend_flat">Your spending matched last week.</string>
@@ -156,6 +167,24 @@
     <string name="export_customer_id_label">Customer ID: %1$s</string>
     <string name="export_started">Preparing your PDF report…</string>
 
+    <!-- Ledger (Khata) PDF statement — reuses date_label/description_label/amount_label/
+         export_total_label/export_pdf/export_pdf_chooser_title/export_started/powered_by_footer -->
+    <string name="khata_export_report_title">Ledger Statement</string>
+    <string name="khata_export_balance_label">Outstanding Balance: %1$s</string>
+    <string name="khata_export_col_type">Type</string>
+    <string name="khata_export_type_credit">Credit</string>
+    <string name="khata_export_type_payment">Payment</string>
+    <string name="khata_export_total_label">Balance</string>
+    <string name="khata_export_no_entries">No entries yet.</string>
+
+    <!-- Split group PDF report — reuses split_wa_header/date_label/description_label/
+         amount_label/export_total_label/export_pdf/export_pdf_chooser_title/export_started/
+         powered_by_footer -->
+    <string name="split_export_col_paid_by">Paid By</string>
+    <string name="split_export_settlement_label">Settlement</string>
+    <string name="split_export_members_label">Members: %1$s</string>
+    <string name="split_export_no_expenses">No expenses yet.</string>
+
     <string name="add_category">Add Category</string>
     <string name="new_category_hint">New category name</string>
     <string name="delete_category_confirm">Expenses using this category will be reassigned to the first remaining category. Continue?</string>
@@ -244,6 +273,7 @@
     <string name="cat_farming">Farming</string>
     <string name="cat_khata">Ledger</string>
     <string name="cat_education">Education</string>
+    <string name="cat_splits">Splits</string>
     <string name="khata_delete_party_title">Delete Party?</string>
     <string name="khata_delete_party_confirm">This will permanently delete %1$s and all their entries. This cannot be undone.</string>
 
@@ -378,10 +408,12 @@
     <!-- ── Khata / Local Shop Credit Tracker ───────────────────────────────── -->
     <string name="khata_tab_label">Ledger</string>
     <string name="khata_screen_title">Ledger</string>
-    <string name="khata_i_owe">I Owe</string>
-    <string name="khata_they_owe">They Owe Me</string>
-    <string name="khata_total_i_owe">Total I Owe</string>
-    <string name="khata_total_they_owe">Total Owed to Me</string>
+    <string name="khata_i_owe">I Will Pay</string>
+    <string name="khata_they_owe">I Will Get</string>
+    <string name="khata_total_i_owe">Total I\'ll Pay</string>
+    <string name="khata_total_they_owe">Total I\'ll Get</string>
+    <string name="khata_today_collected">Collected today</string>
+    <string name="khata_today_credit_given">Given on credit today</string>
     <string name="khata_add_party">Add Party</string>
     <string name="khata_edit_party">Edit Party</string>
     <string name="khata_party_name_hint">Name (shop or person)</string>
@@ -393,20 +425,41 @@
     <string name="khata_upi_qr_scan_error">Couldn\'t find a UPI ID in that QR code. Try again or enter it manually.</string>
     <string name="khata_party_upi_mine_ready">Request via UPI is ready — using your UPI ID: %1$s</string>
     <string name="khata_party_upi_mine_missing">Set your UPI ID in Settings to let them pay you via UPI</string>
+    <string name="khata_credit_limit_label">Credit limit</string>
+    <string name="khata_credit_limit_optional">Optional</string>
+    <string name="khata_credit_limit_of">of %1$s limit</string>
+    <string name="khata_credit_limit_near">Approaching %1$s limit</string>
+    <string name="khata_credit_limit_over">Over %1$s limit</string>
+    <string name="khata_credit_limit_near_short">Near limit</string>
+    <string name="khata_credit_limit_over_short">Over limit</string>
     <string name="khata_save_party">Save</string>
     <string name="khata_delete_party">Delete Party</string>
     <string name="khata_no_parties_i_owe">No shops added yet.
 Tap + to add a shop you have a tab at.</string>
     <string name="khata_no_parties_they_owe">No customers added yet.
-Tap + to add someone who owes you.</string>
+Tap + to add someone you\'ll get money from.</string>
+    <string name="khata_search_hint">Search by name or phone…</string>
+    <string name="khata_search_no_results">No matches. Try a different name or number.</string>
     <string name="khata_outstanding">Outstanding</string>
+    <string name="khata_days_outstanding">Outstanding for %1$d days</string>
     <string name="khata_settled">Settled ✓</string>
     <string name="khata_add_entry">Add Entry</string>
     <string name="khata_credit_label">Credit (taken on tab)</string>
     <string name="khata_payment_label">Payment (settled)</string>
     <string name="khata_amount_hint">Amount</string>
     <string name="khata_note_hint">Note (optional)</string>
+    <string name="khata_voice_add_entry">Add by voice</string>
+    <string name="khata_voice_hint">Say the amount and who it\'s for — e.g. \"Ramesh, five hundred rupees\"</string>
+    <string name="khata_voice_confirm">Use This</string>
     <string name="khata_entry_date">Date</string>
+    <string name="khata_due_date_label">Due date</string>
+    <string name="khata_due_date_optional">Optional — when this should be paid/collected by</string>
+    <string name="khata_due_on">Due %1$s</string>
+    <string name="khata_due_overdue">Overdue — was due %1$s</string>
+    <string name="khata_receipt_photo_label">Receipt photo</string>
+    <string name="khata_take_photo">Camera</string>
+    <string name="khata_choose_photo">Gallery</string>
+    <string name="khata_remove_photo">Remove photo</string>
     <string name="khata_no_entries">No entries yet. Tap + to log a credit or payment.</string>
     <string name="khata_delete_entry">Delete entry</string>
     <string name="khata_whatsapp_reminder">Send Reminder</string>
@@ -433,7 +486,7 @@ Just a note — you have a credit of %2$s at my shop.
 Feel free to use it anytime!</string>
     <string name="khata_reminder_signature">Regards,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">I owe this party</string>
+    <string name="khata_direction_i_owe_label">Choose one:</string>
     <string name="khata_direction_they_owe_label">They owe me</string>
     <string name="khata_initial_amount_label">Opening balance (optional)</string>
 
@@ -450,7 +503,7 @@ Feel free to use it anytime!</string>
 
     <!-- ── Security / Biometric lock ── -->
     <string name="security_section_title">Security</string>
-    <string name="biometric_lock_title">Unlock Expense Tracker</string>
+    <string name="biometric_lock_title">Unlock Baqaya</string>
     <string name="biometric_lock_subtitle">Use biometrics or device PIN to open the app</string>
     <string name="biometric_lock_toggle_label">App lock</string>
     <string name="biometric_lock_description">Require biometrics or PIN each time the app opens</string>
@@ -459,7 +512,7 @@ Feel free to use it anytime!</string>
     <string name="backup_section_title">Data Backup</string>
     <string name="backup_export_label">Export Backup</string>
     <string name="backup_import_label">Import Backup</string>
-    <string name="backup_scope_note">Covers expenses, categories, budgets, Khata, and debts</string>
+    <string name="backup_scope_note">Covers expenses, categories, budgets, Khata, debts, splits, payment accounts, and goals. Receipt photos aren\'t included.</string>
     <string name="backup_chooser_title">Save or share backup</string>
     <string name="backup_success">Backup exported</string>
     <string name="backup_error">Backup failed</string>
@@ -479,8 +532,11 @@ Feel free to use it anytime!</string>
     <string name="drive_no_backup">No backup found on Drive yet</string>
     <string name="drive_backup_error">Google Drive error</string>
     <string name="khata_label_all_cleared">All cleared with %1$s ✓</string>
-    <string name="khata_label_i_owe">You owe %1$s</string>
-    <string name="khata_label_they_owe">%1$s owes you</string>
+    <string name="khata_label_i_owe">You\'ll pay %1$s</string>
+    <string name="khata_label_they_owe">You\'ll get from %1$s</string>
+    <string name="khata_label_credit_they_owe">%1$s owes you a credit</string>
+    <string name="khata_label_credit_i_owe">You owe %1$s a credit</string>
+    <string name="khata_credit_pill">In Credit ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">Track money lent &amp; borrowed with your contacts</string>
@@ -637,21 +693,26 @@ Feel free to use it anytime!</string>
     <string name="split_add_member_hint">Add member name</string>
     <string name="split_member_count">%d members</string>
     <string name="split_settled">Settled ✓</string>
-    <string name="split_you_owe">You owe %1$s%2$.2f</string>
-    <string name="split_you_get">You get %1$s%2$.2f</string>
+    <string name="split_you_owe">You\'ll pay %1$s%2$.2f</string>
+    <string name="split_you_get">You\'ll get %1$s%2$.2f</string>
     <string name="split_settle_up">Settle Up</string>
     <string name="split_member_balances">Member Balances</string>
     <string name="split_expenses_label">Expenses</string>
     <string name="split_expense_count">%d expenses</string>
     <string name="split_no_expenses">No expenses yet — tap + to add one</string>
-    <string name="split_add_expense">Add Expense</string>
+    <!-- Renamed from "Add Expense" — this sheet only ever adds a *split* expense inside a
+         Split group (see AddSplitExpenseSheet.kt), so the generic title read as a duplicate of
+         the unrelated single-user "Add Expense" flow elsewhere in the app. -->
+    <string name="split_add_expense">Split Expense</string>
     <string name="split_expense_description">What was this for?</string>
     <string name="split_expense_amount">Amount</string>
     <string name="split_paid_by">Paid by</string>
     <string name="split_paid_by_member">Paid by %s</string>
     <string name="split_split_among">Split among</string>
     <string name="split_split_among_hint">Select who shares this expense equally</string>
-    <string name="split_save_expense">Save Expense</string>
+    <!-- Matches split_add_expense's "Split Expense" title — "Save Expense" alone read as a
+         generic action unrelated to the screen it's on. -->
+    <string name="split_save_expense">Save Split Expense</string>
     <string name="split_delete_expense">Delete Expense?</string>
     <string name="split_delete_expense_confirm">Delete "%s"? This can\'t be undone.</string>
     <string name="split_delete_group">Delete Group</string>
@@ -669,12 +730,57 @@ Feel free to use it anytime!</string>
     <string name="split_wa_paid_by">Paid by: %s</string>
     <string name="split_wa_total">Total: %s</string>
     <string name="split_wa_balances">Balances</string>
-    <string name="split_wa_gets">gets</string>
-    <string name="split_wa_owes">owes</string>
+    <string name="split_wa_gets">will get</string>
+    <string name="split_wa_owes">will pay</string>
     <string name="split_wa_member_settled">Settled</string>
     <string name="split_wa_to_pay">To Pay</string>
     <string name="split_wa_all_settled">Everyone is settled! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">New expense in %1$s</string>
+
+    <!-- Prompt shown right after saving a new split expense, offering to notify the group —
+         not auto-sent: WhatsApp has no way to deep-link straight into a group chat by phone
+         number (only 1:1 chats support that), so the user still has to pick the group chat and
+         tap Send themselves inside WhatsApp, same "never automated" principle as the Khata bulk
+         reminder flow. -->
+    <string name="split_notify_whatsapp_title">Notify the group?</string>
+    <string name="split_notify_whatsapp_message">Share this expense with %1$s on WhatsApp.</string>
+    <string name="split_notify_whatsapp_not_now">Not now</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">Equal</string>
+    <string name="split_mode_exact">Exact</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">Entered %1$s of %2$s</string>
+    <string name="split_percent_sum_hint">Entered %1$s%% of 100%%</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">Itemized</string>
+    <string name="split_itemized_hint">Break the bill into items and tap who shared each one</string>
+    <string name="split_itemized_amount_hint">Auto-calculated from items below</string>
+    <string name="split_add_item">Add item</string>
+    <string name="split_item_name_hint">Item</string>
+    <string name="split_remove_item">Remove item</string>
+    <string name="split_itemized_total">Items total: %1$s</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">Pay via UPI</string>
+    <string name="split_add_their_upi">Add their UPI ID</string>
+    <string name="split_request_via_upi">Request via UPI</string>
+    <string name="split_set_your_upi">Set your UPI ID</string>
+
+    <!-- Individual settlement reminders in Split settle-up -->
+    <string name="split_remind_member">Remind</string>
+    <string name="split_add_their_phone">Add their phone number</string>
+    <string name="split_member_phone_hint">Phone number (for WhatsApp)</string>
+    <string name="split_whatsapp_not_installed">WhatsApp is not installed.</string>
+    <string name="split_reminder_msg">Hi %1$s 👋
+
+A friendly reminder from \"%2$s\" — you owe %3$s to %4$s.
+
+Kindly settle when convenient 🙏</string>
+    <string name="split_reminder_signature">Regards,
+%1$s</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
 
@@ -687,8 +793,8 @@ Feel free to use it anytime!</string>
     <string name="force_update_note">You must update to continue</string>
     <string name="khata_balance_label">Bal:</string>
     <string name="split_hero_settled_label">All settled ✓</string>
-    <string name="split_hero_get_back_label">You get back</string>
-    <string name="split_hero_you_owe_label">You owe</string>
+    <string name="split_hero_get_back_label">You\'ll Get</string>
+    <string name="split_hero_you_owe_label">You\'ll Pay</string>
 
     <string name="whats_new_feature_scan_title">Scan Receipts</string>
     <string name="whats_new_feature_voice_title">Voice Input</string>
@@ -696,7 +802,61 @@ Feel free to use it anytime!</string>
     <string name="whats_new_feature_khata_title">Khata / Ledger</string>
     <string name="whats_new_feature_goals_title">Goals &amp; Streaks</string>
     <string name="split_hero_total_spent">Total spent</string>
+    <string name="split_member_gets_back">will get</string>
+    <string name="split_member_owes">will pay</string>
+    <string name="split_net_owed">Overall you\'ll get</string>
+    <string name="split_net_owe">Overall you\'ll pay</string>
+    <string name="split_net_settled">All settled up ✓</string>
+    <string name="split_net_group_count">across %d group(s)</string>
 
     <string name="reminder_hour_decrease">Decrease hour</string>
     <string name="reminder_hour_increase">Increase hour</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">Cash</string>
+    <string name="account_bank">Bank Account</string>
+    <string name="account_card">Card</string>
+    <string name="settings_section_payment_accounts">Payment Accounts</string>
+    <string name="manage_payment_accounts">Manage Accounts</string>
+    <string name="payment_accounts_hint">Tag expenses with cash, bank, or card to see where your money actually goes.</string>
+    <string name="add_payment_account">Add account</string>
+    <string name="new_account_name_hint">New account name</string>
+    <string name="enter_account_name">Enter an account name</string>
+    <string name="delete_payment_account_confirm">Delete this account? Expenses tagged with it will just become untagged — nothing is deleted.</string>
+    <string name="payment_account_label">Paid from</string>
+    <string name="payment_account_not_set">Not set</string>
+    <string name="account_breakdown_title">By Account</string>
+    <string name="export_col_account">Account</string>
+
+    <!-- Business Profile (Settings) — optional, stamped onto exported PDF reports in place
+         of the app's own name; see PdfExporter.kt / DashboardScreen.kt / KhataDetailScreen.kt /
+         SplitGroupDetailScreen.kt call sites. -->
+    <string name="settings_business_profile_title">Business Profile</string>
+    <string name="settings_business_profile_hint">Shown on your exported PDF reports instead of the app name — handy if you run a shop.</string>
+    <string name="business_name_label">Business Name</string>
+    <string name="business_name_hint">e.g. Sharma General Store</string>
+    <string name="business_address_label">Address (optional)</string>
+    <string name="business_phone_label">Phone (optional)</string>
+    <string name="settings_business_profile_saved">Business profile saved</string>
+
+    <!-- ── Collections: aging view + bulk WhatsApp reminders (THEY_OWE parties only) ──
+         See KhataCollectionsScreen.kt. Bulk sending is one-tap-per-party (no automated
+         background sending) — each WhatsApp send still requires the user to tap "Send". -->
+    <string name="khata_collections_entry_label">Aging &amp; Reminders</string>
+    <string name="khata_collections_title">Collections</string>
+    <string name="khata_collections_subtitle">Overdue balances, at a glance</string>
+    <string name="khata_aging_bucket_0_30">0–30 days</string>
+    <string name="khata_aging_bucket_31_60">31–60 days</string>
+    <string name="khata_aging_bucket_61_90">61–90 days</string>
+    <string name="khata_aging_bucket_90_plus">90+ days</string>
+    <string name="khata_collections_empty">Nothing overdue right now — you\'re all caught up!</string>
+    <string name="khata_collections_select_all">Select all</string>
+    <string name="khata_collections_no_phone">No phone on file</string>
+    <string name="khata_collections_days_overdue">%1$d days</string>
+    <string name="khata_collections_remind_selected">Remind Selected (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%1$d of %2$d</string>
+    <string name="khata_bulk_reminder_send">Send via WhatsApp</string>
+    <string name="khata_bulk_reminder_skip">Skip</string>
+    <string name="khata_bulk_reminder_stop">Stop</string>
+    <string name="khata_bulk_reminder_done">Sent %1$d of %2$d reminders</string>
 </resources>

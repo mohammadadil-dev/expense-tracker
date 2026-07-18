@@ -9,6 +9,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,9 +32,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
@@ -91,7 +94,11 @@ import com.expensetracker.app.ui.theme.SuccessGreen
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
+import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.PdfExporter
+import com.expensetracker.app.util.ReceiptPhotoStore
+import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
@@ -123,6 +130,7 @@ fun KhataDetailScreen(
     var pendingDelete  by remember { mutableStateOf<KhataEntryEntity?>(null) }
     var showUpiSheet   by remember { mutableStateOf(false) }
     var showMarkPaidConfirm by remember { mutableStateOf(false) }
+    var viewingPhotoPath by remember { mutableStateOf<String?>(null) }
 
     // "Request via UPI" is only offered when: they owe the user money, the outstanding
     // balance clears the ₹1 floor, the currency is INR, and the user has set their own
@@ -177,28 +185,82 @@ fun KhataDetailScreen(
     val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) + signature +
         "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
 
-    // Shared by the plain reminder and the "Request via UPI" share — both hand off to
-    // WhatsApp via Intent.ACTION_VIEW, never touching the message content or transport.
+    // Bill/receipt photos attached to this party's CREDIT entries (see AddKhataEntrySheet's
+    // photo attach UI) — collected here so both WhatsApp share paths below can attach them.
+    // Khata has no per-entry "settled" flag (payments reduce the whole-party balance, not a
+    // specific credit), so this is every CREDIT entry's photo, not just "unpaid" ones; that
+    // matches what "Send Reminder" already means here — it's only ever shown while the party
+    // has a positive balance (see KhataBalanceCard's `!isSettled` gate above).
+    val billPhotoUris = remember(entries) {
+        entries.filter { it.type == KhataEntryEntity.TYPE_CREDIT && !it.photoPath.isNullOrBlank() }
+            .map { ReceiptPhotoStore.uriFor(context, it.photoPath!!) }
+    }
+
+    // Shared by the plain reminder and the "Request via UPI" share. Both prefer
+    // Intent.ACTION_VIEW's phone-prefilled click-to-chat link when there's nothing to attach —
+    // it opens straight into the right conversation. But that API is text-only; the moment
+    // there's an image to attach (a bill photo here, the UPI QR in sendUpiPaymentQr below) this
+    // switches to ACTION_SEND(_MULTIPLE), which can carry images but can't pre-fill a recipient,
+    // so WhatsApp opens its own contact/chat picker instead — same trade-off already made by
+    // the QR share, now made consistently whenever a photo is actually being sent.
     fun sendWhatsAppMessage(message: String) {
-        // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
-        // e.g. "+966 51 234 5678" → "96651234567"
-        val phone = party.phone
-            .replace("+", "")
-            .replace(" ", "")
-            .replace("-", "")
-            .replace("(", "")
-            .replace(")", "")
-        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
-        val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
-        try {
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            // WhatsApp Business fallback
-            val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+        if (billPhotoUris.isEmpty()) {
+            // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
+            // e.g. "+966 51 234 5678" → "96651234567"
+            val phone = party.phone
+                .replace("+", "")
+                .replace(" ", "")
+                .replace("-", "")
+                .replace("(", "")
+                .replace(")", "")
+            val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phone&text=${Uri.encode(message)}")
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp") }
             try {
-                context.startActivity(intent2)
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // WhatsApp Business fallback
+                val intent2 = Intent(Intent.ACTION_VIEW, uri).apply { setPackage("com.whatsapp.w4b") }
+                try {
+                    context.startActivity(intent2)
+                } catch (e2: ActivityNotFoundException) {
+                    // WhatsApp isn't installed — fall back to a plain SMS (see SmsFallback's doc
+                    // comment for why this is text-only and why that's fine for this audience).
+                    if (!SmsFallback.send(context, party.phone, message)) {
+                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            return
+        }
+
+        // Bill photo(s) attached — ACTION_SEND_MULTIPLE so WhatsApp gets every bill in one
+        // share (it supports multi-image sends with a single caption).
+        val images = ArrayList(billPhotoUris)
+        val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "image/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+            putExtra(Intent.EXTRA_TEXT, message)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setPackage("com.whatsapp")
+        }
+        try {
+            context.startActivity(sendIntent)
+        } catch (e: ActivityNotFoundException) {
+            val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "image/*"
+                putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
+                putExtra(Intent.EXTRA_TEXT, message)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp.w4b")
+            }
+            try {
+                context.startActivity(fallbackIntent)
             } catch (e2: ActivityNotFoundException) {
-                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                // WhatsApp isn't installed — fall back to a plain SMS with just the text; the
+                // bill photo(s) can't ride along over SMS (see SmsFallback's doc comment).
+                if (!SmsFallback.send(context, party.phone, message)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -210,11 +272,45 @@ fun KhataDetailScreen(
     // plain text in a chat bubble (percent-encoded characters and all), with zero functional
     // benefit once the scannable QR is already attached — so it's deliberately left out of the
     // caption. No copy-link fallback: sharing always goes through this same WhatsApp flow (§10.3).
+    // Bill photos (if any) ride along with the QR in the same multi-image share.
     fun sendUpiPaymentQr(qrImageUri: Uri) {
         val caption = reminderMsg
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "image/png"
-            putExtra(Intent.EXTRA_STREAM, qrImageUri)
+        if (billPhotoUris.isEmpty()) {
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                putExtra(Intent.EXTRA_STREAM, qrImageUri)
+                putExtra(Intent.EXTRA_TEXT, caption)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp")
+            }
+            try {
+                context.startActivity(sendIntent)
+            } catch (e: ActivityNotFoundException) {
+                val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    putExtra(Intent.EXTRA_STREAM, qrImageUri)
+                    putExtra(Intent.EXTRA_TEXT, caption)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    setPackage("com.whatsapp.w4b")
+                }
+                try {
+                    context.startActivity(fallbackIntent)
+                } catch (e2: ActivityNotFoundException) {
+                    // WhatsApp isn't installed — the QR image itself can't ride over SMS, but
+                    // the reminder text still can (see SmsFallback's doc comment).
+                    if (!SmsFallback.send(context, party.phone, caption)) {
+                        Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            showUpiSheet = false
+            return
+        }
+
+        val images = ArrayList(listOf(qrImageUri) + billPhotoUris)
+        val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+            type = "image/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
             putExtra(Intent.EXTRA_TEXT, caption)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setPackage("com.whatsapp")
@@ -222,9 +318,9 @@ fun KhataDetailScreen(
         try {
             context.startActivity(sendIntent)
         } catch (e: ActivityNotFoundException) {
-            val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "image/png"
-                putExtra(Intent.EXTRA_STREAM, qrImageUri)
+            val fallbackIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "image/*"
+                putParcelableArrayListExtra(Intent.EXTRA_STREAM, images)
                 putExtra(Intent.EXTRA_TEXT, caption)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 setPackage("com.whatsapp.w4b")
@@ -232,7 +328,11 @@ fun KhataDetailScreen(
             try {
                 context.startActivity(fallbackIntent)
             } catch (e2: ActivityNotFoundException) {
-                Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                // WhatsApp isn't installed — the QR image (and any bill photos) can't ride
+                // over SMS, but the reminder text still can (see SmsFallback's doc comment).
+                if (!SmsFallback.send(context, party.phone, caption)) {
+                    Toast.makeText(context, whatsappNotInstalled, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         showUpiSheet = false
@@ -293,6 +393,76 @@ fun KhataDetailScreen(
         showMarkPaidConfirm = false
     }
 
+    // ── PDF statement export ────────────────────────────────────────────────────
+    // Same PdfExporter/ExportRow the Dashboard's monthly report uses (see DashboardScreen.kt).
+    // Rows are signed so they sum to the outstanding balance like a real ledger: a CREDIT entry
+    // shows as a positive amount (adds to what's owed), a PAYMENT shows as negative (reduces
+    // it) — the Type column spells out which, so the sign alone never has to carry the meaning.
+    val exportReportTitle = stringResource(R.string.khata_export_report_title)
+    val exportColDate = stringResource(R.string.date_label)
+    val exportColType = stringResource(R.string.khata_export_col_type)
+    val exportColDescription = stringResource(R.string.description_label)
+    val exportColAmount = stringResource(R.string.amount_label)
+    val exportTotalLabel = stringResource(R.string.khata_export_total_label)
+    val exportEmptyLabel = stringResource(R.string.khata_export_no_entries)
+    val exportChooserTitle = stringResource(R.string.export_pdf_chooser_title)
+    val exportStartedLabel = stringResource(R.string.export_started)
+    val appNameStr = stringResource(R.string.app_name)
+    // Optional business profile (Settings) — stamped onto the export in place of appNameStr
+    // when set. See PdfExporter.kt's businessContactLine doc comment.
+    val businessName by expenseViewModel.businessName.collectAsState()
+    val businessAddress by expenseViewModel.businessAddress.collectAsState()
+    val businessPhone by expenseViewModel.businessPhone.collectAsState()
+    val exportAppName = businessName.ifBlank { appNameStr }
+    val exportBusinessContactLine = listOfNotNull(
+        businessAddress.takeIf { it.isNotBlank() },
+        businessPhone.takeIf { it.isNotBlank() }
+    ).joinToString("   •   ").takeIf { it.isNotBlank() }
+    val poweredByFooter = stringResource(R.string.powered_by_footer)
+    val creditTypeLabel = stringResource(R.string.khata_export_type_credit)
+    val paymentTypeLabel = stringResource(R.string.khata_export_type_payment)
+    // Resolved here (composable scope) rather than inside exportStatementAsPdf() below, since
+    // stringResource() can only be called from composable code and that function is a plain fun.
+    val exportBalanceLabel = stringResource(R.string.khata_export_balance_label, Formatters.money(balance, currencySymbol))
+
+    val exportRows = remember(entries, currencySymbol) {
+        entries.sortedByDescending { it.date }.map { e ->
+            val isCredit = e.type == KhataEntryEntity.TYPE_CREDIT
+            ExportRow(
+                dateLabel = e.date,
+                categoryLabel = if (isCredit) creditTypeLabel else paymentTypeLabel,
+                description = e.note,
+                amountLabel = Formatters.money(if (isCredit) e.amount else -e.amount, currencySymbol)
+            )
+        }
+    }
+
+    fun exportStatementAsPdf() {
+        if (exportRows.isEmpty()) {
+            Toast.makeText(context, exportEmptyLabel, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, exportStartedLabel, Toast.LENGTH_SHORT).show()
+        val uri = PdfExporter.export(
+            context = context,
+            appName = exportAppName,
+            reportTitle = exportReportTitle,
+            monthLabel = party.name,
+            customerIdLabel = exportBalanceLabel,
+            businessContactLine = exportBusinessContactLine,
+            colDate = exportColDate,
+            colCategory = exportColType,
+            colDescription = exportColDescription,
+            colAmount = exportColAmount,
+            totalLabel = exportTotalLabel,
+            totalValue = Formatters.money(balance, currencySymbol),
+            footerText = poweredByFooter,
+            emptyLabel = exportEmptyLabel,
+            rows = exportRows
+        )
+        PdfExporter.shareOrSave(context, uri, exportChooserTitle)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         AnimatedBlobBackground(
             blobColors = listOf(NeonCyan, NeonPink, NeonTeal),
@@ -310,6 +480,9 @@ fun KhataDetailScreen(
                         }
                     },
                     actions = {
+                        IconButton(onClick = { exportStatementAsPdf() }) {
+                            Icon(Icons.Filled.PictureAsPdf, contentDescription = stringResource(R.string.export_pdf))
+                        }
                         IconButton(onClick = { showEditParty = true }) {
                             Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.edit))
                         }
@@ -344,9 +517,13 @@ fun KhataDetailScreen(
                 KhataBalanceCard(
                     partyName = party.name,
                     balance = balance,
+                    creditBalance = khataViewModel.creditBalanceForParty(partyId, allEntries),
                     currencySymbol = currencySymbol,
                     isIOwe = isIOwe,
                     hasPhone = party.phone.isNotBlank(),
+                    creditLimit = party.creditLimit,
+                    creditLimitFraction = khataViewModel.creditLimitFraction(party, balance),
+                    agingDays = khataViewModel.agingDaysForParty(partyId, allEntries),
                     onSendReminder = { sendWhatsApp() },
                     showUpiButton = showUpiButton,
                     onRequestUpi = { showUpiSheet = true },
@@ -416,7 +593,10 @@ fun KhataDetailScreen(
                                 entry = entry,
                                 runningBalance = runningBalance,
                                 currencySymbol = currencySymbol,
-                                onDelete = { pendingDelete = entry }
+                                isOverdue = khataViewModel.isOverdue(entry),
+                                isDueSoon = khataViewModel.isDueSoon(entry),
+                                onDelete = { pendingDelete = entry },
+                                onViewPhoto = { viewingPhotoPath = it }
                             )
                         }
                     }
@@ -428,8 +608,8 @@ fun KhataDetailScreen(
     // ── Sheets & dialogs ────────────────────────────────────────────────────
     if (showAddEntry) {
         AddKhataEntrySheet(
-            onSave = { amount, note, date, type ->
-                khataViewModel.addEntry(partyId, amount, note, date, type)
+            onSave = { amount, note, date, type, dueDate, photoPath ->
+                khataViewModel.addEntry(partyId, amount, note, date, type, dueDate, photoPath)
                 showAddEntry = false
             },
             onDismiss = { showAddEntry = false }
@@ -442,9 +622,9 @@ fun KhataDetailScreen(
             defaultDirection = party.direction,
             currencySymbol = currencySymbol,
             myUpiId = myUpiId,
-            onSave = { id, name, phone, direction, _, _, upiId ->
+            onSave = { id, name, phone, direction, _, _, upiId, creditLimit ->
                 // Editing an existing party — initial amount fields are hidden, pass-through ignored
-                khataViewModel.saveParty(id, name, phone, direction, upiId = upiId)
+                khataViewModel.saveParty(id, name, phone, direction, upiId = upiId, creditLimit = creditLimit)
                 showEditParty = false
             },
             onDismiss = { showEditParty = false }
@@ -481,6 +661,30 @@ fun KhataDetailScreen(
             onShareQr = { qrUri -> sendUpiPaymentQr(qrUri) },
             onDismiss = { showUpiSheet = false }
         )
+    }
+
+    viewingPhotoPath?.let { path ->
+        androidx.compose.ui.window.Dialog(onDismissRequest = { viewingPhotoPath = null }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.Black)
+            ) {
+                androidx.compose.foundation.Image(
+                    painter = coil.compose.rememberAsyncImagePainter(java.io.File(path)),
+                    contentDescription = stringResource(R.string.khata_receipt_photo_label),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                    modifier = Modifier.fillMaxWidth().height(420.dp)
+                )
+                IconButton(
+                    onClick = { viewingPhotoPath = null },
+                    modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+                ) {
+                    Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.close), tint = Color.White)
+                }
+            }
+        }
     }
 
     pendingDelete?.let { entry ->
@@ -524,9 +728,17 @@ fun KhataDetailScreen(
 private fun KhataBalanceCard(
     partyName: String,
     balance: Double,
+    creditBalance: Double = 0.0,
     currencySymbol: String,
     isIOwe: Boolean,
     hasPhone: Boolean,
+    creditLimit: Double? = null,
+    creditLimitFraction: Float? = null,
+    // How many days this balance has been outstanding — same aging calculation the Collections
+    // screen's bucket view already uses (agingDaysForParty), surfaced here too so the party's
+    // own detail screen isn't the only place that just says "Outstanding" with no sense of how
+    // overdue that actually is.
+    agingDays: Int? = null,
     onSendReminder: () -> Unit,
     showUpiButton: Boolean = false,
     onRequestUpi: () -> Unit = {},
@@ -538,6 +750,10 @@ private fun KhataBalanceCard(
     onMarkPaid: () -> Unit = {}
 ) {
     val isSettled = balance <= 0.0
+    // Overpaid: payments exceeded credits. balance is already clamped to 0 by the caller (see
+    // KhataViewModel.balanceForParty's doc), so without this the card would show a flat
+    // "Settled ✓" with no way to see the money now owed back the other way.
+    val hasCredit = creditBalance > 0.01
 
     // Gradient colors: red for "I owe", green for "they owe me", teal-green for settled
     val gradientStart = when {
@@ -551,8 +767,12 @@ private fun KhataBalanceCard(
         else      -> NeonCyan
     }
 
-    // Context-aware label so the user immediately understands direction
+    // Context-aware label so the user immediately understands direction. Note credit flips the
+    // usual direction: on an I_OWE party (a supplier), overpaying them means *they* now owe the
+    // shop back; on a THEY_OWE party (a customer), them overpaying means the *shop* owes them.
     val contextLabel = when {
+        hasCredit && isIOwe -> stringResource(R.string.khata_label_credit_they_owe, partyName)
+        hasCredit           -> stringResource(R.string.khata_label_credit_i_owe, partyName)
         isSettled -> stringResource(R.string.khata_label_all_cleared, partyName)
         isIOwe    -> stringResource(R.string.khata_label_i_owe, partyName)
         else      -> stringResource(R.string.khata_label_they_owe, partyName)
@@ -618,16 +838,75 @@ private fun KhataBalanceCard(
 
             Spacer(Modifier.height(6.dp))
 
-            // Big balance amount
+            // Big balance amount — shows the credit owed back when overpaid, otherwise the
+            // normal outstanding balance (0 when settled).
             MoneyText(
-                formatted = Formatters.money(balance, currencySymbol),
+                formatted = Formatters.money(if (hasCredit) creditBalance else balance, currencySymbol),
                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
                 color = Color.White
             )
 
             Spacer(Modifier.height(12.dp))
 
-            if (isSettled) {
+            // Credit limit progress bar — only shown when a limit is actually set. Purely a
+            // local warning, not a hard cap (the app never blocks adding a credit entry that
+            // would push the balance over it).
+            if (creditLimit != null && creditLimitFraction != null && !isSettled) {
+                val fraction = creditLimitFraction.coerceIn(0f, 1f)
+                val isOverLimit = creditLimitFraction >= 1f
+                val isNearLimit = creditLimitFraction >= 0.8f
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(Color.White.copy(alpha = 0.25f))
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(fraction)
+                                .height(6.dp)
+                                .clip(RoundedCornerShape(50))
+                                .background(if (isOverLimit) Color(0xFFFFCDD2) else Color.White)
+                        )
+                    }
+                    Spacer(Modifier.height(6.dp))
+                    // MoneyText, not a plain Text — the embedded amount was leaking the raw
+                    // "ر.س" abbreviation instead of the vector riyal symbol every other on-screen
+                    // amount in the app uses (maxLines = 2 routes this through MoneyText's
+                    // inline-content path, since the icon sits mid-sentence here, not at the
+                    // start of an isolated value).
+                    MoneyText(
+                        formatted = when {
+                            isOverLimit -> stringResource(R.string.khata_credit_limit_over, Formatters.money(creditLimit, currencySymbol))
+                            isNearLimit -> stringResource(R.string.khata_credit_limit_near, Formatters.money(creditLimit, currencySymbol))
+                            else -> stringResource(R.string.khata_credit_limit_of, Formatters.money(creditLimit, currencySymbol))
+                        },
+                        style = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.Center),
+                        color = Color.White.copy(alpha = 0.90f),
+                        maxLines = 2,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Spacer(Modifier.height(12.dp))
+            }
+
+            if (hasCredit) {
+                // Credit badge pill — distinct from "Settled" so an overpayment doesn't read as
+                // "nothing to see here" (see hasCredit's doc comment above).
+                Surface(
+                    shape = RoundedCornerShape(50),
+                    color = Color.White.copy(alpha = 0.20f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.khata_credit_pill),
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                        color = Color.White,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                    )
+                }
+            } else if (isSettled) {
                 // Settled badge pill
                 Surface(
                     shape = RoundedCornerShape(50),
@@ -665,6 +944,20 @@ private fun KhataBalanceCard(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
                     )
                 }
+            }
+
+            // How long this balance has been outstanding — same number Collections' aging
+            // buckets are built from, so "Outstanding" (or the WhatsApp reminder button above)
+            // isn't the only information on this card; previously there was no sense of how
+            // overdue a balance actually was without leaving this screen.
+            if (!isSettled && !hasCredit && agingDays != null) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = stringResource(R.string.khata_days_outstanding, agingDays),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.White.copy(alpha = 0.75f),
+                    textAlign = TextAlign.Center
+                )
             }
 
             // "Request via UPI" — independent of the WhatsApp/no-phone branch above since
@@ -769,7 +1062,10 @@ private fun KhataEntryRow(
     entry: KhataEntryEntity,
     runningBalance: Double,
     currencySymbol: String,
-    onDelete: () -> Unit
+    isOverdue: Boolean = false,
+    isDueSoon: Boolean = false,
+    onDelete: () -> Unit,
+    onViewPhoto: (String) -> Unit = {}
 ) {
     val isCredit = entry.type == KhataEntryEntity.TYPE_CREDIT
     Card(
@@ -783,6 +1079,24 @@ private fun KhataEntryRow(
                 .padding(horizontal = 14.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Receipt photo thumbnail, if attached — tap to view full screen.
+            entry.photoPath?.let { path ->
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onViewPhoto(path) }
+                ) {
+                    androidx.compose.foundation.Image(
+                        painter = coil.compose.rememberAsyncImagePainter(java.io.File(path)),
+                        contentDescription = stringResource(R.string.khata_receipt_photo_label),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Spacer(Modifier.width(10.dp))
+            }
+
             // Type dot
             Box(
                 modifier = Modifier
@@ -812,6 +1126,31 @@ private fun KhataEntryRow(
                     style = MaterialTheme.typography.bodySmall,
                     color = TextMuted
                 )
+                if (entry.dueDate != null) {
+                    Spacer(Modifier.height(2.dp))
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = when {
+                            isOverdue -> DangerRed.copy(alpha = 0.12f)
+                            isDueSoon -> Color(0xFFFFA000).copy(alpha = 0.14f)
+                            else -> TextMuted.copy(alpha = 0.10f)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(
+                                if (isOverdue) R.string.khata_due_overdue else R.string.khata_due_on,
+                                entry.dueDate
+                            ),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = when {
+                                isOverdue -> DangerRed
+                                isDueSoon -> Color(0xFFE65100)
+                                else -> TextMuted
+                            },
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                }
             }
 
             // Amount + running balance

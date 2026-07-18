@@ -9,4 +9,8 @@
     <cache-path name="camera" path="camera/" />
     <!-- Generated UPI QR code PNGs for the Khata "Request via UPI" share flow. -->
     <cache-path name="qrcodes" path="qrcodes/" />
+    <!-- Permanent (non-cache) storage for Khata receipt/bill photos — unlike the temp
+         camera/ dir above, files here are never cleared by the OS, since these are meant
+         to persist as long as the ledger entry does. See ReceiptPhotoStore. -->
+    <files-path name="receipts" path="receipts/" />
 </paths>

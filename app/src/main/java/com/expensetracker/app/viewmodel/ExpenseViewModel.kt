@@ -63,6 +63,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     val allExpenses: StateFlow<List<ExpenseEntity>> = repository.allExpenses
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Payment accounts (Cash / Bank / Card / user-added) for the account picker + Settings
+     * management sheet. */
+    val paymentAccounts: StateFlow<List<com.expensetracker.app.data.PaymentAccountEntity>> = repository.paymentAccounts
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val monthExpenses: StateFlow<List<ExpenseEntity>> = _currentMonthKey
         .flatMapLatest { key -> repository.expensesForMonth(key) }
@@ -158,6 +163,16 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     private val _myUpiId = MutableStateFlow(settings.myUpiId)
     val myUpiId: StateFlow<String> = _myUpiId
+
+    // ── Business profile (optional, cosmetic — see SettingsRepository) ────────
+    private val _businessName = MutableStateFlow(settings.businessName)
+    val businessName: StateFlow<String> = _businessName
+
+    private val _businessAddress = MutableStateFlow(settings.businessAddress)
+    val businessAddress: StateFlow<String> = _businessAddress
+
+    private val _businessPhone = MutableStateFlow(settings.businessPhone)
+    val businessPhone: StateFlow<String> = _businessPhone
 
     private val _smsDetectionEnabled = MutableStateFlow(settings.smsDetectionEnabled)
     val smsDetectionEnabled: StateFlow<Boolean> = _smsDetectionEnabled
@@ -305,12 +320,14 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         isRecurring: Boolean = false,
         recurringDayOfMonth: Int? = null,
         memberId: Long? = null,
+        accountId: Long? = null,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
             repository.addOrUpdateExpense(
                 id, categoryId, description, amount, date, isRecurring,
-                recurringDayOfMonth = recurringDayOfMonth, memberId = memberId
+                recurringDayOfMonth = recurringDayOfMonth, memberId = memberId,
+                accountId = accountId
             )
             // Update logging streak only for new expenses, not edits.
             if (id == null) updateLogStreak(date)
@@ -387,6 +404,27 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch { onResult(repository.deleteCategory(category)) }
     }
 
+    // ── Payment Accounts ──────────────────────────────────────────────────────
+
+    fun addAccount(name: String, colorHex: String, onDone: () -> Unit = {}) {
+        viewModelScope.launch {
+            repository.addAccount(name, colorHex)
+            onDone()
+        }
+    }
+
+    fun renameAccount(account: com.expensetracker.app.data.PaymentAccountEntity, newName: String) {
+        viewModelScope.launch { repository.renameAccount(account, newName) }
+    }
+
+    fun recolorAccount(account: com.expensetracker.app.data.PaymentAccountEntity, colorHex: String) {
+        viewModelScope.launch { repository.recolorAccount(account, colorHex) }
+    }
+
+    fun deleteAccount(account: com.expensetracker.app.data.PaymentAccountEntity) {
+        viewModelScope.launch { repository.deleteAccount(account) }
+    }
+
     /** Sets, updates, or (passing 0 or less) clears the standing budget target for
      * [categoryId] — null means the overall monthly budget rather than a per-category one. */
     fun setBudget(categoryId: Long?, amount: Double) {
@@ -410,6 +448,21 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun setMyUpiId(upiId: String) {
         settings.myUpiId = upiId
         _myUpiId.value = upiId
+    }
+
+    fun setBusinessName(name: String) {
+        settings.businessName = name
+        _businessName.value = name
+    }
+
+    fun setBusinessAddress(address: String) {
+        settings.businessAddress = address
+        _businessAddress.value = address
+    }
+
+    fun setBusinessPhone(phone: String) {
+        settings.businessPhone = phone
+        _businessPhone.value = phone
     }
 
     fun setCurrencySymbol(symbol: String) {

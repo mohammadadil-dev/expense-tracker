@@ -84,6 +84,7 @@ fun SubscriptionsScreen(
 ) {
     val templates by viewModel.recurringTemplates.collectAsState()
     val categories by viewModel.categories.collectAsState()
+    val paymentAccounts by viewModel.paymentAccounts.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val locale = LocalConfiguration.current.locales[0]
 
@@ -173,9 +174,10 @@ fun SubscriptionsScreen(
             existing = editingTemplate,
             defaultDate = DateUtils.todayIso(),
             defaultRecurring = true,
+            accounts = paymentAccounts,
             onDismiss = { showAddSheet = false; editingTemplate = null },
-            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay ->
-                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId) {
+            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay, accountId ->
+                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId, accountId) {
                     showAddSheet = false
                     editingTemplate = null
                 }

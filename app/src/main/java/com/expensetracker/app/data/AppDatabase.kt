@@ -19,9 +19,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         KhataPartyEntity::class, KhataEntryEntity::class, IncomeEntity::class,
         GoalEntity::class, FamilyMemberEntity::class,
         SplitGroupEntity::class, SplitMemberEntity::class,
-        SplitExpenseEntity::class, SplitExpenseShareEntity::class
+        SplitExpenseEntity::class, SplitExpenseShareEntity::class,
+        PaymentAccountEntity::class,
+        SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class
     ],
-    version = 16,
+    version = 21,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -40,6 +42,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun splitMemberDao(): SplitMemberDao
     abstract fun splitExpenseDao(): SplitExpenseDao
     abstract fun splitExpenseShareDao(): SplitExpenseShareDao
+    abstract fun paymentAccountDao(): PaymentAccountDao
+    abstract fun splitExpenseItemDao(): SplitExpenseItemDao
 
     companion object {
         @Volatile
@@ -464,6 +468,175 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v16 -> v17: Payment accounts (Cash / Bank / Card / etc.) — an expense can optionally
+        // be tagged with which account it was paid from. Adds the payment_accounts table and
+        // a nullable expenses.accountId column (NULL on every existing row = "not specified",
+        // fully backwards-compatible — no existing behavior changes). Seeds three built-in
+        // accounts (Cash, Bank Account, Card) the same way MIGRATION_4_5 seeded a category,
+        // using nameKey so their labels localize; "Cash" is marked isDefault so new expenses
+        // default to it while Bank/Card are just available choices.
+        private val MIGRATION_16_17 = object : Migration(16, 17) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `payment_accounts` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `nameKey` TEXT,
+                        `customName` TEXT,
+                        `type` TEXT NOT NULL DEFAULT 'OTHER',
+                        `colorHex` TEXT NOT NULL DEFAULT '#4CAF50',
+                        `isDefault` INTEGER NOT NULL DEFAULT 0,
+                        `sortOrder` INTEGER NOT NULL DEFAULT 0,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("ALTER TABLE expenses ADD COLUMN accountId INTEGER")
+
+                val now = System.currentTimeMillis()
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_cash", "CASH", "#4CAF50", 1, 0, now)
+                )
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_bank", "BANK", "#2196F3", 0, 1, now)
+                )
+                db.execSQL(
+                    "INSERT INTO payment_accounts (nameKey, type, colorHex, isDefault, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                    arrayOf<Any?>("account_card", "CARD", "#FF9800", 0, 2, now)
+                )
+            }
+        }
+
+        // v17 -> v18: Splits improvements.
+        //   split_expenses.linkedExpenseId — non-settlement split expenses where "me"
+        //   participates now auto-generate a personal ExpenseEntity for *my own share* of
+        //   the cost, the same linked-expense pattern Khata/Debts already use, so group
+        //   spend actually counts toward the Dashboard/budget instead of being invisible to
+        //   them. Backfilled for every existing non-settlement split expense so historical
+        //   figures are correct after upgrading, not just future ones.
+        //   split_members.upiId — optional UPI ID so a settlement owed *to* a member can be
+        //   paid directly from Settle Up, mirroring khata_parties.upiId.
+        private val MIGRATION_17_18 = object : Migration(17, 18) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE split_expenses ADD COLUMN linkedExpenseId INTEGER")
+                db.execSQL("ALTER TABLE split_members ADD COLUMN upiId TEXT")
+
+                // Seed the "Splits" category (same pattern as cat_khata in MIGRATION_7_8).
+                var nextSortOrder = 0
+                db.query("SELECT COUNT(*) FROM categories").use { c ->
+                    if (c.moveToFirst()) nextSortOrder = c.getInt(0)
+                }
+                db.execSQL(
+                    "INSERT INTO categories (nameKey, customName, colorHex, sortOrder) VALUES (?, NULL, ?, ?)",
+                    arrayOf<Any?>("cat_splits", "#00BFA5", nextSortOrder)
+                )
+                var splitsCategoryId = -1L
+                db.query("SELECT id FROM categories WHERE nameKey = 'cat_splits' ORDER BY id DESC LIMIT 1").use { c ->
+                    if (c.moveToFirst()) splitsCategoryId = c.getLong(0)
+                }
+                if (splitsCategoryId == -1L) return
+
+                // Backfill: for every existing non-settlement split expense where the device
+                // owner ("me") has a share, create a linked personal expense for that share
+                // amount (not the full expense amount — "me" only ever really spends my own
+                // share; the rest is fronted-and-reimbursed, not spend).
+                data class PendingBackfill(val expenseId: Long, val myShare: Double, val date: String, val description: String)
+                val toBackfill = mutableListOf<PendingBackfill>()
+                db.query(
+                    """
+                    SELECT se.id, ses.shareAmount, se.date, se.description
+                    FROM split_expenses se
+                    INNER JOIN split_members sm ON sm.groupId = se.groupId AND sm.isMe = 1
+                    INNER JOIN split_expense_shares ses ON ses.expenseId = se.id AND ses.memberId = sm.id
+                    WHERE se.isSettlement = 0
+                    """.trimIndent()
+                ).use { c ->
+                    while (c.moveToNext()) {
+                        toBackfill.add(
+                            PendingBackfill(c.getLong(0), c.getDouble(1), c.getString(2), c.getString(3))
+                        )
+                    }
+                }
+
+                for (row in toBackfill) {
+                    if (row.myShare <= 0.0) continue
+                    val monthKey = if (row.date.length >= 7) row.date.substring(0, 7) else row.date
+                    db.execSQL(
+                        "INSERT INTO expenses (categoryId, description, amount, date, monthKey) VALUES (?, ?, ?, ?, ?)",
+                        arrayOf<Any?>(splitsCategoryId, row.description, row.myShare, row.date, monthKey)
+                    )
+                    var newExpenseId = -1L
+                    db.query("SELECT last_insert_rowid()").use { c ->
+                        if (c.moveToFirst()) newExpenseId = c.getLong(0)
+                    }
+                    if (newExpenseId != -1L) {
+                        db.execSQL(
+                            "UPDATE split_expenses SET linkedExpenseId = ? WHERE id = ?",
+                            arrayOf<Any?>(newExpenseId, row.expenseId)
+                        )
+                    }
+                }
+            }
+        }
+
+        // v18 -> v19: Khata due-date / credit-limit tracking + receipt photo attachment.
+        //   khata_entries.dueDate    — optional "pay/collect by" date on a CREDIT entry.
+        //   khata_entries.photoPath  — optional absolute path to a receipt photo saved in
+        //                              this app's private storage (filesDir/receipts/).
+        //   khata_parties.creditLimit — optional cap on a party's outstanding balance, used
+        //                               purely as a local warning threshold.
+        // All three are nullable/additive — every existing row just has no due date, no
+        // photo, and no limit, which is fully backwards-compatible.
+        private val MIGRATION_18_19 = object : Migration(18, 19) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE khata_entries ADD COLUMN dueDate TEXT")
+                db.execSQL("ALTER TABLE khata_entries ADD COLUMN photoPath TEXT")
+                db.execSQL("ALTER TABLE khata_parties ADD COLUMN creditLimit REAL")
+            }
+        }
+
+        // v19 -> v20: Itemized/receipt-based Splits — a bill can be broken into line items
+        // (e.g. "Pizza", "Coke") each assigned to whichever members actually had them, instead
+        // of only ever being one flat equal/exact/percentage split across the whole amount.
+        //   split_expense_items        — one row per line item (name, amount) on an expense.
+        //   split_expense_item_members — junction: which members share a given item's cost
+        //                                 (split equally among them).
+        // Both are new, additive tables — no existing schema changes, nothing to backfill;
+        // pre-existing split expenses simply have zero item rows (they weren't itemized).
+        private val MIGRATION_19_20 = object : Migration(19, 20) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expense_items` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `expenseId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `amount` REAL NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `split_expense_item_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `itemId` INTEGER NOT NULL,
+                        `memberId` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_items_expenseId` ON `split_expense_items` (`expenseId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `idx_split_item_members_itemId` ON `split_expense_item_members` (`itemId`)")
+            }
+        }
+
+        // v20 -> v21: per-member phone on Splits, so an individual settlement can be nudged
+        // with its own WhatsApp/SMS reminder instead of only ever sharing one combined group
+        // summary (mirrors khata_parties.phone). Nullable/additive — every existing member
+        // simply has no phone until someone fills it in via the Settle Up sheet.
+        private val MIGRATION_20_21 = object : Migration(20, 21) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE split_members ADD COLUMN phone TEXT")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -474,7 +647,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5,
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
-                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16
+                    MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
+                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21
                 ).build().also { INSTANCE = it }
             }
         }

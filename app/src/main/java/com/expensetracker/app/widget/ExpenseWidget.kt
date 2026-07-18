@@ -86,7 +86,7 @@ class ExpenseWidget : GlanceAppWidget() {
 
                 // ── Header row: app name ─────────────────────────────────────
                 Text(
-                    text = "Expense Tracker",
+                    text = "Baqaya",
                     style = TextStyle(
                         color = ColorProvider(Color(0xFFF59E0B)), // AccentAmber
                         fontSize = 11.sp,

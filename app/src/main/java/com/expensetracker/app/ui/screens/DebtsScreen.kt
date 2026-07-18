@@ -4,7 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -60,9 +62,11 @@ import com.expensetracker.app.data.DebtEntity
 import com.expensetracker.app.ui.components.AddEditDebtSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.DebtListItem
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.components.RecordPaymentSheet
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import androidx.compose.ui.text.font.FontWeight
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
@@ -120,6 +124,13 @@ fun DebtsScreen(
         BackgroundScrollSignal.pixels.floatValue = scrollState.value.toFloat()
     }
 
+    // Bottom nav bar + this screen's own FAB hide together while scrolling down, and come back
+    // on scroll-up/stop — same cross-screen pattern as Dashboard/Khata/Splits.
+    val isScrollingUp by scrollState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
+
     // Debts gets its own touch-reactive background trio — red/green (the two directions) plus
     // indigo, distinct from Dashboard's violet/indigo/green and Settings' cyan/pink/teal.
     Box(modifier = Modifier.fillMaxSize()) {
@@ -131,11 +142,17 @@ fun DebtsScreen(
             containerColor = Color.Transparent,
             // ── No TopAppBar — title lives inline with the content ──
             floatingActionButton = {
+                AnimatedVisibility(
+                    visible = isScrollingUp,
+                    enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                    exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
+                ) {
                 FloatingActionButton(onClick = {
                     editingDebt = null
                     showAddSheet = true
                 }) {
                     Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.debt_add_title))
+                }
                 }
             }
         ) { innerPadding ->

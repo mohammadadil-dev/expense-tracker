@@ -12,10 +12,13 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +46,7 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.CoachmarkOverlay
 import com.expensetracker.app.ui.components.CoachmarkStep
 import androidx.compose.ui.res.stringResource
@@ -58,6 +62,7 @@ import com.expensetracker.app.ui.screens.CurrencySetupScreen
 import com.expensetracker.app.ui.screens.OnboardingScreen
 import com.expensetracker.app.ui.screens.DashboardScreen
 import com.expensetracker.app.ui.screens.DebtsScreen
+import com.expensetracker.app.ui.screens.KhataCollectionsScreen
 import com.expensetracker.app.ui.screens.KhataDetailScreen
 import com.expensetracker.app.ui.screens.KhataScreen
 import com.expensetracker.app.ui.screens.SettingsScreen
@@ -77,6 +82,7 @@ private object Routes {
     const val DASHBOARD       = "dashboard"
     const val KHATA           = "khata"
     const val KHATA_DETAIL    = "khata_detail/{partyId}"
+    const val KHATA_COLLECTIONS = "khata_collections"
     const val DEBTS           = "debts"
     const val SPLITS          = "splits"
     const val SPLIT_DETAIL    = "split_detail/{groupId}"
@@ -104,7 +110,7 @@ private val bottomNavItems = listOf(
 )
 
 // Routes where the bottom nav should be hidden
-private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS)
+private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS, Routes.KHATA_COLLECTIONS)
 
 @Composable
 fun AppNav() {
@@ -115,6 +121,10 @@ fun AppNav() {
 
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val displayName    by viewModel.displayName.collectAsState()
+    val myUpiId        by viewModel.myUpiId.collectAsState()
+    val businessName    by viewModel.businessName.collectAsState()
+    val businessAddress by viewModel.businessAddress.collectAsState()
+    val businessPhone   by viewModel.businessPhone.collectAsState()
 
     // POST_NOTIFICATIONS (Android 13+) request for the daily reminder — shared by onboarding
     // completion and the Dashboard catch-up check below. Mirrors Settings screen's own toggle
@@ -125,6 +135,14 @@ fun AppNav() {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    // Always reveal the bottom nav bar right after switching screens — otherwise it could
+    // stay hidden on entry to a fresh tab just because you'd scrolled down on the previous
+    // one. Each screen's own scroll position then drives BottomNavVisibility.visible from
+    // there via LazyListState/ScrollState.rememberIsScrollingUp().
+    LaunchedEffect(currentRoute) {
+        BottomNavVisibility.visible = true
+    }
 
     val showBottomNav = currentRoute != null &&
         routesWithoutBottomNav.none { currentRoute.startsWith(it) }
@@ -169,6 +187,14 @@ fun AppNav() {
     Scaffold(
         bottomBar = {
             if (showBottomNav) {
+                // Slides fully off-screen while the active screen is scrolling down, and back
+                // in on scroll-up/stop — driven by BottomNavVisibility, which each of the 5
+                // main screens updates from its own scroll position.
+                AnimatedVisibility(
+                    visible = BottomNavVisibility.visible,
+                    enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                    exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
+                ) {
                 Column {
                     // Banner ad shown on all tab screens, flush above the nav bar.
                     // Hidden when screenshot mode is active (long-press version in Settings).
@@ -227,6 +253,7 @@ fun AppNav() {
                             )
                         }
                     }
+                }
                 }
             }
         }
@@ -347,9 +374,6 @@ fun AppNav() {
                         onOpenSettings = {
                             navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
                         },
-                        onOpenDebts = {
-                            navController.navigate(Routes.DEBTS) { launchSingleTop = true }
-                        },
                         onOpenSubscriptions = {
                             navController.navigate(Routes.SUBSCRIPTIONS) { launchSingleTop = true }
                         }
@@ -385,7 +409,28 @@ fun AppNav() {
                         expenseViewModel = viewModel,
                         onOpenDetail     = { partyId ->
                             navController.navigate(Routes.khataDetail(partyId))
+                        },
+                        onOpenCollections = {
+                            navController.navigate(Routes.KHATA_COLLECTIONS)
                         }
+                    )
+                }
+
+                composable(
+                    Routes.KHATA_COLLECTIONS,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) {
+                    KhataCollectionsScreen(
+                        khataViewModel   = khataViewModel,
+                        expenseViewModel = viewModel,
+                        onBack           = { navController.popBackStack() }
                     )
                 }
 
@@ -457,10 +502,18 @@ fun AppNav() {
                     val groupId = backStackEntry.arguments
                         ?.getString("groupId")?.toLongOrNull() ?: return@composable
                     SplitGroupDetailScreen(
-                        groupId        = groupId,
-                        viewModel      = splitViewModel,
-                        currencySymbol = currencySymbol,
-                        onBack         = { navController.popBackStack() }
+                        groupId          = groupId,
+                        viewModel        = splitViewModel,
+                        currencySymbol   = currencySymbol,
+                        myUpiId          = myUpiId,
+                        ownerDisplayName = displayName.ifBlank { "Me" },
+                        businessName     = businessName,
+                        businessAddress  = businessAddress,
+                        businessPhone    = businessPhone,
+                        onOpenSettings   = {
+                            navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
+                        },
+                        onBack           = { navController.popBackStack() }
                     )
                 }
 

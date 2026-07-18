@@ -42,6 +42,28 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getString(KEY_MY_UPI_ID, "") ?: ""
         set(value) = prefs.edit().putString(KEY_MY_UPI_ID, value).apply()
 
+    // ── Business profile (optional) ───────────────────────────────────────────
+    // Purely cosmetic — stamped onto exported PDF reports (Ledger statement, Split report,
+    // Dashboard monthly report) in place of the generic app name, so a shop owner's export
+    // reads like it came from their business rather than from "Expense Tracker App". All
+    // blank by default; PdfExporter call sites fall back to the app's own name/branding
+    // when [businessName] is blank, same as before this existed.
+
+    /** Shown as the bold title line at the top of exported PDFs when non-blank. */
+    var businessName: String
+        get() = prefs.getString(KEY_BUSINESS_NAME, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_BUSINESS_NAME, value).apply()
+
+    /** Optional — shown alongside [businessPhone] as a small contact line under the title. */
+    var businessAddress: String
+        get() = prefs.getString(KEY_BUSINESS_ADDRESS, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_BUSINESS_ADDRESS, value).apply()
+
+    /** Optional — shown alongside [businessAddress] as a small contact line under the title. */
+    var businessPhone: String
+        get() = prefs.getString(KEY_BUSINESS_PHONE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_BUSINESS_PHONE, value).apply()
+
     var firstRunDone: Boolean
         get() = prefs.getBoolean(KEY_FIRST_RUN_DONE, false)
         set(value) = prefs.edit().putBoolean(KEY_FIRST_RUN_DONE, value).apply()
@@ -208,6 +230,9 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_CURRENCY_SETUP_DONE = "currency_setup_done"
         private const val KEY_DISPLAY_NAME = "display_name"
         private const val KEY_MY_UPI_ID = "my_upi_id"
+        private const val KEY_BUSINESS_NAME = "business_name"
+        private const val KEY_BUSINESS_ADDRESS = "business_address"
+        private const val KEY_BUSINESS_PHONE = "business_phone"
         private const val KEY_FIRST_RUN_DONE = "first_run_done"
         private const val KEY_ONBOARDING_DONE = "onboarding_done"
         private const val KEY_CUSTOMER_ID = "customer_id"

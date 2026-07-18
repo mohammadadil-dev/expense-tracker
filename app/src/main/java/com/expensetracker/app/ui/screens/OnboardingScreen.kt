@@ -354,7 +354,7 @@ private fun WelcomeStep(name: String, onNameChange: (String) -> Unit) {
         Text("👋", fontSize = 64.sp)
         Spacer(Modifier.height(16.dp))
         Text(
-            text = "Welcome to\nExpense Tracker",
+            text = "Welcome to\nBaqaya",
             style = MaterialTheme.typography.headlineMedium.copy(
                 color = Color.White,
                 fontWeight = FontWeight.Bold,

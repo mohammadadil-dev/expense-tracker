@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">খরচ ট্র্যাকার - বাজেট ম্যানেজার</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">খরচ লিখুন, বিভাগ ট্র্যাক করুন এবং সময়ের সাথে প্রবণতা দেখুন।</string>
     <string name="manage_categories">বিভাগ পরিচালনা করুন</string>
     <string name="reset_data">ডেটা রিসেট করুন</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">এই মাসের খরচের %1$s</string>
 
     <string name="ai_insights_feed_title">AI ইনসাইট</string>
+    <string name="insights_show_more">আরও %1$d ইনসাইট দেখুন</string>
+    <string name="insights_show_more_plural">আরও %1$d ইনসাইট দেখুন</string>
+    <string name="insights_show_less">কম দেখান</string>
+    <string name="dashboard_engagement_more">স্ট্রিক, লক্ষ্য এবং আরও</string>
+    <string name="dashboard_trend_show">ট্রেন্ড দেখান</string>
     <string name="insight_trend_down">আপনার খরচ গত সপ্তাহের চেয়ে %1$s কম।</string>
     <string name="insight_trend_up">আপনার খরচ গত সপ্তাহের চেয়ে %1$s বেশি।</string>
     <string name="insight_trend_flat">আপনার খরচ গত সপ্তাহের মতোই।</string>
@@ -154,6 +159,21 @@
     <string name="export_customer_id_label">কাস্টমার আইডি: %1$s</string>
     <string name="export_started">আপনার PDF রিপোর্ট তৈরি হচ্ছে…</string>
 
+    <!-- Ledger (Khata) PDF statement -->
+    <string name="khata_export_report_title">খাতা বিবরণী</string>
+    <string name="khata_export_balance_label">বকেয়া ব্যালেন্স: %1$s</string>
+    <string name="khata_export_col_type">ধরন</string>
+    <string name="khata_export_type_credit">বাকি</string>
+    <string name="khata_export_type_payment">পরিশোধ</string>
+    <string name="khata_export_total_label">ব্যালেন্স</string>
+    <string name="khata_export_no_entries">এখনও কোনো এন্ট্রি নেই।</string>
+
+    <!-- Split group PDF report -->
+    <string name="split_export_col_paid_by">পরিশোধ করেছেন</string>
+    <string name="split_export_settlement_label">নিষ্পত্তি</string>
+    <string name="split_export_members_label">সদস্য: %1$s</string>
+    <string name="split_export_no_expenses">এখনও কোনো খরচ নেই।</string>
+
     <string name="add_category">বিভাগ যোগ করুন</string>
     <string name="new_category_hint">নতুন বিভাগের নাম</string>
     <string name="delete_category_confirm">এই বিভাগ ব্যবহারকারী খরচগুলো প্রথম অবশিষ্ট বিভাগে স্থানান্তরিত হবে। চালিয়ে যাবেন?</string>
@@ -239,6 +259,7 @@
     <string name="cat_farming">কৃষি</string>
     <string name="cat_khata">খাতা</string>
     <string name="cat_education">শিক্ষা</string>
+    <string name="cat_splits">স্প্লিট</string>
     <string name="khata_delete_party_title">পার্টি মুছবেন?</string>
     <string name="khata_delete_party_confirm">%1$s এবং তাদের সমস্ত এন্ট্রি স্থায়ীভাবে মুছে যাবে।</string>
 
@@ -358,6 +379,8 @@
     <string name="khata_they_owe">আমি পাব</string>
     <string name="khata_total_i_owe">মোট দেওয়ার পরিমাণ</string>
     <string name="khata_total_they_owe">মোট পাওয়ার পরিমাণ</string>
+    <string name="khata_today_collected">আজ সংগ্রহ</string>
+    <string name="khata_today_credit_given">আজ বাকিতে দেওয়া</string>
     <string name="khata_add_party">পার্টি যোগ করুন</string>
     <string name="khata_edit_party">পার্টি সম্পাদনা করুন</string>
     <string name="khata_party_name_hint">নাম (দোকান বা ব্যক্তি)</string>
@@ -369,20 +392,41 @@
     <string name="khata_upi_qr_scan_error">সেই QR কোডে কোনো UPI আইডি পাওয়া যায়নি। আবার চেষ্টা করুন বা নিজে লিখুন।</string>
     <string name="khata_party_upi_mine_ready">UPI অনুরোধ প্রস্তুত — আপনার UPI আইডি ব্যবহার করা হবে: %1$s</string>
     <string name="khata_party_upi_mine_missing">তাদের UPI-এর মাধ্যমে আপনাকে পেমেন্ট করতে দিতে সেটিংসে আপনার UPI আইডি সেট করুন</string>
+    <string name="khata_credit_limit_label">ক্রেডিট সীমা</string>
+    <string name="khata_credit_limit_optional">ঐচ্ছিক</string>
+    <string name="khata_credit_limit_of">%1$s সীমার মধ্যে</string>
+    <string name="khata_credit_limit_near">%1$s সীমার কাছাকাছি</string>
+    <string name="khata_credit_limit_over">%1$s সীমা অতিক্রম</string>
+    <string name="khata_credit_limit_near_short">সীমার কাছাকাছি</string>
+    <string name="khata_credit_limit_over_short">সীমা অতিক্রম</string>
     <string name="khata_save_party">সংরক্ষণ করুন</string>
     <string name="khata_delete_party">পার্টি মুছুন</string>
     <string name="khata_no_parties_i_owe">এখনো কোনো দোকান যোগ করা হয়নি।
 বাকি আছে এমন দোকান যোগ করতে + চাপুন।</string>
     <string name="khata_no_parties_they_owe">এখনো কোনো গ্রাহক যোগ করা হয়নি।
 যে ধার নিয়েছে তাকে যোগ করতে + চাপুন।</string>
+    <string name="khata_search_hint">নাম বা ফোন নম্বর দিয়ে খুঁজুন…</string>
+    <string name="khata_search_no_results">কোনো ফলাফল নেই। অন্য নাম বা নম্বর চেষ্টা করুন।</string>
     <string name="khata_outstanding">বকেয়া</string>
+    <string name="khata_days_outstanding">%1$d দিন ধরে বকেয়া</string>
     <string name="khata_settled">পরিশোধ হয়েছে ✓</string>
     <string name="khata_add_entry">এন্ট্রি যোগ করুন</string>
     <string name="khata_credit_label">বাকি (ধারে নেওয়া)</string>
     <string name="khata_payment_label">পরিশোধ (দেওয়া হয়েছে)</string>
     <string name="khata_amount_hint">পরিমাণ</string>
     <string name="khata_note_hint">নোট (ঐচ্ছিক)</string>
+    <string name="khata_voice_add_entry">ভয়েসে যোগ করুন</string>
+    <string name="khata_voice_hint">পরিমাণ ও কার জন্য তা বলুন — যেমন: \"রমেশ, পাঁচশো টাকা\"</string>
+    <string name="khata_voice_confirm">এটি ব্যবহার করুন</string>
     <string name="khata_entry_date">তারিখ</string>
+    <string name="khata_due_date_label">নির্ধারিত তারিখ</string>
+    <string name="khata_due_date_optional">ঐচ্ছিক — কখন এটি পরিশোধ/সংগ্রহ করতে হবে</string>
+    <string name="khata_due_on">নির্ধারিত %1$s</string>
+    <string name="khata_due_overdue">মেয়াদোত্তীর্ণ — %1$s তারিখে নির্ধারিত ছিল</string>
+    <string name="khata_receipt_photo_label">রসিদের ছবি</string>
+    <string name="khata_take_photo">ক্যামেরা</string>
+    <string name="khata_choose_photo">গ্যালারি</string>
+    <string name="khata_remove_photo">ছবি সরান</string>
     <string name="khata_no_entries">এখনো কোনো এন্ট্রি নেই। ক্রেডিট বা পরিশোধ লগ করতে + চাপুন।</string>
     <string name="khata_delete_entry">এন্ট্রি মুছুন</string>
     <string name="khata_whatsapp_reminder">রিমাইন্ডার পাঠান</string>
@@ -409,7 +453,7 @@
 যেকোনো সময় ব্যবহার করুন!</string>
     <string name="khata_reminder_signature">শুভেচ্ছান্তে,
 %1$s</string>
-    <string name="khata_direction_i_owe_label">আমি এই পার্টিকে দেব</string>
+    <string name="khata_direction_i_owe_label">একটি বেছে নিন:</string>
     <string name="khata_direction_they_owe_label">এই পার্টি আমাকে দেবে</string>
     <string name="khata_initial_amount_label">প্রারম্ভিক পরিমাণ (ঐচ্ছিক)</string>
 
@@ -443,7 +487,7 @@
 
     <!-- ── Security ── -->
     <string name="security_section_title">নিরাপত্তা</string>
-    <string name="biometric_lock_title">খরচ ট্র্যাকার আনলক করুন</string>
+    <string name="biometric_lock_title">Baqaya আনলক করুন</string>
     <string name="biometric_lock_subtitle">অ্যাপ খুলতে বায়োমেট্রিক্স বা ডিভাইস PIN ব্যবহার করুন</string>
     <string name="biometric_lock_toggle_label">অ্যাপ লক</string>
     <string name="biometric_lock_description">প্রতিবার অ্যাপ খোলার সময় বায়োমেট্রিক্স বা PIN প্রয়োজন</string>
@@ -470,10 +514,13 @@
     <string name="drive_restore_success">Google Drive থেকে ডেটা পুনরুদ্ধার হয়েছে</string>
     <string name="drive_no_backup">Drive-এ এখনো কোনো ব্যাকআপ নেই</string>
     <string name="drive_backup_error">Google Drive ত্রুটি</string>
-    <string name="backup_scope_note">ব্যয়, বিভাগ, বাজেট, খাতা এবং ঋণ অন্তর্ভুক্ত</string>
+    <string name="backup_scope_note">ব্যয়, বিভাগ, বাজেট, খাতা, ঋণ, স্প্লিট, পেমেন্ট অ্যাকাউন্ট এবং লক্ষ্য অন্তর্ভুক্ত। রসিদের ছবি অন্তর্ভুক্ত নয়।</string>
     <string name="khata_label_all_cleared">%1$s-এর সাথে সব পরিষ্কার ✓</string>
     <string name="khata_label_i_owe">আপনি %1$s-এর কাছে ঋণী</string>
     <string name="khata_label_they_owe">%1$s আপনার কাছে ঋণী</string>
+    <string name="khata_label_credit_they_owe">%1$s আপনাকে ক্রেডিট ফেরত দেবে</string>
+    <string name="khata_label_credit_i_owe">আপনি %1$s-কে ক্রেডিট ফেরত দেবেন</string>
+    <string name="khata_credit_pill">ক্রেডিটে ✓</string>
 
     <!-- ── Khata / Debts shared localized labels ── -->
     <string name="khata_subtitle">আপনার পরিচিতদের সাথে ধার দেওয়া ও নেওয়া অর্থ ট্র্যাক করুন</string>
@@ -636,14 +683,14 @@
     <string name="split_expenses_label">খরচ</string>
     <string name="split_expense_count">%d খরচ</string>
     <string name="split_no_expenses">এখনো কোনো খরচ নেই — + চাপুন</string>
-    <string name="split_add_expense">খরচ যোগ করুন</string>
+    <string name="split_add_expense">খরচ ভাগ করুন</string>
     <string name="split_expense_description">এটা কীসের জন্য?</string>
     <string name="split_expense_amount">পরিমাণ</string>
     <string name="split_paid_by">কে দিয়েছে</string>
     <string name="split_paid_by_member">%s দিয়েছে</string>
     <string name="split_split_among">কারা ভাগ করবে</string>
     <string name="split_split_among_hint">এই খরচ সমানভাবে ভাগ করতে নির্বাচন করুন</string>
-    <string name="split_save_expense">খরচ সংরক্ষণ করুন</string>
+    <string name="split_save_expense">ভাগ করা খরচ সংরক্ষণ করুন</string>
     <string name="split_delete_expense">খরচ মুছুন?</string>
     <string name="split_delete_expense_confirm">"%s" মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।</string>
     <string name="split_delete_group">গ্রুপ মুছুন</string>
@@ -666,7 +713,44 @@
     <string name="split_wa_member_settled">মিটে গেছে</string>
     <string name="split_wa_to_pay">পরিশোধ করুন</string>
     <string name="split_wa_all_settled">সবার হিসাব মিটে গেছে! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">%1$s-এ নতুন খরচ</string>
+    <string name="split_notify_whatsapp_title">গ্রুপকে জানাবেন?</string>
+    <string name="split_notify_whatsapp_message">%1$s-এর সাথে এই খরচটি WhatsApp-এ শেয়ার করুন।</string>
+    <string name="split_notify_whatsapp_not_now">এখন নয়</string>
+
+    <!-- Unequal splits (exact amount / percentage) -->
+    <string name="split_mode_equal">সমান</string>
+    <string name="split_mode_exact">সঠিক</string>
+    <string name="split_mode_percent">%</string>
+    <string name="split_exact_sum_hint">%2$s এর মধ্যে %1$s প্রবেশ করানো হয়েছে</string>
+    <string name="split_percent_sum_hint">১০০%% এর মধ্যে %1$s%% প্রবেশ করানো হয়েছে</string>
+
+    <!-- Itemized/receipt-based splitting -->
+    <string name="split_mode_itemized">আইটেম অনুযায়ী</string>
+    <string name="split_itemized_hint">বিলটি আইটেমে ভাগ করুন এবং কে কোনটি শেয়ার করেছে তা ট্যাপ করুন</string>
+    <string name="split_itemized_amount_hint">নিচের আইটেম থেকে স্বয়ংক্রিয়ভাবে গণনা করা হয়েছে</string>
+    <string name="split_add_item">আইটেম যোগ করুন</string>
+    <string name="split_item_name_hint">আইটেম</string>
+    <string name="split_remove_item">আইটেম সরান</string>
+    <string name="split_itemized_total">মোট আইটেম: %1$s</string>
+
+    <!-- UPI in Split settle-up -->
+    <string name="split_pay_via_upi">UPI-এর মাধ্যমে পরিশোধ করুন</string>
+    <string name="split_add_their_upi">তাদের UPI আইডি যোগ করুন</string>
+    <string name="split_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
+    <string name="split_set_your_upi">আপনার UPI আইডি সেট করুন</string>
+    <string name="split_remind_member">মনে করিয়ে দিন</string>
+    <string name="split_add_their_phone">তাদের ফোন নম্বর যোগ করুন</string>
+    <string name="split_member_phone_hint">ফোন নম্বর (WhatsApp-এর জন্য)</string>
+    <string name="split_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
+    <string name="split_reminder_msg">হ্যালো %1$s 👋
+
+"%2$s" থেকে একটু মনে করিয়ে দিচ্ছি — আপনাকে %4$s-কে %3$s দিতে হবে।
+
+সুবিধামতো পরিশোধ করুন 🙏</string>
+    <string name="split_reminder_signature">শুভেচ্ছান্তে,
+%1$s</string>
     <string name="reminder_notification_tip">টিপস: প্রতিদিন লগ করলে বাজেটে থাকা সহজ হয় 📊</string>
     <string name="reminder_action_add_expense">খরচ যোগ করুন</string>
 
@@ -688,7 +772,56 @@
     <string name="whats_new_feature_khata_title">খাতা / লেজার</string>
     <string name="whats_new_feature_goals_title">লক্ষ্য ও স্ট্রিক</string>
     <string name="split_hero_total_spent">মোট খরচ</string>
+    <string name="split_member_gets_back">পাবেন</string>
+    <string name="split_member_owes">দেবেন</string>
+    <string name="split_net_owed">সামগ্রিকভাবে আপনি পাবেন</string>
+    <string name="split_net_owe">সামগ্রিকভাবে আপনি দেবেন</string>
+    <string name="split_net_settled">সব মিটমাট হয়েছে ✓</string>
+    <string name="split_net_group_count">%d গ্রুপ জুড়ে</string>
 
     <string name="reminder_hour_decrease">ঘণ্টা কমান</string>
     <string name="reminder_hour_increase">ঘণ্টা বাড়ান</string>
+
+    <!-- Payment Accounts (Cash / Bank / Card / user-added) -->
+    <string name="account_cash">নগদ</string>
+    <string name="account_bank">ব্যাংক অ্যাকাউন্ট</string>
+    <string name="account_card">কার্ড</string>
+    <string name="settings_section_payment_accounts">পেমেন্ট অ্যাকাউন্ট</string>
+    <string name="manage_payment_accounts">অ্যাকাউন্ট পরিচালনা করুন</string>
+    <string name="payment_accounts_hint">আপনার টাকা আসলে কোথায় যাচ্ছে তা দেখতে খরচগুলোকে নগদ, ব্যাংক বা কার্ড দিয়ে ট্যাগ করুন।</string>
+    <string name="add_payment_account">অ্যাকাউন্ট যোগ করুন</string>
+    <string name="new_account_name_hint">নতুন অ্যাকাউন্টের নাম</string>
+    <string name="enter_account_name">অ্যাকাউন্টের নাম লিখুন</string>
+    <string name="delete_payment_account_confirm">এই অ্যাকাউন্টটি মুছবেন? এটি দিয়ে ট্যাগ করা খরচগুলো শুধু আনট্যাগ হয়ে যাবে — কিছুই মুছে যাবে না।</string>
+    <string name="payment_account_label">পেমেন্টের উৎস</string>
+    <string name="payment_account_not_set">সেট করা নেই</string>
+    <string name="account_breakdown_title">অ্যাকাউন্ট অনুযায়ী</string>
+    <string name="export_col_account">অ্যাকাউন্ট</string>
+
+    <!-- Business Profile (Settings) -->
+    <string name="settings_business_profile_title">ব্যবসার প্রোফাইল</string>
+    <string name="settings_business_profile_hint">আপনার এক্সপোর্ট করা PDF রিপোর্টে অ্যাপের নামের বদলে এটি দেখানো হয় — আপনি দোকান চালালে কাজে লাগবে।</string>
+    <string name="business_name_label">দোকানের নাম</string>
+    <string name="business_name_hint">যেমন: শর্মা জেনারেল স্টোর</string>
+    <string name="business_address_label">ঠিকানা (ঐচ্ছিক)</string>
+    <string name="business_phone_label">ফোন (ঐচ্ছিক)</string>
+    <string name="settings_business_profile_saved">ব্যবসার প্রোফাইল সংরক্ষিত হয়েছে</string>
+    <!-- Collections: aging view + bulk WhatsApp reminders -->
+    <string name="khata_collections_entry_label">বয়স বিশ্লেষণ ও রিমাইন্ডার</string>
+    <string name="khata_collections_title">সংগ্রহ</string>
+    <string name="khata_collections_subtitle">বকেয়া ব্যালেন্স, এক নজরে</string>
+    <string name="khata_aging_bucket_0_30">0–30 দিন</string>
+    <string name="khata_aging_bucket_31_60">31–60 দিন</string>
+    <string name="khata_aging_bucket_61_90">61–90 দিন</string>
+    <string name="khata_aging_bucket_90_plus">90+ দিন</string>
+    <string name="khata_collections_empty">এই মুহূর্তে কোনো বকেয়া নেই — সব ঠিক আছে!</string>
+    <string name="khata_collections_select_all">সব নির্বাচন করুন</string>
+    <string name="khata_collections_no_phone">ফোন নম্বর নেই</string>
+    <string name="khata_collections_days_overdue">%1$d দিন</string>
+    <string name="khata_collections_remind_selected">নির্বাচিতদের রিমাইন্ডার (%1$d)</string>
+    <string name="khata_bulk_reminder_progress">%2$d এর %1$d</string>
+    <string name="khata_bulk_reminder_send">WhatsApp-এর মাধ্যমে পাঠান</string>
+    <string name="khata_bulk_reminder_skip">এড়িয়ে যান</string>
+    <string name="khata_bulk_reminder_stop">থামুন</string>
+    <string name="khata_bulk_reminder_done">%2$d এর মধ্যে %1$d রিমাইন্ডার পাঠানো হয়েছে</string>
 </resources>

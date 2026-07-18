@@ -19,6 +19,11 @@ import androidx.room.PrimaryKey
  * template's [id]. Normal, non-recurring expenses have both fields at their defaults
  * (false / null).
  *
+ * [accountId] optionally tags which [PaymentAccountEntity] (Cash, Bank, Card, etc.) this
+ * expense was paid from. Null means "not specified" — existing rows from before this
+ * feature was added, and any new expense the user doesn't bother to tag, behave exactly
+ * as they always have; nothing about totals/budgets/reports depends on this field.
+ *
  * [recurringPeriod] is reserved for future daily/weekly cadences; for now only
  * "MONTHLY" is used.
  *
@@ -42,5 +47,7 @@ data class ExpenseEntity(
     val recurringSourceId: Long? = null,   // non-null on auto-created copies
     val recurringDayOfMonth: Int? = null,  // template rows only — see class doc
     // Family / Couple Mode — null when family mode is off or expense is "shared household".
-    val memberId: Long? = null
+    val memberId: Long? = null,
+    // Payment account tag (Cash / Bank / Card / etc.) — null = not specified. See class doc.
+    val accountId: Long? = null
 )
