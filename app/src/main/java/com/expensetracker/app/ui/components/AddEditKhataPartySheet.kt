@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,15 +19,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -46,7 +40,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,15 +47,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
@@ -86,96 +77,10 @@ import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-// ── Country code data ──────────────────────────────────────────────────────────
-
-private data class CountryEntry(
-    val flag: String,
-    val name: String,
-    val dial: String
-)
-
-private val COUNTRY_ENTRIES = listOf(
-    CountryEntry("🇸🇦", "Saudi Arabia",  "+966"),
-    CountryEntry("🇮🇳", "India",          "+91"),
-    CountryEntry("🇵🇰", "Pakistan",       "+92"),
-    CountryEntry("🇧🇩", "Bangladesh",     "+880"),
-    CountryEntry("🇵🇭", "Philippines",    "+63"),
-    CountryEntry("🇦🇪", "UAE",            "+971"),
-    CountryEntry("🇶🇦", "Qatar",          "+974"),
-    CountryEntry("🇰🇼", "Kuwait",         "+965"),
-    CountryEntry("🇧🇭", "Bahrain",        "+973"),
-    CountryEntry("🇴🇲", "Oman",           "+968"),
-    CountryEntry("🇪🇬", "Egypt",          "+20"),
-    CountryEntry("🇯🇴", "Jordan",         "+962"),
-    CountryEntry("🇱🇧", "Lebanon",        "+961"),
-    CountryEntry("🇮🇶", "Iraq",           "+964"),
-    CountryEntry("🇸🇾", "Syria",          "+963"),
-    CountryEntry("🇾🇪", "Yemen",          "+967"),
-    CountryEntry("🇱🇰", "Sri Lanka",      "+94"),
-    CountryEntry("🇳🇵", "Nepal",          "+977"),
-    CountryEntry("🇬🇧", "UK",             "+44"),
-    CountryEntry("🇺🇸", "USA / Canada",   "+1"),
-    CountryEntry("🇦🇺", "Australia",      "+61"),
-)
-
-/** Auto-detect country from device locale; falls back to Saudi Arabia. */
-private fun defaultCountryEntry(): CountryEntry {
-    val country = java.util.Locale.getDefault().country.uppercase()
-    val dial = when (country) {
-        "SA"       -> "+966"
-        "IN"       -> "+91"
-        "PK"       -> "+92"
-        "BD"       -> "+880"
-        "PH"       -> "+63"
-        "AE"       -> "+971"
-        "QA"       -> "+974"
-        "KW"       -> "+965"
-        "BH"       -> "+973"
-        "OM"       -> "+968"
-        "EG"       -> "+20"
-        "JO"       -> "+962"
-        "LB"       -> "+961"
-        "IQ"       -> "+964"
-        "SY"       -> "+963"
-        "YE"       -> "+967"
-        "LK"       -> "+94"
-        "NP"       -> "+977"
-        "GB"       -> "+44"
-        "US", "CA" -> "+1"
-        "AU", "NZ" -> "+61"
-        else       -> "+966"   // default to Saudi Arabia
-    }
-    return COUNTRY_ENTRIES.firstOrNull { it.dial == dial } ?: COUNTRY_ENTRIES.first()
-}
-
-// Known country codes sorted longest-first so "+880" is tried before "+88" etc.
-private val KNOWN_CODES = listOf(
-    "+880", "+960", "+961", "+962", "+963", "+964", "+965", "+966",
-    "+967", "+968", "+971", "+972", "+973", "+974", "+975", "+976", "+977",
-    "+20",  "+27",  "+30",  "+31",  "+32",  "+33",  "+34",  "+36",
-    "+39",  "+40",  "+41",  "+43",  "+44",  "+45",  "+46",  "+47",
-    "+48",  "+49",  "+51",  "+52",  "+53",  "+54",  "+55",  "+56",
-    "+57",  "+58",  "+60",  "+61",  "+62",  "+63",  "+64",  "+65",
-    "+66",  "+81",  "+82",  "+84",  "+86",  "+90",  "+91",  "+92",
-    "+93",  "+94",  "+95",  "+98",
-    "+1",   "+7"
-)
-
-/** Split a stored phone string back into (countryCode, localNumber). */
-private fun splitPhone(stored: String): Pair<String, String> {
-    val stripped = stored.trim().replace(" ", "").replace("-", "")
-    if (stripped.isBlank()) return Pair("", "")
-    if (stripped.startsWith("+")) {
-        for (code in KNOWN_CODES) {
-            if (stripped.startsWith(code) && stripped.length > code.length) {
-                return Pair(code, stripped.substring(code.length))
-            }
-        }
-    }
-    return Pair("", stripped)
-}
-
 // ── Sheet ──────────────────────────────────────────────────────────────────────
+// Country-code data (CountryEntry, COUNTRY_ENTRIES, defaultCountryEntry, splitPhone) now lives
+// in PhoneNumberField.kt, shared with SettleUpSheet's "set their phone" dialog — see that file's
+// doc comment for why this was pulled out into one place.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -261,57 +166,10 @@ fun AddEditKhataPartySheet(
 
     // ── Country picker dialog ──────────────────────────────────────────────────
     if (showCountryPicker) {
-        AlertDialog(
-            onDismissRequest = { showCountryPicker = false },
-            title = { Text(stringResource(R.string.select_country_code), style = MaterialTheme.typography.titleMedium) },
-            text = {
-                LazyColumn(modifier = Modifier.heightIn(max = 360.dp)) {
-                    items(COUNTRY_ENTRIES) { entry ->
-                        val isSelected = entry.dial == selectedCountry.dial
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(
-                                    if (isSelected) AccentIndigo.copy(alpha = 0.08f)
-                                    else androidx.compose.ui.graphics.Color.Transparent
-                                )
-                                .clickable {
-                                    selectedCountry = entry
-                                    showCountryPicker = false
-                                }
-                                .padding(vertical = 10.dp, horizontal = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            Text(entry.flag, fontSize = 24.sp)
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    entry.name,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
-                                )
-                            }
-                            Text(
-                                entry.dial,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = TextSecondary
-                            )
-                            if (isSelected) {
-                                Icon(
-                                    imageVector = Icons.Filled.Check,
-                                    contentDescription = null,
-                                    tint = SuccessGreen,
-                                    modifier = Modifier.size(18.dp)
-                                )
-                            } else {
-                                Spacer(Modifier.size(18.dp))
-                            }
-                        }
-                    }
-                }
-            },
-            confirmButton = {}
+        CountryPickerDialog(
+            selectedCountry = selectedCountry,
+            onSelect = { selectedCountry = it; showCountryPicker = false },
+            onDismiss = { showCountryPicker = false }
         )
     }
 
@@ -364,53 +222,13 @@ fun AddEditKhataPartySheet(
             )
             Spacer(Modifier.height(4.dp))
 
-            // Always LTR: flag badge on left, number field on right
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // ── Country badge (tappable) ───────────────────────────────
-                    Surface(
-                        onClick = { showCountryPicker = true },
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        modifier = Modifier.height(56.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(selectedCountry.flag, fontSize = 20.sp)
-                            Text(
-                                text = selectedCountry.dial,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                            Icon(
-                                imageVector = Icons.Filled.ArrowDropDown,
-                                contentDescription = "Change country code",
-                                modifier = Modifier.size(18.dp)
-                            )
-                        }
-                    }
-
-                    // ── Local number field ─────────────────────────────────────
-                    OutlinedTextField(
-                        value = localPhone,
-                        onValueChange = { localPhone = it },
-                        placeholder = { Text("512 345 678") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Phone,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
+            // Country badge + local number, digit-capped per country (see PhoneNumberField.kt).
+            CountryCodePhoneField(
+                selectedCountry = selectedCountry,
+                onCountryClick = { showCountryPicker = true },
+                localNumber = localPhone,
+                onLocalNumberChange = { localPhone = it }
+            )
 
             Text(
                 text = stringResource(R.string.khata_party_phone_optional),
@@ -458,7 +276,17 @@ fun AddEditKhataPartySheet(
                 supportingText = if (creditLimitError) {
                     { Text(stringResource(R.string.error_invalid_budget_amount)) }
                 } else null,
-                prefix = { Text(currencySymbol) },
+                prefix = {
+                    if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_saudi_riyal),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    } else {
+                        Text(currencySymbol)
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal,
                     imeAction = ImeAction.Next
@@ -599,8 +427,7 @@ fun AddEditKhataPartySheet(
                         parsedCreditLimit = v.takeIf { it > 0.0 }
                     }
 
-                    val fullPhone = if (localPhone.isBlank()) ""
-                        else "${selectedCountry.dial}${localPhone.trim().replace(" ", "").replace("-", "")}"
+                    val fullPhone = buildFullPhone(selectedCountry, localPhone)
 
                     onSave(
                         initial?.id, name.trim(), fullPhone, direction, parsedAmount, noteText.trim(),

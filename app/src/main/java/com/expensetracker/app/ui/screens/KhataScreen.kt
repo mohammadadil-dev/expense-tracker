@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -85,7 +86,9 @@ import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AddEditKhataPartySheet
 import com.expensetracker.app.ui.components.AddKhataEntrySheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import com.expensetracker.app.ui.components.RequestUpiPaymentSheet
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
@@ -190,6 +193,15 @@ fun KhataScreen(
     val todaysCollections = khataViewModel.todaysCollections(allParties, allEntries)
     val todaysCreditGiven  = khataViewModel.todaysCreditGiven(allParties, allEntries)
 
+    val partyListState = rememberLazyListState()
+    // The "Add Party" FAB (and the bottom nav bar) hide together while scrolling down the
+    // party list, and come back on scroll-up/stop — same cross-screen pattern as Dashboard,
+    // Debts and Splits. Replaces the old top-of-list-only icon collapse.
+    val isScrollingUp by partyListState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
+
     LaunchedEffect(Unit) { heroVisible = true }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -202,12 +214,21 @@ fun KhataScreen(
             containerColor = Color.Transparent,
             // ── No TopAppBar — hero header is inline ──
             floatingActionButton = {
+                // Hides entirely while scrolling down through the party list (isScrollingUp,
+                // shared with BottomNavVisibility above) instead of the old icon-only collapse —
+                // smaller footprint isn't needed when it's not on screen at all while scrolling.
+                AnimatedVisibility(
+                    visible = isScrollingUp,
+                    enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                    exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
+                ) {
                 ExtendedFloatingActionButton(
                     onClick = { editingParty = null; showAddParty = true },
                     containerColor = AccentIndigo,
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
+                    icon = { Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.khata_add_party)) },
                     text = { Text(stringResource(R.string.khata_add_party)) }
                 )
+                }
             }
         ) { innerPadding ->
             Column(
@@ -346,8 +367,11 @@ fun KhataScreen(
                         }
                     } else {
                         LazyColumn(
+                            state = partyListState,
+                            // 112dp clears the extended FAB (56dp) + its 16dp margin + a buffer
+                            // so the last card is never hidden behind it while the FAB is visible.
                             contentPadding = PaddingValues(
-                                start = 16.dp, end = 16.dp, bottom = 88.dp
+                                start = 16.dp, end = 16.dp, bottom = 112.dp
                             ),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {

@@ -8,7 +8,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -44,7 +46,9 @@ import com.expensetracker.app.data.SplitGroupEntity
 import com.expensetracker.app.ui.components.AddEditSplitGroupSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.MoneyText
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.OnAccent
@@ -71,13 +75,20 @@ fun SplitsScreen(
     onOpenGroup: (Long) -> Unit
 ) {
     val groups by viewModel.groups.collectAsState()
+    // Any expense change in any group (add/edit/delete, or a settlement — which is just an
+    // expense row with isSettlement=true) needs to refresh the summaries below too. Keying the
+    // refresh only on `groups` (as this used to) missed that entirely: SplitGroupEntity itself
+    // never changes when you add an expense, so a group's "Settled" badge and the aggregate
+    // You'll Pay / You'll Get cards could silently go stale — showing whatever balance existed
+    // the last time `groups` changed identity, not the group's actual current balance.
+    val allSplitExpenses by viewModel.allExpenses.collectAsState()
     var showNewGroupSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     // Per-group balance summary: groupId → meBalance
     val groupSummaries = remember { mutableStateMapOf<Long, Pair<Double, Int>>() }
 
-    LaunchedEffect(groups) {
+    LaunchedEffect(groups, allSplitExpenses) {
         groups.forEach { group ->
             scope.launch {
                 val netBalances = viewModel.getNetBalances(group.id)
@@ -111,6 +122,13 @@ fun SplitsScreen(
         BackgroundScrollSignal.pixels.floatValue = listState.firstVisibleItemScrollOffset.toFloat()
     }
 
+    // Bottom nav bar + this screen's own FAB hide together while scrolling down, and come back
+    // on scroll-up/stop — same cross-screen pattern as Dashboard/Khata/Debts.
+    val isScrollingUp by listState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         // ── Animated blob background — splits palette ──────────────────────
         AnimatedBlobBackground(
@@ -125,12 +143,18 @@ fun SplitsScreen(
             // doing the exact same thing on top of it was pure duplication.
             floatingActionButton = {
                 if (groups.isNotEmpty()) {
-                    FloatingActionButton(
-                        onClick = { showNewGroupSheet = true },
-                        shape = CircleShape,
-                        containerColor = MaterialTheme.colorScheme.primary
+                    AnimatedVisibility(
+                        visible = isScrollingUp,
+                        enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                        exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
                     ) {
-                        Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                        FloatingActionButton(
+                            onClick = { showNewGroupSheet = true },
+                            shape = CircleShape,
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.split_new_group))
+                        }
                     }
                 }
             }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">செலவு டிராக்கர் - பட்ஜெட் மேனேஜர்</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">செலவுகளை பதிவு செய்யுங்கள், வகைகளை கண்காணியுங்கள், போக்குகளை பாருங்கள்.</string>
     <string name="manage_categories">வகைகளை நிர்வகி</string>
     <string name="reset_data">தரவை மீட்டமை</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">மாதாந்திர செலவில் %1$s</string>
 
     <string name="ai_insights_feed_title">AI நுண்ணறிவு</string>
+    <string name="insights_show_more">மேலும் %1$d நுண்ணறிவைக் காட்டு</string>
+    <string name="insights_show_more_plural">மேலும் %1$d நுண்ணறிவுகளைக் காட்டு</string>
+    <string name="insights_show_less">குறைவாகக் காட்டு</string>
+    <string name="dashboard_engagement_more">தொடர்ச்சி, இலக்குகள் மற்றும் மேலும்</string>
+    <string name="dashboard_trend_show">போக்கைக் காட்டு</string>
     <string name="insight_trend_down">உங்கள் செலவு கடந்த வாரத்தை விட %1$s குறைவாக உள்ளது.</string>
     <string name="insight_trend_up">உங்கள் செலவு கடந்த வாரத்தை விட %1$s அதிகமாக உள்ளது.</string>
     <string name="insight_trend_flat">உங்கள் செலவு கடந்த வாரம் போலவே உள்ளது.</string>
@@ -415,6 +420,7 @@
     <string name="khata_search_hint">பெயர் அல்லது தொலைபேசி எண் மூலம் தேடுங்கள்…</string>
     <string name="khata_search_no_results">பொருத்தமில்லை. வேறு பெயர் அல்லது எண்ணை முயற்சிக்கவும்.</string>
     <string name="khata_outstanding">நிலுவை</string>
+    <string name="khata_days_outstanding">%1$d நாட்களாக நிலுவையில்</string>
     <string name="khata_settled">தீர்வு ✓</string>
     <string name="khata_add_entry">உள்ளீடு சேர்</string>
     <string name="khata_credit_label">கடன் (உதிரிக்கு)</string>
@@ -472,7 +478,7 @@
     <string name="search_expenses_hint">செலவுகளை தேடு…</string>
 
     <string name="security_section_title">பாதுகாப்பு</string>
-    <string name="biometric_lock_title">செலவு டிராக்கர் திற</string>
+    <string name="biometric_lock_title">Baqaya திற</string>
     <string name="biometric_lock_subtitle">ஆப்பை திறக்க பயோமெட்ரிக்ஸ் அல்லது PIN பயன்படுத்துங்கள்</string>
     <string name="biometric_lock_toggle_label">ஆப் பூட்டு</string>
     <string name="biometric_lock_description">ஒவ்வொரு முறையும் ஆப் திறக்கும்போது பயோமெட்ரிக்ஸ் அல்லது PIN தேவை</string>
@@ -654,14 +660,14 @@
     <string name="split_expenses_label">செலவுகள்</string>
     <string name="split_expense_count">%d செலவுகள்</string>
     <string name="split_no_expenses">இன்னும் செலவுகள் இல்லை — + தட்டுங்கள்</string>
-    <string name="split_add_expense">செலவு சேர்</string>
+    <string name="split_add_expense">செலவு பிரி</string>
     <string name="split_expense_description">இது எதற்காக?</string>
     <string name="split_expense_amount">தொகை</string>
     <string name="split_paid_by">யார் செலுத்தினார்</string>
     <string name="split_paid_by_member">%s செலுத்தினார்</string>
     <string name="split_split_among">யாருக்கிடையே பிரிக்க</string>
     <string name="split_split_among_hint">இந்த செலவை சமானமாக பகிர்பவர்களை தேர்ந்தெடுங்கள்</string>
-    <string name="split_save_expense">செலவை சேமி</string>
+    <string name="split_save_expense">பிரிக்கப்பட்ட செலவை சேமி</string>
     <string name="split_delete_expense">செலவை நீக்கவா?</string>
     <string name="split_delete_expense_confirm">"%s" நீக்கவா? இதை மீட்கல் இயலாது.</string>
     <string name="split_delete_group">குழுவை நீக்கு</string>
@@ -682,7 +688,11 @@
     <string name="split_wa_member_settled">தீர்வு</string>
     <string name="split_wa_to_pay">செலுத்த</string>
     <string name="split_wa_all_settled">எல்லோரும் தீர்வு! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">%1$s இல் புதிய செலவு</string>
+    <string name="split_notify_whatsapp_title">குழுவிற்கு தெரிவிக்கவா?</string>
+    <string name="split_notify_whatsapp_message">இந்த செலவை %1$s உடன் WhatsApp-இல் பகிரவும்.</string>
+    <string name="split_notify_whatsapp_not_now">இப்போது வேண்டாம்</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">சமம்</string>
@@ -770,6 +780,7 @@
     <string name="business_name_hint">எ.கா. சர்மா ஜெனரல் ஸ்டோர்</string>
     <string name="business_address_label">முகவரி (விருப்பத்தேர்வு)</string>
     <string name="business_phone_label">தொலைபேசி (விருப்பத்தேர்வு)</string>
+    <string name="settings_business_profile_saved">வணிக சுயவிவரம் சேமிக்கப்பட்டது</string>
     <!-- Collections: aging view + bulk WhatsApp reminders -->
     <string name="khata_collections_entry_label">வயதாகுதல் மற்றும் நினைவூட்டல்கள்</string>
     <string name="khata_collections_title">வசூல்கள்</string>

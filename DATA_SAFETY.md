@@ -1,5 +1,12 @@
 # Play Console "Data Safety" Form — Answer Key
 
+**Updated 2026-07-18 (v1.9.0, versionCode 20)**: rebrand from "Expense Tracker" to Baqaya (new
+name/icon only, no data implication), a Dashboard UI trim (sections collapse until tapped; no
+new data touched), a per-expense WhatsApp share button on Splits (same user-invoked share-sheet
+pattern as every other WhatsApp flow already covered below — still not "collection"), fixes for
+stale Split-group balances and a few display bugs, and a scroll-reactive nav bar/FAB (pure UI).
+**No new Data Safety declaration needed for any of this.**
+
 **Updated 2026-07-14 (v1.8.0, versionCode 19)**: added QR-code scanning to fill in a Khata
 party's UPI ID (`AddEditKhataPartySheet.kt`, ML Kit Barcode Scanning — the **bundled** model, not
 the Google-Play-Services unbundled one, same distinction as the existing receipt-scan OCR entry

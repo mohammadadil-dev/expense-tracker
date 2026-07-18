@@ -38,11 +38,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.GridOn
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.Repeat
@@ -58,7 +58,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -81,6 +81,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
@@ -107,6 +108,8 @@ import com.expensetracker.app.ui.components.AddIncomeSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.BentoCard
+import com.expensetracker.app.ui.components.BottomNavVisibility
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import com.expensetracker.app.ui.components.BudgetManageSheet
 import com.expensetracker.app.ui.components.BudgetRingCard
 import com.expensetracker.app.ui.components.FamilyModeCard
@@ -149,7 +152,6 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.WarningAmber
 import com.expensetracker.app.ui.theme.TextSecondary
 import com.expensetracker.app.util.DateUtils
-import com.expensetracker.app.util.DebtInsights
 import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.FinancialInsights
 import com.expensetracker.app.util.Formatters
@@ -160,14 +162,12 @@ import com.expensetracker.app.util.categoryDisplayName
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import kotlinx.coroutines.launch
 import java.util.Locale
-import kotlin.math.abs
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     viewModel: ExpenseViewModel,
     onOpenSettings: () -> Unit,
-    onOpenDebts: () -> Unit,
     onOpenSubscriptions: () -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
@@ -176,10 +176,7 @@ fun DashboardScreen(
     val allExpenses by viewModel.allExpenses.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val currentMonthKey by viewModel.currentMonthKey.collectAsState()
-    val debts by viewModel.debts.collectAsState()
-    val debtPayments by viewModel.debtPayments.collectAsState()
     val recurringTemplates by viewModel.recurringTemplates.collectAsState()
-    val debtNetPosition = remember(debts, debtPayments) { DebtInsights.computeNetPosition(debts, debtPayments) }
     val pendingSmsExpenses by viewModel.pendingSmsExpenses.collectAsState()
     val budgets by viewModel.budgets.collectAsState()
     val displayName by viewModel.displayName.collectAsState()
@@ -212,6 +209,18 @@ fun DashboardScreen(
     var showVoiceSheet by remember { mutableStateOf(false) }
     var voicePrefill by remember { mutableStateOf<ExpensePrefill?>(null) }
     var showReceiptSheet by remember { mutableStateOf(false) }
+    // Dashboard trim: AI Insights feed shows only the top card by default; toggled by "Show
+    // N more" / "Show less" in the item-3 block below.
+    var insightsExpanded by remember { mutableStateOf(false) }
+    // Dashboard trim: Payday/Goals/Personality/Account-breakdown stay collapsed by default —
+    // only the Streak card (the daily-habit hook) shows without a tap.
+    var engagementExpanded by remember { mutableStateOf(false) }
+    // Dashboard trim: the 12-month trend chart is collapsed by default too.
+    var trendExpanded by remember { mutableStateOf(false) }
+    // Dashboard trim: Spending by Category and Recent Transactions are collapsed by default —
+    // tapping either header reveals its rows.
+    var categoryBreakdownExpanded by remember { mutableStateOf(false) }
+    var recentTransactionsExpanded by remember { mutableStateOf(false) }
     @Suppress("UNUSED_VARIABLE")
     var showFamilySetupSheet by remember { mutableStateOf(false) } // reserved for Family Mode re-enable
 
@@ -453,13 +462,32 @@ fun DashboardScreen(
     }
 
     // Scroll anchors for list navigation.
-    // breakdownItemIndex = 4: SpendingCategorySection (tapping subscription tile scrolls here)
-    // expenseListItemIndex = 7: "Expenses this month" header
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    val breakdownItemIndex = 4
-    val expenseListItemIndex = 7
+    // These must match the actual 0-indexed position of their target `item { }` block inside
+    // the LazyColumn below — NOT the "// ── item N ──" comment labels, which are just narrative
+    // section names and have drifted out of sync with real positions as sections were added
+    // over time (item 1b, item 1c, item 2b, etc. all insert extra ordinal slots). Recount
+    // real item{} blocks whenever the section order above changes.
+    //
+    // The item-2 Subscription/Recurring row is itself conditional now (hidden entirely when
+    // there's no real subscription spend and no recurring templates), so every item after it
+    // shifts up by one ordinal slot when it's absent — hasSecondaryTilesRow below must stay in
+    // sync with the exact same condition used to gate that item{} block.
+    val hasSubscriptionSpend = intelligence.subscriptionSpend > 0.0
+    val hasRecurringTemplates = recurringTemplates.isNotEmpty()
+    val hasSecondaryTilesRow = hasSubscriptionSpend || hasRecurringTemplates
+    val secondaryTilesRowOffset = if (hasSecondaryTilesRow) 0 else 1
+    // Trend chart now renders before Spending by Category / Recent Transactions (moved per
+    // request), so SpendingCategorySection sits one slot later than it used to —
+    // expenseListItemIndex is unchanged since the same 4 items (AI Insights, Trend, Category,
+    // Recent Transactions) still all sit before it, just reordered among themselves.
+    val breakdownItemIndex = 7 - secondaryTilesRowOffset
+    val expenseListItemIndex = 9 - secondaryTilesRowOffset
     fun scrollToBreakdown() {
+        // Force-expand: this section is collapsed by default, so a tap that scrolls here
+        // (e.g. the Subscription tile) should also reveal its rows, not land on an empty header.
+        categoryBreakdownExpanded = true
         coroutineScope.launch { listState.animateScrollToItem(breakdownItemIndex) }
     }
     fun scrollToExpenseList() {
@@ -471,6 +499,13 @@ fun DashboardScreen(
     }
     LaunchedEffect(dashboardScrollPx) {
         BackgroundScrollSignal.pixels.floatValue = dashboardScrollPx
+    }
+
+    // Bottom nav bar + this screen's own FABs hide together while scrolling down, and come
+    // back on scroll-up/stop — see BottomNavVisibility's doc comment for the cross-screen design.
+    val isScrollingUp by listState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
     }
 
     LaunchedEffect(pendingSmsExpenses) {
@@ -518,6 +553,13 @@ fun DashboardScreen(
             }
         },
         floatingActionButton = {
+            // Hides in sync with the bottom nav bar while scrolling down (isScrollingUp is the
+            // same signal driving BottomNavVisibility above) — reappears on scroll-up/stop.
+            AnimatedVisibility(
+                visible = isScrollingUp,
+                enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
+            ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -550,18 +592,19 @@ fun DashboardScreen(
                         contentDescription = stringResource(R.string.voice_tap_to_speak)
                     )
                 }
-                // Primary add FAB — labeled (not icon-only) so the main action on the app's
-                // most-visited screen is self-explanatory at a glance, same reasoning as the
-                // Ledger screen's "Add Party" FAB.
-                ExtendedFloatingActionButton(
+                // Primary add FAB — icon-only "+" (was a labeled ExtendedFloatingActionButton;
+                // switched to match the compact style of the two secondary FABs above it).
+                FloatingActionButton(
                     onClick = {
                         editingExpense = null
                         showAddSheet = true
                     },
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    text = { Text(stringResource(R.string.add_expense)) },
+                    containerColor = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.onGloballyPositioned { viewModel.fabBounds = it.boundsInWindow() }
-                )
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_expense))
+                }
+            }
             }
         }
     ) { innerPadding ->
@@ -650,134 +693,146 @@ fun DashboardScreen(
             }
 
             // ── item 1c ────────────────────────────────────────────────────────
-            // Engagement: Streak + Payday countdown side by side, then Goals below.
+            // Engagement: Streak always visible (the daily-habit hook); Payday, Goals,
+            // Spending Personality and Account breakdown are the biggest remaining source of
+            // dashboard bulk (up to 4 extra full-height cards stacking every visit), so they
+            // now sit behind a single "Streak, Goals & More" toggle, collapsed by default.
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     StreakCard(
                         streak = logStreak,
                         bestStreak = logStreakBest
                     )
-                    PaydayCard(
-                        daysUntilPayday = daysUntilPayday,
-                        dailyBudgetRemaining = dailyBudgetRemaining,
-                        currencySymbol = currencySymbol,
-                        paydayDayOfMonth = paydayDayOfMonth,
-                        onConfigurePayday = { showPaydayPicker = true }
-                    )
-                    GoalProgressCard(
-                        goals = activeGoals,
-                        currencySymbol = currencySymbol,
-                        onAddGoal = {
-                            editingGoal = null
-                            showAddGoalSheet = true
-                        },
-                        onGoalTap = { goal ->
-                            editingGoal = goal
-                            showAddGoalSheet = true
-                        }
-                    )
-                    // Spending Personality — derived from current month's top category.
-                    // Only shown once we have ≥3 expenses (threshold inside engine).
-                    val spendingPersonality = remember(monthExpenses, categories) {
-                        SpendingPersonalityEngine.compute(monthExpenses, categories)
-                    }
-                    spendingPersonality?.let { p ->
-                        SpendingPersonalityCard(personality = p)
-                    }
-                    // Family Mode card — hidden (feature not yet ready for release)
-
-                    // Account breakdown — only worth showing once spend is actually split
-                    // across 2+ distinct accounts this month; otherwise it's just noise.
-                    val accountsWithSpend = remember(monthExpenses) {
-                        monthExpenses.mapNotNull { it.accountId }.toSet()
-                    }
-                    if (accountsWithSpend.size >= 2) {
-                        AccountBreakdownCard(
-                            accounts = paymentAccounts,
-                            monthExpenses = monthExpenses,
-                            currencySymbol = currencySymbol,
-                            onManageAccounts = onOpenSettings
+                    TextButton(
+                        onClick = { engagementExpanded = !engagementExpanded },
+                        modifier = Modifier.align(Alignment.End)
+                    ) {
+                        Text(
+                            if (engagementExpanded) stringResource(R.string.insights_show_less)
+                            else stringResource(R.string.dashboard_engagement_more)
                         )
+                    }
+                    AnimatedVisibility(
+                        visible = engagementExpanded,
+                        enter = fadeIn(tween(200)) + slideInVertically(tween(200)) { -it / 8 },
+                        exit = fadeOut(tween(150))
+                    ) {
+                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            PaydayCard(
+                                daysUntilPayday = daysUntilPayday,
+                                dailyBudgetRemaining = dailyBudgetRemaining,
+                                currencySymbol = currencySymbol,
+                                paydayDayOfMonth = paydayDayOfMonth,
+                                onConfigurePayday = { showPaydayPicker = true }
+                            )
+                            GoalProgressCard(
+                                goals = activeGoals,
+                                currencySymbol = currencySymbol,
+                                onAddGoal = {
+                                    editingGoal = null
+                                    showAddGoalSheet = true
+                                },
+                                onGoalTap = { goal ->
+                                    editingGoal = goal
+                                    showAddGoalSheet = true
+                                }
+                            )
+                            // Spending Personality — derived from current month's top category.
+                            // Only shown once we have ≥3 expenses (threshold inside engine).
+                            val spendingPersonality = remember(monthExpenses, categories) {
+                                SpendingPersonalityEngine.compute(monthExpenses, categories)
+                            }
+                            spendingPersonality?.let { p ->
+                                SpendingPersonalityCard(personality = p)
+                            }
+                            // Family Mode card — hidden (feature not yet ready for release)
+
+                            // Account breakdown — only worth showing once spend is actually
+                            // split across 2+ distinct accounts this month; otherwise noise.
+                            val accountsWithSpend = remember(monthExpenses) {
+                                monthExpenses.mapNotNull { it.accountId }.toSet()
+                            }
+                            if (accountsWithSpend.size >= 2) {
+                                AccountBreakdownCard(
+                                    accounts = paymentAccounts,
+                                    monthExpenses = monthExpenses,
+                                    currencySymbol = currencySymbol,
+                                    onManageAccounts = onOpenSettings
+                                )
+                            }
+                        }
                     }
                 }
             }
 
             // ── item 2 ─────────────────────────────────────────────────────────
-            // Compact side-by-side tiles: Debts net position + Subscription spend.
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    BentoCard(
-                        title = stringResource(R.string.bento_debts_title),
-                        value = Formatters.money(abs(debtNetPosition.net), currencySymbol),
-                        subtitle = stringResource(
-                            when {
-                                debtNetPosition.net > 0.0 -> R.string.debts_net_owed_to_you
-                                debtNetPosition.net < 0.0 -> R.string.debts_net_you_owe
-                                else -> R.string.debts_net_settled
-                            }
-                        ),
-                        icon = Icons.Filled.AccountBalance,
-                        gradientColors = if (debtNetPosition.net < 0.0) {
-                            listOf(DangerRed, WarningAmber)
-                        } else {
-                            listOf(SuccessGreen, NeonCyan)
-                        },
-                        onClick = onOpenDebts,
-                        visible = contentVisible,
-                        entranceDelayMillis = 0,
-                        modifier = Modifier.weight(1f).heightIn(min = 110.dp)
-                    )
-                    BentoCard(
-                        title = stringResource(R.string.bento_subscription_cost),
-                        value = Formatters.money(intelligence.subscriptionSpend, currencySymbol),
-                        subtitle = subscriptionSharePct?.let { stringResource(R.string.bento_subscription_subtitle, it) },
-                        icon = Icons.Filled.Receipt,
-                        gradientColors = listOf(WarningAmber, NeonViolet),
-                        onClick = { scrollToBreakdown() },
-                        visible = contentVisible,
-                        entranceDelayMillis = 60,
-                        modifier = Modifier.weight(1f).heightIn(min = 110.dp)
-                    )
-                }
-            }
-
-            // ── item 2b ────────────────────────────────────────────────────────
-            // Recurring-expense templates (subscriptions, rent, EMIs marked "Repeat every
-            // month") — distinct from the category-based "Subscription Cost" card above.
-            // Hidden entirely when the user has no templates yet, to avoid an empty-looking
-            // card cluttering the dashboard.
-            if (recurringTemplates.isNotEmpty()) {
+            // Subscription spend / Recurring templates. The Debts tile was dropped from here —
+            // Debts already has its own persistent bottom-nav tab (unlike Subscriptions/
+            // Recurring, which have no other entry point), so a duplicate net-position summary
+            // on the dashboard was pure redundancy, not an access shortcut. Plain Row now
+            // (not a scrollable LazyRow) since there are at most 2 fixed tiles left.
+            // Each tile only renders when it has real content — a "SAR 0.00" Subscription Cost
+            // card for a user with no subscription-tagged spend is just as pointless as the
+            // Debts tile was, so both are gated the same way now. (hasSubscriptionSpend /
+            // hasRecurringTemplates / hasSecondaryTilesRow are computed above, near
+            // breakdownItemIndex — the scroll-anchor math depends on this same condition.)
+            if (hasSecondaryTilesRow) {
                 item {
-                    BentoCard(
-                        title = stringResource(R.string.subscriptions_dashboard_title),
-                        value = Formatters.money(recurringTemplates.sumOf { it.amount }, currencySymbol),
-                        subtitle = stringResource(
-                            if (recurringTemplates.size == 1) R.string.subscriptions_count_singular
-                            else R.string.subscriptions_count_plural,
-                            recurringTemplates.size
-                        ),
-                        icon = Icons.Filled.Repeat,
-                        gradientColors = listOf(NeonViolet, NeonCyan),
-                        onClick = onOpenSubscriptions,
-                        visible = contentVisible,
-                        entranceDelayMillis = 90,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 100.dp)
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        if (hasSubscriptionSpend) {
+                            BentoCard(
+                                title = stringResource(R.string.bento_subscription_cost),
+                                value = Formatters.money(intelligence.subscriptionSpend, currencySymbol),
+                                subtitle = subscriptionSharePct?.let { stringResource(R.string.bento_subscription_subtitle, it) },
+                                icon = Icons.Filled.Receipt,
+                                gradientColors = listOf(WarningAmber, NeonViolet),
+                                onClick = { scrollToBreakdown() },
+                                visible = contentVisible,
+                                entranceDelayMillis = 0,
+                                modifier = Modifier.weight(1f).heightIn(min = 110.dp)
+                            )
+                        }
+                        // Recurring-expense templates (subscriptions, rent, EMIs marked "Repeat
+                        // every month") — hidden entirely when the user has no templates yet, so
+                        // Subscription Cost above just takes the full row width alone in that
+                        // case (and vice versa if only Recurring has content).
+                        if (hasRecurringTemplates) {
+                            BentoCard(
+                                title = stringResource(R.string.subscriptions_dashboard_title),
+                                value = Formatters.money(recurringTemplates.sumOf { it.amount }, currencySymbol),
+                                subtitle = stringResource(
+                                    if (recurringTemplates.size == 1) R.string.subscriptions_count_singular
+                                    else R.string.subscriptions_count_plural,
+                                    recurringTemplates.size
+                                ),
+                                icon = Icons.Filled.Repeat,
+                                gradientColors = listOf(NeonViolet, NeonCyan),
+                                onClick = onOpenSubscriptions,
+                                visible = contentVisible,
+                                entranceDelayMillis = 60,
+                                modifier = Modifier.weight(1f).heightIn(min = 110.dp)
+                            )
+                        }
+                    }
                 }
             }
 
             // ── item 3 ─────────────────────────────────────────────────────────
-            // AI Insights Feed — on-device rule-based intelligence cards.
+            // AI Insights Feed — on-device rule-based intelligence cards. Only the top insight
+            // shows by default (dashboard trim: this was previously N full-height cards stacked
+            // on every visit); the rest are one tap away behind "Show N more".
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(
                         text = stringResource(R.string.ai_insights_feed_title),
                         style = MaterialTheme.typography.titleMedium
                     )
-                    intelligence.insights.forEachIndexed { index, insight ->
+                    val visibleInsights = if (insightsExpanded) intelligence.insights
+                        else intelligence.insights.take(1)
+                    visibleInsights.forEachIndexed { index, insight ->
                         InsightFeedCard(
                             emoji = insight.emoji,
                             text = insightText(insight, categoryNameById),
@@ -786,37 +841,30 @@ fun DashboardScreen(
                             entranceDelayMillis = index * 40
                         )
                     }
+                    val remaining = intelligence.insights.size - 1
+                    if (remaining > 0) {
+                        TextButton(
+                            onClick = { insightsExpanded = !insightsExpanded },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Text(
+                                if (insightsExpanded) stringResource(R.string.insights_show_less)
+                                else stringResource(
+                                    if (remaining == 1) R.string.insights_show_more
+                                    else R.string.insights_show_more_plural,
+                                    remaining
+                                )
+                            )
+                        }
+                    }
                 }
             }
 
             // ── item 4 ─────────────────────────────────────────────────────────
-            // Spending by Category — emoji squircle icons + coloured progress bars.
-            // Index 4 is intentional: breakdownItemIndex = 4 and scrollToBreakdown() rely on it.
-            item {
-                SpendingCategorySection(
-                    categoryTotals = categoryTotals,
-                    categories     = categories,
-                    totalThisMonth = totalThisMonth,
-                    currencySymbol = currencySymbol,
-                    onManageCategories = { showCategorySheet = true },
-                    modifier           = Modifier.fillMaxWidth()
-                )
-            }
-
-            // ── item 5 ─────────────────────────────────────────────────────────
-            // Recent Transactions — last 5 expenses from this month.
-            item {
-                RecentTransactionsSection(
-                    expenses = monthExpenses,
-                    categoryById = categoryById,
-                    currencySymbol = currencySymbol,
-                    onViewAll = { scrollToExpenseList() },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            // ── item 6 ─────────────────────────────────────────────────────────
-            // Monthly Trend bar chart — 12-month rolling view.
+            // Monthly Trend bar chart — 12-month rolling view. Collapsed by default (same
+            // "trim the bulk" pass as the AI Insights and Streak/Goals sections above) — just
+            // the title + toggle row shows until the user taps to see the chart. Moved ahead of
+            // Spending by Category / Recent Transactions per request.
             item {
                 val trendShape = RoundedCornerShape(22.dp)
                 Box(
@@ -843,18 +891,90 @@ fun DashboardScreen(
                             }
                         }
                         .border(width = 1.dp, color = BorderLight, shape = trendShape)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = LocalIndication.current,
+                            onClick = { trendExpanded = !trendExpanded }
+                        )
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(stringResource(R.string.trend_title), style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(16.dp))
-                        TrendBarChart(points = trendPoints, modifier = Modifier.fillMaxWidth().height(140.dp))
+                        // Title truncates with ellipsis (weight(1f)) instead of squeezing the
+                        // toggle into a sliver of space — that's what was forcing "Show Trend"
+                        // to wrap one letter per line. A rotating chevron replaces the text
+                        // label entirely: fixed-size regardless of locale, standard expand/
+                        // collapse affordance, no truncation math needed at all.
+                        val chevronRotation by animateFloatAsState(
+                            targetValue = if (trendExpanded) 180f else 0f,
+                            label = "trendChevronRotation"
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(R.string.trend_title),
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f).padding(end = 8.dp)
+                            )
+                            Icon(
+                                Icons.Filled.KeyboardArrowDown,
+                                contentDescription = if (trendExpanded) stringResource(R.string.insights_show_less)
+                                    else stringResource(R.string.dashboard_trend_show),
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.rotate(chevronRotation)
+                            )
+                        }
+                        AnimatedVisibility(
+                            visible = trendExpanded,
+                            enter = fadeIn(tween(200)) + slideInVertically(tween(200)) { -it / 8 },
+                            exit = fadeOut(tween(150))
+                        ) {
+                            Column {
+                                Spacer(Modifier.height(16.dp))
+                                TrendBarChart(points = trendPoints, modifier = Modifier.fillMaxWidth().height(140.dp))
+                            }
+                        }
                     }
                 }
             }
 
+            // ── item 5 ─────────────────────────────────────────────────────────
+            // Spending by Category — emoji squircle icons + coloured progress bars. Collapsed
+            // by default; scrollToBreakdown() force-expands it (see breakdownItemIndex comment
+            // near the top of this composable for the real ordinal position it targets).
+            item {
+                SpendingCategorySection(
+                    categoryTotals = categoryTotals,
+                    categories     = categories,
+                    totalThisMonth = totalThisMonth,
+                    currencySymbol = currencySymbol,
+                    onManageCategories = { showCategorySheet = true },
+                    expanded       = categoryBreakdownExpanded,
+                    onExpandToggle = { categoryBreakdownExpanded = !categoryBreakdownExpanded },
+                    modifier           = Modifier.fillMaxWidth()
+                )
+            }
+
+            // ── item 6 ─────────────────────────────────────────────────────────
+            // Recent Transactions — last 5 expenses from this month.
+            item {
+                RecentTransactionsSection(
+                    expenses = monthExpenses,
+                    categoryById = categoryById,
+                    currencySymbol = currencySymbol,
+                    onViewAll = { scrollToExpenseList() },
+                    expanded = recentTransactionsExpanded,
+                    onExpandToggle = { recentTransactionsExpanded = !recentTransactionsExpanded },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             // ── item 7 ─────────────────────────────────────────────────────────
             // Full expense list header (title + PDF export chip).
-            // expenseListItemIndex = 7 — "View All" in RecentTransactionsSection scrolls here.
+            // "View All" in RecentTransactionsSection scrolls here — see expenseListItemIndex.
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

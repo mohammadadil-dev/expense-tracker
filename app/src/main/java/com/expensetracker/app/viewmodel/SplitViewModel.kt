@@ -28,6 +28,14 @@ class SplitViewModel(application: Application) : AndroidViewModel(application) {
     val groups: StateFlow<List<SplitGroupEntity>> = repository.allGroups
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Every split expense across every group, reactively — SplitsScreen keys its per-group
+     *  balance summary refresh on this (alongside [groups]) so adding/editing/deleting an
+     *  expense in any group immediately updates that group's "Settled" badge and the aggregate
+     *  You'll Pay / You'll Get cards, instead of only refreshing when a group itself is
+     *  renamed/added/deleted. */
+    val allExpenses: StateFlow<List<SplitExpenseEntity>> = repository.allExpenses
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     // ── Selected group (detail screen) ───────────────────────────────────────
 
     private val _selectedGroupId = MutableStateFlow<Long?>(null)

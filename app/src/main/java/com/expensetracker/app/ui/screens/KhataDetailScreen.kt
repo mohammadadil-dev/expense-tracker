@@ -523,6 +523,7 @@ fun KhataDetailScreen(
                     hasPhone = party.phone.isNotBlank(),
                     creditLimit = party.creditLimit,
                     creditLimitFraction = khataViewModel.creditLimitFraction(party, balance),
+                    agingDays = khataViewModel.agingDaysForParty(partyId, allEntries),
                     onSendReminder = { sendWhatsApp() },
                     showUpiButton = showUpiButton,
                     onRequestUpi = { showUpiSheet = true },
@@ -733,6 +734,11 @@ private fun KhataBalanceCard(
     hasPhone: Boolean,
     creditLimit: Double? = null,
     creditLimitFraction: Float? = null,
+    // How many days this balance has been outstanding — same aging calculation the Collections
+    // screen's bucket view already uses (agingDaysForParty), surfaced here too so the party's
+    // own detail screen isn't the only place that just says "Outstanding" with no sense of how
+    // overdue that actually is.
+    agingDays: Int? = null,
     onSendReminder: () -> Unit,
     showUpiButton: Boolean = false,
     onRequestUpi: () -> Unit = {},
@@ -866,15 +872,20 @@ private fun KhataBalanceCard(
                         )
                     }
                     Spacer(Modifier.height(6.dp))
-                    Text(
-                        text = when {
+                    // MoneyText, not a plain Text — the embedded amount was leaking the raw
+                    // "ر.س" abbreviation instead of the vector riyal symbol every other on-screen
+                    // amount in the app uses (maxLines = 2 routes this through MoneyText's
+                    // inline-content path, since the icon sits mid-sentence here, not at the
+                    // start of an isolated value).
+                    MoneyText(
+                        formatted = when {
                             isOverLimit -> stringResource(R.string.khata_credit_limit_over, Formatters.money(creditLimit, currencySymbol))
                             isNearLimit -> stringResource(R.string.khata_credit_limit_near, Formatters.money(creditLimit, currencySymbol))
                             else -> stringResource(R.string.khata_credit_limit_of, Formatters.money(creditLimit, currencySymbol))
                         },
-                        style = MaterialTheme.typography.labelSmall,
+                        style = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.Center),
                         color = Color.White.copy(alpha = 0.90f),
-                        textAlign = TextAlign.Center,
+                        maxLines = 2,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -933,6 +944,20 @@ private fun KhataBalanceCard(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
                     )
                 }
+            }
+
+            // How long this balance has been outstanding — same number Collections' aging
+            // buckets are built from, so "Outstanding" (or the WhatsApp reminder button above)
+            // isn't the only information on this card; previously there was no sense of how
+            // overdue a balance actually was without leaving this screen.
+            if (!isSettled && !hasCredit && agingDays != null) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = stringResource(R.string.khata_days_outstanding, agingDays),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.White.copy(alpha = 0.75f),
+                    textAlign = TextAlign.Center
+                )
             }
 
             // "Request via UPI" — independent of the WhatsApp/no-phone branch above since

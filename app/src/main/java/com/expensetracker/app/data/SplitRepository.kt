@@ -117,6 +117,10 @@ class SplitRepository(
     fun getExpensesForGroup(groupId: Long): Flow<List<SplitExpenseEntity>> =
         expenseDao.getExpensesForGroup(groupId)
 
+    /** Every split expense across every group, reactively — see
+     *  [SplitExpenseDao.observeAll]'s doc comment for why SplitsScreen needs this. */
+    val allExpenses: Flow<List<SplitExpenseEntity>> = expenseDao.observeAll()
+
     /**
      * Adds an expense and its per-member shares.
      *

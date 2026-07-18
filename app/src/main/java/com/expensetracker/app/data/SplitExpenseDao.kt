@@ -16,6 +16,14 @@ interface SplitExpenseDao {
     @Query("SELECT * FROM split_expenses")
     suspend fun getAllOnce(): List<SplitExpenseEntity>
 
+    /** Reactive version of [getAllOnce] — emits whenever ANY row in this table changes
+     *  (insert/update/delete in any group). Used by SplitsScreen's group-summary list so
+     *  adding/editing/deleting an expense (or marking a settlement paid, which is just an
+     *  expense row with isSettlement=true) refreshes every group's balance immediately,
+     *  instead of only when the groups table itself changes. */
+    @Query("SELECT * FROM split_expenses")
+    fun observeAll(): Flow<List<SplitExpenseEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(expense: SplitExpenseEntity): Long
 

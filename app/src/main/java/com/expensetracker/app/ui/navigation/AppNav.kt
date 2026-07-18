@@ -12,10 +12,13 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +46,7 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.expensetracker.app.ui.components.BottomNavVisibility
 import com.expensetracker.app.ui.components.CoachmarkOverlay
 import com.expensetracker.app.ui.components.CoachmarkStep
 import androidx.compose.ui.res.stringResource
@@ -132,6 +136,14 @@ fun AppNav() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // Always reveal the bottom nav bar right after switching screens — otherwise it could
+    // stay hidden on entry to a fresh tab just because you'd scrolled down on the previous
+    // one. Each screen's own scroll position then drives BottomNavVisibility.visible from
+    // there via LazyListState/ScrollState.rememberIsScrollingUp().
+    LaunchedEffect(currentRoute) {
+        BottomNavVisibility.visible = true
+    }
+
     val showBottomNav = currentRoute != null &&
         routesWithoutBottomNav.none { currentRoute.startsWith(it) }
 
@@ -175,6 +187,14 @@ fun AppNav() {
     Scaffold(
         bottomBar = {
             if (showBottomNav) {
+                // Slides fully off-screen while the active screen is scrolling down, and back
+                // in on scroll-up/stop — driven by BottomNavVisibility, which each of the 5
+                // main screens updates from its own scroll position.
+                AnimatedVisibility(
+                    visible = BottomNavVisibility.visible,
+                    enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
+                    exit = slideOutVertically(tween(180)) { it } + fadeOut(tween(150))
+                ) {
                 Column {
                     // Banner ad shown on all tab screens, flush above the nav bar.
                     // Hidden when screenshot mode is active (long-press version in Settings).
@@ -233,6 +253,7 @@ fun AppNav() {
                             )
                         }
                     }
+                }
                 }
             }
         }
@@ -352,9 +373,6 @@ fun AppNav() {
                         viewModel = viewModel,
                         onOpenSettings = {
                             navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
-                        },
-                        onOpenDebts = {
-                            navController.navigate(Routes.DEBTS) { launchSingleTop = true }
                         },
                         onOpenSubscriptions = {
                             navController.navigate(Routes.SUBSCRIPTIONS) { launchSingleTop = true }

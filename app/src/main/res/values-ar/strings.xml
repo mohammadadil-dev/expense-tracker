@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">متابع المصروفات - مدير الميزانية</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">سجّل مصروفاتك، وتابع الفئات، وشاهد الاتجاهات بمرور الوقت.</string>
     <string name="manage_categories">إدارة الفئات</string>
     <string name="reset_data">إعادة تعيين البيانات</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">%1$s من إنفاق الشهر</string>
 
     <string name="ai_insights_feed_title">رؤى ذكية</string>
+    <string name="insights_show_more">عرض %1$d رؤية إضافية</string>
+    <string name="insights_show_more_plural">عرض %1$d رؤى إضافية</string>
+    <string name="insights_show_less">عرض أقل</string>
+    <string name="dashboard_engagement_more">المتابعة والأهداف والمزيد</string>
+    <string name="dashboard_trend_show">عرض الاتجاه</string>
     <string name="insight_trend_down">إنفاقك أقل بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="insight_trend_up">إنفاقك أعلى بنسبة %1$s عن الأسبوع الماضي.</string>
     <string name="insight_trend_flat">إنفاقك مطابق للأسبوع الماضي.</string>
@@ -403,6 +408,7 @@
     <string name="khata_search_hint">ابحث بالاسم أو رقم الهاتف…</string>
     <string name="khata_search_no_results">لا توجد نتائج. جرّب اسمًا أو رقمًا آخر.</string>
     <string name="khata_outstanding">المستحق</string>
+    <string name="khata_days_outstanding">مستحق منذ %1$d يومًا</string>
     <string name="khata_settled">تمت التسوية ✓</string>
     <string name="khata_add_entry">إضافة إدخال</string>
     <string name="khata_credit_label">دين (أُخذ بالأجل)</string>
@@ -481,7 +487,7 @@
 
     <!-- ── Security ── -->
     <string name="security_section_title">الأمان</string>
-    <string name="biometric_lock_title">فتح تطبيق المصروفات</string>
+    <string name="biometric_lock_title">فتح Baqaya</string>
     <string name="biometric_lock_subtitle">استخدم القياسات الحيوية أو رمز PIN للدخول</string>
     <string name="biometric_lock_toggle_label">قفل التطبيق</string>
     <string name="biometric_lock_description">طلب القياسات الحيوية أو PIN عند كل فتح للتطبيق</string>
@@ -685,14 +691,14 @@
     <string name="split_expenses_label">المصاريف</string>
     <string name="split_expense_count">%d مصاريف</string>
     <string name="split_no_expenses">لا توجد مصاريف — اضغط + لإضافة واحدة</string>
-    <string name="split_add_expense">إضافة مصروف</string>
+    <string name="split_add_expense">تقسيم المصروف</string>
     <string name="split_expense_description">ما هذا؟</string>
     <string name="split_expense_amount">المبلغ</string>
     <string name="split_paid_by">دفع بواسطة</string>
     <string name="split_paid_by_member">دفعه %s</string>
     <string name="split_split_among">تقسيم بين</string>
     <string name="split_split_among_hint">اختر من يتشارك هذا المصروف بالتساوي</string>
-    <string name="split_save_expense">حفظ المصروف</string>
+    <string name="split_save_expense">حفظ المصروف المقسم</string>
     <string name="split_delete_expense">حذف المصروف؟</string>
     <string name="split_delete_expense_confirm">حذف "%s"؟ لا يمكن التراجع.</string>
     <string name="split_delete_group">حذف المجموعة</string>
@@ -715,7 +721,11 @@
     <string name="split_wa_member_settled">مسدد</string>
     <string name="split_wa_to_pay">للسداد</string>
     <string name="split_wa_all_settled">الجميع مسدد! 🎉</string>
-    <string name="split_wa_footer">متتبع المصاريف</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">مصروف جديد في %1$s</string>
+    <string name="split_notify_whatsapp_title">تنبيه المجموعة؟</string>
+    <string name="split_notify_whatsapp_message">شارك هذا المصروف مع %1$s عبر واتساب.</string>
+    <string name="split_notify_whatsapp_not_now">ليس الآن</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">متساوٍ</string>
@@ -803,6 +813,7 @@
     <string name="business_name_hint">مثال: بقالة الشرقية</string>
     <string name="business_address_label">العنوان (اختياري)</string>
     <string name="business_phone_label">الهاتف (اختياري)</string>
+    <string name="settings_business_profile_saved">تم حفظ الملف التجاري</string>
     <!-- Collections: aging view + bulk WhatsApp reminders -->
     <string name="khata_collections_entry_label">التقادم والتذكيرات</string>
     <string name="khata_collections_title">التحصيلات</string>

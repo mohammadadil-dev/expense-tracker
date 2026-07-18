@@ -340,33 +340,57 @@ fun SettleUpSheet(
     }
 
     // ── Inline "set their phone number" dialog ───────────────────────────────
+    // Country code + local number (not a single free-text field) — without a code prefix the
+    // stored number never resolves to a valid WhatsApp/E.164 number (see this file's top-level
+    // doc comment in PhoneNumberField.kt for the "+51375230 is not a valid phone number" bug
+    // this caused).
     editingPhoneForMember?.let { member ->
-        var phoneInput by remember(member.id) { mutableStateOf(member.phone ?: "") }
+        val (initCode, initLocal) = remember(member.id) { splitPhone(member.phone ?: "") }
+        var selectedCountry by remember(member.id) {
+            mutableStateOf(COUNTRY_ENTRIES.firstOrNull { it.dial == initCode } ?: defaultCountryEntry())
+        }
+        var localPhone by remember(member.id) { mutableStateOf(initLocal) }
+        var showCountryPicker by remember { mutableStateOf(false) }
+
+        if (showCountryPicker) {
+            CountryPickerDialog(
+                selectedCountry = selectedCountry,
+                onSelect = { selectedCountry = it; showCountryPicker = false },
+                onDismiss = { showCountryPicker = false }
+            )
+        }
+
         AlertDialog(
             onDismissRequest = { editingPhoneForMember = null; pendingReminderSettlement = null },
             title = { Text(stringResource(R.string.split_add_their_phone)) },
             text = {
-                OutlinedTextField(
-                    value = phoneInput,
-                    onValueChange = { phoneInput = it },
-                    label = { Text(stringResource(R.string.split_member_phone_hint)) },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Column {
+                    Text(
+                        text = stringResource(R.string.split_member_phone_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    CountryCodePhoneField(
+                        selectedCountry = selectedCountry,
+                        onCountryClick = { showCountryPicker = true },
+                        localNumber = localPhone,
+                        onLocalNumberChange = { localPhone = it }
+                    )
+                }
             },
             confirmButton = {
                 TextButton(
-                    enabled = phoneInput.isNotBlank(),
+                    enabled = localPhone.isNotBlank(),
                     onClick = {
-                        val trimmedPhone = phoneInput.trim()
-                        onSetMemberPhone(member, trimmedPhone)
+                        val fullPhone = buildFullPhone(selectedCountry, localPhone)
+                        onSetMemberPhone(member, fullPhone)
                         // Fire the reminder immediately with the freshly-typed number, rather
                         // than waiting for the recomposition that would carry the saved member
                         // back in — the caller (SplitGroupDetailScreen) re-fetches members
                         // asynchronously, so `member` here would still show the old blank phone.
                         pendingReminderSettlement?.let { settlement ->
-                            sendReminderTo(member.name, trimmedPhone, settlement.toMemberName, settlement.amount)
+                            sendReminderTo(member.name, fullPhone, settlement.toMemberName, settlement.amount)
                         }
                         editingPhoneForMember = null
                         pendingReminderSettlement = null
@@ -519,7 +543,7 @@ private fun SettlementRow(
  *   • Me → Adil: SAR 140.00
  *   • Roshni → Adil: SAR 40.00
  *
- *   _Tracked with Expense Tracker_ 🧾
+ *   _Tracked with Baqaya_ 🧾
  *
  * Currency: SAR is written as "SAR" in plain text (the "ر.س" glyph is unreadable in
  * most WhatsApp notifications and chat bubbles on non-Arabic system fonts).

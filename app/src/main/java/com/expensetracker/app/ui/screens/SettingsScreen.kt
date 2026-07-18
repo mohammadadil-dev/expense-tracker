@@ -108,6 +108,8 @@ import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
+import com.expensetracker.app.ui.components.BottomNavVisibility
+import com.expensetracker.app.ui.components.rememberIsScrollingUp
 // import com.expensetracker.app.ui.components.FamilySetupSheet  // reserved for Family Mode re-enable
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
@@ -157,6 +159,28 @@ private val allCurrencies = listOf(
     CurrencyOption("₦",    "₦ — Nigerian Naira (Nigeria)"),
     CurrencyOption("R",    "R — South African Rand (South Africa)"),
     CurrencyOption("KSh",  "KSh — Kenyan Shilling (Kenya)"),
+)
+
+/** code, native name (never translated), English name (never translated) — mirrors
+ *  OnboardingScreen's OnboardLanguage, which already gets this right: every language is always
+ *  written in itself and always carries a plain-English anchor, regardless of the app's
+ *  currently active language. See the language dropdown's doc comment below for why. */
+private data class SettingsLanguage(val code: String, val native: String, val english: String)
+
+private val SETTINGS_LANGUAGES = listOf(
+    SettingsLanguage("en", "English",   "English"),
+    SettingsLanguage("ar", "العربية",   "Arabic"),
+    SettingsLanguage("hi", "हिन्दी",     "Hindi"),
+    SettingsLanguage("ur", "اردو",      "Urdu"),
+    SettingsLanguage("tl", "Tagalog",   "Tagalog"),
+    SettingsLanguage("bn", "বাংলা",     "Bengali"),
+    SettingsLanguage("ta", "தமிழ்",     "Tamil"),
+    SettingsLanguage("te", "తెలుగు",    "Telugu"),
+    SettingsLanguage("kn", "ಕನ್ನಡ",     "Kannada"),
+    SettingsLanguage("ml", "മലയാളം",    "Malayalam"),
+    SettingsLanguage("mr", "मराठी",     "Marathi"),
+    SettingsLanguage("gu", "ગુજરાતી",   "Gujarati"),
+    SettingsLanguage("pa", "ਪੰਜਾਬੀ",    "Punjabi"),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -352,6 +376,13 @@ fun SettingsScreen(
         BackgroundScrollSignal.pixels.floatValue = scrollState.value.toFloat()
     }
 
+    // Settings has no FAB of its own, but the bottom nav bar still hides while scrolling down
+    // here and comes back on scroll-up/stop, same as every other main screen.
+    val isScrollingUp by scrollState.rememberIsScrollingUp()
+    LaunchedEffect(isScrollingUp) {
+        BottomNavVisibility.visible = isScrollingUp
+    }
+
     // Settings gets its own touch-reactive background instance — cyan/pink/teal instead of
     // Dashboard's violet/indigo/green, so the two screens feel like distinct "places".
     Box(modifier = Modifier.fillMaxSize()) {
@@ -445,11 +476,15 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(10.dp))
+                val businessProfileSavedLabel = stringResource(R.string.settings_business_profile_saved)
                 OutlinedButton(
                     onClick = {
                         viewModel.setBusinessName(businessNameInput.trim())
                         viewModel.setBusinessAddress(businessAddressInput.trim())
                         viewModel.setBusinessPhone(businessPhoneInput.trim())
+                        // Previously silent — tapping Save gave no feedback at all, so there was
+                        // no way to tell it had actually done anything.
+                        Toast.makeText(context, businessProfileSavedLabel, Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -521,22 +556,18 @@ fun SettingsScreen(
             AnimatedSection(visible = contentVisible, delayMillis = 15) {
                 SettingsSectionHeader(icon = Icons.Filled.Language, title = stringResource(R.string.language_label))
                 Spacer(Modifier.height(8.dp))
-                val langOptions = listOf(
-                    "en" to stringResource(R.string.language_english),
-                    "ar" to stringResource(R.string.language_arabic),
-                    "hi" to stringResource(R.string.language_hindi),
-                    "ur" to stringResource(R.string.language_urdu),
-                    "tl" to stringResource(R.string.language_tagalog),
-                    "bn" to stringResource(R.string.language_bengali),
-                    "ta" to stringResource(R.string.language_tamil),
-                    "te" to stringResource(R.string.language_telugu),
-                    "kn" to stringResource(R.string.language_kannada),
-                    "ml" to stringResource(R.string.language_malayalam),
-                    "mr" to stringResource(R.string.language_marathi),
-                    "gu" to stringResource(R.string.language_gujarati),
-                    "pa" to stringResource(R.string.language_punjabi),
-                )
-                val currentLangLabel = langOptions.firstOrNull { it.first == languagePref }?.second ?: "English"
+                // Each language is shown in its OWN name — never translated into whatever
+                // language is currently active. This dropdown used to build its labels from
+                // stringResource(), which meant switching to Arabic re-translated "English" into
+                // "الإنجليزية": once someone who can't read Arabic ends up there, there's no
+                // Latin-script "English" left anywhere in the list to tap their way back out.
+                // Every language now always reads the same regardless of the app's current
+                // language — mirrors OnboardingScreen's language step, which already got this
+                // right (native name + small English-name subtitle, both hardcoded).
+                val langOptions = SETTINGS_LANGUAGES
+                val currentLang = langOptions.firstOrNull { it.code == languagePref } ?: langOptions.first()
+                val currentLangLabel = if (currentLang.native == currentLang.english) currentLang.native
+                    else "${currentLang.native} (${currentLang.english})"
                 ExposedDropdownMenuBox(
                     expanded = langExpanded,
                     onExpandedChange = { langExpanded = it }
@@ -553,11 +584,22 @@ fun SettingsScreen(
                         expanded = langExpanded,
                         onDismissRequest = { langExpanded = false }
                     ) {
-                        langOptions.forEach { (code, label) ->
+                        langOptions.forEach { lang ->
                             DropdownMenuItem(
-                                text = { Text(label) },
-                                onClick = { langExpanded = false; changeLanguage(code) },
-                                trailingIcon = if (languagePref == code) {
+                                text = {
+                                    Column {
+                                        Text(lang.native, fontWeight = androidx.compose.ui.text.font.FontWeight.Medium)
+                                        if (lang.native != lang.english) {
+                                            Text(
+                                                lang.english,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = TextSecondary
+                                            )
+                                        }
+                                    }
+                                },
+                                onClick = { langExpanded = false; changeLanguage(lang.code) },
+                                trailingIcon = if (languagePref == lang.code) {
                                     { Icon(Icons.Filled.Check, contentDescription = null, tint = AccentIndigo) }
                                 } else null
                             )

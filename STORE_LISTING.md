@@ -121,12 +121,33 @@ Your data still never leaves your device unless you choose to export it.
 ```
 (415 characters)
 
+## Release notes — v1.9.0 (max 500 characters)
+
+Paste this into Play Console → your release (Internal testing or Production) → **Release notes**.
+Covers everything since the unpublished v1.8.0 (versionCode 19) — the app rename, a lighter
+Dashboard, and Splits fixes. Update this section again for the next version rather than reusing it.
+
+```
+Baqaya (formerly Expense Tracker) — same app, new name and icon.
+
+• Dashboard decluttered — sections collapse until tapped
+• Split expenses: share any expense to WhatsApp anytime, not just right after saving
+• Fixed: a settled Split group could show stale info after a new expense
+• Fixed: currency symbol and phone number display bugs in Splits
+• Nav bar and buttons tuck away while scrolling for more reading room
+
+Your data still never leaves your device unless you choose to export it.
+```
+(489 characters)
+
 ## Notes
 
 - The short description above already accounts for `&` and `—` rendering as single characters; re-check the live character counter in Play Console after pasting, since some fonts/locales can count slightly differently.
 - Screenshots and a feature graphic still need to be captured from a real build (see the main README's "Publishing to the Play Store" section) — that requires running the app on a device or emulator, which isn't something that can be produced from here.
-- **This file lags the actual live Play Store listing.** As of this writing the live listing's title is still "Expense & Budget Tracker" (developer "AG Tech") — paste the new "Baqaya: Budget & Khata" title and description above into Play Console to make this real. The live listing also still mentions "Google Drive cloud backup" as a feature; since that feature's UI is currently disabled, remove that line directly in Play Console too, not just here.
+- **The in-app name is now "Baqaya"** — `app_name` (all 14 locales) was updated to the single, un-translated brand token "Baqaya" rather than a per-language translation, matching how most multi-language app brands keep one consistent icon label across every locale (WhatsApp, Google, etc. don't translate their own name either). This is what shows under the home-screen icon, in the app switcher, and as the PDF-export fallback name/toolbar titles.
+- **This file still lags the actual live Play Store listing**, which is a *separate* thing from `app_name` above — the Play Store title/description are edited in Play Console, not in code. As of this writing the live listing's title is still "Expense & Budget Tracker" (developer "AG Tech") — paste the new "Baqaya: Budget & Khata" title and description above into Play Console to make that real too. The live listing also still mentions "Google Drive cloud backup" as a feature; since that feature's UI is currently disabled, remove that line directly in Play Console too, not just here.
 - The Arabic/Hindi translated listings below are updated to match: "باقي" in the Arabic listing (its actual Arabic-script origin) and "बकाया" in the Hindi listing (the same word, already a common Hindi/Urdu financial term for an outstanding balance — not a foreign loanword needing transliteration). Confirmed choice: native script per language rather than keeping "Baqaya" in Latin letters everywhere.
+- **The launcher icon was also redesigned** since this file was last touched (white coin + amber checkmark + "BAQAYA" wordmark, replacing the old wallet/coin icon) — the **Play Store listing icon** (512×512 PNG, uploaded separately in Play Console under **Store presence → Main store listing → Graphics**) is a distinct asset from the in-app adaptive icon and needs to be re-exported/re-uploaded to match, or the app icon on the Play Store page will look like a different app from what's on the user's home screen after install. Any existing screenshots were captured against the old icon/dashboard layout too and should be recaptured from a current build before this release goes to Production, for the same reason.
 
 ## Translated listings — Arabic and Hindi
 

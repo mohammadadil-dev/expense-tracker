@@ -103,7 +103,7 @@ class ReminderReceiver : BroadcastReceiver() {
             val addLabel = context.getString(R.string.reminder_action_add_expense)
 
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setStyle(
@@ -115,7 +115,7 @@ class ReminderReceiver : BroadcastReceiver() {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)      // sound + vibrate
                 .setContentIntent(openAppIntent)
                 .addAction(
-                    R.drawable.ic_launcher_foreground,
+                    R.drawable.ic_notification,
                     addLabel,
                     addExpenseIntent
                 )

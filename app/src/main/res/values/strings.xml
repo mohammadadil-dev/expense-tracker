@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker - Budget Manager</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">Log expenses, track categories, and watch trends over time.</string>
     <string name="manage_categories">Manage Categories</string>
     <string name="reset_data">Reset Data</string>
@@ -59,6 +59,17 @@
     <string name="bento_subscription_subtitle">%1$s of monthly spend</string>
 
     <string name="ai_insights_feed_title">AI Insights</string>
+    <!-- Dashboard trim: only the top insight shows by default now, with the rest revealed on
+         tap, so the feed doesn't stack N full-height cards on every visit. -->
+    <string name="insights_show_more">Show %1$d more insight</string>
+    <string name="insights_show_more_plural">Show %1$d more insights</string>
+    <string name="insights_show_less">Show less</string>
+    <!-- Dashboard trim: Payday/Goals/Personality/Account-breakdown cards are collapsed by
+         default behind this toggle; only the Streak card stays always-visible. -->
+    <string name="dashboard_engagement_more">Streak, Goals &amp; More</string>
+    <!-- Dashboard trim: the 12-month trend chart is collapsed by default too — just the
+         title + toggle show until tapped. -->
+    <string name="dashboard_trend_show">Show Trend</string>
     <string name="insight_trend_down">Your spending is %1$s lower than last week.</string>
     <string name="insight_trend_up">Your spending is %1$s higher than last week.</string>
     <string name="insight_trend_flat">Your spending matched last week.</string>
@@ -430,6 +441,7 @@ Tap + to add someone you\'ll get money from.</string>
     <string name="khata_search_hint">Search by name or phone…</string>
     <string name="khata_search_no_results">No matches. Try a different name or number.</string>
     <string name="khata_outstanding">Outstanding</string>
+    <string name="khata_days_outstanding">Outstanding for %1$d days</string>
     <string name="khata_settled">Settled ✓</string>
     <string name="khata_add_entry">Add Entry</string>
     <string name="khata_credit_label">Credit (taken on tab)</string>
@@ -491,7 +503,7 @@ Feel free to use it anytime!</string>
 
     <!-- ── Security / Biometric lock ── -->
     <string name="security_section_title">Security</string>
-    <string name="biometric_lock_title">Unlock Expense Tracker</string>
+    <string name="biometric_lock_title">Unlock Baqaya</string>
     <string name="biometric_lock_subtitle">Use biometrics or device PIN to open the app</string>
     <string name="biometric_lock_toggle_label">App lock</string>
     <string name="biometric_lock_description">Require biometrics or PIN each time the app opens</string>
@@ -688,14 +700,19 @@ Feel free to use it anytime!</string>
     <string name="split_expenses_label">Expenses</string>
     <string name="split_expense_count">%d expenses</string>
     <string name="split_no_expenses">No expenses yet — tap + to add one</string>
-    <string name="split_add_expense">Add Expense</string>
+    <!-- Renamed from "Add Expense" — this sheet only ever adds a *split* expense inside a
+         Split group (see AddSplitExpenseSheet.kt), so the generic title read as a duplicate of
+         the unrelated single-user "Add Expense" flow elsewhere in the app. -->
+    <string name="split_add_expense">Split Expense</string>
     <string name="split_expense_description">What was this for?</string>
     <string name="split_expense_amount">Amount</string>
     <string name="split_paid_by">Paid by</string>
     <string name="split_paid_by_member">Paid by %s</string>
     <string name="split_split_among">Split among</string>
     <string name="split_split_among_hint">Select who shares this expense equally</string>
-    <string name="split_save_expense">Save Expense</string>
+    <!-- Matches split_add_expense's "Split Expense" title — "Save Expense" alone read as a
+         generic action unrelated to the screen it's on. -->
+    <string name="split_save_expense">Save Split Expense</string>
     <string name="split_delete_expense">Delete Expense?</string>
     <string name="split_delete_expense_confirm">Delete "%s"? This can\'t be undone.</string>
     <string name="split_delete_group">Delete Group</string>
@@ -718,7 +735,17 @@ Feel free to use it anytime!</string>
     <string name="split_wa_member_settled">Settled</string>
     <string name="split_wa_to_pay">To Pay</string>
     <string name="split_wa_all_settled">Everyone is settled! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">New expense in %1$s</string>
+
+    <!-- Prompt shown right after saving a new split expense, offering to notify the group —
+         not auto-sent: WhatsApp has no way to deep-link straight into a group chat by phone
+         number (only 1:1 chats support that), so the user still has to pick the group chat and
+         tap Send themselves inside WhatsApp, same "never automated" principle as the Khata bulk
+         reminder flow. -->
+    <string name="split_notify_whatsapp_title">Notify the group?</string>
+    <string name="split_notify_whatsapp_message">Share this expense with %1$s on WhatsApp.</string>
+    <string name="split_notify_whatsapp_not_now">Not now</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">Equal</string>
@@ -810,6 +837,7 @@ Kindly settle when convenient 🙏</string>
     <string name="business_name_hint">e.g. Sharma General Store</string>
     <string name="business_address_label">Address (optional)</string>
     <string name="business_phone_label">Phone (optional)</string>
+    <string name="settings_business_profile_saved">Business profile saved</string>
 
     <!-- ── Collections: aging view + bulk WhatsApp reminders (THEY_OWE parties only) ──
          See KhataCollectionsScreen.kt. Bulk sending is one-tap-per-party (no automated

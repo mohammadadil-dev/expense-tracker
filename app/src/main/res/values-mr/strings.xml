@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">खर्च ट्रॅकर - बजेट मॅनेजर</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">खर्च नोंदवा, श्रेण्या ट्रॅक करा, ट्रेंड पहा.</string>
     <string name="manage_categories">श्रेण्या व्यवस्थापित करा</string>
     <string name="reset_data">डेटा रीसेट करा</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">मासिक खर्चाचे %1$s</string>
 
     <string name="ai_insights_feed_title">AI अंतर्दृष्टी</string>
+    <string name="insights_show_more">आणखी %1$d अंतर्दृष्टी दाखवा</string>
+    <string name="insights_show_more_plural">आणखी %1$d अंतर्दृष्टी दाखवा</string>
+    <string name="insights_show_less">कमी दाखवा</string>
+    <string name="dashboard_engagement_more">स्ट्रीक, ध्येये आणि बरेच काही</string>
+    <string name="dashboard_trend_show">कल दाखवा</string>
     <string name="insight_trend_down">तुमचा खर्च मागील आठवड्यापेक्षा %1$s कमी आहे.</string>
     <string name="insight_trend_up">तुमचा खर्च मागील आठवड्यापेक्षा %1$s जास्त आहे.</string>
     <string name="insight_trend_flat">तुमचा खर्च मागील आठवड्यासारखाच आहे.</string>
@@ -415,6 +420,7 @@
     <string name="khata_search_hint">नाव किंवा फोन नंबरने शोधा…</string>
     <string name="khata_search_no_results">काही जुळले नाही. दुसरे नाव किंवा नंबर वापरून पहा.</string>
     <string name="khata_outstanding">बाकी</string>
+    <string name="khata_days_outstanding">%1$d दिवसांपासून बाकी</string>
     <string name="khata_settled">निपटले ✓</string>
     <string name="khata_add_entry">नोंद जोडा</string>
     <string name="khata_credit_label">क्रेडिट (उधार)</string>
@@ -472,7 +478,7 @@
     <string name="search_expenses_hint">खर्च शोधा…</string>
 
     <string name="security_section_title">सुरक्षा</string>
-    <string name="biometric_lock_title">खर्च ट्रॅकर उघडा</string>
+    <string name="biometric_lock_title">Baqaya उघडा</string>
     <string name="biometric_lock_subtitle">ॲप उघडण्यासाठी बायोमेट्रिक्स किंवा PIN वापरा</string>
     <string name="biometric_lock_toggle_label">ॲप लॉक</string>
     <string name="biometric_lock_description">प्रत्येक ॲप उघडण्यावेळी बायोमेट्रिक्स किंवा PIN आवश्यक</string>
@@ -654,14 +660,14 @@
     <string name="split_expenses_label">खर्च</string>
     <string name="split_expense_count">%d खर्च</string>
     <string name="split_no_expenses">अजून खर्च नाही — + दाबा</string>
-    <string name="split_add_expense">खर्च जोडा</string>
+    <string name="split_add_expense">खर्च विभागा</string>
     <string name="split_expense_description">हे कशासाठी आहे?</string>
     <string name="split_expense_amount">रक्कम</string>
     <string name="split_paid_by">कोणी दिले</string>
     <string name="split_paid_by_member">%s ने दिले</string>
     <string name="split_split_among">कोणांमध्ये विभागायचे</string>
     <string name="split_split_among_hint">हा खर्च समान रीतीने शेअर करणाऱ्यांना निवडा</string>
-    <string name="split_save_expense">खर्च जतन करा</string>
+    <string name="split_save_expense">विभागलेला खर्च जतन करा</string>
     <string name="split_delete_expense">खर्च हटवायचा का?</string>
     <string name="split_delete_expense_confirm">"%s" हटवायचे का? हे पूर्ववत केले जाऊ शकत नाही.</string>
     <string name="split_delete_group">गट हटवा</string>
@@ -682,7 +688,11 @@
     <string name="split_wa_member_settled">निपटले</string>
     <string name="split_wa_to_pay">द्या</string>
     <string name="split_wa_all_settled">सर्वांनी निपटले! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">%1$s मध्ये नवीन खर्च</string>
+    <string name="split_notify_whatsapp_title">गटाला सूचित करायचे?</string>
+    <string name="split_notify_whatsapp_message">हा खर्च %1$s सोबत WhatsApp वर शेअर करा.</string>
+    <string name="split_notify_whatsapp_not_now">आत्ता नाही</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">समान</string>
@@ -770,6 +780,7 @@
     <string name="business_name_hint">उदा. शर्मा जनरल स्टोअर</string>
     <string name="business_address_label">पत्ता (पर्यायी)</string>
     <string name="business_phone_label">फोन (पर्यायी)</string>
+    <string name="settings_business_profile_saved">व्यवसाय प्रोफाइल जतन केली</string>
     <!-- Collections: aging view + bulk WhatsApp reminders -->
     <string name="khata_collections_entry_label">एजिंग आणि रिमाइंडर</string>
     <string name="khata_collections_title">कलेक्शन</string>

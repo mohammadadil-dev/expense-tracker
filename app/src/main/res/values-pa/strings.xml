@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ਖਰਚ ਟਰੈਕਰ - ਬਜਟ ਮੈਨੇਜਰ</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">ਖਰਚ ਦਰਜ ਕਰੋ, ਸ਼੍ਰੇਣੀਆਂ ਟਰੈਕ ਕਰੋ, ਰੁਝਾਨ ਦੇਖੋ।</string>
     <string name="manage_categories">ਸ਼੍ਰੇਣੀਆਂ ਪ੍ਰਬੰਧਿਤ ਕਰੋ</string>
     <string name="reset_data">ਡੇਟਾ ਰੀਸੈੱਟ ਕਰੋ</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">ਮਹੀਨੇਵਾਰ ਖਰਚ ਦਾ %1$s</string>
 
     <string name="ai_insights_feed_title">AI ਸੂਝ</string>
+    <string name="insights_show_more">ਹੋਰ %1$d ਸੂਝ ਦਿਖਾਓ</string>
+    <string name="insights_show_more_plural">ਹੋਰ %1$d ਸੂਝ ਦਿਖਾਓ</string>
+    <string name="insights_show_less">ਘੱਟ ਦਿਖਾਓ</string>
+    <string name="dashboard_engagement_more">ਸਟ੍ਰੀਕ, ਟੀਚੇ ਅਤੇ ਹੋਰ</string>
+    <string name="dashboard_trend_show">ਰੁਝਾਨ ਦਿਖਾਓ</string>
     <string name="insight_trend_down">ਤੁਹਾਡਾ ਖਰਚ ਪਿਛਲੇ ਹਫ਼ਤੇ ਨਾਲੋਂ %1$s ਘੱਟ ਹੈ।</string>
     <string name="insight_trend_up">ਤੁਹਾਡਾ ਖਰਚ ਪਿਛਲੇ ਹਫ਼ਤੇ ਨਾਲੋਂ %1$s ਵੱਧ ਹੈ।</string>
     <string name="insight_trend_flat">ਤੁਹਾਡਾ ਖਰਚ ਪਿਛਲੇ ਹਫ਼ਤੇ ਜਿੰਨਾ ਹੀ ਹੈ।</string>
@@ -415,6 +420,7 @@
     <string name="khata_search_hint">ਨਾਮ ਜਾਂ ਫ਼ੋਨ ਨੰਬਰ ਨਾਲ ਖੋਜੋ…</string>
     <string name="khata_search_no_results">ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ। ਕੋਈ ਹੋਰ ਨਾਮ ਜਾਂ ਨੰਬਰ ਅਜ਼ਮਾਓ।</string>
     <string name="khata_outstanding">ਬਾਕੀ</string>
+    <string name="khata_days_outstanding">%1$d ਦਿਨਾਂ ਤੋਂ ਬਾਕੀ</string>
     <string name="khata_settled">ਨਿਪਟਿਆ ✓</string>
     <string name="khata_add_entry">ਐਂਟਰੀ ਜੋੜੋ</string>
     <string name="khata_credit_label">ਕ੍ਰੈਡਿਟ (ਉਧਾਰ)</string>
@@ -472,7 +478,7 @@
     <string name="search_expenses_hint">ਖਰਚ ਖੋਜੋ…</string>
 
     <string name="security_section_title">ਸੁਰੱਖਿਆ</string>
-    <string name="biometric_lock_title">ਖਰਚ ਟਰੈਕਰ ਖੋਲ੍ਹੋ</string>
+    <string name="biometric_lock_title">Baqaya ਖੋਲ੍ਹੋ</string>
     <string name="biometric_lock_subtitle">ਐਪ ਖੋਲ੍ਹਣ ਲਈ ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਜਾਂ PIN ਵਰਤੋ</string>
     <string name="biometric_lock_toggle_label">ਐਪ ਲਾਕ</string>
     <string name="biometric_lock_description">ਹਰ ਵਾਰ ਐਪ ਖੋਲ੍ਹਣ ਤੇ ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਜਾਂ PIN ਚਾਹੀਦਾ</string>
@@ -654,14 +660,14 @@
     <string name="split_expenses_label">ਖਰਚ</string>
     <string name="split_expense_count">%d ਖਰਚ</string>
     <string name="split_no_expenses">ਅਜੇ ਕੋਈ ਖਰਚ ਨਹੀਂ — + ਦਬਾਓ</string>
-    <string name="split_add_expense">ਖਰਚ ਜੋੜੋ</string>
+    <string name="split_add_expense">ਖਰਚ ਵੰਡੋ</string>
     <string name="split_expense_description">ਇਹ ਕਿਸ ਲਈ ਹੈ?</string>
     <string name="split_expense_amount">ਰਕਮ</string>
     <string name="split_paid_by">ਕਿਸ ਨੇ ਦਿੱਤਾ</string>
     <string name="split_paid_by_member">%s ਨੇ ਦਿੱਤਾ</string>
     <string name="split_split_among">ਕਿਨ੍ਹਾਂ ਵਿੱਚ ਵੰਡਣਾ</string>
     <string name="split_split_among_hint">ਇਹ ਖਰਚ ਬਰਾਬਰ ਸਾਂਝੇ ਕਰਨ ਵਾਲੇ ਚੁਣੋ</string>
-    <string name="split_save_expense">ਖਰਚ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
+    <string name="split_save_expense">ਵੰਡਿਆ ਖਰਚ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
     <string name="split_delete_expense">ਖਰਚ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="split_delete_expense_confirm">"%s" ਮਿਟਾਉਣਾ ਹੈ? ਇਹ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
     <string name="split_delete_group">ਗਰੁੱਪ ਮਿਟਾਓ</string>
@@ -682,7 +688,11 @@
     <string name="split_wa_member_settled">ਨਿਪਟਿਆ</string>
     <string name="split_wa_to_pay">ਦਿਓ</string>
     <string name="split_wa_all_settled">ਸਭ ਨੇ ਦਿੱਤਾ! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">%1$s ਵਿੱਚ ਨਵਾਂ ਖਰਚ</string>
+    <string name="split_notify_whatsapp_title">ਗਰੁੱਪ ਨੂੰ ਸੂਚਿਤ ਕਰੀਏ?</string>
+    <string name="split_notify_whatsapp_message">ਇਹ ਖਰਚ %1$s ਨਾਲ WhatsApp \'ਤੇ ਸਾਂਝਾ ਕਰੋ।</string>
+    <string name="split_notify_whatsapp_not_now">ਹੁਣੇ ਨਹੀਂ</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">ਬਰਾਬਰ</string>
@@ -770,6 +780,7 @@
     <string name="business_name_hint">ਜਿਵੇਂ ਸ਼ਰਮਾ ਜਨਰਲ ਸਟੋਰ</string>
     <string name="business_address_label">ਪਤਾ (ਵਿਕਲਪਿਕ)</string>
     <string name="business_phone_label">ਫ਼ੋਨ (ਵਿਕਲਪਿਕ)</string>
+    <string name="settings_business_profile_saved">ਕਾਰੋਬਾਰੀ ਪ੍ਰੋਫਾਈਲ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
     <!-- Collections: aging view + bulk WhatsApp reminders -->
     <string name="khata_collections_entry_label">ਏਜਿੰਗ ਅਤੇ ਰਿਮਾਈਂਡਰ</string>
     <string name="khata_collections_title">ਕਲੈਕਸ਼ਨ</string>

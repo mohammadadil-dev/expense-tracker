@@ -61,6 +61,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.KhataPartyEntity
@@ -358,21 +359,28 @@ private fun AgingBucketChip(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(14.dp),
         color = if (selected) color.copy(alpha = 0.16f) else CardWhite,
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            if (selected) color.copy(alpha = 0.45f) else color.copy(alpha = 0.16f)
+        ),
         modifier = modifier.clickable(onClick = onClick)
     ) {
         Column(
-            modifier = Modifier.padding(vertical = 10.dp, horizontal = 6.dp),
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Two-line label instead of a single truncated line — bucket names like "31–60 days"
+            // don't fit a quarter-width chip on one line without ellipsizing mid-word.
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 12.sp),
                 color = if (selected) color else TextSecondary,
                 textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.height(24.dp)
             )
             Spacer(Modifier.height(4.dp))
             Text(
@@ -381,9 +389,13 @@ private fun AgingBucketChip(
                 color = color
             )
             if (count > 0) {
+                Spacer(Modifier.height(2.dp))
+                // Plain-text "SAR 2,000.00" instead of the raw "ر.س" abbreviation — this chip is
+                // too narrow to host MoneyText's icon glyph without wrapping/clipping, so it uses
+                // the same ISO-code convention as the app's WhatsApp reminder text.
                 Text(
-                    text = Formatters.money(total, currencySymbol),
-                    style = MaterialTheme.typography.labelSmall,
+                    text = Formatters.moneyWithCode(total, currencySymbol),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                     color = TextMuted,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -500,8 +512,11 @@ private fun BulkReminderDialog(
                     fontWeight = FontWeight.Medium,
                     color = TextPrimary
                 )
-                Text(
-                    text = Formatters.money(row.balance, currencySymbol),
+                // MoneyText, not a plain Text — this dialog has room for the vector riyal symbol,
+                // so it should render the same way every other on-screen amount in the app does,
+                // instead of leaking the raw "ر.س" abbreviation as text.
+                MoneyText(
+                    formatted = Formatters.money(row.balance, currencySymbol),
                     style = MaterialTheme.typography.bodyMedium,
                     color = DangerRed
                 )

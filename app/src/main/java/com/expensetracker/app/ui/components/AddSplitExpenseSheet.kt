@@ -385,7 +385,9 @@ fun AddSplitExpenseSheet(
                                     singleLine = true,
                                     textStyle = MaterialTheme.typography.bodySmall,
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                                    prefix = { Text(currencySymbol, style = MaterialTheme.typography.bodySmall) }
+                                    // CurrencyPrefix, not a raw Text — was leaking the "ر.س"
+                                    // abbreviation instead of the vector riyal symbol.
+                                    prefix = { CurrencyPrefix(currencySymbol) }
                                 )
                             }
                             SplitMode.PERCENT -> if (checked) {
@@ -407,14 +409,20 @@ fun AddSplitExpenseSheet(
                 // Running-total validation hint for Exact/Percentage modes
                 if (splitMode == SplitMode.EXACT) {
                     Spacer(Modifier.height(6.dp))
-                    Text(
-                        text = stringResource(
+                    // MoneyText, not a plain Text — this sentence embeds two amounts, and a
+                    // plain Text left both leaking the raw "ر.س" abbreviation instead of the
+                    // vector riyal symbol. maxLines = 2 routes this through MoneyText's
+                    // inline-content path, which (unlike its single-line path) swaps out every
+                    // occurrence of the symbol, not just the first.
+                    MoneyText(
+                        formatted = stringResource(
                             R.string.split_exact_sum_hint,
                             "$currencySymbol${"%.2f".format(exactSum)}",
                             "$currencySymbol${"%.2f".format(amount)}"
                         ),
                         style = MaterialTheme.typography.bodySmall,
-                        color = if (exactMatches) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
+                        color = if (exactMatches) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error,
+                        maxLines = 2
                     )
                 } else if (splitMode == SplitMode.PERCENT) {
                     Spacer(Modifier.height(6.dp))
@@ -503,7 +511,7 @@ private fun ItemRowEditor(
                 singleLine = true,
                 textStyle = MaterialTheme.typography.bodyMedium,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                prefix = { Text(currencySymbol, style = MaterialTheme.typography.bodySmall) },
+                prefix = { CurrencyPrefix(currencySymbol) },
                 modifier = Modifier.width(108.dp)
             )
             if (canRemove) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Expense Tracker - Budget Manager</string>
+    <string name="app_name">Baqaya</string>
     <string name="dashboard_subtitle">Itala ang mga gastusin, subaybayan ang mga kategorya, at tingnan ang mga trend sa paglipas ng panahon.</string>
     <string name="manage_categories">Pamahalaan ang mga Kategorya</string>
     <string name="reset_data">I-reset ang Data</string>
@@ -58,6 +58,11 @@
     <string name="bento_subscription_subtitle">%1$s ng buwanang paggastos</string>
 
     <string name="ai_insights_feed_title">Mga AI Insight</string>
+    <string name="insights_show_more">Ipakita ang %1$d pang insight</string>
+    <string name="insights_show_more_plural">Ipakita ang %1$d pang insight</string>
+    <string name="insights_show_less">Ipakita ang mas kaunti</string>
+    <string name="dashboard_engagement_more">Streak, Goals at Higit Pa</string>
+    <string name="dashboard_trend_show">Ipakita ang Trend</string>
     <string name="insight_trend_down">Ang iyong paggastos ay %1$s na mas mababa kaysa noong nakaraang linggo.</string>
     <string name="insight_trend_up">Ang iyong paggastos ay %1$s na mas mataas kaysa noong nakaraang linggo.</string>
     <string name="insight_trend_flat">Ang iyong paggastos ay katulad ng nakaraang linggo.</string>
@@ -399,6 +404,7 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_search_hint">Maghanap gamit ang pangalan o numero…</string>
     <string name="khata_search_no_results">Walang nahanap. Subukan ang ibang pangalan o numero.</string>
     <string name="khata_outstanding">Natitirang Utang</string>
+    <string name="khata_days_outstanding">Natitirang utang sa loob ng %1$d na araw</string>
     <string name="khata_settled">Nabayaran na ✓</string>
     <string name="khata_add_entry">Magdagdag ng Entry</string>
     <string name="khata_credit_label">Utang (kinuha sa kwenta)</string>
@@ -481,7 +487,7 @@ Gamitin anumang oras!</string>
     <string name="export_csv_chooser_title">I-save o ibahagi ang CSV</string>
     <string name="search_expenses_hint">Maghanap ng gastos…</string>
     <string name="security_section_title">Seguridad</string>
-    <string name="biometric_lock_title">I-unlock ang Expense Tracker</string>
+    <string name="biometric_lock_title">I-unlock ang Baqaya</string>
     <string name="biometric_lock_subtitle">Gumamit ng biometrics o PIN ng device para buksan ang app</string>
     <string name="biometric_lock_toggle_label">App lock</string>
     <string name="biometric_lock_description">Kailangan ng biometrics o PIN sa tuwing bubuksan ang app</string>
@@ -662,14 +668,14 @@ Gamitin anumang oras!</string>
     <string name="split_expenses_label">Mga Gastos</string>
     <string name="split_expense_count">%d gastos</string>
     <string name="split_no_expenses">Walang gastos pa — pindutin ang +</string>
-    <string name="split_add_expense">Magdagdag ng Gastos</string>
+    <string name="split_add_expense">Hatiin ang Gastos</string>
     <string name="split_expense_description">Para saan ito?</string>
     <string name="split_expense_amount">Halaga</string>
     <string name="split_paid_by">Binayaran ni</string>
     <string name="split_paid_by_member">Binayaran ni %s</string>
     <string name="split_split_among">Hatiin sa</string>
     <string name="split_split_among_hint">Piliin kung sino ang maghahatiin nito nang pantay</string>
-    <string name="split_save_expense">I-save ang Gastos</string>
+    <string name="split_save_expense">I-save ang Hating Gastos</string>
     <string name="split_delete_expense">Burahin ang Gastos?</string>
     <string name="split_delete_expense_confirm">Burahin ang "%s"? Hindi na mababawi.</string>
     <string name="split_delete_group">Burahin ang Grupo</string>
@@ -692,7 +698,11 @@ Gamitin anumang oras!</string>
     <string name="split_wa_member_settled">Naisaayos na</string>
     <string name="split_wa_to_pay">Babayaran</string>
     <string name="split_wa_all_settled">Lahat ay naisaayos na! 🎉</string>
-    <string name="split_wa_footer">Expense Tracker</string>
+    <string name="split_wa_footer">Baqaya</string>
+    <string name="split_wa_new_expense_header">Bagong gastos sa %1$s</string>
+    <string name="split_notify_whatsapp_title">Ipaalam sa grupo?</string>
+    <string name="split_notify_whatsapp_message">Ibahagi ang gastos na ito sa %1$s sa WhatsApp.</string>
+    <string name="split_notify_whatsapp_not_now">Huwag muna</string>
 
     <!-- Unequal splits (exact amount / percentage) -->
     <string name="split_mode_equal">Pantay</string>
@@ -780,6 +790,7 @@ Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="business_name_hint">hal. Sharma General Store</string>
     <string name="business_address_label">Address (opsyonal)</string>
     <string name="business_phone_label">Telepono (opsyonal)</string>
+    <string name="settings_business_profile_saved">Na-save ang profile ng negosyo</string>
     <!-- Collections: aging view + bulk WhatsApp reminders -->
     <string name="khata_collections_entry_label">Edad ng Utang at Paalala</string>
     <string name="khata_collections_title">Koleksyon</string>

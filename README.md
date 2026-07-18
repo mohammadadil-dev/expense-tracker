@@ -1,4 +1,4 @@
-# Expense Tracker
+# Baqaya (formerly "Expense Tracker")
 
 A native Android app for logging monthly expenses and viewing category breakdowns and 12-month trends. Built with Kotlin and Jetpack Compose. All data is stored on-device in a Room (SQLite) database — there is no backend, no account, and no recurring cost of any kind.
 
@@ -51,7 +51,7 @@ ExpenseTrackerApp/
 
 1. **`applicationId`**: set to `com.agtech.expensetracker` in `app/build.gradle.kts` (the original placeholder, `com.expensetracker.app`, was rejected by Play Console as already in use). This is permanent the moment you complete your first upload — double-check it's the one you want before then. Note `namespace` (just above it in the same file) intentionally stays `com.expensetracker.app`; it only controls the generated R class package and doesn't need to match `applicationId`.
 2. **Launcher icon**: already replaced with a custom adaptive icon (`drawable/ic_launcher_foreground.xml` / `ic_launcher_background.xml`, plus a monochrome variant) — no further action needed unless you want different artwork.
-3. **App name**: `app_name` in `strings.xml` / `values-ar/strings.xml` / `values-hi/strings.xml` — currently "Expense Tracker". Change if you want a different display name.
+3. **App name**: `app_name` is now "Baqaya", set consistently (untranslated) across all 14 `values*/strings.xml` locale files — this is the launcher icon label, not the Play Store listing title. See `STORE_LISTING.md` for the separate, longer "Baqaya: Budget & Khata" title used in Play Console.
 4. **Target/compile API level**: bumped to `compileSdk = 35` / `targetSdk = 35` in `app/build.gradle.kts` — Google Play has required new app submissions to target API 35 (Android 15) since Aug 31 2025; the project previously targeted 34 and would have been rejected on upload. If Android Studio's sync complains it doesn't recognize SDK 35 (rather than just failing to find the platform), update Android Studio / the Android Gradle Plugin too (`Help → Check for Updates`), and install "Android 15.0 (API 35)" via the SDK Manager if it's not already on your machine.
 5. **Version bump**: `versionCode` / `versionName` in `app/build.gradle.kts` before each new release (currently `1` / `"1.0"`, correct for a first release).
 
