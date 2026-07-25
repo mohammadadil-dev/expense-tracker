@@ -53,6 +53,7 @@ import com.expensetracker.app.data.CategoryEntity
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.ui.components.AddEditExpenseSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
+import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
@@ -170,7 +171,7 @@ fun SubscriptionsScreen(
 
     if (showAddSheet) {
         AddEditExpenseSheet(
-            categories = categories.filter { it.nameKey != "cat_debt_payments" },
+            categories = categories.filter { it.nameKey !in setOf("cat_debt_payments", "cat_khata", "cat_splits") },
             existing = editingTemplate,
             defaultDate = DateUtils.todayIso(),
             defaultRecurring = true,
@@ -214,8 +215,8 @@ private fun SubscriptionsSummaryHeader(
             style = MaterialTheme.typography.labelLarge,
             color = TextMuted
         )
-        Text(
-            text = Formatters.money(monthlyTotal, currencySymbol),
+        MoneyText(
+            formatted = Formatters.money(monthlyTotal, currencySymbol),
             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
             color = TextPrimary
         )
@@ -274,8 +275,8 @@ private fun SubscriptionListItem(
                 )
             }
             Spacer(Modifier.width(8.dp))
-            Text(
-                text = Formatters.money(template.amount, currencySymbol),
+            MoneyText(
+                formatted = Formatters.money(template.amount, currencySymbol),
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 color = TextPrimary
             )

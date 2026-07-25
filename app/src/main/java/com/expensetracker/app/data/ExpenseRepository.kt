@@ -40,9 +40,9 @@ class ExpenseRepository(private val db: AppDatabase) {
     /** Total number of expenses ever logged — used only to time the in-app review prompt. */
     suspend fun countExpenses(): Int = db.expenseDao().count()
 
-    suspend fun seedDefaultCategoriesIfNeeded() {
+    suspend fun seedDefaultCategoriesIfNeeded(isIndiaMarket: Boolean) {
         if (db.categoryDao().count() == 0) {
-            defaultCategorySeed().forEach { db.categoryDao().insert(it) }
+            defaultCategorySeed(isIndiaMarket).forEach { db.categoryDao().insert(it) }
         }
     }
 
@@ -59,7 +59,10 @@ class ExpenseRepository(private val db: AppDatabase) {
         }
     }
 
-    private fun defaultCategorySeed(): List<CategoryEntity> = listOf(
+    // `cat_farming` is India-market-only — a Farming category reads as out of place for a Saudi
+    // (or urban) user, so it's seeded solely when the detected market is India (INR). Everything
+    // else is universal. listOfNotNull drops the farming entry cleanly when it's not applicable.
+    private fun defaultCategorySeed(isIndiaMarket: Boolean): List<CategoryEntity> = listOfNotNull(
         CategoryEntity(nameKey = "cat_housing", colorHex = "#6366F1", sortOrder = 0),
         CategoryEntity(nameKey = "cat_food", colorHex = "#F59E0B", sortOrder = 1),
         CategoryEntity(nameKey = "cat_transport", colorHex = "#10B981", sortOrder = 2),
@@ -74,9 +77,10 @@ class ExpenseRepository(private val db: AppDatabase) {
         CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
         CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
         CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
-        CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+        if (isIndiaMarket) CategoryEntity(nameKey = "cat_farming", colorHex = "#22C55E", sortOrder = 14) else null,
         CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
-        CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
+        CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16),
+        CategoryEntity(nameKey = "cat_charity",         colorHex = "#059669", sortOrder = 17)
     )
 
     /**
@@ -84,15 +88,18 @@ class ExpenseRepository(private val db: AppDatabase) {
      * app launch. New categories added in a later release appear automatically for existing
      * users without wiping their data.
      */
-    suspend fun ensureNewBuiltinCategories() {
+    suspend fun ensureNewBuiltinCategories(isIndiaMarket: Boolean) {
         val existing = db.categoryDao().getAllOnce().mapNotNull { it.nameKey }.toSet()
-        val toAdd = listOf(
+        // Farming stays India-only here too, so a Saudi user never has it re-added on launch.
+        // This only ever ADDs missing built-ins; an India user who already has farming keeps it.
+        val toAdd = listOfNotNull(
             CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
             CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
             CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
-            CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+            if (isIndiaMarket) CategoryEntity(nameKey = "cat_farming", colorHex = "#22C55E", sortOrder = 14) else null,
             CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
-            CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
+            CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16),
+            CategoryEntity(nameKey = "cat_charity",         colorHex = "#059669", sortOrder = 17)
         )
         toAdd.forEach { cat ->
             if (cat.nameKey !in existing) db.categoryDao().insert(cat)
@@ -266,7 +273,7 @@ class ExpenseRepository(private val db: AppDatabase) {
         }
     }
 
-    suspend fun resetAllData() {
+    suspend fun resetAllData(isIndiaMarket: Boolean) {
         db.expenseDao().deleteAll()
         db.categoryDao().deleteAll()
         db.pendingSmsExpenseDao().deleteAll()
@@ -277,7 +284,7 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.paymentAccountDao().deleteAll()
         // Goals are personal commitments — deliberately NOT wiped on data reset so users
         // don't lose their savings targets when clearing transaction history.
-        seedDefaultCategoriesIfNeeded()
+        seedDefaultCategoriesIfNeeded(isIndiaMarket)
         seedDefaultAccountsIfNeeded()
     }
 

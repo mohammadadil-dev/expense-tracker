@@ -25,9 +25,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -70,10 +72,15 @@ import com.expensetracker.app.ui.screens.SplashScreen
 import com.expensetracker.app.ui.screens.SplitsScreen
 import com.expensetracker.app.ui.screens.SplitGroupDetailScreen
 import com.expensetracker.app.ui.screens.SubscriptionsScreen
+import com.expensetracker.app.ui.screens.JamiyaScreen
+import com.expensetracker.app.ui.screens.JamiyaDetailScreen
+import com.expensetracker.app.ui.screens.MoreScreen
+import com.expensetracker.app.ui.screens.ZakatScreen
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import com.expensetracker.app.viewmodel.KhataViewModel
 import com.expensetracker.app.viewmodel.SplitViewModel
+import com.expensetracker.app.viewmodel.JamiyaViewModel
 
 private object Routes {
     const val SPLASH          = "splash"
@@ -86,11 +93,16 @@ private object Routes {
     const val DEBTS           = "debts"
     const val SPLITS          = "splits"
     const val SPLIT_DETAIL    = "split_detail/{groupId}"
+    const val JAMIYA          = "jamiya"
+    const val JAMIYA_DETAIL   = "jamiya_detail/{circleId}"
+    const val MORE            = "more"
+    const val ZAKAT           = "zakat"
     const val SETTINGS        = "settings"
     const val SUBSCRIPTIONS   = "subscriptions"
 
     fun khataDetail(partyId: Long) = "khata_detail/$partyId"
     fun splitDetail(groupId: Long) = "split_detail/$groupId"
+    fun jamiyaDetail(circleId: Long) = "jamiya_detail/$circleId"
 }
 
 private const val TRANSITION_MS = 260
@@ -104,13 +116,15 @@ private data class BottomNavItem(
 private val bottomNavItems = listOf(
     BottomNavItem(Routes.DASHBOARD, R.string.nav_dashboard,   Icons.Filled.Home),
     BottomNavItem(Routes.KHATA,     R.string.khata_tab_label, Icons.Filled.MenuBook),
-    BottomNavItem(Routes.DEBTS,     R.string.nav_debts,       Icons.Filled.AccountBalance),
     BottomNavItem(Routes.SPLITS,    R.string.nav_splits,      Icons.Filled.Groups),
-    BottomNavItem(Routes.SETTINGS,  R.string.nav_settings,    Icons.Filled.Settings),
+    BottomNavItem(Routes.JAMIYA,    R.string.nav_jamiya,      Icons.Filled.Autorenew),
+    BottomNavItem(Routes.MORE,      R.string.nav_more,        Icons.Filled.MoreHoriz),
 )
 
-// Routes where the bottom nav should be hidden
-private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", Routes.SUBSCRIPTIONS, Routes.KHATA_COLLECTIONS)
+// Routes where the bottom nav should be hidden. Debts, Subscriptions and Settings are now
+// secondary screens reached from the More tab, so they present full-screen with a back button
+// (same pattern as the Khata/Split detail screens) rather than as top-level tabs.
+private val routesWithoutBottomNav = setOf(Routes.SPLASH, Routes.ONBOARDING, Routes.CURRENCY_SETUP, "khata_detail/", "split_detail/", "jamiya_detail/", Routes.SUBSCRIPTIONS, Routes.KHATA_COLLECTIONS, Routes.DEBTS, Routes.SETTINGS, Routes.ZAKAT)
 
 @Composable
 fun AppNav() {
@@ -118,6 +132,7 @@ fun AppNav() {
     val viewModel: ExpenseViewModel = viewModel()
     val khataViewModel: KhataViewModel = viewModel()
     val splitViewModel: SplitViewModel = viewModel()
+    val jamiyaViewModel: JamiyaViewModel = viewModel()
 
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val displayName    by viewModel.displayName.collectAsState()
@@ -216,7 +231,10 @@ fun AppNav() {
 
                             NavigationBarItem(
                                 modifier = when (item.route) {
-                                    Routes.DEBTS -> Modifier.onGloballyPositioned { coords ->
+                                    // Debts moved under the More tab; anchor the coachmark's
+                                    // "Debts" spotlight (tour step 4) to More so the tour still
+                                    // points somewhere real.
+                                    Routes.MORE -> Modifier.onGloballyPositioned { coords ->
                                         viewModel.debtsNavBounds = coords.boundsInWindow()
                                     }
                                     Routes.KHATA -> Modifier.onGloballyPositioned { coords ->
@@ -514,6 +532,76 @@ fun AppNav() {
                             navController.navigate(Routes.SETTINGS) { launchSingleTop = true }
                         },
                         onBack           = { navController.popBackStack() }
+                    )
+                }
+
+                composable(
+                    Routes.JAMIYA,
+                    enterTransition    = { fadeIn(tween(TRANSITION_MS)) },
+                    exitTransition     = { fadeOut(tween(TRANSITION_MS)) },
+                    popEnterTransition = { fadeIn(tween(TRANSITION_MS)) },
+                    popExitTransition  = { fadeOut(tween(TRANSITION_MS)) }
+                ) {
+                    JamiyaScreen(
+                        viewModel      = jamiyaViewModel,
+                        currencySymbol = currencySymbol,
+                        onOpenCircle   = { circleId ->
+                            navController.navigate(Routes.jamiyaDetail(circleId))
+                        },
+                        onBack         = { navController.popBackStack() }
+                    )
+                }
+
+                composable(
+                    Routes.JAMIYA_DETAIL,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) { backStackEntry ->
+                    val circleId = backStackEntry.arguments
+                        ?.getString("circleId")?.toLongOrNull() ?: return@composable
+                    JamiyaDetailScreen(
+                        circleId       = circleId,
+                        viewModel      = jamiyaViewModel,
+                        currencySymbol = currencySymbol,
+                        onBack         = { navController.popBackStack() }
+                    )
+                }
+
+                composable(
+                    Routes.MORE,
+                    enterTransition    = { fadeIn(tween(TRANSITION_MS)) },
+                    exitTransition     = { fadeOut(tween(TRANSITION_MS)) },
+                    popEnterTransition = { fadeIn(tween(TRANSITION_MS)) },
+                    popExitTransition  = { fadeOut(tween(TRANSITION_MS)) }
+                ) {
+                    MoreScreen(
+                        onOpenDebts         = { navController.navigate(Routes.DEBTS) { launchSingleTop = true } },
+                        onOpenZakat         = { navController.navigate(Routes.ZAKAT) { launchSingleTop = true } },
+                        onOpenSubscriptions = { navController.navigate(Routes.SUBSCRIPTIONS) { launchSingleTop = true } },
+                        onOpenSettings      = { navController.navigate(Routes.SETTINGS) { launchSingleTop = true } }
+                    )
+                }
+
+                composable(
+                    Routes.ZAKAT,
+                    enterTransition   = {
+                        fadeIn(tween(TRANSITION_MS)) +
+                            slideInHorizontally(tween(TRANSITION_MS)) { it }
+                    },
+                    popExitTransition = {
+                        fadeOut(tween(TRANSITION_MS)) +
+                            slideOutHorizontally(tween(TRANSITION_MS)) { it }
+                    }
+                ) {
+                    ZakatScreen(
+                        viewModel = viewModel,
+                        onBack    = { navController.popBackStack() }
                     )
                 }
 

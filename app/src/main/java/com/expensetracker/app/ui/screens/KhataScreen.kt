@@ -542,7 +542,7 @@ fun KhataScreen(
         AlertDialog(
             onDismissRequest = { markPaidParty = null },
             title = { Text(stringResource(R.string.khata_mark_as_paid)) },
-            text = { Text(stringResource(R.string.khata_mark_as_paid_confirm, Formatters.money(balance, currencySymbol))) },
+            text = { MoneyText(formatted = stringResource(R.string.khata_mark_as_paid_confirm, Formatters.money(balance, currencySymbol)), style = MaterialTheme.typography.bodyMedium, maxLines = 3) },
             confirmButton = {
                 TextButton(onClick = {
                     khataViewModel.addEntry(

@@ -483,7 +483,8 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     fun resetAllData(onDone: () -> Unit) {
         viewModelScope.launch {
-            repository.resetAllData()
+            val isIndiaMarket = com.expensetracker.app.data.CurrencyLocaleMapper.isInrSymbol(settings.currencySymbol)
+            repository.resetAllData(isIndiaMarket)
             _currentMonthKey.value = DateUtils.currentMonthKey()
             onDone()
         }

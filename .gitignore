@@ -2,6 +2,8 @@
 build/
 app/build/
 .gradle/
+.kotlin/
+*.hprof
 local.properties
 
 # Android Studio / IntelliJ

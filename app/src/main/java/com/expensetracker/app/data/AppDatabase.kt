@@ -21,9 +21,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         SplitGroupEntity::class, SplitMemberEntity::class,
         SplitExpenseEntity::class, SplitExpenseShareEntity::class,
         PaymentAccountEntity::class,
-        SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class
+        SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class,
+        JamiyaCircleEntity::class, JamiyaMemberEntity::class, JamiyaContributionEntity::class
     ],
-    version = 21,
+    version = 22,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -44,6 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun splitExpenseShareDao(): SplitExpenseShareDao
     abstract fun paymentAccountDao(): PaymentAccountDao
     abstract fun splitExpenseItemDao(): SplitExpenseItemDao
+    abstract fun jamiyaDao(): JamiyaDao
 
     companion object {
         @Volatile
@@ -637,6 +639,65 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v21 -> v22: Jam'iya (جمعية) — rotating savings circles (ROSCA), the KSA-native
+        // equivalent of the khata. Three new, fully additive tables — nothing on any existing
+        // table changes, so there is nothing to backfill and no existing behaviour is touched:
+        //   jamiya_circles        — one named savings circle (contribution amount, cadence).
+        //   jamiya_members        — the people in it; payoutPosition = which round they collect,
+        //                           isMe = the device owner (mirrors split_members).
+        //   jamiya_contributions  — one row per recorded "member paid round N"; presence == paid,
+        //                           the same "a ledger line means it happened" model as khata.
+        // Pure record-keeping: no money ever moves through the app, so this stays offline,
+        // backend-free, and outside SAMA's regulated-activity scope. linkedExpenseId on
+        // contributions is reserved for a future "count my own contributions as spend" pass
+        // (captured now to avoid a second migration later, like khata_parties.upiId did).
+        // Written by hand, same as every prior migration, so upgrading never wipes existing data.
+        private val MIGRATION_21_22 = object : Migration(21, 22) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `jamiya_circles` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `emoji` TEXT NOT NULL DEFAULT '🔄',
+                        `contributionAmount` REAL NOT NULL,
+                        `frequency` TEXT NOT NULL DEFAULT 'MONTHLY',
+                        `startDate` TEXT NOT NULL,
+                        `currentRound` INTEGER NOT NULL DEFAULT 1,
+                        `notes` TEXT NOT NULL DEFAULT '',
+                        `isClosed` INTEGER NOT NULL DEFAULT 0,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `jamiya_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `circleId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `phone` TEXT NOT NULL DEFAULT '',
+                        `colorHex` TEXT NOT NULL DEFAULT '#4CAF50',
+                        `emoji` TEXT NOT NULL DEFAULT '',
+                        `isMe` INTEGER NOT NULL DEFAULT 0,
+                        `payoutPosition` INTEGER NOT NULL DEFAULT 0,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `jamiya_contributions` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `circleId` INTEGER NOT NULL,
+                        `memberId` INTEGER NOT NULL,
+                        `roundNumber` INTEGER NOT NULL,
+                        `amount` REAL NOT NULL,
+                        `date` TEXT NOT NULL,
+                        `linkedExpenseId` INTEGER
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_jamiya_members_circleId` ON `jamiya_members` (`circleId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_jamiya_contributions_circleId` ON `jamiya_contributions` (`circleId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_jamiya_contributions_memberId` ON `jamiya_contributions` (`memberId`)")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -648,7 +709,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9,
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
                     MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
-                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21
+                    MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21,
+                    MIGRATION_21_22
                 ).build().also { INSTANCE = it }
             }
         }

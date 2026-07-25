@@ -23,5 +23,6 @@ fun categoryEmoji(nameKey: String?): String = when (nameKey) {
     "cat_khata"           -> "📒"
     "cat_education"       -> "📚"
     "cat_splits"          -> "🤝"
+    "cat_charity"         -> "🤲"
     else                  -> "💳"
 }
