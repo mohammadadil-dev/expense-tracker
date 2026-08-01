@@ -37,4 +37,8 @@ interface BudgetDao {
 
     @Query("DELETE FROM budgets")
     suspend fun deleteAll()
+
+    /** Rescales every budget cap when the user converts currency. */
+    @Query("UPDATE budgets SET amount = amount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

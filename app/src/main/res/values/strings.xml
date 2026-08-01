@@ -339,6 +339,19 @@
     <string name="subscriptions_delete_title">Delete subscription?</string>
     <string name="subscriptions_delete_confirm">This stops future copies of \"%1$s\" from being added. Past entries stay in your history.</string>
     <string name="subscriptions_dashboard_title">Subscriptions</string>
+    <!-- Add/Edit subscription sheet (service-preset picker) -->
+    <string name="subscription_add_title">Add subscription</string>
+    <string name="subscription_edit_title">Edit subscription</string>
+    <string name="subscription_choose_service">Choose a service</string>
+    <string name="subscription_custom">Custom</string>
+    <string name="subscription_name_label">Name</string>
+    <string name="subscription_name_hint">e.g. Netflix</string>
+    <string name="subscription_billing_day_label">Renews on (day of month)</string>
+    <string name="subscription_billing_cycle">Billing cycle</string>
+    <string name="subscription_cycle_monthly">Monthly</string>
+    <string name="subscription_cycle_quarterly">Every 3 months</string>
+    <string name="subscription_cycle_halfyearly">Every 6 months</string>
+    <string name="subscription_cycle_yearly">Yearly</string>
 
     <string name="debt_direction_label">Direction</string>
     <string name="debt_direction_owe">I Owe</string>
@@ -467,6 +480,11 @@ Tap + to add someone you\'ll get money from.</string>
     <string name="khata_whatsapp_not_installed">WhatsApp is not installed.</string>
     <string name="khata_request_via_upi">Request via UPI</string>
     <string name="khata_add_upi_hint">Add your UPI ID in Settings so they can pay you instantly via UPI</string>
+    <string name="khata_add_iban_hint">Add your IBAN in Settings so it\'s included in payment reminders</string>
+    <string name="khata_iban_shared_label">Your IBAN (shared in reminders)</string>
+    <string name="khata_stc_shared_label">Your STC Pay (shared in reminders)</string>
+    <string name="khata_add_payment_hint">Add your IBAN or STC Pay in Settings so it\'s included in reminders</string>
+    <string name="copied">Copied</string>
     <string name="khata_upi_sheet_caption">They can scan this in person, or tap the link you share to pay you directly.</string>
     <string name="khata_upi_share_link">Share payment link</string>
     <string name="khata_pay_via_upi">Pay via UPI</string>
@@ -475,18 +493,14 @@ Tap + to add someone you\'ll get money from.</string>
     <string name="khata_mark_as_paid">Mark as Paid</string>
     <string name="khata_mark_as_paid_confirm">Mark %1$s as paid? This logs a payment entry that settles the outstanding balance.</string>
     <string name="khata_marked_as_paid_note">Marked as paid</string>
-    <string name="khata_reminder_msg_owe">Hi %1$s 👋
-
-This is a friendly reminder — you have an outstanding balance of %2$s.
-
-Kindly settle when convenient 🙏</string>
+    <string name="khata_reminder_msg_owe">Hi %1$s 👋\n\nAmount due: *%2$s*\nKindly settle when convenient 🙏</string>
     <string name="khata_reminder_msg_credit">Hi %1$s 👋
 
-Just a note — you have a credit of %2$s at my shop.
+🎁 Just a note — you have a credit of *%2$s* at my shop.
 
 Feel free to use it anytime!</string>
     <string name="khata_reminder_signature">Regards,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">Choose one:</string>
     <string name="khata_direction_they_owe_label">They owe me</string>
     <string name="khata_initial_amount_label">Opening balance (optional)</string>
@@ -692,6 +706,8 @@ Feel free to use it anytime!</string>
     <string name="split_group_name_hint">Group name (e.g. Trip to Dubai)</string>
     <string name="split_members_label">Members</string>
     <string name="split_add_member_hint">Add member name</string>
+    <string name="split_add_member">Add member</string>
+    <string name="split_member_duplicate">That name is already in this group</string>
     <string name="split_member_count">%d members</string>
     <string name="split_settled">Settled ✓</string>
     <string name="split_you_owe">You\'ll pay %1$s%2$.2f</string>
@@ -777,11 +793,11 @@ Feel free to use it anytime!</string>
     <string name="split_whatsapp_not_installed">WhatsApp is not installed.</string>
     <string name="split_reminder_msg">Hi %1$s 👋
 
-A friendly reminder from \"%2$s\" — you owe %3$s to %4$s.
+🧾 A friendly reminder from \"%2$s\" — you owe *%3$s* to %4$s.
 
 Kindly settle when convenient 🙏</string>
     <string name="split_reminder_signature">Regards,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">Tip: logging daily keeps your budget on track 📊</string>
     <string name="reminder_action_add_expense">Add Expense</string>
 
@@ -861,19 +877,19 @@ Kindly settle when convenient 🙏</string>
     <string name="khata_bulk_reminder_stop">Stop</string>
     <string name="khata_bulk_reminder_done">Sent %1$d of %2$d reminders</string>
     <!-- Jam'iya (rotating savings circle / ROSCA) -->
-    <string name="nav_jamiya">Circle</string>
-    <string name="jamiya_title">Circle</string>
-    <string name="jamiya_new_circle">New circle</string>
+    <string name="nav_jamiya">Committee</string>
+    <string name="jamiya_title">Committee</string>
+    <string name="jamiya_new_circle">New committee</string>
     <string name="jamiya_create">Create</string>
-    <string name="jamiya_circle_name">Circle name</string>
+    <string name="jamiya_circle_name">Committee name</string>
     <string name="jamiya_contribution_amount">Contribution per member</string>
     <string name="jamiya_monthly">Monthly</string>
     <string name="jamiya_weekly">Weekly</string>
     <string name="jamiya_summary_monthly">%1$s / month</string>
     <string name="jamiya_summary_weekly">%1$s / week</string>
     <string name="jamiya_round_short">Round %1$d</string>
-    <string name="jamiya_empty_title">No savings circles yet</string>
-    <string name="jamiya_empty_body">Track a savings circle (committee / kitty): who has paid each round and whose turn it is to collect. No money moves through the app — it only keeps the record.</string>
+    <string name="jamiya_empty_title">No committees yet</string>
+    <string name="jamiya_empty_body">Track a committee (rotating savings group / kitty): who has paid each round and whose turn it is to collect. No money moves through the app — it only keeps the record.</string>
     <string name="jamiya_add_member">Add member</string>
     <string name="jamiya_member_name">Name</string>
     <string name="jamiya_member_phone">Phone (optional)</string>
@@ -889,8 +905,8 @@ Kindly settle when convenient 🙏</string>
     <string name="jamiya_owes">Owes %1$s</string>
     <string name="jamiya_recipient_badge">Receives the pot this round</string>
     <string name="jamiya_remind">Send reminder</string>
-    <string name="jamiya_reminder_message">Reminder: your contribution of %1$s for our savings circle \"%2$s\" (round %3$d) is due. Thank you.</string>
-    <string name="jamiya_delete_circle_title">Delete circle?</string>
+    <string name="jamiya_reminder_message">Reminder: your contribution of %1$s for our committee \"%2$s\" (round %3$d) is due. Thank you.</string>
+    <string name="jamiya_delete_circle_title">Delete committee?</string>
     <string name="jamiya_delete_circle_confirm">This permanently removes \"%1$s\" and all its members and contribution records. This cannot be undone.</string>
 
     <string name="nav_more">More</string>
@@ -922,19 +938,19 @@ Kindly settle when convenient 🙏</string>
     <string name="zakat_disclaimer">This is a guide, not a fatwa. Nisab and rules vary by scholar and region — confirm with a trusted authority.</string>
 
     <string name="jamiya_complete_title">All rounds complete! 🎉</string>
-    <string name="jamiya_complete_body">Everyone has contributed and collected their turn. You can mark this circle as complete.</string>
-    <string name="jamiya_mark_complete">Mark circle as complete</string>
-    <string name="jamiya_completed_title">Circle completed</string>
-    <string name="jamiya_completed_body">This savings circle is finished and archived. You can reopen it if you need to make changes.</string>
+    <string name="jamiya_complete_body">Everyone has contributed and collected their turn. You can mark this committee as complete.</string>
+    <string name="jamiya_mark_complete">Mark committee as complete</string>
+    <string name="jamiya_completed_title">Committee completed</string>
+    <string name="jamiya_completed_body">This committee is finished and archived. You can reopen it if you need to make changes.</string>
     <string name="jamiya_completed_badge">Completed</string>
-    <string name="jamiya_reopen">Reopen circle</string>
+    <string name="jamiya_reopen">Reopen committee</string>
     <string name="jamiya_turn">Turn %1$d</string>
     <string name="jamiya_move_up">Move up (earlier turn)</string>
     <string name="jamiya_move_down">Move down (later turn)</string>
-    <string name="jamiya_edit_circle">Edit circle</string>
+    <string name="jamiya_edit_circle">Edit committee</string>
     <string name="jamiya_duplicate_member">A member with this name already exists</string>
     <string name="jamiya_share">Share summary</string>
-    <string name="jamiya_share_header">%1$s — Savings Circle</string>
+    <string name="jamiya_share_header">%1$s — Committee</string>
     <string name="jamiya_share_terms_monthly">%1$s per member each month · %2$d members</string>
     <string name="jamiya_share_terms_weekly">%1$s per member each week · %2$d members</string>
     <string name="jamiya_share_pot">Pot each round: %1$s</string>
@@ -944,7 +960,7 @@ Kindly settle when convenient 🙏</string>
     <string name="jamiya_share_turns">Collection order:</string>
     <string name="jamiya_share_footer">Shared via Baqaya</string>
     <string name="jamiya_share_member_greeting">Hi %1$s 👋</string>
-    <string name="jamiya_share_member_body">\"%1$s\" — our savings circle.\nYour turn to collect: round %2$d (%3$s pot).\nThis round (%4$d): %5$s\nContribution each round: %6$s.</string>
+    <string name="jamiya_share_member_body">\"%1$s\" — our committee.\nYour turn to collect: round %2$d (%3$s pot).\nThis round (%4$d): %5$s\nContribution each round: %6$s.</string>
     <string name="jamiya_share_member_paid">you\'ve already paid ✅ — thank you!</string>
     <string name="jamiya_share_member_due">please pay your %1$s ⌛</string>
     <string name="jamiya_share_member_cd">Send details on WhatsApp</string>
@@ -954,4 +970,79 @@ Kindly settle when convenient 🙏</string>
     <string name="zakat_nisab_hint">Zakat is due only if your net wealth is above the nisab — the value of 85g gold or 595g silver. Choose which to measure against; enter that metal\'s price below.</string>
     <string name="zakat_gold_grams">Gold you own (grams)</string>
     <string name="zakat_silver_grams">Silver you own (grams)</string>
+    <string name="iban_section_title">Bank transfer (IBAN)</string>
+    <string name="iban_label">Your IBAN</string>
+    <string name="iban_hint">00 0000 0000 0000 0000 00</string>
+    <string name="iban_invalid">Enter a valid Saudi IBAN (SA + 22 characters)</string>
+    <string name="iban_pay_to">*Pay by bank transfer*\n%1$s</string>
+    <string name="iban_note">Double-check the IBAN before saving. Payments go to this exact number, so a wrong digit could send money to the wrong account.</string>
+    <string name="iban_updated">IBAN saved</string>
+    <string name="iban_removed">IBAN removed</string>
+    <!-- STC Pay (KSA mobile wallet) — second sharable SAR payment method -->
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay number</string>
+    <string name="stc_hint">5XXXXXXXX</string>
+    <string name="stc_pay_to">*Or STC Pay*\n📲 %1$s</string>
+    <string name="stc_note">Double-check the number before saving — STC Pay transfers go to this exact number.</string>
+    <string name="stc_updated">STC Pay number saved</string>
+    <string name="stc_removed">STC Pay number removed</string>
+    <!-- Shared Bills (utility bills prorated between flatmates by person-days) -->
+    <string name="shared_bills_title">Shared Bills</string>
+    <string name="shared_bills_empty_title">No shared bills yet</string>
+    <string name="shared_bills_empty_body">Split a shared utility bill fairly by how many days each person was here. Tap + to start.</string>
+    <string name="shared_bill_add_title">New shared bill</string>
+    <string name="shared_bill_label_hint">Bill name</string>
+    <string name="shared_bill_label_example">e.g. Electricity — August</string>
+    <string name="shared_bill_period">Billing period</string>
+    <string name="shared_bill_period_days">%1$d days</string>
+    <string name="shared_bill_total">Total amount</string>
+    <string name="shared_bill_people">People</string>
+    <string name="shared_bill_people_hint">Add everyone who shares the bill. Set away dates for anyone who wasn\'t here the whole period.</string>
+    <string name="shared_bill_bill_type">Bill</string>
+    <string name="bill_type_electricity">Electricity</string>
+    <string name="bill_type_water">Water</string>
+    <string name="bill_type_gas">Gas</string>
+    <string name="bill_type_internet">Internet</string>
+    <string name="bill_type_rent">Rent</string>
+    <string name="bill_type_maintenance">Maintenance</string>
+    <string name="bill_type_other">Other</string>
+    <string name="shared_bill_split_by">Split by</string>
+    <string name="shared_bill_mode_person">By person</string>
+    <string name="shared_bill_mode_flat">By flat</string>
+    <string name="shared_bill_flats">Flats</string>
+    <string name="shared_bill_flats_hint">Add each flat and how many people stay in it. Set away dates if a flat was empty for part of the period.</string>
+    <string name="shared_bill_flat_hint">Flat number</string>
+    <string name="shared_bill_people_count_label">People in flat</string>
+    <string name="shared_bill_people_count">%1$d people</string>
+    <string name="shared_bill_present_days">%1$d/%2$d days</string>
+    <string name="shared_bill_away_from">Away from</string>
+    <string name="shared_bill_away_to">Away to</string>
+    <string name="shared_bill_compute">Compute split</string>
+    <string name="shared_bill_delete_title">Delete bill?</string>
+    <string name="shared_bill_delete_confirm">Delete \"%1$s\" and its split? This cannot be undone.</string>
+    <string name="shared_bill_share">Share breakdown</string>
+    <string name="shared_bill_share_heading">Each person\'s share (by days present)</string>
+    <string name="shared_bill_log_my_share">Log my share (%1$s)</string>
+    <string name="shared_bill_my_share_logged">My share logged ✓</string>
+    <string name="shared_bill_excluded">Excluded from this bill</string>
+    <string name="shared_bill_my_flat">My flat</string>
+    <string name="shared_bill_note_hint">Note (optional)</string>
+    <string name="shared_bill_note_example">e.g. with guest, Flat 3 vacant</string>
+    <string name="shared_bill_bills_label">Bills</string>
+    <string name="shared_bill_groups_empty_title">No groups yet</string>
+    <string name="shared_bill_groups_empty_body">Create a group — an apartment, floor, office or any shared place — to track its bills like electricity and water.</string>
+    <string name="shared_bill_new_group">New group</string>
+    <string name="shared_bill_group_name_hint">Group name</string>
+    <string name="shared_bill_group_name_example">e.g. Apartment 3, Office</string>
+    <string name="shared_bill_create_group">Create group</string>
+    <string name="shared_bill_group_delete_title">Delete group?</string>
+    <string name="shared_bill_group_delete_confirm">Delete \"%1$s\" and all its bills? This cannot be undone.</string>
+    <!-- Splits tab mode toggle -->
+    <string name="split_mode_expenses">Group expenses</string>
+    <string name="split_mode_shared">Shared bills</string>
+    <string name="split_mode_expenses_desc">Split trips, dinners and shared purchases, then settle up who owes whom.</string>
+    <string name="split_mode_shared_desc">Split a recurring utility bill across flatmates by days present.</string>
+    <string name="remove">Remove</string>
+    <!-- Install pitch appended to WhatsApp reminders/summaries (before the Play Store link). No format args. -->
+    <string name="app_install_pitch">📲 *Track expenses &amp; settle up easily with Baqaya* — free, offline &amp; private.</string>
 </resources>

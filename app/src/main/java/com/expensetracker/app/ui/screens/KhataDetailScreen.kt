@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -71,6 +72,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -98,6 +100,7 @@ import com.expensetracker.app.util.ExportRow
 import com.expensetracker.app.util.Formatters
 import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.ReceiptPhotoStore
+import com.expensetracker.app.util.SaudiBanks
 import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
 import com.expensetracker.app.viewmodel.ExpenseViewModel
@@ -116,6 +119,8 @@ fun KhataDetailScreen(
     val currencySymbol by expenseViewModel.currencySymbol.collectAsState()
     val displayName    by expenseViewModel.displayName.collectAsState()
     val myUpiId        by expenseViewModel.myUpiId.collectAsState()
+    val myIban         by expenseViewModel.myIban.collectAsState()
+    val myStcPay       by expenseViewModel.myStcPay.collectAsState()
     val allParties     by khataViewModel.allParties.collectAsState()
     val allEntries     by khataViewModel.allEntries.collectAsState()
 
@@ -156,6 +161,18 @@ fun KhataDetailScreen(
         CurrencyLocaleMapper.isInrSymbol(currencySymbol) &&
         (!party.upiId.isNullOrBlank() || party.phone.isNotBlank())
 
+    // IBAN is the Saudi analog of the UPI flow above. When the party owes the user and the
+    // currency is SAR, either surface the IBAN that gets attached to the reminder (so the user
+    // can see/confirm it), or — if none is saved yet — nudge them to add one before sending,
+    // exactly like showAddUpiHint. There's no "request" button here (unlike UPI's QR): the IBAN
+    // is plain text that already rides along in the reminder message.
+    val isSarCollect = !isIOwe && balance >= 1.0 && CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)
+    val showIbanInfo = isSarCollect && myIban.isNotBlank()
+    val showStcInfo = isSarCollect && myStcPay.isNotBlank()
+    // One nudge, only when NEITHER payment method is saved — if they already have one, no nagging.
+    val showAddPaymentHint = isSarCollect && myIban.isBlank() && myStcPay.isBlank()
+    val myStcDisplay = if (myStcPay.isNotBlank()) "🇸🇦 +966 " + myStcPay.removePrefix("966").trimStart('0') else ""
+
     // "Mark as Paid" — a general quick-settle shortcut available for any party regardless of
     // direction or currency (not just the UPI flows above), since a debt can be settled in cash,
     // bank transfer, etc. Logs one PAYMENT entry for the full outstanding balance.
@@ -182,8 +199,31 @@ fun KhataDetailScreen(
     // Play Store link appended in code (not in the translated string resources) since the URL
     // itself needs no localization — this reaches the recipient even if they don't have the app
     // yet, which is often the case for a Khata reminder sent to someone outside the user base.
-    val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) + signature +
-        "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+    // When the party owes the user (collect flow) and the user has set a Saudi IBAN, include it
+    // so they can bank-transfer — the KSA analog of the "Request via UPI" flow for India.
+    val ibanArabic = LocalConfiguration.current.locales[0].language == "ar"
+    val ibanLine = if (!isIOwe && CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myIban.isNotBlank()) {
+        val bank = SaudiBanks.nameForIbanBody(myIban.removePrefix("SA"), ibanArabic)
+        // Bank name ABOVE the (grouped, bold) IBAN so the IBAN is the block's last line — both
+        // are passed as one arg, so line breaks come from real \n, not template surgery.
+        val body = (if (bank != null) "🏛️ $bank\n" else "") + "*${SaudiBanks.formatGrouped(myIban)}*"
+        "\n\n" + stringResource(R.string.iban_pay_to, body)
+    } else ""
+    // STC Pay mobile-wallet line — the second sharable SAR method. Included whenever set, so a
+    // reminder can carry IBAN, STC Pay, or both depending on what the user saved.
+    val stcLine = if (!isIOwe && CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myStcPay.isNotBlank())
+        "\n\n" + stringResource(R.string.stc_pay_to, myStcPay) else ""
+    // Compact one-line version of the same IBAN (+ bank) for the on-card info chip.
+    val myIbanDisplay = if (myIban.isNotBlank()) {
+        val bank = SaudiBanks.nameForIbanBody(myIban.removePrefix("SA"), ibanArabic)
+        if (bank != null) "$myIban · $bank" else myIban
+    } else ""
+    // Tail: a divider, a short install pitch, then a tappable https:// Play Store link. This
+    // reaches the recipient even if they don't have the app yet — often the case for a reminder
+    // sent to someone outside the user base — so the pitch doubles as organic acquisition.
+    val reminderMsg = (if (isIOwe) reminderMsgCredit else reminderMsgOwe) + ibanLine + stcLine + signature +
+        "\n\n━━━━━━━━━━\n" + stringResource(R.string.app_install_pitch) +
+        "\n👉 https://play.google.com/store/apps/details?id=${context.packageName}"
 
     // Bill/receipt photos attached to this party's CREDIT entries (see AddKhataEntrySheet's
     // photo attach UI) — collected here so both WhatsApp share paths below can attach them.
@@ -531,6 +571,12 @@ fun KhataDetailScreen(
                     onAddUpiId = onOpenSettings,
                     showPayUpiButton = showPayUpiButton,
                     onPayUpi = { payViaUpi() },
+                    showIbanInfo = showIbanInfo,
+                    ibanDisplay = myIbanDisplay,
+                    showStcInfo = showStcInfo,
+                    stcDisplay = myStcDisplay,
+                    showAddPaymentHint = showAddPaymentHint,
+                    onAddIban = onOpenSettings,
                     showMarkPaidButton = showMarkPaidButton,
                     onMarkPaid = { showMarkPaidConfirm = true }
                 )
@@ -746,6 +792,12 @@ private fun KhataBalanceCard(
     onAddUpiId: () -> Unit = {},
     showPayUpiButton: Boolean = false,
     onPayUpi: () -> Unit = {},
+    showIbanInfo: Boolean = false,
+    ibanDisplay: String = "",
+    showStcInfo: Boolean = false,
+    stcDisplay: String = "",
+    showAddPaymentHint: Boolean = false,
+    onAddIban: () -> Unit = {},
     showMarkPaidButton: Boolean = false,
     onMarkPaid: () -> Unit = {}
 ) {
@@ -1001,6 +1053,128 @@ private fun KhataBalanceCard(
                         Spacer(Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.khata_add_upi_hint),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = Color.White,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            Icons.Filled.ChevronRight,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.80f),
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+            }
+
+            // IBAN info chip (SAR): shows the IBAN that will be attached to the reminder, so the
+            // user can confirm it at a glance. Tappable to edit it in Settings.
+            if (showIbanInfo) {
+                Spacer(Modifier.height(10.dp))
+                Surface(
+                    onClick = onAddIban,
+                    shape = RoundedCornerShape(14.dp),
+                    color = Color.White.copy(alpha = 0.16f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.AccountBalance,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.khata_iban_shared_label),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.White.copy(alpha = 0.80f)
+                            )
+                            Text(
+                                text = ibanDisplay,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = Color.White
+                            )
+                        }
+                        Icon(
+                            Icons.Filled.Edit,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.80f),
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+            }
+
+            // STC Pay info chip (SAR): the mobile-wallet number attached to the reminder.
+            if (showStcInfo) {
+                Spacer(Modifier.height(10.dp))
+                Surface(
+                    onClick = onAddIban,
+                    shape = RoundedCornerShape(14.dp),
+                    color = Color.White.copy(alpha = 0.16f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.Smartphone,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.khata_stc_shared_label),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.White.copy(alpha = 0.80f)
+                            )
+                            Text(
+                                text = stcDisplay,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = Color.White
+                            )
+                        }
+                        Icon(
+                            Icons.Filled.Edit,
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = 0.80f),
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+            }
+
+            // Nudge (SAR): no payment method saved yet — jump to Settings to add IBAN or STC Pay
+            // so it's included in reminders.
+            if (showAddPaymentHint) {
+                Spacer(Modifier.height(10.dp))
+                Surface(
+                    onClick = onAddIban,
+                    shape = RoundedCornerShape(14.dp),
+                    color = Color.White.copy(alpha = 0.16f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Filled.Info,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.khata_add_payment_hint),
                             style = MaterialTheme.typography.labelMedium,
                             color = Color.White,
                             modifier = Modifier.weight(1f)

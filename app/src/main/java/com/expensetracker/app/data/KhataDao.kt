@@ -65,4 +65,12 @@ interface KhataDao {
     /** Sum of all PAYMENT entries for a party (what has been settled). */
     @Query("SELECT COALESCE(SUM(amount),0) FROM khata_entries WHERE partyId = :partyId AND type = 'PAYMENT'")
     suspend fun totalPaymentForParty(partyId: Long): Double
+
+    /** Rescales every ledger entry when the user converts currency. */
+    @Query("UPDATE khata_entries SET amount = amount * :rate")
+    suspend fun scaleAllEntryAmounts(rate: Double)
+
+    /** Rescales any credit-limit caps set on parties (skips parties with no limit). */
+    @Query("UPDATE khata_parties SET creditLimit = creditLimit * :rate WHERE creditLimit IS NOT NULL")
+    suspend fun scaleAllCreditLimits(rate: Double)
 }

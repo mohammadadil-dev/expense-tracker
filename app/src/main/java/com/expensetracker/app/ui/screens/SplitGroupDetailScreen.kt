@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import com.expensetracker.app.data.SplitRepository
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -124,6 +125,8 @@ fun SplitGroupDetailScreen(
     viewModel: SplitViewModel,
     currencySymbol: String,
     myUpiId: String = "",
+    myIban: String = "",
+    myStcPay: String = "",
     ownerDisplayName: String = "",
     // Optional business profile (Settings) — stamped onto the PDF export in place of the app
     // name when set. Threaded from AppNav.kt (this screen has no direct ExpenseViewModel
@@ -150,6 +153,7 @@ fun SplitGroupDetailScreen(
     var showAddExpenseSheet   by remember { mutableStateOf(false) }
     var showSettleUpSheet     by remember { mutableStateOf(false) }
     var showDeleteGroupDialog by remember { mutableStateOf(false) }
+    var showAddMemberDialog   by remember { mutableStateOf(false) }
     var expenseToDelete       by remember { mutableStateOf<SplitExpenseEntity?>(null) }
     var menuExpanded          by remember { mutableStateOf(false) }
     // memberIds per expenseId — used to resolve "split among" names when the user taps the
@@ -474,6 +478,38 @@ fun SplitGroupDetailScreen(
                     }
                 }
 
+                // ── Add member (to an already-created group) ────────────────
+                item(key = "add_member") {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .clickable { showAddMemberDialog = true }
+                            .padding(vertical = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Icons.Filled.Add,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                        Spacer(Modifier.width(10.dp))
+                        Text(
+                            stringResource(R.string.split_add_member),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+
                 // ── Expenses header ─────────────────────────────────────────
                 item(key = "expenses_header") {
                     Spacer(Modifier.height(16.dp))
@@ -581,6 +617,8 @@ fun SplitGroupDetailScreen(
             netBalances      = netBalances,
             meMemberId       = meMember?.id,
             myUpiId          = myUpiId,
+            myIban           = myIban,
+            myStcPay         = myStcPay,
             ownerDisplayName = ownerDisplayName.ifBlank { meMember?.name ?: "Me" },
             onSetMemberUpiId = { member, upiId -> viewModel.setMemberUpiId(member, upiId) },
             onSetMemberPhone = { member, phone -> viewModel.setMemberPhone(member, phone) },
@@ -632,6 +670,45 @@ fun SplitGroupDetailScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteGroupDialog = false }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+
+    if (showAddMemberDialog) {
+        var newMemberName by remember { mutableStateOf("") }
+        var duplicateError by remember { mutableStateOf(false) }
+        val duplicateMsg = stringResource(R.string.split_member_duplicate)
+        AlertDialog(
+            onDismissRequest = { showAddMemberDialog = false },
+            title = { Text(stringResource(R.string.split_add_member)) },
+            text = {
+                OutlinedTextField(
+                    value = newMemberName,
+                    onValueChange = { newMemberName = it; duplicateError = false },
+                    label = { Text(stringResource(R.string.split_add_member_hint)) },
+                    singleLine = true,
+                    isError = duplicateError,
+                    supportingText = if (duplicateError) {
+                        { Text(duplicateMsg, color = MaterialTheme.colorScheme.error) }
+                    } else null
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    val trimmed = newMemberName.trim()
+                    if (trimmed.isBlank()) return@TextButton
+                    // Case-insensitive uniqueness against every existing member (owner included).
+                    if (members.any { it.name.trim().equals(trimmed, ignoreCase = true) }) {
+                        duplicateError = true
+                        return@TextButton
+                    }
+                    val color = SplitRepository.PALETTE[members.size % SplitRepository.PALETTE.size]
+                    viewModel.addMember(groupId, trimmed, color)
+                    showAddMemberDialog = false
+                }) { Text(stringResource(R.string.add)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddMemberDialog = false }) { Text(stringResource(R.string.cancel)) }
             }
         )
     }

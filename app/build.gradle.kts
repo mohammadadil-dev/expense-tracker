@@ -50,8 +50,11 @@ android {
         // raw-Saudi-Riyal-text rendering bugs, a scroll-reactive bottom nav bar + FAB
         // (hides on scroll-down, reappears on scroll-up, across all 5 main screens), and a fix
         // for the Splits list's "Settled" badge going stale after adding/editing an expense.
-        versionCode = 20
-        versionName = "1.9.0"
+        // v2.0.0 — major release: Savings Circle (jam'iya), Zakat calculator, Saudi bank SMS
+        // parsing, More-tab nav, Charity category, full 14-language localization, and the
+        // Android 16 (API 36) target bump. versionCode jumps to 21 (live Play is still 17).
+        versionCode = 21
+        versionName = "2.0.0"
 
         vectorDrawables {
             useSupportLibrary = true

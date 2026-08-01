@@ -22,9 +22,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         SplitExpenseEntity::class, SplitExpenseShareEntity::class,
         PaymentAccountEntity::class,
         SplitExpenseItemEntity::class, SplitExpenseItemMemberEntity::class,
-        JamiyaCircleEntity::class, JamiyaMemberEntity::class, JamiyaContributionEntity::class
+        JamiyaCircleEntity::class, JamiyaMemberEntity::class, JamiyaContributionEntity::class,
+        SharedBillEntity::class, SharedBillMemberEntity::class, SharedBillGroupEntity::class,
+        SharedBillGroupMemberEntity::class
     ],
-    version = 22,
+    version = 27,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -46,6 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun paymentAccountDao(): PaymentAccountDao
     abstract fun splitExpenseItemDao(): SplitExpenseItemDao
     abstract fun jamiyaDao(): JamiyaDao
+    abstract fun sharedBillDao(): SharedBillDao
 
     companion object {
         @Volatile
@@ -698,6 +701,86 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        // v22 -> v23: Shared Bills — utility bills prorated between flatmates by person-days.
+        //   shared_bills          — one saved bill (period + total, optional linked "my share").
+        //   shared_bill_members   — flatmates on that bill, with days-absent + paid flags.
+        private val MIGRATION_22_23 = object : Migration(22, 23) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `shared_bills` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `label` TEXT NOT NULL,
+                        `periodStart` TEXT NOT NULL,
+                        `periodEnd` TEXT NOT NULL,
+                        `totalAmount` REAL NOT NULL,
+                        `linkedExpenseId` INTEGER,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `shared_bill_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `billId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `isMe` INTEGER NOT NULL DEFAULT 0,
+                        `daysAbsent` INTEGER NOT NULL DEFAULT 0,
+                        `paid` INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_shared_bill_members_billId` ON `shared_bill_members` (`billId`)")
+            }
+        }
+
+        // v23 -> v24: Shared Bills can now split by flat (with a headcount per flat), not just by
+        // individual member. personCount defaults to 1 so existing rows behave as before.
+        private val MIGRATION_23_24 = object : Migration(23, 24) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `shared_bill_members` ADD COLUMN `personCount` INTEGER NOT NULL DEFAULT 1")
+            }
+        }
+
+        // v24 -> v25: Shared Bills are now grouped under an apartment/group. groupId defaults to 0
+        // (orphan) for any pre-existing bill; the groups table holds the apartment names.
+        private val MIGRATION_24_25 = object : Migration(24, 25) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `shared_bill_groups` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `createdAt` INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("ALTER TABLE `shared_bills` ADD COLUMN `groupId` INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        // v25 -> v26: Shared Bills groups gain an emoji badge + split mode and own a reusable
+        // member list; bill members gain an include/exclude flag (for a vacant flat this period).
+        private val MIGRATION_25_26 = object : Migration(25, 26) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `shared_bill_groups` ADD COLUMN `emoji` TEXT NOT NULL DEFAULT '🏠'")
+                db.execSQL("ALTER TABLE `shared_bill_groups` ADD COLUMN `splitMode` INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE `shared_bill_members` ADD COLUMN `included` INTEGER NOT NULL DEFAULT 1")
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `shared_bill_group_members` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `groupId` INTEGER NOT NULL,
+                        `name` TEXT NOT NULL,
+                        `personCount` INTEGER NOT NULL DEFAULT 1,
+                        `isMe` INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_shared_bill_group_members_groupId` ON `shared_bill_group_members` (`groupId`)")
+            }
+        }
+
+        // v26 -> v27: optional per-bill note to tell same-type bills apart.
+        private val MIGRATION_26_27 = object : Migration(26, 27) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `shared_bills` ADD COLUMN `note` TEXT NOT NULL DEFAULT ''")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
@@ -710,7 +793,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13,
                     MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
                     MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21,
-                    MIGRATION_21_22
+                    MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24, MIGRATION_24_25,
+                    MIGRATION_25_26, MIGRATION_26_27
                 ).build().also { INSTANCE = it }
             }
         }

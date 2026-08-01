@@ -434,6 +434,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
     <string name="khata_request_via_upi">UPI-এর মাধ্যমে অনুরোধ করুন</string>
     <string name="khata_add_upi_hint">তারা যাতে আপনাকে সাথে সাথে UPI-এর মাধ্যমে পেমেন্ট করতে পারে, তার জন্য সেটিংসে আপনার UPI আইডি যোগ করুন</string>
+    <string name="khata_add_iban_hint">Settings-এ আপনার IBAN যোগ করুন যাতে তা পেমেন্ট রিমাইন্ডারে যুক্ত হয়</string>
+    <string name="khata_iban_shared_label">আপনার IBAN (রিমাইন্ডারে পাঠানো হয়)</string>
     <string name="khata_upi_sheet_caption">তারা এটি সরাসরি স্ক্যান করতে পারে, অথবা আপনার শেয়ার করা লিঙ্কে ট্যাপ করে সরাসরি পেমেন্ট করতে পারে।</string>
     <string name="khata_upi_share_link">পেমেন্ট লিঙ্ক শেয়ার করুন</string>
     <string name="khata_pay_via_upi">UPI-এর মাধ্যমে পেমেন্ট করুন</string>
@@ -444,16 +446,16 @@
     <string name="khata_marked_as_paid_note">পরিশোধিত হিসেবে চিহ্নিত করা হয়েছে</string>
     <string name="khata_reminder_msg_owe">হ্যালো %1$s 👋
 
-একটু মনে করিয়ে দিচ্ছি — আপনার বকেয়া %2$s আছে।
+🧾 একটু মনে করিয়ে দিচ্ছি — আপনার বকেয়া *%2$s* আছে।
 
 সুবিধামতো পরিশোধ করুন 🙏</string>
     <string name="khata_reminder_msg_credit">হ্যালো %1$s 👋
 
-জানিয়ে রাখছি — আমার দোকানে আপনার %2$s ক্রেডিট আছে।
+🎁 জানিয়ে রাখছি — আমার দোকানে আপনার *%2$s* ক্রেডিট আছে।
 
 যেকোনো সময় ব্যবহার করুন!</string>
     <string name="khata_reminder_signature">শুভেচ্ছান্তে,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">একটি বেছে নিন:</string>
     <string name="khata_direction_they_owe_label">এই পার্টি আমাকে দেবে</string>
     <string name="khata_initial_amount_label">প্রারম্ভিক পরিমাণ (ঐচ্ছিক)</string>
@@ -474,6 +476,18 @@
     <string name="subscriptions_delete_title">সাবস্ক্রিপশন মুছবেন?</string>
     <string name="subscriptions_delete_confirm">এটি \"%1$s\"-এর ভবিষ্যৎ কপি যোগ হওয়া বন্ধ করবে। অতীত এন্ট্রিগুলো আপনার ইতিহাসে থাকবে।</string>
     <string name="subscriptions_dashboard_title">সাবস্ক্রিপশন</string>
+    <string name="subscription_add_title">সাবস্ক্রিপশন যোগ করুন</string>
+    <string name="subscription_edit_title">সাবস্ক্রিপশন সম্পাদনা</string>
+    <string name="subscription_choose_service">একটি সার্ভিস বাছুন</string>
+    <string name="subscription_custom">কাস্টম</string>
+    <string name="subscription_name_label">নাম</string>
+    <string name="subscription_name_hint">যেমন Netflix</string>
+    <string name="subscription_billing_day_label">নবায়ন হবে (মাসের দিন)</string>
+    <string name="subscription_billing_cycle">বিলিং সাইকেল</string>
+    <string name="subscription_cycle_monthly">মাসিক</string>
+    <string name="subscription_cycle_quarterly">প্রতি ৩ মাস</string>
+    <string name="subscription_cycle_halfyearly">প্রতি ৬ মাস</string>
+    <string name="subscription_cycle_yearly">বার্ষিক</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ আপনি আপনার মাসিক বাজেটের 80% ব্যবহার করেছেন</string>
@@ -675,6 +689,8 @@
     <string name="split_group_name_hint">গ্রুপের নাম (যেমন: দুবাই ট্রিপ)</string>
     <string name="split_members_label">সদস্যরা</string>
     <string name="split_add_member_hint">সদস্যের নাম যোগ করুন</string>
+    <string name="split_add_member">সদস্য যোগ করুন</string>
+    <string name="split_member_duplicate">এই নামটি ইতিমধ্যে এই গ্রুপে আছে</string>
     <string name="split_member_count">%d সদস্য</string>
     <string name="split_settled">মিটিয়ে দেওয়া ✓</string>
     <string name="split_you_owe">আপনি বাকি আছেন %1$s%2$.2f</string>
@@ -747,11 +763,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp ইনস্টল নেই।</string>
     <string name="split_reminder_msg">হ্যালো %1$s 👋
 
-"%2$s" থেকে একটু মনে করিয়ে দিচ্ছি — আপনাকে %4$s-কে %3$s দিতে হবে।
+🧾 "%2$s" থেকে একটু মনে করিয়ে দিচ্ছি — আপনাকে %4$s-কে *%3$s* দিতে হবে।
 
 সুবিধামতো পরিশোধ করুন 🙏</string>
     <string name="split_reminder_signature">শুভেচ্ছান্তে,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">টিপস: প্রতিদিন লগ করলে বাজেটে থাকা সহজ হয় 📊</string>
     <string name="reminder_action_add_expense">খরচ যোগ করুন</string>
 
@@ -915,4 +931,13 @@
     <string name="zakat_nisab_hint">Zakat তখনই প্রদেয় যখন আপনার নিট সম্পদ Nisab এর উপরে — 85 গ্রাম সোনা বা 595 গ্রাম রুপার মূল্য। কোনটি দিয়ে মাপবেন বেছে নিন; সেই ধাতুর দাম নিচে লিখুন।</string>
     <string name="zakat_gold_grams">আপনার সোনা (গ্রাম)</string>
     <string name="zakat_silver_grams">আপনার রুপা (গ্রাম)</string>
+    <string name="app_install_pitch">📲 *Baqaya দিয়ে খরচ ট্র্যাক করুন ও সহজে হিসাব মেটান* — ফ্রি, অফলাইন ও ব্যক্তিগত।</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay নম্বর</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">সেভ করার আগে নম্বরটি যাচাই করুন — STC Pay ট্রান্সফার এই নম্বরেই যাবে।</string>
+    <string name="stc_updated">STC Pay নম্বর সেভ হয়েছে</string>
+    <string name="stc_removed">STC Pay নম্বর সরানো হয়েছে</string>
 </resources>

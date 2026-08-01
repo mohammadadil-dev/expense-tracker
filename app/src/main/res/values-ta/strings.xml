@@ -323,6 +323,18 @@
     <string name="subscriptions_delete_title">சந்தாவை நீக்கவா?</string>
     <string name="subscriptions_delete_confirm">இது \"%1$s\" இன் எதிர்கால நகல்கள் சேர்க்கப்படுவதை நிறுத்தும். கடந்த பதிவுகள் உங்கள் வரலாற்றில் இருக்கும்.</string>
     <string name="subscriptions_dashboard_title">சந்தாக்கள்</string>
+    <string name="subscription_add_title">சந்தா சேர்</string>
+    <string name="subscription_edit_title">சந்தாவைத் திருத்து</string>
+    <string name="subscription_choose_service">சேவையைத் தேர்ந்தெடு</string>
+    <string name="subscription_custom">தனிப்பயன்</string>
+    <string name="subscription_name_label">பெயர்</string>
+    <string name="subscription_name_hint">எ.கா. Netflix</string>
+    <string name="subscription_billing_day_label">புதுப்பிப்பு (மாதத்தின் நாள்)</string>
+    <string name="subscription_billing_cycle">பில்லிங் சுழற்சி</string>
+    <string name="subscription_cycle_monthly">மாதந்தோறும்</string>
+    <string name="subscription_cycle_quarterly">3 மாதத்திற்கு ஒருமுறை</string>
+    <string name="subscription_cycle_halfyearly">6 மாதத்திற்கு ஒருமுறை</string>
+    <string name="subscription_cycle_yearly">ஆண்டுதோறும்</string>
 
     <string name="debt_direction_label">திசை</string>
     <string name="debt_direction_owe">நான் கொடுக்க வேண்டியது</string>
@@ -446,6 +458,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp நிறுவப்படவில்லை.</string>
     <string name="khata_request_via_upi">UPI மூலம் கோரிக்கை</string>
     <string name="khata_add_upi_hint">அவர்கள் உங்களுக்கு உடனடியாக UPI மூலம் பணம் செலுத்த, உங்கள் UPI ஐடியை அமைப்புகளில் சேர்க்கவும்</string>
+    <string name="khata_add_iban_hint">கட்டண நினைவூட்டலில் சேர்க்க Settings-ல் உங்கள் IBAN சேர்க்கவும்</string>
+    <string name="khata_iban_shared_label">உங்கள் IBAN (நினைவூட்டலில் அனுப்பப்படும்)</string>
     <string name="khata_upi_sheet_caption">அவர்கள் இதை நேரடியாக ஸ்கேன் செய்யலாம், அல்லது நீங்கள் பகிரும் இணைப்பைத் தட்டி நேரடியாக பணம் செலுத்தலாம்.</string>
     <string name="khata_upi_share_link">கட்டண இணைப்பைப் பகிரவும்</string>
     <string name="khata_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
@@ -456,16 +470,16 @@
     <string name="khata_marked_as_paid_note">செலுத்தப்பட்டதாகக் குறிக்கப்பட்டது</string>
     <string name="khata_reminder_msg_owe">வணக்கம் %1$s 👋
 
-ஒரு நட்பு நினைவூட்டல் — உங்களிடம் %2$s நிலுவை உள்ளது.
+🧾 ஒரு நட்பு நினைவூட்டல் — உங்களிடம் *%2$s* நிலுவை உள்ளது.
 
 வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏</string>
     <string name="khata_reminder_msg_credit">வணக்கம் %1$s 👋
 
-ஒரு குறிப்பு — என் கடையில் உங்களுக்கு %2$s கடன் உள்ளது.
+🎁 ஒரு குறிப்பு — என் கடையில் உங்களுக்கு *%2$s* கடன் உள்ளது.
 
 எப்போது வேண்டுமானாலும் பயன்படுத்திக்கொள்ளுங்கள்!</string>
     <string name="khata_reminder_signature">வணக்கத்துடன்,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">ஒன்றைத் தேர்ந்தெடுக்கவும்:</string>
     <string name="khata_direction_they_owe_label">இந்த தரப்பு என்னிடம் கொடுக்க வேண்டியது</string>
     <string name="khata_initial_amount_label">தொடக்க இருப்பு (விருப்பமானது)</string>
@@ -652,6 +666,8 @@
     <string name="split_group_name_hint">குழு பெயர் (எ.கா. துபாய் பயணம்)</string>
     <string name="split_members_label">உறுப்பினர்கள்</string>
     <string name="split_add_member_hint">உறுப்பினர் பெயர் சேர்</string>
+    <string name="split_add_member">உறுப்பினரைச் சேர்</string>
+    <string name="split_member_duplicate">இந்தப் பெயர் ஏற்கனவே இக்குழுவில் உள்ளது</string>
     <string name="split_member_count">%d உறுப்பினர்கள்</string>
     <string name="split_settled">தீர்வு ✓</string>
     <string name="split_you_owe">நீங்கள் %1$s%2$.2f கொடுக்க வேண்டும்</string>
@@ -722,11 +738,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp நிறுவப்படவில்லை.</string>
     <string name="split_reminder_msg">வணக்கம் %1$s 👋
 
-"%2$s" இலிருந்து நினைவூட்டல் — நீங்கள் %4$s க்கு %3$s கொடுக்க வேண்டும்.
+🧾 "%2$s" இலிருந்து நினைவூட்டல் — நீங்கள் %4$s க்கு *%3$s* கொடுக்க வேண்டும்.
 
 வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏</string>
     <string name="split_reminder_signature">வணக்கத்துடன்,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">குறிப்பு: தினசரி பதிவு பட்ஜெட்டை கட்டுக்கோப்பாக வைக்கும் 📊</string>
     <string name="reminder_action_add_expense">செலவு சேர்</string>
 
@@ -890,4 +906,13 @@
     <string name="zakat_nisab_hint">உங்கள் நிகர செல்வம் Nisab ஐ விட அதிகமாக இருந்தால் மட்டுமே Zakat செலுத்த வேண்டும் — 85 கிராம் தங்கம் அல்லது 595 கிராம் வெள்ளியின் மதிப்பு. எதை வைத்து அளவிடுவது எனத் தேர்வுசெய்க; அந்த உலோகத்தின் விலையை கீழே உள்ளிடவும்.</string>
     <string name="zakat_gold_grams">உங்கள் தங்கம் (கிராம்)</string>
     <string name="zakat_silver_grams">உங்கள் வெள்ளி (கிராம்)</string>
+    <string name="app_install_pitch">📲 *Baqaya மூலம் செலவுகளைக் கண்காணித்து, கணக்குகளை எளிதாகத் தீர்க்கவும்* — இலவசம், ஆஃப்லைன், தனிப்பட்டது.</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay எண்</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">சேமிக்கும் முன் எண்ணைச் சரிபார்க்கவும் — STC Pay பரிமாற்றம் இதே எண்ணுக்குச் செல்லும்.</string>
+    <string name="stc_updated">STC Pay எண் சேமிக்கப்பட்டது</string>
+    <string name="stc_removed">STC Pay எண் அகற்றப்பட்டது</string>
 </resources>

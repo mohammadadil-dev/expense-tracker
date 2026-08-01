@@ -323,6 +323,18 @@
     <string name="subscriptions_delete_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="subscriptions_delete_confirm">ਇਹ \"%1$s\" ਦੀਆਂ ਭਵਿੱਖ ਦੀਆਂ ਕਾਪੀਆਂ ਜੋੜਨ ਤੋਂ ਰੋਕ ਦੇਵੇਗਾ। ਪਿਛਲੀਆਂ ਐਂਟਰੀਆਂ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਰਹਿਣਗੀਆਂ।</string>
     <string name="subscriptions_dashboard_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscription_add_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="subscription_edit_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸੋਧੋ</string>
+    <string name="subscription_choose_service">ਸੇਵਾ ਚੁਣੋ</string>
+    <string name="subscription_custom">ਕਸਟਮ</string>
+    <string name="subscription_name_label">ਨਾਂ</string>
+    <string name="subscription_name_hint">ਜਿਵੇਂ Netflix</string>
+    <string name="subscription_billing_day_label">ਨਵੀਨੀਕਰਨ (ਮਹੀਨੇ ਦਾ ਦਿਨ)</string>
+    <string name="subscription_billing_cycle">ਬਿਲਿੰਗ ਸਾਈਕਲ</string>
+    <string name="subscription_cycle_monthly">ਮਹੀਨਾਵਾਰ</string>
+    <string name="subscription_cycle_quarterly">ਹਰ 3 ਮਹੀਨੇ</string>
+    <string name="subscription_cycle_halfyearly">ਹਰ 6 ਮਹੀਨੇ</string>
+    <string name="subscription_cycle_yearly">ਸਾਲਾਨਾ</string>
 
     <string name="debt_direction_label">ਦਿਸ਼ਾ</string>
     <string name="debt_direction_owe">ਮੈਂ ਦੇਣਾ ਹੈ</string>
@@ -446,6 +458,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp ਸਥਾਪਿਤ ਨਹੀਂ।</string>
     <string name="khata_request_via_upi">UPI ਰਾਹੀਂ ਬੇਨਤੀ ਕਰੋ</string>
     <string name="khata_add_upi_hint">ਆਪਣੀ UPI ਆਈਡੀ ਸੈਟਿੰਗਸ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ ਤਾਂ ਜੋ ਉਹ ਤੁਹਾਨੂੰ ਤੁਰੰਤ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰ ਸਕਣ</string>
+    <string name="khata_add_iban_hint">Settings ਵਿੱਚ ਆਪਣਾ IBAN ਸ਼ਾਮਲ ਕਰੋ ਤਾਂ ਜੋ ਇਹ ਭੁਗਤਾਨ ਯਾਦ-ਪੱਤਰ ਵਿੱਚ ਆਵੇ</string>
+    <string name="khata_iban_shared_label">ਤੁਹਾਡਾ IBAN (ਯਾਦ-ਪੱਤਰ ਵਿੱਚ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ)</string>
     <string name="khata_upi_sheet_caption">ਉਹ ਇਸਨੂੰ ਖੁਦ ਸਕੈਨ ਕਰ ਸਕਦੇ ਹਨ, ਜਾਂ ਤੁਹਾਡੇ ਵੱਲੋਂ ਸਾਂਝੇ ਕੀਤੇ ਲਿੰਕ \'ਤੇ ਟੈਪ ਕਰਕੇ ਸਿੱਧਾ ਭੁਗਤਾਨ ਕਰ ਸਕਦੇ ਹਨ।</string>
     <string name="khata_upi_share_link">ਭੁਗਤਾਨ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="khata_pay_via_upi">UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰੋ</string>
@@ -456,16 +470,16 @@
     <string name="khata_marked_as_paid_note">ਭੁਗਤਾਨ ਹੋਇਆ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ</string>
     <string name="khata_reminder_msg_owe">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-ਇੱਕ ਦੋਸਤਾਨਾ ਯਾਦ — ਤੁਹਾਡਾ %2$s ਬਾਕੀ ਹੈ।
+🧾 ਇੱਕ ਦੋਸਤਾਨਾ ਯਾਦ — ਤੁਹਾਡਾ *%2$s* ਬਾਕੀ ਹੈ।
 
 ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏</string>
     <string name="khata_reminder_msg_credit">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-ਇੱਕ ਨੋਟ — ਮੇਰੀ ਦੁਕਾਨ ਵਿੱਚ ਤੁਹਾਡਾ %2$s ਕ੍ਰੈਡਿਟ ਹੈ।
+🎁 ਇੱਕ ਨੋਟ — ਮੇਰੀ ਦੁਕਾਨ ਵਿੱਚ ਤੁਹਾਡਾ *%2$s* ਕ੍ਰੈਡਿਟ ਹੈ।
 
 ਜਦੋਂ ਚਾਹੋ ਵਰਤੋ!</string>
     <string name="khata_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">ਇੱਕ ਚੁਣੋ:</string>
     <string name="khata_direction_they_owe_label">ਇਹ ਪਾਰਟੀ ਮੈਨੂੰ ਦੇਣੀ ਹੈ</string>
     <string name="khata_initial_amount_label">ਸ਼ੁਰੂਆਤੀ ਰਕਮ (ਵਿਕਲਪਿਕ)</string>
@@ -652,6 +666,8 @@
     <string name="split_group_name_hint">ਗਰੁੱਪ ਦਾ ਨਾਮ (ਜਿਵੇਂ ਦੁਬਈ ਟ੍ਰਿੱਪ)</string>
     <string name="split_members_label">ਮੈਂਬਰ</string>
     <string name="split_add_member_hint">ਮੈਂਬਰ ਦਾ ਨਾਮ ਜੋੜੋ</string>
+    <string name="split_add_member">ਮੈਂਬਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="split_member_duplicate">ਇਹ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਇਸ ਗਰੁੱਪ ਵਿੱਚ ਹੈ</string>
     <string name="split_member_count">%d ਮੈਂਬਰ</string>
     <string name="split_settled">ਨਿਪਟਿਆ ✓</string>
     <string name="split_you_owe">ਤੁਸੀਂ %1$s%2$.2f ਦੇਣਾ ਹੈ</string>
@@ -722,11 +738,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp ਸਥਾਪਿਤ ਨਹੀਂ।</string>
     <string name="split_reminder_msg">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-"%2$s" ਵੱਲੋਂ ਯਾਦ — ਤੁਸੀਂ %4$s ਨੂੰ %3$s ਦੇਣਾ ਹੈ।
+🧾 "%2$s" ਵੱਲੋਂ ਯਾਦ — ਤੁਸੀਂ %4$s ਨੂੰ *%3$s* ਦੇਣਾ ਹੈ।
 
 ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏</string>
     <string name="split_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">ਸੁਝਾਅ: ਰੋਜ਼ ਦਰਜ ਕਰਨ ਨਾਲ ਬਜਟ ਕਾਬੂ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ 📊</string>
     <string name="reminder_action_add_expense">ਖਰਚ ਜੋੜੋ</string>
 
@@ -890,4 +906,13 @@
     <string name="zakat_nisab_hint">Zakat ਤਾਂ ਹੀ ਦੇਣਯੋਗ ਹੈ ਜੇ ਤੁਹਾਡੀ ਸ਼ੁੱਧ ਸੰਪਤੀ Nisab ਤੋਂ ਵੱਧ ਹੋਵੇ — 85 ਗ੍ਰਾਮ ਸੋਨਾ ਜਾਂ 595 ਗ੍ਰਾਮ ਚਾਂਦੀ ਦੀ ਕੀਮਤ। ਕਿਸ ਨਾਲ ਮਾਪਣਾ ਹੈ ਚੁਣੋ; ਉਸ ਧਾਤ ਦਾ ਭਾਅ ਹੇਠਾਂ ਭਰੋ।</string>
     <string name="zakat_gold_grams">ਤੁਹਾਡਾ ਸੋਨਾ (ਗ੍ਰਾਮ)</string>
     <string name="zakat_silver_grams">ਤੁਹਾਡੀ ਚਾਂਦੀ (ਗ੍ਰਾਮ)</string>
+    <string name="app_install_pitch">📲 *Baqaya ਨਾਲ ਖਰਚੇ ਟ੍ਰੈਕ ਕਰੋ ਤੇ ਹਿਸਾਬ ਸੌਖਿਆਂ ਚੁਕਾਓ* — ਮੁਫ਼ਤ, ਆਫ਼ਲਾਈਨ ਅਤੇ ਪ੍ਰਾਈਵੇਟ।</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay ਨੰਬਰ</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">ਸੇਵ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਨੰਬਰ ਜਾਂਚੋ — STC Pay ਟ੍ਰਾਂਸਫਰ ਇਸੇ ਨੰਬਰ ਤੇ ਜਾਵੇਗਾ।</string>
+    <string name="stc_updated">STC Pay ਨੰਬਰ ਸੇਵ ਹੋਇਆ</string>
+    <string name="stc_removed">STC Pay ਨੰਬਰ ਹਟਾਇਆ</string>
 </resources>

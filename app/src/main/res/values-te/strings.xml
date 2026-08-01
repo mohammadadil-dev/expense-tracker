@@ -323,6 +323,18 @@
     <string name="subscriptions_delete_title">సబ్‌స్క్రిప్షన్‌ను తొలగించాలా?</string>
     <string name="subscriptions_delete_confirm">ఇది \"%1$s\" యొక్క భవిష్యత్తు కాపీలను జోడించకుండా ఆపుతుంది. గత ఎంట్రీలు మీ చరిత్రలో ఉంటాయి.</string>
     <string name="subscriptions_dashboard_title">సబ్‌స్క్రిప్షన్‌లు</string>
+    <string name="subscription_add_title">సబ్‌స్క్రిప్షన్ జోడించు</string>
+    <string name="subscription_edit_title">సబ్‌స్క్రిప్షన్ సవరించు</string>
+    <string name="subscription_choose_service">సేవను ఎంచుకోండి</string>
+    <string name="subscription_custom">అనుకూలం</string>
+    <string name="subscription_name_label">పేరు</string>
+    <string name="subscription_name_hint">ఉదా. Netflix</string>
+    <string name="subscription_billing_day_label">పునరుద్ధరణ (నెలలో రోజు)</string>
+    <string name="subscription_billing_cycle">బిల్లింగ్ సైకిల్</string>
+    <string name="subscription_cycle_monthly">నెలవారీ</string>
+    <string name="subscription_cycle_quarterly">ప్రతి 3 నెలలకు</string>
+    <string name="subscription_cycle_halfyearly">ప్రతి 6 నెలలకు</string>
+    <string name="subscription_cycle_yearly">వార్షికం</string>
 
     <string name="debt_direction_label">దిశ</string>
     <string name="debt_direction_owe">నేను చెల్లించాల్సింది</string>
@@ -446,6 +458,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp ఇన్‌స్టాల్ కాలేదు.</string>
     <string name="khata_request_via_upi">UPI ద్వారా అభ్యర్థించండి</string>
     <string name="khata_add_upi_hint">వారు మీకు తక్షణమే UPI ద్వారా చెల్లించగలిగేలా మీ UPI IDని సెట్టింగ్‌లలో జోడించండి</string>
+    <string name="khata_add_iban_hint">చెల్లింపు రిమైండర్‌లో చేర్చడానికి Settings లో మీ IBAN జోడించండి</string>
+    <string name="khata_iban_shared_label">మీ IBAN (రిమైండర్‌లో పంపబడుతుంది)</string>
     <string name="khata_upi_sheet_caption">వారు దీన్ని నేరుగా స్కాన్ చేయవచ్చు, లేదా మీరు షేర్ చేసిన లింక్‌ను నొక్కి నేరుగా చెల్లించవచ్చు.</string>
     <string name="khata_upi_share_link">చెల్లింపు లింక్‌ను షేర్ చేయండి</string>
     <string name="khata_pay_via_upi">UPI ద్వారా చెల్లించండి</string>
@@ -456,16 +470,16 @@
     <string name="khata_marked_as_paid_note">చెల్లించినట్లు గుర్తించబడింది</string>
     <string name="khata_reminder_msg_owe">హలో %1$s 👋
 
-ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు %2$s బాకీ ఉంది.
+🧾 ఒక స్నేహపూర్వక గుర్తుచేయడం — మీకు *%2$s* బాకీ ఉంది.
 
 వీలైనప్పుడు పరిష్కరించండి 🙏</string>
     <string name="khata_reminder_msg_credit">హలో %1$s 👋
 
-ఒక గమనిక — నా దుకాణంలో మీకు %2$s క్రెడిట్ ఉంది.
+🎁 ఒక గమనిక — నా దుకాణంలో మీకు *%2$s* క్రెడిట్ ఉంది.
 
 ఎప్పుడైనా ఉపయోగించుకోండి!</string>
     <string name="khata_reminder_signature">వందనాలతో,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">ఒకటి ఎంచుకోండి:</string>
     <string name="khata_direction_they_owe_label">ఈ పార్టీ నాకు చెల్లించాల్సింది</string>
     <string name="khata_initial_amount_label">ప్రారంభ నిల్వ (ఐచ్ఛికం)</string>
@@ -652,6 +666,8 @@
     <string name="split_group_name_hint">గ్రూప్ పేరు (ఉదా. దుబాయ్ ట్రిప్)</string>
     <string name="split_members_label">సభ్యులు</string>
     <string name="split_add_member_hint">సభ్యుడి పేరు జోడించు</string>
+    <string name="split_add_member">సభ్యుడిని జోడించు</string>
+    <string name="split_member_duplicate">ఈ పేరు ఇప్పటికే ఈ గ్రూప్‌లో ఉంది</string>
     <string name="split_member_count">%d సభ్యులు</string>
     <string name="split_settled">పరిష్కరించారు ✓</string>
     <string name="split_you_owe">మీరు %1$s%2$.2f చెల్లించాల్సింది</string>
@@ -722,11 +738,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp ఇన్‌స్టాల్ కాలేదు.</string>
     <string name="split_reminder_msg">హలో %1$s 👋
 
-"%2$s" నుండి గుర్తుచేయడం — మీరు %4$s కి %3$s చెల్లించాలి.
+🧾 "%2$s" నుండి గుర్తుచేయడం — మీరు %4$s కి *%3$s* చెల్లించాలి.
 
 వీలైనప్పుడు పరిష్కరించండి 🙏</string>
     <string name="split_reminder_signature">వందనాలతో,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">చిట్కా: రోజూ నమోదు చేయడం బడ్జెట్ నియంత్రించడం సులభం 📊</string>
     <string name="reminder_action_add_expense">ఖర్చు జోడించు</string>
 
@@ -890,4 +906,13 @@
     <string name="zakat_nisab_hint">మీ నికర సంపద Nisab కంటే ఎక్కువగా ఉంటేనే Zakat చెల్లించాలి — 85 గ్రా బంగారం లేదా 595 గ్రా వెండి విలువ. దేనితో కొలవాలో ఎంచుకోండి; ఆ లోహం ధరను క్రింద నమోదు చేయండి.</string>
     <string name="zakat_gold_grams">మీ బంగారం (గ్రా)</string>
     <string name="zakat_silver_grams">మీ వెండి (గ్రా)</string>
+    <string name="app_install_pitch">📲 *Baqaya తో ఖర్చులను ట్రాక్ చేయండి, లెక్కలను సులభంగా తీర్చండి* — ఉచితం, ఆఫ్‌లైన్, ప్రైవేట్.</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay నంబర్</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">సేవ్ చేయడానికి ముందు నంబర్ సరిచూసుకోండి — STC Pay బదిలీలు ఈ నంబర్‌కే వెళ్తాయి.</string>
+    <string name="stc_updated">STC Pay నంబర్ సేవ్ అయింది</string>
+    <string name="stc_removed">STC Pay నంబర్ తీసివేయబడింది</string>
 </resources>

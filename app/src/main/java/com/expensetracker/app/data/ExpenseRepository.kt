@@ -1,5 +1,6 @@
 package com.expensetracker.app.data
 
+import androidx.room.withTransaction
 import com.expensetracker.app.util.DateUtils
 import kotlinx.coroutines.flow.Flow
 
@@ -160,8 +161,12 @@ class ExpenseRepository(private val db: AppDatabase) {
         val templates = db.expenseDao().recurringTemplatesOnce()
 
         for (template in templates) {
-            // Start from the month after the template was created
-            var month = DateUtils.shiftMonthKey(template.monthKey, 1)
+            // Step by the template's cadence (1/3/6/12 months) instead of always monthly, so a
+            // quarterly/yearly subscription only generates a copy when it actually renews.
+            val intervalMonths = com.expensetracker.app.util.RecurringPeriod
+                .months(template.recurringPeriod).toLong()
+            // Start from the first renewal after the template was created.
+            var month = DateUtils.shiftMonthKey(template.monthKey, intervalMonths)
             while (month <= currentMonth) {
                 val alreadyExists =
                     db.expenseDao().countRecurringInstance(template.id, month) > 0
@@ -181,7 +186,7 @@ class ExpenseRepository(private val db: AppDatabase) {
                         )
                     )
                 }
-                month = DateUtils.shiftMonthKey(month, 1)
+                month = DateUtils.shiftMonthKey(month, intervalMonths)
             }
         }
     }
@@ -199,7 +204,28 @@ class ExpenseRepository(private val db: AppDatabase) {
 
     /** Multiplies every stored expense amount by [rate] — used when the user switches
      * currency and supplies a manual exchange rate. Purely local arithmetic, no network call. */
-    suspend fun convertAllAmounts(rate: Double) = db.expenseDao().scaleAllAmounts(rate)
+    /**
+     * Rescales EVERY monetary value in the database by [rate] when the user converts currency.
+     * Runs in a single transaction so the whole app's data flips atomically — previously only
+     * the expenses table was scaled, leaving budgets, income/salary, savings goals, debts, the
+     * Khata ledger, Splits and Committee amounts stranded in the old currency. (Settings-stored
+     * values like the monthly salary are scaled by the caller — see ExpenseViewModel.)
+     */
+    suspend fun convertAllAmounts(rate: Double) = db.withTransaction {
+        db.expenseDao().scaleAllAmounts(rate)
+        db.budgetDao().scaleAllAmounts(rate)
+        db.goalDao().scaleAllAmounts(rate)
+        db.incomeDao().scaleAllAmounts(rate)
+        db.debtDao().scaleAllAmounts(rate)
+        db.debtPaymentDao().scaleAllAmounts(rate)
+        db.khataDao().scaleAllEntryAmounts(rate)
+        db.khataDao().scaleAllCreditLimits(rate)
+        db.splitExpenseDao().scaleAllAmounts(rate)
+        db.splitExpenseShareDao().scaleAllShares(rate)
+        db.splitExpenseItemDao().scaleAllItemAmounts(rate)
+        db.jamiyaDao().scaleAllContributionAmounts(rate)
+        db.jamiyaDao().scaleAllContributions(rate)
+    }
 
     suspend fun addCategory(name: String, colorHex: String): Long {
         val sortOrder = db.categoryDao().count()

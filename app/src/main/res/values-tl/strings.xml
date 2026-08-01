@@ -429,6 +429,8 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
     <string name="khata_request_via_upi">Humiling sa pamamagitan ng UPI</string>
     <string name="khata_add_upi_hint">Idagdag ang iyong UPI ID sa Settings para makapagbayad sila sa iyo agad gamit ang UPI</string>
+    <string name="khata_add_iban_hint">Idagdag ang iyong IBAN sa Settings para makasama ito sa mga paalala sa bayad</string>
+    <string name="khata_iban_shared_label">Ang iyong IBAN (isinasama sa mga paalala)</string>
     <string name="khata_upi_sheet_caption">Puwede nilang i-scan ito nang personal, o pindutin ang link na ibinahagi mo para direktang magbayad.</string>
     <string name="khata_upi_share_link">Ibahagi ang link ng bayad</string>
     <string name="khata_pay_via_upi">Magbayad sa pamamagitan ng UPI</string>
@@ -439,16 +441,16 @@ Pindutin ang + para magdagdag ng may utang sa iyo.</string>
     <string name="khata_marked_as_paid_note">Minarkahang bayad na</string>
     <string name="khata_reminder_msg_owe">Kamusta %1$s 👋
 
-Paalala lang — mayroon kang natitirang balanse na %2$s.
+🧾 Paalala lang — mayroon kang natitirang balanse na *%2$s*.
 
 Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="khata_reminder_msg_credit">Kamusta %1$s 👋
 
-Paalala — mayroon kang %2$s na credit sa aking tindahan.
+🎁 Paalala — mayroon kang *%2$s* na credit sa aking tindahan.
 
 Gamitin anumang oras!</string>
     <string name="khata_reminder_signature">Regards,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">Pumili ng isa:</string>
     <string name="khata_direction_they_owe_label">May utang ang party na ito sa akin</string>
     <string name="khata_initial_amount_label">Panimulang halaga (opsyonal)</string>
@@ -469,6 +471,18 @@ Gamitin anumang oras!</string>
     <string name="subscriptions_delete_title">Burahin ang subscription?</string>
     <string name="subscriptions_delete_confirm">Ihihinto nito ang pagdaragdag ng mga susunod na kopya ng \"%1$s\". Mananatili ang mga nakaraang entry sa iyong history.</string>
     <string name="subscriptions_dashboard_title">Mga Subscription</string>
+    <string name="subscription_add_title">Magdagdag ng subscription</string>
+    <string name="subscription_edit_title">I-edit ang subscription</string>
+    <string name="subscription_choose_service">Pumili ng serbisyo</string>
+    <string name="subscription_custom">Custom</string>
+    <string name="subscription_name_label">Pangalan</string>
+    <string name="subscription_name_hint">hal. Netflix</string>
+    <string name="subscription_billing_day_label">Nagre-renew sa (araw ng buwan)</string>
+    <string name="subscription_billing_cycle">Billing cycle</string>
+    <string name="subscription_cycle_monthly">Buwanan</string>
+    <string name="subscription_cycle_quarterly">Kada 3 buwan</string>
+    <string name="subscription_cycle_halfyearly">Kada 6 buwan</string>
+    <string name="subscription_cycle_yearly">Taunan</string>
     <string name="load_more">Mag-load pa</string>
 
     <!-- ── Budget alerts ── -->
@@ -671,6 +685,8 @@ Gamitin anumang oras!</string>
     <string name="split_group_name_hint">Pangalan ng grupo (hal. Dubai Trip)</string>
     <string name="split_members_label">Mga Miyembro</string>
     <string name="split_add_member_hint">Idagdag ang miyembro</string>
+    <string name="split_add_member">Magdagdag ng miyembro</string>
+    <string name="split_member_duplicate">Nasa grupo na ang pangalang ito</string>
     <string name="split_member_count">%d miyembro</string>
     <string name="split_settled">Nayos na ✓</string>
     <string name="split_you_owe">May utang ka ng %1$s%2$.2f</string>
@@ -743,11 +759,11 @@ Gamitin anumang oras!</string>
     <string name="split_whatsapp_not_installed">Hindi naka-install ang WhatsApp.</string>
     <string name="split_reminder_msg">Kamusta %1$s 👋
 
-Paalala mula sa "%2$s" — dapat kang magbayad ng %3$s kay %4$s.
+🧾 Paalala mula sa "%2$s" — dapat kang magbayad ng *%3$s* kay %4$s.
 
 Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="split_reminder_signature">Regards,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">Tip: ang pag-log araw-araw ay nakakatulong sa badyet 📊</string>
     <string name="reminder_action_add_expense">Magdagdag ng Gastos</string>
 
@@ -911,4 +927,13 @@ Mangyaring bayaran kapag maginhawa 🙏</string>
     <string name="zakat_nisab_hint">May Zakat lamang kung ang iyong netong yaman ay lampas sa Nisab — halaga ng 85g ginto o 595g pilak. Piliin kung alin ang batayan; ilagay ang presyo ng metal na iyon sa ibaba.</string>
     <string name="zakat_gold_grams">Ginto mong hawak (gramo)</string>
     <string name="zakat_silver_grams">Pilak mong hawak (gramo)</string>
+    <string name="app_install_pitch">📲 *Subaybayan ang gastos at magbayaran nang madali gamit ang Baqaya* — libre, offline, at pribado.</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay number</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">I-double check ang numero bago i-save — dito mapupunta ang mga STC Pay transfer.</string>
+    <string name="stc_updated">Na-save ang STC Pay number</string>
+    <string name="stc_removed">Inalis ang STC Pay number</string>
 </resources>

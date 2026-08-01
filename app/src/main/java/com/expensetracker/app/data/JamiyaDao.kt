@@ -83,4 +83,12 @@ interface JamiyaDao {
 
     @Query("DELETE FROM jamiya_contributions WHERE memberId = :memberId")
     suspend fun deleteContributionsForMember(memberId: Long)
+
+    /** Rescales each committee's per-round contribution when the user converts currency. */
+    @Query("UPDATE jamiya_circles SET contributionAmount = contributionAmount * :rate")
+    suspend fun scaleAllContributionAmounts(rate: Double)
+
+    /** Rescales every recorded contribution amount when the user converts currency. */
+    @Query("UPDATE jamiya_contributions SET amount = amount * :rate")
+    suspend fun scaleAllContributions(rate: Double)
 }

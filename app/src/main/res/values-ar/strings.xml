@@ -434,6 +434,11 @@
     <string name="khata_whatsapp_not_installed">واتساب غير مثبت.</string>
     <string name="khata_request_via_upi">الطلب عبر UPI</string>
     <string name="khata_add_upi_hint">أضف معرّف UPI الخاص بك في الإعدادات حتى يتمكنوا من دفع المبلغ لك فورًا عبر UPI</string>
+    <string name="khata_add_iban_hint">أضف رقم الآيبان في الإعدادات ليُدرَج في تذكيرات الدفع</string>
+    <string name="khata_iban_shared_label">رقم الآيبان (يُرسَل في التذكيرات)</string>
+    <string name="khata_stc_shared_label">STC Pay (يُرسَل في التذكيرات)</string>
+    <string name="khata_add_payment_hint">أضف الآيبان أو STC Pay في الإعدادات ليُدرَج في التذكيرات</string>
+    <string name="copied">تم النسخ</string>
     <string name="khata_upi_sheet_caption">يمكنهم مسح هذا شخصيًا، أو النقر على الرابط الذي تشاركه للدفع مباشرة.</string>
     <string name="khata_upi_share_link">مشاركة رابط الدفع</string>
     <string name="khata_pay_via_upi">الدفع عبر UPI</string>
@@ -442,18 +447,14 @@
     <string name="khata_mark_as_paid">وضع علامة كمدفوع</string>
     <string name="khata_mark_as_paid_confirm">هل تريد وضع علامة على %1$s كمدفوع؟ سيؤدي هذا إلى تسجيل عملية دفع تسوّي الرصيد المستحق.</string>
     <string name="khata_marked_as_paid_note">تم وضع علامة كمدفوع</string>
-    <string name="khata_reminder_msg_owe">مرحباً %1$s 👋
-
-تذكير ودي — لديك رصيد مستحق بقيمة %2$s.
-
-يرجى السداد عند الإمكان 🙏</string>
+    <string name="khata_reminder_msg_owe">مرحباً %1$s 👋\n\nالمبلغ المستحق: *%2$s*\nيرجى السداد عند الإمكان 🙏</string>
     <string name="khata_reminder_msg_credit">مرحباً %1$s 👋
 
-ملاحظة — لديك رصيد دائن بقيمة %2$s في محلي.
+🎁 ملاحظة — لديك رصيد دائن بقيمة *%2$s* في محلي.
 
 استخدمه في أي وقت!</string>
     <string name="khata_reminder_signature">مع التحية،
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">اختر أحد الخيارين:</string>
     <string name="khata_direction_they_owe_label">هذا الطرف مدين لي</string>
     <string name="khata_initial_amount_label">الرصيد الافتتاحي (اختياري)</string>
@@ -474,6 +475,18 @@
     <string name="subscriptions_delete_title">حذف الاشتراك؟</string>
     <string name="subscriptions_delete_confirm">سيؤدي هذا إلى إيقاف إضافة نسخ مستقبلية من \"%1$s\". ستبقى الإدخالات السابقة في سجلك.</string>
     <string name="subscriptions_dashboard_title">الاشتراكات</string>
+    <string name="subscription_add_title">إضافة اشتراك</string>
+    <string name="subscription_edit_title">تعديل الاشتراك</string>
+    <string name="subscription_choose_service">اختر خدمة</string>
+    <string name="subscription_custom">مخصص</string>
+    <string name="subscription_name_label">الاسم</string>
+    <string name="subscription_name_hint">مثال: Netflix</string>
+    <string name="subscription_billing_day_label">يتجدد في (يوم الشهر)</string>
+    <string name="subscription_billing_cycle">دورة الفوترة</string>
+    <string name="subscription_cycle_monthly">شهري</string>
+    <string name="subscription_cycle_quarterly">كل 3 أشهر</string>
+    <string name="subscription_cycle_halfyearly">كل 6 أشهر</string>
+    <string name="subscription_cycle_yearly">سنوي</string>
 
     <!-- ── Budget alerts ── -->
     <string name="budget_alert_warning">⚠️ لقد استخدمت 80% من ميزانيتك الشهرية</string>
@@ -683,6 +696,8 @@
     <string name="split_group_name_hint">اسم المجموعة (مثلاً: رحلة دبي)</string>
     <string name="split_members_label">الأعضاء</string>
     <string name="split_add_member_hint">أضف اسم عضو</string>
+    <string name="split_add_member">إضافة عضو</string>
+    <string name="split_member_duplicate">هذا الاسم موجود بالفعل في هذه المجموعة</string>
     <string name="split_member_count">%d أعضاء</string>
     <string name="split_settled">تمت التسوية ✓</string>
     <string name="split_you_owe">أنت مدين بـ %1$s%2$.2f</string>
@@ -755,11 +770,11 @@
     <string name="split_whatsapp_not_installed">واتساب غير مثبت.</string>
     <string name="split_reminder_msg">مرحباً %1$s 👋
 
-تذكير ودي من "%2$s" — عليك دفع %3$s إلى %4$s.
+🧾 تذكير ودي من "%2$s" — عليك دفع *%3$s* إلى %4$s.
 
 يرجى السداد عند الإمكان 🙏</string>
     <string name="split_reminder_signature">مع التحية،
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">نصيحة: التسجيل اليومي يساعدك على متابعة ميزانيتك 📊</string>
     <string name="reminder_action_add_expense">إضافة مصروف</string>
 
@@ -927,4 +942,75 @@
     <string name="zakat_nisab_hint">لا تجب الزكاة إلا إذا تجاوز صافي مالك النصاب — قيمة 85 غرام ذهب أو 595 غرام فضة. اختر أساس القياس؛ وأدخل سعر ذلك المعدن أدناه.</string>
     <string name="zakat_gold_grams">ذهبك (غرام)</string>
     <string name="zakat_silver_grams">فضتك (غرام)</string>
+    <string name="iban_section_title">التحويل البنكي (آيبان)</string>
+    <string name="iban_label">رقم الآيبان الخاص بك</string>
+    <string name="iban_hint">00 0000 0000 0000 0000 00</string>
+    <string name="iban_invalid">أدخل رقم آيبان سعودي صحيح (SA + ٢٢ خانة)</string>
+    <string name="iban_pay_to">*الدفع بالتحويل البنكي*\n%1$s</string>
+    <string name="iban_note">تحقق من رقم الآيبان قبل الحفظ. تذهب المبالغ إلى هذا الرقم بالضبط، لذا قد يؤدي خطأ في أي خانة إلى تحويل المال إلى حساب خاطئ.</string>
+    <string name="iban_updated">تم حفظ الآيبان</string>
+    <string name="iban_removed">تم حذف الآيبان</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">رقم STC Pay</string>
+    <string name="stc_hint">5XXXXXXXX</string>
+    <string name="stc_pay_to">*أو STC Pay*\n📲 %1$s</string>
+    <string name="stc_note">تحقق من الرقم قبل الحفظ — تذهب تحويلات STC Pay إلى هذا الرقم بالضبط.</string>
+    <string name="stc_updated">تم حفظ رقم STC Pay</string>
+    <string name="stc_removed">تم حذف رقم STC Pay</string>
+    <string name="shared_bills_title">الفواتير المشتركة</string>
+    <string name="shared_bills_empty_title">لا توجد فواتير مشتركة بعد</string>
+    <string name="shared_bills_empty_body">وزّع فاتورة المرافق المشتركة بعدل حسب عدد الأيام التي أقام فيها كل شخص. اضغط + للبدء.</string>
+    <string name="shared_bill_add_title">فاتورة مشتركة جديدة</string>
+    <string name="shared_bill_label_hint">اسم الفاتورة</string>
+    <string name="shared_bill_label_example">مثال: الكهرباء — أغسطس</string>
+    <string name="shared_bill_period">فترة الفوترة</string>
+    <string name="shared_bill_period_days">%1$d يوم</string>
+    <string name="shared_bill_total">المبلغ الإجمالي</string>
+    <string name="shared_bill_people">الأشخاص</string>
+    <string name="shared_bill_people_hint">أضف كل من يشارك في الفاتورة. حدّد أيام الغياب لمن لم يكن موجودًا طوال الفترة.</string>
+    <string name="shared_bill_bill_type">الفاتورة</string>
+    <string name="bill_type_electricity">كهرباء</string>
+    <string name="bill_type_water">ماء</string>
+    <string name="bill_type_gas">غاز</string>
+    <string name="bill_type_internet">إنترنت</string>
+    <string name="bill_type_rent">إيجار</string>
+    <string name="bill_type_maintenance">صيانة</string>
+    <string name="bill_type_other">أخرى</string>
+    <string name="shared_bill_split_by">طريقة التقسيم</string>
+    <string name="shared_bill_mode_person">حسب الشخص</string>
+    <string name="shared_bill_mode_flat">حسب الشقة</string>
+    <string name="shared_bill_flats">الشقق</string>
+    <string name="shared_bill_flats_hint">أضف كل شقة وعدد الأشخاص فيها. حدّد أيام الغياب إذا كانت الشقة فارغة جزءًا من الفترة.</string>
+    <string name="shared_bill_flat_hint">رقم الشقة</string>
+    <string name="shared_bill_people_count_label">عدد الأشخاص في الشقة</string>
+    <string name="shared_bill_people_count">%1$d أشخاص</string>
+    <string name="shared_bill_present_days">%1$d/%2$d يوم</string>
+    <string name="shared_bill_away_from">غياب من</string>
+    <string name="shared_bill_away_to">غياب إلى</string>
+    <string name="shared_bill_compute">احسب التقسيم</string>
+    <string name="shared_bill_delete_title">حذف الفاتورة؟</string>
+    <string name="shared_bill_delete_confirm">حذف "%1$s" وتقسيمها؟ لا يمكن التراجع.</string>
+    <string name="shared_bill_share">مشاركة التفاصيل</string>
+    <string name="shared_bill_share_heading">حصة كل شخص (حسب أيام الحضور)</string>
+    <string name="shared_bill_log_my_share">سجّل حصتي (%1$s)</string>
+    <string name="shared_bill_my_share_logged">تم تسجيل حصتي ✓</string>
+    <string name="shared_bill_excluded">مستبعد من هذه الفاتورة</string>
+    <string name="shared_bill_my_flat">شقتي</string>
+    <string name="shared_bill_note_hint">ملاحظة (اختياري)</string>
+    <string name="shared_bill_note_example">مثال: مع ضيف، الشقة 3 فارغة</string>
+    <string name="shared_bill_bills_label">الفواتير</string>
+    <string name="shared_bill_groups_empty_title">لا توجد مجموعات بعد</string>
+    <string name="shared_bill_groups_empty_body">أنشئ مجموعة — شقة أو دور أو مكتب أو أي مكان مشترك — لتتبّع فواتيرها مثل الكهرباء والماء.</string>
+    <string name="shared_bill_new_group">مجموعة جديدة</string>
+    <string name="shared_bill_group_name_hint">اسم المجموعة</string>
+    <string name="shared_bill_group_name_example">مثال: شقة 3، مكتب</string>
+    <string name="shared_bill_create_group">إنشاء مجموعة</string>
+    <string name="shared_bill_group_delete_title">حذف المجموعة؟</string>
+    <string name="shared_bill_group_delete_confirm">حذف "%1$s" وجميع فواتيرها؟ لا يمكن التراجع.</string>
+    <string name="split_mode_expenses">مصاريف جماعية</string>
+    <string name="split_mode_shared">فواتير مشتركة</string>
+    <string name="split_mode_expenses_desc">قسّم الرحلات والعشاء والمشتريات المشتركة ثم سوِّ من يدين لمن.</string>
+    <string name="split_mode_shared_desc">قسّم فاتورة مرافق متكررة بين السكان حسب أيام الحضور.</string>
+    <string name="remove">حذف</string>
+    <string name="app_install_pitch">📲 *تابع مصاريفك وسوِّ حساباتك بسهولة مع بقايا* — مجاني، يعمل بدون إنترنت وخصوصيتك محفوظة.</string>
 </resources>

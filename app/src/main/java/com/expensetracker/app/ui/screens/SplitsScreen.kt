@@ -17,17 +17,22 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.ReceiptLong
 import androidx.compose.material.icons.filled.TrendingDown
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,8 +47,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
+import com.expensetracker.app.data.SharedBillGroupEntity
 import com.expensetracker.app.data.SplitGroupEntity
 import com.expensetracker.app.ui.components.AddEditSplitGroupSheet
+import com.expensetracker.app.ui.components.AddSharedBillGroupSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.BackgroundScrollSignal
 import com.expensetracker.app.ui.components.BottomNavVisibility
@@ -56,6 +63,7 @@ import com.expensetracker.app.ui.theme.SuccessGreen
 import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.ui.theme.TextSecondary
+import com.expensetracker.app.viewmodel.SharedBillViewModel
 import com.expensetracker.app.viewmodel.SplitViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -70,10 +78,20 @@ private val SplitBlobCoral  = Color(0xFFFF6D00)
 @Composable
 fun SplitsScreen(
     viewModel: SplitViewModel,
+    sharedBillViewModel: SharedBillViewModel,
     ownerName: String,
     currencySymbol: String,
-    onOpenGroup: (Long) -> Unit
+    onOpenGroup: (Long) -> Unit,
+    onOpenSharedBillGroup: (Long) -> Unit
 ) {
+    // 0 = Group expenses (split with friends), 1 = Shared bills (apartment utilities).
+    // rememberSaveable so returning from a group/bill detail lands back on the same mode the
+    // user was in, instead of snapping back to Group expenses.
+    var mode by rememberSaveable { mutableStateOf(0) }
+    val sharedGroups by sharedBillViewModel.groups.collectAsState()
+    var showNewApartment by remember { mutableStateOf(false) }
+    var pendingDeleteApartment by remember { mutableStateOf<SharedBillGroupEntity?>(null) }
+
     val groups by viewModel.groups.collectAsState()
     // Any expense change in any group (add/edit/delete, or a settlement — which is just an
     // expense row with isSettlement=true) needs to refresh the summaries below too. Keying the
@@ -142,7 +160,19 @@ fun SplitsScreen(
             // its own full-width "Create Group" button as the sole call-to-action, so a FAB
             // doing the exact same thing on top of it was pure duplication.
             floatingActionButton = {
-                if (groups.isNotEmpty()) {
+                if (mode == 1) {
+                    // Shared bills mode: FAB only once at least one group exists — the empty
+                    // state already has its own "Create group" button (no duplicate CTA).
+                    if (sharedGroups.isNotEmpty()) {
+                        FloatingActionButton(
+                            onClick = { showNewApartment = true },
+                            shape = CircleShape,
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.shared_bill_new_group))
+                        }
+                    }
+                } else if (groups.isNotEmpty()) {
                     AnimatedVisibility(
                         visible = isScrollingUp,
                         enter = slideInVertically(tween(220)) { it } + fadeIn(tween(220)),
@@ -160,89 +190,168 @@ fun SplitsScreen(
             }
         ) { padding ->
 
-            if (groups.isEmpty()) {
-                // ── Empty state ───────────────────────────────────────────
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(horizontal = 16.dp)
-                ) {
-                    item {
-                        // Still show the hero even when empty
-                        AnimatedVisibility(
-                            visible = heroVisible,
-                            enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
-                                    fadeIn(tween(500))
+            Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+
+                // ── Mode toggle: Group expenses ↔ Shared bills ─────────────
+                SplitModeToggle(mode = mode, onSelect = { mode = it })
+
+                if (mode == 1) {
+                    // ── Shared bills (apartments) ──────────────────────────
+                    if (sharedGroups.isEmpty()) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth().weight(1f).padding(32.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
-                            SplitsHeroHeader(
-                                groupCount      = 0,
-                                totalYouOwe     = 0.0,
-                                totalYouGetBack = 0.0,
-                                net             = 0.0,
-                                currencySymbol  = currencySymbol
+                            Icon(
+                                Icons.Filled.ReceiptLong,
+                                contentDescription = null,
+                                tint = TextMuted,
+                                modifier = Modifier.size(48.dp)
                             )
+                            Spacer(Modifier.height(12.dp))
+                            Text(stringResource(R.string.shared_bill_groups_empty_title), style = MaterialTheme.typography.titleMedium, color = TextPrimary)
+                            Spacer(Modifier.height(6.dp))
+                            Text(
+                                stringResource(R.string.shared_bill_groups_empty_body),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = TextMuted,
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(Modifier.height(20.dp))
+                            Button(
+                                onClick = { showNewApartment = true },
+                                shape = RoundedCornerShape(14.dp)
+                            ) {
+                                Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.shared_bill_create_group))
+                            }
+                        }
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxWidth().weight(1f),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(sharedGroups, key = { "apt_${it.id}" }) { g ->
+                                Card(
+                                    onClick = { onOpenSharedBillGroup(g.id) },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = CardDefaults.cardColors(containerColor = CardWhite),
+                                    shape = RoundedCornerShape(18.dp)
+                                ) {
+                                    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(46.dp)
+                                                .clip(CircleShape)
+                                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(g.emoji, style = MaterialTheme.typography.titleLarge)
+                                        }
+                                        Spacer(Modifier.width(12.dp))
+                                        Column(modifier = Modifier.weight(1f)) {
+                                            Text(
+                                                g.name,
+                                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
+                                                color = TextPrimary
+                                            )
+                                            Text(
+                                                stringResource(if (g.splitMode == 1) R.string.shared_bill_mode_flat else R.string.shared_bill_mode_person),
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = TextSecondary
+                                            )
+                                        }
+                                        Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = TextMuted, modifier = Modifier.size(20.dp))
+                                        IconButton(onClick = { pendingDeleteApartment = g }) {
+                                            Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.delete), tint = DangerRed, modifier = Modifier.size(18.dp))
+                                        }
+                                    }
+                                }
+                            }
+                            item { Spacer(Modifier.height(96.dp)) }
                         }
                     }
-                    item {
-                        SplitsEmptyState(
-                            onCreateGroup = { showNewGroupSheet = true },
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 48.dp)
-                        )
-                    }
-                }
-            } else {
-                LazyColumn(
-                    state = listState,
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(bottom = 96.dp)
-                ) {
-                    // ── Animated hero header ───────────────────────────────
-                    item(key = "hero") {
-                        AnimatedVisibility(
-                            visible = heroVisible,
-                            enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
-                                    fadeIn(tween(500))
-                        ) {
-                            SplitsHeroHeader(
-                                groupCount      = groups.size,
-                                totalYouOwe     = totalYouOwe,
-                                totalYouGetBack = totalYouGetBack,
-                                net             = net,
-                                currencySymbol  = currencySymbol
-                            )
-                        }
-                    }
-
-                    // ── Section label ──────────────────────────────────────
-                    item(key = "section_label") {
-                        Text(
-                            stringResource(R.string.split_screen_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = TextPrimary,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                    }
-
-                    // ── Group cards with staggered animation ───────────────
-                    itemsIndexed(groups, key = { _, g -> g.id }) { index, group ->
-                        val (meBalance, memberCount) = groupSummaries[group.id] ?: (0.0 to 0)
-                        AnimatedVisibility(
-                            visible = true,
-                            enter = slideInVertically(
-                                initialOffsetY = { it / 3 },
-                                animationSpec = spring(
-                                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                                    stiffness = Spring.StiffnessLow
+                } else if (groups.isEmpty()) {
+                    // ── Group expenses: empty state ────────────────────────
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth().weight(1f),
+                        contentPadding = PaddingValues(horizontal = 16.dp)
+                    ) {
+                        item {
+                            AnimatedVisibility(
+                                visible = heroVisible,
+                                enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                                        fadeIn(tween(500))
+                            ) {
+                                SplitsHeroHeader(
+                                    groupCount      = 0,
+                                    totalYouOwe     = 0.0,
+                                    totalYouGetBack = 0.0,
+                                    net             = 0.0,
+                                    currencySymbol  = currencySymbol
                                 )
-                            ) + fadeIn(tween(300, delayMillis = index * 60))
-                        ) {
-                            SplitGroupCard(
-                                group = group,
-                                memberCount = memberCount,
-                                meBalance = meBalance,
-                                currencySymbol = currencySymbol,
-                                onClick = { onOpenGroup(group.id) },
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp)
+                            }
+                        }
+                        item {
+                            SplitsEmptyState(
+                                onCreateGroup = { showNewGroupSheet = true },
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 48.dp)
                             )
+                        }
+                    }
+                } else {
+                    LazyColumn(
+                        state = listState,
+                        modifier = Modifier.fillMaxWidth().weight(1f),
+                        contentPadding = PaddingValues(bottom = 96.dp)
+                    ) {
+                        item(key = "hero") {
+                            AnimatedVisibility(
+                                visible = heroVisible,
+                                enter = slideInVertically(tween(500, easing = FastOutSlowInEasing)) { -it / 2 } +
+                                        fadeIn(tween(500))
+                            ) {
+                                SplitsHeroHeader(
+                                    groupCount      = groups.size,
+                                    totalYouOwe     = totalYouOwe,
+                                    totalYouGetBack = totalYouGetBack,
+                                    net             = net,
+                                    currencySymbol  = currencySymbol
+                                )
+                            }
+                        }
+                        item(key = "section_label") {
+                            Text(
+                                stringResource(R.string.split_screen_title),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = TextPrimary,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            )
+                        }
+                        itemsIndexed(groups, key = { _, g -> g.id }) { index, group ->
+                            val (meBalance, memberCount) = groupSummaries[group.id] ?: (0.0 to 0)
+                            AnimatedVisibility(
+                                visible = true,
+                                enter = slideInVertically(
+                                    initialOffsetY = { it / 3 },
+                                    animationSpec = spring(
+                                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                                        stiffness = Spring.StiffnessLow
+                                    )
+                                ) + fadeIn(tween(300, delayMillis = index * 60))
+                            ) {
+                                SplitGroupCard(
+                                    group = group,
+                                    memberCount = memberCount,
+                                    meBalance = meBalance,
+                                    currencySymbol = currencySymbol,
+                                    onClick = { onOpenGroup(group.id) },
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -268,6 +377,105 @@ fun SplitsScreen(
                     viewModel.selectedGroupId.value?.let { onOpenGroup(it) }
                 }
             }
+        )
+    }
+
+    if (showNewApartment) {
+        AddSharedBillGroupSheet(
+            ownerName = ownerName,
+            onDismiss = { showNewApartment = false },
+            onCreate = { gname, emoji, splitMode, memberDrafts ->
+                sharedBillViewModel.createGroup(gname, emoji, splitMode, memberDrafts) { newId ->
+                    showNewApartment = false
+                    onOpenSharedBillGroup(newId)
+                }
+            }
+        )
+    }
+
+    pendingDeleteApartment?.let { apt ->
+        AlertDialog(
+            onDismissRequest = { pendingDeleteApartment = null },
+            title = { Text(stringResource(R.string.shared_bill_group_delete_title)) },
+            text = { Text(stringResource(R.string.shared_bill_group_delete_confirm, apt.name)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    sharedBillViewModel.deleteGroup(apt)
+                    pendingDeleteApartment = null
+                }) { Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error) }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingDeleteApartment = null }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
+}
+
+@Composable
+private fun SplitModeToggle(mode: Int, onSelect: (Int) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp)) {
+        // Prominent full-width segmented control — the selected half is filled and bold so the
+        // two tools read as a clear switch, not muted chips.
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.White.copy(alpha = 0.55f))
+                .padding(5.dp)
+        ) {
+            SplitModeSegment(
+                selected = mode == 0,
+                icon = Icons.Filled.Groups,
+                label = stringResource(R.string.split_mode_expenses),
+                modifier = Modifier.weight(1f),
+                onClick = { onSelect(0) }
+            )
+            SplitModeSegment(
+                selected = mode == 1,
+                icon = Icons.Filled.ReceiptLong,
+                label = stringResource(R.string.split_mode_shared),
+                modifier = Modifier.weight(1f),
+                onClick = { onSelect(1) }
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            stringResource(if (mode == 1) R.string.split_mode_shared_desc else R.string.split_mode_expenses_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = TextSecondary
+        )
+    }
+}
+
+@Composable
+private fun SplitModeSegment(
+    selected: Boolean,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(if (selected) MaterialTheme.colorScheme.primary else Color.Transparent)
+            .clickable(onClick = onClick)
+            .padding(vertical = 11.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            icon,
+            contentDescription = null,
+            tint = if (selected) OnAccent else TextSecondary,
+            modifier = Modifier.size(18.dp)
+        )
+        Spacer(Modifier.width(6.dp))
+        Text(
+            label,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
+            color = if (selected) OnAccent else TextSecondary
         )
     }
 }

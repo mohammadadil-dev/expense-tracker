@@ -37,4 +37,8 @@ interface GoalDao {
 
     @Query("UPDATE savings_goals SET isCompleted = 1 WHERE id = :id")
     suspend fun markCompleted(id: Long)
+
+    /** Rescales both target and saved amounts when the user converts currency. */
+    @Query("UPDATE savings_goals SET targetAmount = targetAmount * :rate, savedAmount = savedAmount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

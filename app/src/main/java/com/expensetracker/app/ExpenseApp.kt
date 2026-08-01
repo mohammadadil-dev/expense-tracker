@@ -12,6 +12,7 @@ import com.expensetracker.app.data.FamilyRepository
 import com.expensetracker.app.data.JamiyaRepository
 import com.expensetracker.app.data.KhataRepository
 import com.expensetracker.app.data.SettingsRepository
+import com.expensetracker.app.data.SharedBillRepository
 import com.expensetracker.app.data.SplitRepository
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.util.ReminderReceiver
@@ -33,6 +34,7 @@ class ExpenseApp : Application() {
     lateinit var familyRepository: FamilyRepository
     lateinit var splitRepository: SplitRepository
     lateinit var jamiyaRepository: JamiyaRepository
+    lateinit var sharedBillRepository: SharedBillRepository
     lateinit var settings: SettingsRepository
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -99,6 +101,7 @@ class ExpenseApp : Application() {
             database
         )
         jamiyaRepository = JamiyaRepository(database.jamiyaDao())
+        sharedBillRepository = SharedBillRepository(database)
         settings = SettingsRepository(this)
 
         // Detect the default currency from the phone's region on every launch,

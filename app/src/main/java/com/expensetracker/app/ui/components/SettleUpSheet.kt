@@ -31,6 +31,7 @@ import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.SplitExpenseEntity
 import com.expensetracker.app.data.SplitMemberEntity
+import com.expensetracker.app.util.SaudiBanks
 import com.expensetracker.app.util.Settlement
 import com.expensetracker.app.util.SmsFallback
 import com.expensetracker.app.util.UpiPaymentHelper
@@ -51,6 +52,8 @@ fun SettleUpSheet(
     // isMe member (shouldn't normally happen, but guards the UI cleanly either way).
     meMemberId: Long? = null,
     myUpiId: String = "",
+    myIban: String = "",
+    myStcPay: String = "",
     ownerDisplayName: String = "",
     onSetMemberUpiId: (SplitMemberEntity, String) -> Unit = { _, _ -> },
     onSetMemberPhone: (SplitMemberEntity, String) -> Unit = { _, _ -> },
@@ -104,17 +107,28 @@ fun SettleUpSheet(
     // Builds and sends the individual reminder once we definitely have a phone number —
     // shared by the normal "already has a phone" path and the "just typed one into the
     // dialog" path below (which can't wait for a recomposition to see the saved member).
-    fun sendReminderTo(fromName: String, phone: String, toName: String, amount: Double) {
+    fun sendReminderTo(fromName: String, phone: String, toName: String, amount: Double, owedToMe: Boolean) {
         val amountText = run {
             val formatted = String.format(java.util.Locale.US, "%.2f", amount)
             if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) "SAR $formatted"
             else "$currencySymbol $formatted"
         }
+        // KSA analog of the UPI request: if this settlement is owed to me and I've set an IBAN,
+        // include it so they can bank-transfer.
+        val ibanLine = if (owedToMe && CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myIban.isNotBlank()) {
+            val arabic = context.resources.configuration.locales[0].language == "ar"
+            val bank = SaudiBanks.nameForIbanBody(myIban.removePrefix("SA"), arabic)
+            val body = (if (bank != null) "🏛️ $bank\n" else "") + "*${SaudiBanks.formatGrouped(myIban)}*"
+            "\n\n" + context.getString(R.string.iban_pay_to, body)
+        } else ""
+        val stcLine = if (owedToMe && CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myStcPay.isNotBlank())
+            "\n\n" + context.getString(R.string.stc_pay_to, myStcPay) else ""
         val message = context.getString(
             R.string.split_reminder_msg, fromName, groupName, amountText, toName
-        ) + (if (ownerDisplayName.isNotBlank())
+        ) + ibanLine + stcLine + (if (ownerDisplayName.isNotBlank())
             "\n\n" + context.getString(R.string.split_reminder_signature, ownerDisplayName)
-        else "") + "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+        else "") + "\n\n━━━━━━━━━━\n" + context.getString(R.string.app_install_pitch) +
+            "\n👉 https://play.google.com/store/apps/details?id=${context.packageName}"
 
         // WhatsApp API requires E.164 WITHOUT the leading '+' and WITHOUT spaces/dashes.
         val phoneDigits = phone
@@ -146,7 +160,7 @@ fun SettleUpSheet(
             editingPhoneForMember = fromMember
             return
         }
-        sendReminderTo(fromMember.name, fromMember.phone!!, settlement.toMemberName, settlement.amount)
+        sendReminderTo(fromMember.name, fromMember.phone!!, settlement.toMemberName, settlement.amount, settlement.toMemberId == meMemberId)
     }
 
     ModalBottomSheet(
@@ -390,7 +404,7 @@ fun SettleUpSheet(
                         // back in — the caller (SplitGroupDetailScreen) re-fetches members
                         // asynchronously, so `member` here would still show the old blank phone.
                         pendingReminderSettlement?.let { settlement ->
-                            sendReminderTo(member.name, fullPhone, settlement.toMemberName, settlement.amount)
+                            sendReminderTo(member.name, fullPhone, settlement.toMemberName, settlement.amount, settlement.toMemberId == meMemberId)
                         }
                         editingPhoneForMember = null
                         pendingReminderSettlement = null
@@ -576,7 +590,6 @@ private fun buildGroupSummaryText(
     val lSettled    = context.getString(R.string.split_wa_member_settled)
     val lToPay      = context.getString(R.string.split_wa_to_pay)
     val lAllSettled = context.getString(R.string.split_wa_all_settled)
-    val lFooter     = context.getString(R.string.split_wa_footer)
 
     val realExpenses = expenses.filter { !it.isSettlement }
     val total = realExpenses.sumOf { it.amount }
@@ -631,8 +644,8 @@ private fun buildGroupSummaryText(
     // the URL needs no localization, and this is often the only touchpoint a non-user group
     // member (someone who hasn't installed the app yet) has with it.
     sb.appendLine(divider)
-    sb.appendLine("_${lFooter}_ 🧾")
-    sb.append("play.google.com/store/apps/details?id=${context.packageName}")
+    sb.appendLine(context.getString(R.string.app_install_pitch))
+    sb.append("👉 https://play.google.com/store/apps/details?id=${context.packageName}")
 
     return sb.toString()
 }

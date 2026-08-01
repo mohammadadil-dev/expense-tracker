@@ -40,6 +40,7 @@ fun AddEditSplitGroupSheet(
     // Extra members beyond the device owner
     val extraMembers = remember { mutableStateListOf<Pair<String, String>>() }
     var newMemberName by remember { mutableStateOf("") }
+    var duplicateError by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
 
@@ -206,19 +207,31 @@ fun AddEditSplitGroupSheet(
             ) {
                 OutlinedTextField(
                     value = newMemberName,
-                    onValueChange = { newMemberName = it },
+                    onValueChange = { newMemberName = it; duplicateError = false },
                     label = { Text(stringResource(R.string.split_add_member_hint)) },
                     singleLine = true,
+                    isError = duplicateError,
+                    supportingText = if (duplicateError) {
+                        { Text(stringResource(R.string.split_member_duplicate), color = MaterialTheme.colorScheme.error) }
+                    } else null,
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp)
                 )
                 IconButton(
                     onClick = {
                         val trimmed = newMemberName.trim()
-                        if (trimmed.isNotBlank()) {
-                            val color = PALETTE[(extraMembers.size + 1) % PALETTE.size]
-                            extraMembers += trimmed to color
-                            newMemberName = ""
+                        when {
+                            trimmed.isBlank() -> {}
+                            // Reject case-insensitive duplicates of the owner or an existing member.
+                            trimmed.equals(ownerName.trim(), ignoreCase = true) ||
+                                extraMembers.any { it.first.equals(trimmed, ignoreCase = true) } ->
+                                duplicateError = true
+                            else -> {
+                                val color = PALETTE[(extraMembers.size + 1) % PALETTE.size]
+                                extraMembers += trimmed to color
+                                newMemberName = ""
+                                duplicateError = false
+                            }
                         }
                     },
                     modifier = Modifier
