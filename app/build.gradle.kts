@@ -21,11 +21,13 @@ val localProperties = Properties().apply {
 
 android {
     namespace = "com.expensetracker.app"
-    // Google Play has required new app submissions to target API 35 (Android 15) since
-    // Aug 31 2025 — compileSdk must be >= targetSdk, so both move together. If Android
-    // Studio's sync complains it doesn't recognize compileSdk 35, update Android Studio /
-    // the Android Gradle Plugin first (Help → Check for Updates) rather than lowering this.
-    compileSdk = 35
+    // From Aug 31 2026 Google Play requires app UPDATES to target Android 16 (API 36); staying
+    // on 35 would block all future updates. compileSdk must be >= targetSdk, so both move to 36.
+    // API 36 requires Android Gradle Plugin >= 8.9.1 and Gradle >= 8.11.1 (bumped in the root
+    // build.gradle.kts and gradle-wrapper.properties). If Android Studio can't recognise
+    // compileSdk 36, update Studio (Meerkat 2024.3.1+) and install the Android 16 SDK platform
+    // via SDK Manager rather than lowering this.
+    compileSdk = 36
 
     defaultConfig {
         // applicationId is the permanent, Play Store–unique package name — it does not need
@@ -34,7 +36,7 @@ android {
         // unchanged avoids renaming every package declaration in the codebase.
         applicationId = "com.agtech.expensetracker"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         // v1.8.0 (versionCode 19) was set before the rebrand + dashboard/Splits work below,
         // and was never published either — live Play Store is still versionCode 17 (1.7.0).
         // Bumping straight to 20/1.9.0 to fold everything in at once: the app rename from
@@ -48,8 +50,11 @@ android {
         // raw-Saudi-Riyal-text rendering bugs, a scroll-reactive bottom nav bar + FAB
         // (hides on scroll-down, reappears on scroll-up, across all 5 main screens), and a fix
         // for the Splits list's "Settled" badge going stale after adding/editing an expense.
-        versionCode = 20
-        versionName = "1.9.0"
+        // v2.0.0 — major release: Savings Circle (jam'iya), Zakat calculator, Saudi bank SMS
+        // parsing, More-tab nav, Charity category, full 14-language localization, and the
+        // Android 16 (API 36) target bump. versionCode jumps to 21 (live Play is still 17).
+        versionCode = 21
+        versionName = "2.0.0"
 
         vectorDrawables {
             useSupportLibrary = true

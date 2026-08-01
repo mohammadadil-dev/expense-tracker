@@ -261,6 +261,7 @@
     <string name="cat_farming">விவசாயம்</string>
     <string name="cat_khata">கணக்கு</string>
     <string name="cat_education">கல்வி</string>
+    <string name="cat_charity">தானம்</string>
     <string name="cat_splits">பிரிவுகள்</string>
     <string name="khata_delete_party_title">தரப்பை நீக்கவா?</string>
     <string name="khata_delete_party_confirm">%1$s மற்றும் அவர்களின் அனைத்து உள்ளீடுகளும் நிரந்தரமாக நீக்கப்படும். இதை மீட்கல் இயலாது.</string>
@@ -322,6 +323,18 @@
     <string name="subscriptions_delete_title">சந்தாவை நீக்கவா?</string>
     <string name="subscriptions_delete_confirm">இது \"%1$s\" இன் எதிர்கால நகல்கள் சேர்க்கப்படுவதை நிறுத்தும். கடந்த பதிவுகள் உங்கள் வரலாற்றில் இருக்கும்.</string>
     <string name="subscriptions_dashboard_title">சந்தாக்கள்</string>
+    <string name="subscription_add_title">சந்தா சேர்</string>
+    <string name="subscription_edit_title">சந்தாவைத் திருத்து</string>
+    <string name="subscription_choose_service">சேவையைத் தேர்ந்தெடு</string>
+    <string name="subscription_custom">தனிப்பயன்</string>
+    <string name="subscription_name_label">பெயர்</string>
+    <string name="subscription_name_hint">எ.கா. Netflix</string>
+    <string name="subscription_billing_day_label">புதுப்பிப்பு (மாதத்தின் நாள்)</string>
+    <string name="subscription_billing_cycle">பில்லிங் சுழற்சி</string>
+    <string name="subscription_cycle_monthly">மாதந்தோறும்</string>
+    <string name="subscription_cycle_quarterly">3 மாதத்திற்கு ஒருமுறை</string>
+    <string name="subscription_cycle_halfyearly">6 மாதத்திற்கு ஒருமுறை</string>
+    <string name="subscription_cycle_yearly">ஆண்டுதோறும்</string>
 
     <string name="debt_direction_label">திசை</string>
     <string name="debt_direction_owe">நான் கொடுக்க வேண்டியது</string>
@@ -445,6 +458,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp நிறுவப்படவில்லை.</string>
     <string name="khata_request_via_upi">UPI மூலம் கோரிக்கை</string>
     <string name="khata_add_upi_hint">அவர்கள் உங்களுக்கு உடனடியாக UPI மூலம் பணம் செலுத்த, உங்கள் UPI ஐடியை அமைப்புகளில் சேர்க்கவும்</string>
+    <string name="khata_add_iban_hint">கட்டண நினைவூட்டலில் சேர்க்க Settings-ல் உங்கள் IBAN சேர்க்கவும்</string>
+    <string name="khata_iban_shared_label">உங்கள் IBAN (நினைவூட்டலில் அனுப்பப்படும்)</string>
     <string name="khata_upi_sheet_caption">அவர்கள் இதை நேரடியாக ஸ்கேன் செய்யலாம், அல்லது நீங்கள் பகிரும் இணைப்பைத் தட்டி நேரடியாக பணம் செலுத்தலாம்.</string>
     <string name="khata_upi_share_link">கட்டண இணைப்பைப் பகிரவும்</string>
     <string name="khata_pay_via_upi">UPI மூலம் செலுத்துங்கள்</string>
@@ -455,16 +470,16 @@
     <string name="khata_marked_as_paid_note">செலுத்தப்பட்டதாகக் குறிக்கப்பட்டது</string>
     <string name="khata_reminder_msg_owe">வணக்கம் %1$s 👋
 
-ஒரு நட்பு நினைவூட்டல் — உங்களிடம் %2$s நிலுவை உள்ளது.
+🧾 ஒரு நட்பு நினைவூட்டல் — உங்களிடம் *%2$s* நிலுவை உள்ளது.
 
 வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏</string>
     <string name="khata_reminder_msg_credit">வணக்கம் %1$s 👋
 
-ஒரு குறிப்பு — என் கடையில் உங்களுக்கு %2$s கடன் உள்ளது.
+🎁 ஒரு குறிப்பு — என் கடையில் உங்களுக்கு *%2$s* கடன் உள்ளது.
 
 எப்போது வேண்டுமானாலும் பயன்படுத்திக்கொள்ளுங்கள்!</string>
     <string name="khata_reminder_signature">வணக்கத்துடன்,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">ஒன்றைத் தேர்ந்தெடுக்கவும்:</string>
     <string name="khata_direction_they_owe_label">இந்த தரப்பு என்னிடம் கொடுக்க வேண்டியது</string>
     <string name="khata_initial_amount_label">தொடக்க இருப்பு (விருப்பமானது)</string>
@@ -651,6 +666,8 @@
     <string name="split_group_name_hint">குழு பெயர் (எ.கா. துபாய் பயணம்)</string>
     <string name="split_members_label">உறுப்பினர்கள்</string>
     <string name="split_add_member_hint">உறுப்பினர் பெயர் சேர்</string>
+    <string name="split_add_member">உறுப்பினரைச் சேர்</string>
+    <string name="split_member_duplicate">இந்தப் பெயர் ஏற்கனவே இக்குழுவில் உள்ளது</string>
     <string name="split_member_count">%d உறுப்பினர்கள்</string>
     <string name="split_settled">தீர்வு ✓</string>
     <string name="split_you_owe">நீங்கள் %1$s%2$.2f கொடுக்க வேண்டும்</string>
@@ -721,11 +738,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp நிறுவப்படவில்லை.</string>
     <string name="split_reminder_msg">வணக்கம் %1$s 👋
 
-"%2$s" இலிருந்து நினைவூட்டல் — நீங்கள் %4$s க்கு %3$s கொடுக்க வேண்டும்.
+🧾 "%2$s" இலிருந்து நினைவூட்டல் — நீங்கள் %4$s க்கு *%3$s* கொடுக்க வேண்டும்.
 
 வசதியாக இருக்கும்போது தீர்த்துவிடுங்கள் 🙏</string>
     <string name="split_reminder_signature">வணக்கத்துடன்,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">குறிப்பு: தினசரி பதிவு பட்ஜெட்டை கட்டுக்கோப்பாக வைக்கும் 📊</string>
     <string name="reminder_action_add_expense">செலவு சேர்</string>
 
@@ -799,4 +816,103 @@
     <string name="khata_bulk_reminder_skip">தவிர்</string>
     <string name="khata_bulk_reminder_stop">நிறுத்து</string>
     <string name="khata_bulk_reminder_done">%2$d இல் %1$d நினைவூட்டல்கள் அனுப்பப்பட்டன</string>
+    <string name="jamiya_add_member">உறுப்பினரைச் சேர்</string>
+    <string name="jamiya_circle_name">சேமிப்புக் குழுவின் பெயர்</string>
+    <string name="jamiya_collected_of">%2$s இல் %1$s வசூலிக்கப்பட்டது</string>
+    <string name="jamiya_collects_this_round">%1$s இந்தச் சுற்றில் பெறுவார்</string>
+    <string name="jamiya_complete_body">அனைவரும் பங்களித்து தத்தம் முறையில் தொகையைப் பெற்றனர். இந்தக் குழுவை முடிந்ததாகக் குறிக்கலாம்.</string>
+    <string name="jamiya_complete_title">எல்லாச் சுற்றுகளும் முடிந்தன! 🎉</string>
+    <string name="jamiya_completed_badge">முடிந்தது</string>
+    <string name="jamiya_completed_body">இந்தச் சேமிப்புக் குழு முடிந்து காப்பகப்படுத்தப்பட்டது. தேவைப்பட்டால் மீண்டும் திறக்கலாம்.</string>
+    <string name="jamiya_completed_title">குழு முடிந்தது</string>
+    <string name="jamiya_contribution_amount">ஒரு உறுப்பினருக்கான பங்களிப்பு</string>
+    <string name="jamiya_create">உருவாக்கு</string>
+    <string name="jamiya_delete_circle_confirm">இது \"%1$s\" மற்றும் அதன் அனைத்து உறுப்பினர்கள் மற்றும் பங்களிப்புப் பதிவுகளை நிரந்தரமாக நீக்கும். இதை மீட்க முடியாது.</string>
+    <string name="jamiya_delete_circle_title">குழுவை நீக்கவா?</string>
+    <string name="jamiya_duplicate_member">இந்தப் பெயரில் ஒரு உறுப்பினர் ஏற்கனவே உள்ளார்</string>
+    <string name="jamiya_edit_circle">குழுவைத் திருத்து</string>
+    <string name="jamiya_empty_body">ஒரு சேமிப்புக் குழுவை (கமிட்டி) கண்காணி: ஒவ்வொரு சுற்றிலும் யார் செலுத்தினார், யாருடைய முறை. செயலியில் பணம் மாற்றப்படுவதில்லை — இது பதிவை மட்டும் வைத்திருக்கும்.</string>
+    <string name="jamiya_empty_title">இன்னும் சேமிப்புக் குழு இல்லை</string>
+    <string name="jamiya_mark_complete">குழுவை முடிந்ததாகக் குறி</string>
+    <string name="jamiya_member_name">பெயர்</string>
+    <string name="jamiya_member_phone">தொலைபேசி (விருப்பம்)</string>
+    <string name="jamiya_monthly">மாதாந்திரம்</string>
+    <string name="jamiya_move_down">கீழே நகர்த்து (பிந்தைய முறை)</string>
+    <string name="jamiya_move_up">மேலே நகர்த்து (முந்தைய முறை)</string>
+    <string name="jamiya_new_circle">புதிய குழு</string>
+    <string name="jamiya_next_round">அடுத்த சுற்று</string>
+    <string name="jamiya_no_members">சுற்றுகளைக் கண்காணிக்க உறுப்பினர்களைச் சேர்.</string>
+    <string name="jamiya_owes">%1$s நிலுவை</string>
+    <string name="jamiya_paid">செலுத்தப்பட்டது</string>
+    <string name="jamiya_pot_label">இந்தச் சுற்றின் தொகை</string>
+    <string name="jamiya_prev_round">முந்தைய சுற்று</string>
+    <string name="jamiya_recipient_badge">இந்தச் சுற்றின் தொகையைப் பெறுவார்</string>
+    <string name="jamiya_remind">நினைவூட்டு</string>
+    <string name="jamiya_reminder_message">நினைவூட்டல்: எங்கள் சேமிப்புக் குழு \"%2$s\" (சுற்று %3$d) க்கான உங்கள் %1$s பங்களிப்பு நிலுவையில் உள்ளது. நன்றி.</string>
+    <string name="jamiya_reopen">குழுவை மீண்டும் திற</string>
+    <string name="jamiya_round_of">சுற்று %1$d / %2$d</string>
+    <string name="jamiya_round_short">சுற்று %1$d</string>
+    <string name="jamiya_share">சுருக்கத்தைப் பகிர்</string>
+    <string name="jamiya_share_asof">%1$s வரை</string>
+    <string name="jamiya_share_footer">Baqaya மூலம் பகிரப்பட்டது</string>
+    <string name="jamiya_share_header">%1$s — சேமிப்புக் குழு</string>
+    <string name="jamiya_share_member_body">\"%1$s\" — எங்கள் சேமிப்புக் குழு.\nஉங்கள் முறை: சுற்று %2$d (%3$s தொகை).\nஇந்தச் சுற்று (%4$d): %5$s\nஒவ்வொரு சுற்றின் பங்களிப்பு: %6$s.</string>
+    <string name="jamiya_share_member_cd">வாட்ஸ்அப்பில் விவரங்களை அனுப்பு</string>
+    <string name="jamiya_share_member_due">தயவுசெய்து உங்கள் %1$s செலுத்தவும் ⌛</string>
+    <string name="jamiya_share_member_greeting">வணக்கம் %1$s 👋</string>
+    <string name="jamiya_share_member_paid">நீங்கள் ஏற்கனவே செலுத்திவிட்டீர்கள் ✅ — நன்றி!</string>
+    <string name="jamiya_share_paid">இந்தச் சுற்றில் செலுத்தியது: %2$d இல் %1$d</string>
+    <string name="jamiya_share_pot">ஒவ்வொரு சுற்றின் தொகை: %1$s</string>
+    <string name="jamiya_share_round">சுற்று %1$d / %2$d — %3$s பெறுவார்</string>
+    <string name="jamiya_share_round_norecipient">சுற்று %1$d / %2$d</string>
+    <string name="jamiya_share_terms_monthly">%1$s ஒரு உறுப்பினருக்கு ஒவ்வொரு மாதமும் · %2$d உறுப்பினர்கள்</string>
+    <string name="jamiya_share_terms_weekly">%1$s ஒரு உறுப்பினருக்கு ஒவ்வொரு வாரமும் · %2$d உறுப்பினர்கள்</string>
+    <string name="jamiya_share_turns">பெறும் வரிசை:</string>
+    <string name="jamiya_summary_monthly">%1$s / மாதம்</string>
+    <string name="jamiya_summary_weekly">%1$s / வாரம்</string>
+    <string name="jamiya_this_is_me">இது நான்</string>
+    <string name="jamiya_title">கமிட்டி</string>
+    <string name="jamiya_turn">முறை %1$d</string>
+    <string name="jamiya_weekly">வாராந்திரம்</string>
+    <string name="nav_jamiya">கமிட்டி</string>
+    <string name="nav_more">மேலும்</string>
+    <string name="zakat_asset_bank">வங்கி இருப்பு</string>
+    <string name="zakat_asset_business">வணிகச் சரக்கு</string>
+    <string name="zakat_asset_cash">கையிருப்புப் பணம்</string>
+    <string name="zakat_asset_gold">தங்க மதிப்பு</string>
+    <string name="zakat_asset_investments">முதலீடுகள்</string>
+    <string name="zakat_asset_receivables">உங்களுக்கு வரவேண்டிய பணம்</string>
+    <string name="zakat_asset_savings">சேமிப்பு</string>
+    <string name="zakat_asset_silver">வெள்ளி மதிப்பு</string>
+    <string name="zakat_basis_gold">தங்கம் (85 கிராம்)</string>
+    <string name="zakat_basis_silver">வெள்ளி (595 கிராம்)</string>
+    <string name="zakat_disclaimer">இது வழிகாட்டல், ஃபத்வா அல்ல. Nisab மற்றும் விதிகள் அறிஞர் மற்றும் பகுதிக்கேற்ப மாறுபடும் — நம்பகமான அதிகாரியிடம் உறுதிப்படுத்தவும்.</string>
+    <string name="zakat_due_label">செலுத்த வேண்டிய Zakat (2.5%)</string>
+    <string name="zakat_eligible_no">Nisab க்குக் கீழே — இன்னும் Zakat செலுத்தத் தேவையில்லை.</string>
+    <string name="zakat_eligible_yes">Nisab க்கு மேலே — Zakat செலுத்த வேண்டும்.</string>
+    <string name="zakat_hawl">ஒரு முழு நிலவாண்டு வைத்திருந்தது (Hawl)</string>
+    <string name="zakat_hawl_note">இந்தச் செல்வம் ஒரு முழு நிலவாண்டு வைத்திருந்தால் Zakat செலுத்த வேண்டியதாகும்.</string>
+    <string name="zakat_liabilities">குறுகிய கால கடன்கள் (கழிக்கப்பட்டது)</string>
+    <string name="zakat_net_wealth">நிகர Zakat-க்குரிய செல்வம்</string>
+    <string name="zakat_nisab_threshold">Nisab வரம்பு</string>
+    <string name="zakat_price_gold">கிராமுக்கு தங்க விலை</string>
+    <string name="zakat_price_silver">கிராமுக்கு வெள்ளி விலை</string>
+    <string name="zakat_savings_prefill_note">உங்கள் சேமிப்பு இலக்குகளிலிருந்து நிரப்பப்பட்டது — தேவைப்பட்டால் திருத்தவும்.</string>
+    <string name="zakat_section_assets">உங்கள் Zakat-க்குரிய செல்வம்</string>
+    <string name="zakat_section_nisab">Nisab அடிப்படை</string>
+    <string name="zakat_title">Zakat கால்குலேட்டர்</string>
+    <string name="jamiya_intro">ஒரு முறை வாரியான சேமிப்புக் குழு — ஒவ்வொரு சுற்றிலும் அனைவரும் பங்களிப்பர், ஒவ்வொரு முறையும் ஒரு உறுப்பினர் முழுத் தொகையையும் பெறுவார். Baqaya பதிவை மட்டும் வைத்திருக்கும்; செயலியில் பணம் மாற்றப்படுவதில்லை.</string>
+    <string name="zakat_intro">Zakat என்பது இஸ்லாத்தில் ஒரு வருடாந்திர கட்டாய தானம் — ஒரு நிலவாண்டு வைத்திருந்த தகுதியான செல்வத்தின் 2.5%. மதிப்பீட்டிற்கு கீழே உங்கள் சொத்துக்களை உள்ளிடவும்.</string>
+    <string name="zakat_nisab_hint">உங்கள் நிகர செல்வம் Nisab ஐ விட அதிகமாக இருந்தால் மட்டுமே Zakat செலுத்த வேண்டும் — 85 கிராம் தங்கம் அல்லது 595 கிராம் வெள்ளியின் மதிப்பு. எதை வைத்து அளவிடுவது எனத் தேர்வுசெய்க; அந்த உலோகத்தின் விலையை கீழே உள்ளிடவும்.</string>
+    <string name="zakat_gold_grams">உங்கள் தங்கம் (கிராம்)</string>
+    <string name="zakat_silver_grams">உங்கள் வெள்ளி (கிராம்)</string>
+    <string name="app_install_pitch">📲 *Baqaya மூலம் செலவுகளைக் கண்காணித்து, கணக்குகளை எளிதாகத் தீர்க்கவும்* — இலவசம், ஆஃப்லைன், தனிப்பட்டது.</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay எண்</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">சேமிக்கும் முன் எண்ணைச் சரிபார்க்கவும் — STC Pay பரிமாற்றம் இதே எண்ணுக்குச் செல்லும்.</string>
+    <string name="stc_updated">STC Pay எண் சேமிக்கப்பட்டது</string>
+    <string name="stc_removed">STC Pay எண் அகற்றப்பட்டது</string>
 </resources>

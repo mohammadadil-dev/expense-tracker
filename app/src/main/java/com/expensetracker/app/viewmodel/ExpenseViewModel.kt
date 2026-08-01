@@ -164,6 +164,12 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     private val _myUpiId = MutableStateFlow(settings.myUpiId)
     val myUpiId: StateFlow<String> = _myUpiId
 
+    private val _myIban = MutableStateFlow(settings.myIban)
+    val myIban: StateFlow<String> = _myIban
+
+    private val _myStcPay = MutableStateFlow(settings.myStcPay)
+    val myStcPay: StateFlow<String> = _myStcPay
+
     // ── Business profile (optional, cosmetic — see SettingsRepository) ────────
     private val _businessName = MutableStateFlow(settings.businessName)
     val businessName: StateFlow<String> = _businessName
@@ -321,11 +327,13 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         recurringDayOfMonth: Int? = null,
         memberId: Long? = null,
         accountId: Long? = null,
+        recurringPeriod: String? = null,
         onDone: () -> Unit
     ) {
         viewModelScope.launch {
             repository.addOrUpdateExpense(
                 id, categoryId, description, amount, date, isRecurring,
+                recurringPeriod = recurringPeriod,
                 recurringDayOfMonth = recurringDayOfMonth, memberId = memberId,
                 accountId = accountId
             )
@@ -445,6 +453,16 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         _displayName.value = name
     }
 
+    fun setMyIban(iban: String) {
+        settings.myIban = iban
+        _myIban.value = iban
+    }
+
+    fun setMyStcPay(number: String) {
+        settings.myStcPay = number
+        _myStcPay.value = number
+    }
+
     fun setMyUpiId(upiId: String) {
         settings.myUpiId = upiId
         _myUpiId.value = upiId
@@ -475,6 +493,14 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
     fun convertCurrency(newSymbol: String, rate: Double, onDone: () -> Unit) {
         viewModelScope.launch {
             repository.convertAllAmounts(rate)
+            // Monthly salary lives in settings (SharedPreferences), not the DB, so it has to be
+            // rescaled here alongside the DB amounts — otherwise it stays in the old currency.
+            // Push the new value to the StateFlow so the dashboard updates immediately.
+            if (settings.monthlySalary != 0.0) {
+                val scaledSalary = settings.monthlySalary * rate
+                settings.monthlySalary = scaledSalary
+                _monthlySalary.value = scaledSalary
+            }
             settings.currencySymbol = newSymbol
             _currencySymbol.value = newSymbol
             onDone()
@@ -483,7 +509,8 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
 
     fun resetAllData(onDone: () -> Unit) {
         viewModelScope.launch {
-            repository.resetAllData()
+            val isIndiaMarket = com.expensetracker.app.data.CurrencyLocaleMapper.isInrSymbol(settings.currencySymbol)
+            repository.resetAllData(isIndiaMarket)
             _currentMonthKey.value = DateUtils.currentMonthKey()
             onDone()
         }

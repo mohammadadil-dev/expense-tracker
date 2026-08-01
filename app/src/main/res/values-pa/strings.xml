@@ -261,6 +261,7 @@
     <string name="cat_farming">ਖੇਤੀਬਾੜੀ</string>
     <string name="cat_khata">ਖਾਤਾ</string>
     <string name="cat_education">ਸਿੱਖਿਆ</string>
+    <string name="cat_charity">ਦਾਨ</string>
     <string name="cat_splits">ਸਪਲਿਟਸ</string>
     <string name="khata_delete_party_title">ਪਾਰਟੀ ਮਿਟਾਉਣੀ ਹੈ?</string>
     <string name="khata_delete_party_confirm">%1$s ਅਤੇ ਉਹਨਾਂ ਦੀਆਂ ਸਾਰੀਆਂ ਐਂਟਰੀਆਂ ਸਥਾਈ ਤੌਰ ਉੱਤੇ ਮਿਟਾ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ। ਇਹ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
@@ -322,6 +323,18 @@
     <string name="subscriptions_delete_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="subscriptions_delete_confirm">ਇਹ \"%1$s\" ਦੀਆਂ ਭਵਿੱਖ ਦੀਆਂ ਕਾਪੀਆਂ ਜੋੜਨ ਤੋਂ ਰੋਕ ਦੇਵੇਗਾ। ਪਿਛਲੀਆਂ ਐਂਟਰੀਆਂ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਰਹਿਣਗੀਆਂ।</string>
     <string name="subscriptions_dashboard_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨਾਂ</string>
+    <string name="subscription_add_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="subscription_edit_title">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸੋਧੋ</string>
+    <string name="subscription_choose_service">ਸੇਵਾ ਚੁਣੋ</string>
+    <string name="subscription_custom">ਕਸਟਮ</string>
+    <string name="subscription_name_label">ਨਾਂ</string>
+    <string name="subscription_name_hint">ਜਿਵੇਂ Netflix</string>
+    <string name="subscription_billing_day_label">ਨਵੀਨੀਕਰਨ (ਮਹੀਨੇ ਦਾ ਦਿਨ)</string>
+    <string name="subscription_billing_cycle">ਬਿਲਿੰਗ ਸਾਈਕਲ</string>
+    <string name="subscription_cycle_monthly">ਮਹੀਨਾਵਾਰ</string>
+    <string name="subscription_cycle_quarterly">ਹਰ 3 ਮਹੀਨੇ</string>
+    <string name="subscription_cycle_halfyearly">ਹਰ 6 ਮਹੀਨੇ</string>
+    <string name="subscription_cycle_yearly">ਸਾਲਾਨਾ</string>
 
     <string name="debt_direction_label">ਦਿਸ਼ਾ</string>
     <string name="debt_direction_owe">ਮੈਂ ਦੇਣਾ ਹੈ</string>
@@ -445,6 +458,8 @@
     <string name="khata_whatsapp_not_installed">WhatsApp ਸਥਾਪਿਤ ਨਹੀਂ।</string>
     <string name="khata_request_via_upi">UPI ਰਾਹੀਂ ਬੇਨਤੀ ਕਰੋ</string>
     <string name="khata_add_upi_hint">ਆਪਣੀ UPI ਆਈਡੀ ਸੈਟਿੰਗਸ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ ਤਾਂ ਜੋ ਉਹ ਤੁਹਾਨੂੰ ਤੁਰੰਤ UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰ ਸਕਣ</string>
+    <string name="khata_add_iban_hint">Settings ਵਿੱਚ ਆਪਣਾ IBAN ਸ਼ਾਮਲ ਕਰੋ ਤਾਂ ਜੋ ਇਹ ਭੁਗਤਾਨ ਯਾਦ-ਪੱਤਰ ਵਿੱਚ ਆਵੇ</string>
+    <string name="khata_iban_shared_label">ਤੁਹਾਡਾ IBAN (ਯਾਦ-ਪੱਤਰ ਵਿੱਚ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ)</string>
     <string name="khata_upi_sheet_caption">ਉਹ ਇਸਨੂੰ ਖੁਦ ਸਕੈਨ ਕਰ ਸਕਦੇ ਹਨ, ਜਾਂ ਤੁਹਾਡੇ ਵੱਲੋਂ ਸਾਂਝੇ ਕੀਤੇ ਲਿੰਕ \'ਤੇ ਟੈਪ ਕਰਕੇ ਸਿੱਧਾ ਭੁਗਤਾਨ ਕਰ ਸਕਦੇ ਹਨ।</string>
     <string name="khata_upi_share_link">ਭੁਗਤਾਨ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="khata_pay_via_upi">UPI ਰਾਹੀਂ ਭੁਗਤਾਨ ਕਰੋ</string>
@@ -455,16 +470,16 @@
     <string name="khata_marked_as_paid_note">ਭੁਗਤਾਨ ਹੋਇਆ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ</string>
     <string name="khata_reminder_msg_owe">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-ਇੱਕ ਦੋਸਤਾਨਾ ਯਾਦ — ਤੁਹਾਡਾ %2$s ਬਾਕੀ ਹੈ।
+🧾 ਇੱਕ ਦੋਸਤਾਨਾ ਯਾਦ — ਤੁਹਾਡਾ *%2$s* ਬਾਕੀ ਹੈ।
 
 ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏</string>
     <string name="khata_reminder_msg_credit">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-ਇੱਕ ਨੋਟ — ਮੇਰੀ ਦੁਕਾਨ ਵਿੱਚ ਤੁਹਾਡਾ %2$s ਕ੍ਰੈਡਿਟ ਹੈ।
+🎁 ਇੱਕ ਨੋਟ — ਮੇਰੀ ਦੁਕਾਨ ਵਿੱਚ ਤੁਹਾਡਾ *%2$s* ਕ੍ਰੈਡਿਟ ਹੈ।
 
 ਜਦੋਂ ਚਾਹੋ ਵਰਤੋ!</string>
     <string name="khata_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
-%1$s</string>
+*%1$s*</string>
     <string name="khata_direction_i_owe_label">ਇੱਕ ਚੁਣੋ:</string>
     <string name="khata_direction_they_owe_label">ਇਹ ਪਾਰਟੀ ਮੈਨੂੰ ਦੇਣੀ ਹੈ</string>
     <string name="khata_initial_amount_label">ਸ਼ੁਰੂਆਤੀ ਰਕਮ (ਵਿਕਲਪਿਕ)</string>
@@ -651,6 +666,8 @@
     <string name="split_group_name_hint">ਗਰੁੱਪ ਦਾ ਨਾਮ (ਜਿਵੇਂ ਦੁਬਈ ਟ੍ਰਿੱਪ)</string>
     <string name="split_members_label">ਮੈਂਬਰ</string>
     <string name="split_add_member_hint">ਮੈਂਬਰ ਦਾ ਨਾਮ ਜੋੜੋ</string>
+    <string name="split_add_member">ਮੈਂਬਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="split_member_duplicate">ਇਹ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਇਸ ਗਰੁੱਪ ਵਿੱਚ ਹੈ</string>
     <string name="split_member_count">%d ਮੈਂਬਰ</string>
     <string name="split_settled">ਨਿਪਟਿਆ ✓</string>
     <string name="split_you_owe">ਤੁਸੀਂ %1$s%2$.2f ਦੇਣਾ ਹੈ</string>
@@ -721,11 +738,11 @@
     <string name="split_whatsapp_not_installed">WhatsApp ਸਥਾਪਿਤ ਨਹੀਂ।</string>
     <string name="split_reminder_msg">ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋
 
-"%2$s" ਵੱਲੋਂ ਯਾਦ — ਤੁਸੀਂ %4$s ਨੂੰ %3$s ਦੇਣਾ ਹੈ।
+🧾 "%2$s" ਵੱਲੋਂ ਯਾਦ — ਤੁਸੀਂ %4$s ਨੂੰ *%3$s* ਦੇਣਾ ਹੈ।
 
 ਸੁਵਿਧਾਜਨਕ ਹੋਵੇ ਤਾਂ ਨਿਪਟਾਓ 🙏</string>
     <string name="split_reminder_signature">ਸਤਿਕਾਰ ਸਹਿਤ,
-%1$s</string>
+*%1$s*</string>
     <string name="reminder_notification_tip">ਸੁਝਾਅ: ਰੋਜ਼ ਦਰਜ ਕਰਨ ਨਾਲ ਬਜਟ ਕਾਬੂ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ 📊</string>
     <string name="reminder_action_add_expense">ਖਰਚ ਜੋੜੋ</string>
 
@@ -799,4 +816,103 @@
     <string name="khata_bulk_reminder_skip">ਛੱਡੋ</string>
     <string name="khata_bulk_reminder_stop">ਰੋਕੋ</string>
     <string name="khata_bulk_reminder_done">%2$d ਵਿੱਚੋਂ %1$d ਰਿਮਾਈਂਡਰ ਭੇਜੇ ਗਏ</string>
+    <string name="jamiya_add_member">ਮੈਂਬਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="jamiya_circle_name">ਮੰਡਲੀ ਦਾ ਨਾਮ</string>
+    <string name="jamiya_collected_of">%2$s ਵਿੱਚੋਂ %1$s ਜਮ੍ਹਾਂ</string>
+    <string name="jamiya_collects_this_round">%1$s ਇਸ ਗੇੜ ਵਿੱਚ ਲੈਣਗੇ</string>
+    <string name="jamiya_complete_body">ਸਾਰਿਆਂ ਨੇ ਯੋਗਦਾਨ ਪਾਇਆ ਅਤੇ ਆਪਣੀ ਵਾਰੀ ਵਿੱਚ ਰਕਮ ਲਈ। ਤੁਸੀਂ ਇਸ ਮੰਡਲੀ ਨੂੰ ਪੂਰਾ ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ ਕਰ ਸਕਦੇ ਹੋ।</string>
+    <string name="jamiya_complete_title">ਸਾਰੇ ਗੇੜ ਪੂਰੇ! 🎉</string>
+    <string name="jamiya_completed_badge">ਪੂਰਾ</string>
+    <string name="jamiya_completed_body">ਇਹ ਬੱਚਤ ਮੰਡਲੀ ਖ਼ਤਮ ਹੋ ਕੇ ਸੰਭਾਲੀ ਗਈ ਹੈ। ਲੋੜ ਹੋਵੇ ਤਾਂ ਦੁਬਾਰਾ ਖੋਲ੍ਹ ਸਕਦੇ ਹੋ।</string>
+    <string name="jamiya_completed_title">ਮੰਡਲੀ ਪੂਰੀ ਹੋਈ</string>
+    <string name="jamiya_contribution_amount">ਪ੍ਰਤੀ ਮੈਂਬਰ ਯੋਗਦਾਨ</string>
+    <string name="jamiya_create">ਬਣਾਓ</string>
+    <string name="jamiya_delete_circle_confirm">ਇਹ \"%1$s\" ਅਤੇ ਇਸਦੇ ਸਾਰੇ ਮੈਂਬਰ ਅਤੇ ਯੋਗਦਾਨ ਰਿਕਾਰਡ ਪੱਕੇ ਤੌਰ ਤੇ ਹਟਾ ਦੇਵੇਗਾ। ਇਸਨੂੰ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
+    <string name="jamiya_delete_circle_title">ਮੰਡਲੀ ਹਟਾਉਣੀ ਹੈ?</string>
+    <string name="jamiya_duplicate_member">ਇਸ ਨਾਮ ਦਾ ਮੈਂਬਰ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ</string>
+    <string name="jamiya_edit_circle">ਮੰਡਲੀ ਸੋਧੋ</string>
+    <string name="jamiya_empty_body">ਬੱਚਤ ਮੰਡਲੀ (ਕਮੇਟੀ) ਟ੍ਰੈਕ ਕਰੋ: ਹਰ ਗੇੜ ਵਿੱਚ ਕਿਸਨੇ ਭੁਗਤਾਨ ਕੀਤਾ ਅਤੇ ਕਿਸਦੀ ਵਾਰੀ। ਐਪ ਵਿੱਚ ਕੋਈ ਪੈਸਾ ਨਹੀਂ ਜਾਂਦਾ — ਇਹ ਸਿਰਫ਼ ਰਿਕਾਰਡ ਰੱਖਦੀ ਹੈ।</string>
+    <string name="jamiya_empty_title">ਹਾਲੇ ਕੋਈ ਬੱਚਤ ਮੰਡਲੀ ਨਹੀਂ</string>
+    <string name="jamiya_mark_complete">ਮੰਡਲੀ ਨੂੰ ਪੂਰਾ ਨਿਸ਼ਾਨਬੱਧ ਕਰੋ</string>
+    <string name="jamiya_member_name">ਨਾਮ</string>
+    <string name="jamiya_member_phone">ਫ਼ੋਨ (ਵਿਕਲਪਿਕ)</string>
+    <string name="jamiya_monthly">ਮਾਸਿਕ</string>
+    <string name="jamiya_move_down">ਹੇਠਾਂ ਲੈ ਜਾਓ (ਬਾਅਦ ਦੀ ਵਾਰੀ)</string>
+    <string name="jamiya_move_up">ਉੱਪਰ ਲੈ ਜਾਓ (ਪਹਿਲਾਂ ਦੀ ਵਾਰੀ)</string>
+    <string name="jamiya_new_circle">ਨਵੀਂ ਮੰਡਲੀ</string>
+    <string name="jamiya_next_round">ਅਗਲਾ ਗੇੜ</string>
+    <string name="jamiya_no_members">ਗੇੜ ਟ੍ਰੈਕ ਕਰਨ ਲਈ ਮੈਂਬਰ ਸ਼ਾਮਲ ਕਰੋ।</string>
+    <string name="jamiya_owes">%1$s ਬਾਕੀ</string>
+    <string name="jamiya_paid">ਭੁਗਤਾਨ ਹੋਇਆ</string>
+    <string name="jamiya_pot_label">ਇਸ ਗੇੜ ਦੀ ਰਕਮ</string>
+    <string name="jamiya_prev_round">ਪਿਛਲਾ ਗੇੜ</string>
+    <string name="jamiya_recipient_badge">ਇਸ ਗੇੜ ਦੀ ਰਕਮ ਮਿਲੇਗੀ</string>
+    <string name="jamiya_remind">ਯਾਦ ਕਰਾਓ</string>
+    <string name="jamiya_reminder_message">ਯਾਦ: ਸਾਡੀ ਬੱਚਤ ਮੰਡਲੀ \"%2$s\" (ਗੇੜ %3$d) ਲਈ ਤੁਹਾਡਾ %1$s ਯੋਗਦਾਨ ਬਾਕੀ ਹੈ। ਧੰਨਵਾਦ।</string>
+    <string name="jamiya_reopen">ਮੰਡਲੀ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ</string>
+    <string name="jamiya_round_of">ਗੇੜ %1$d / %2$d</string>
+    <string name="jamiya_round_short">ਗੇੜ %1$d</string>
+    <string name="jamiya_share">ਸਾਰ ਸਾਂਝਾ ਕਰੋ</string>
+    <string name="jamiya_share_asof">%1$s ਤੱਕ</string>
+    <string name="jamiya_share_footer">Baqaya ਰਾਹੀਂ ਸਾਂਝਾ ਕੀਤਾ</string>
+    <string name="jamiya_share_header">%1$s — ਬੱਚਤ ਮੰਡਲੀ</string>
+    <string name="jamiya_share_member_body">\"%1$s\" — ਸਾਡੀ ਬੱਚਤ ਮੰਡਲੀ।\nਤੁਹਾਡੀ ਵਾਰੀ: ਗੇੜ %2$d (%3$s ਰਕਮ)।\nਇਸ ਗੇੜ (%4$d): %5$s\nਹਰ ਗੇੜ ਦਾ ਯੋਗਦਾਨ: %6$s।</string>
+    <string name="jamiya_share_member_cd">ਵਟਸਐਪ ਤੇ ਵੇਰਵੇ ਭੇਜੋ</string>
+    <string name="jamiya_share_member_due">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ %1$s ਭੁਗਤਾਨ ਕਰੋ ⌛</string>
+    <string name="jamiya_share_member_greeting">ਸਤ ਸ੍ਰੀ ਅਕਾਲ %1$s 👋</string>
+    <string name="jamiya_share_member_paid">ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ ਭੁਗਤਾਨ ਕਰ ਦਿੱਤਾ ✅ — ਧੰਨਵਾਦ!</string>
+    <string name="jamiya_share_paid">ਇਸ ਗੇੜ ਭੁਗਤਾਨ: %2$d ਵਿੱਚੋਂ %1$d</string>
+    <string name="jamiya_share_pot">ਹਰ ਗੇੜ ਦੀ ਰਕਮ: %1$s</string>
+    <string name="jamiya_share_round">ਗੇੜ %1$d / %2$d — %3$s ਲੈਣਗੇ</string>
+    <string name="jamiya_share_round_norecipient">ਗੇੜ %1$d / %2$d</string>
+    <string name="jamiya_share_terms_monthly">%1$s ਪ੍ਰਤੀ ਮੈਂਬਰ ਹਰ ਮਹੀਨੇ · %2$d ਮੈਂਬਰ</string>
+    <string name="jamiya_share_terms_weekly">%1$s ਪ੍ਰਤੀ ਮੈਂਬਰ ਹਰ ਹਫ਼ਤੇ · %2$d ਮੈਂਬਰ</string>
+    <string name="jamiya_share_turns">ਮਿਲਣ ਦਾ ਕ੍ਰਮ:</string>
+    <string name="jamiya_summary_monthly">%1$s / ਮਹੀਨਾ</string>
+    <string name="jamiya_summary_weekly">%1$s / ਹਫ਼ਤਾ</string>
+    <string name="jamiya_this_is_me">ਇਹ ਮੈਂ ਹਾਂ</string>
+    <string name="jamiya_title">ਕਮੇਟੀ</string>
+    <string name="jamiya_turn">ਵਾਰੀ %1$d</string>
+    <string name="jamiya_weekly">ਹਫ਼ਤਾਵਾਰ</string>
+    <string name="nav_jamiya">ਕਮੇਟੀ</string>
+    <string name="nav_more">ਹੋਰ</string>
+    <string name="zakat_asset_bank">ਬੈਂਕ ਬਕਾਇਆ</string>
+    <string name="zakat_asset_business">ਕਾਰੋਬਾਰੀ ਮਾਲ</string>
+    <string name="zakat_asset_cash">ਹੱਥ ਵਿੱਚ ਨਕਦੀ</string>
+    <string name="zakat_asset_gold">ਸੋਨੇ ਦੀ ਕੀਮਤ</string>
+    <string name="zakat_asset_investments">ਨਿਵੇਸ਼</string>
+    <string name="zakat_asset_receivables">ਤੁਹਾਨੂੰ ਮਿਲਣ ਵਾਲੀ ਰਕਮ</string>
+    <string name="zakat_asset_savings">ਬੱਚਤ</string>
+    <string name="zakat_asset_silver">ਚਾਂਦੀ ਦੀ ਕੀਮਤ</string>
+    <string name="zakat_basis_gold">ਸੋਨਾ (85 ਗ੍ਰਾਮ)</string>
+    <string name="zakat_basis_silver">ਚਾਂਦੀ (595 ਗ੍ਰਾਮ)</string>
+    <string name="zakat_disclaimer">ਇਹ ਮਾਰਗਦਰਸ਼ਨ ਹੈ, ਫ਼ਤਵਾ ਨਹੀਂ। Nisab ਅਤੇ ਨਿਯਮ ਵਿਦਵਾਨ ਅਤੇ ਖੇਤਰ ਅਨੁਸਾਰ ਬਦਲਦੇ ਹਨ — ਕਿਸੇ ਭਰੋਸੇਯੋਗ ਅਥਾਰਟੀ ਤੋਂ ਪੁਸ਼ਟੀ ਕਰੋ।</string>
+    <string name="zakat_due_label">ਦੇਣਯੋਗ Zakat (2.5%)</string>
+    <string name="zakat_eligible_no">Nisab ਤੋਂ ਘੱਟ — ਹਾਲੇ Zakat ਦੇਣਯੋਗ ਨਹੀਂ।</string>
+    <string name="zakat_eligible_yes">Nisab ਤੋਂ ਵੱਧ — Zakat ਦੇਣਯੋਗ ਹੈ।</string>
+    <string name="zakat_hawl">ਇੱਕ ਪੂਰਾ ਚੰਦਰ ਸਾਲ ਰੱਖਿਆ (Hawl)</string>
+    <string name="zakat_hawl_note">ਇਹ ਸੰਪਤੀ ਇੱਕ ਪੂਰਾ ਚੰਦਰ ਸਾਲ ਰੱਖਣ ਤੇ Zakat ਦੇਣਯੋਗ ਬਣਦੀ ਹੈ।</string>
+    <string name="zakat_liabilities">ਥੋੜ੍ਹ-ਚਿਰੇ ਕਰਜ਼ੇ (ਘਟਾਏ ਗਏ)</string>
+    <string name="zakat_net_wealth">ਸ਼ੁੱਧ Zakat-ਯੋਗ ਸੰਪਤੀ</string>
+    <string name="zakat_nisab_threshold">Nisab ਹੱਦ</string>
+    <string name="zakat_price_gold">ਪ੍ਰਤੀ ਗ੍ਰਾਮ ਸੋਨੇ ਦਾ ਭਾਅ</string>
+    <string name="zakat_price_silver">ਪ੍ਰਤੀ ਗ੍ਰਾਮ ਚਾਂਦੀ ਦਾ ਭਾਅ</string>
+    <string name="zakat_savings_prefill_note">ਤੁਹਾਡੇ ਬੱਚਤ ਟੀਚਿਆਂ ਤੋਂ ਭਰਿਆ — ਲੋੜ ਹੋਵੇ ਤਾਂ ਬਦਲੋ।</string>
+    <string name="zakat_section_assets">ਤੁਹਾਡੀ Zakat-ਯੋਗ ਸੰਪਤੀ</string>
+    <string name="zakat_section_nisab">Nisab ਆਧਾਰ</string>
+    <string name="zakat_title">Zakat ਕੈਲਕੁਲੇਟਰ</string>
+    <string name="jamiya_intro">ਇੱਕ ਵਾਰੀ-ਵਾਰੀ ਬੱਚਤ ਸਮੂਹ — ਹਰ ਗੇੜ ਵਿੱਚ ਸਾਰੇ ਯੋਗਦਾਨ ਪਾਉਂਦੇ ਹਨ ਅਤੇ ਹਰ ਵਾਰ ਇੱਕ ਮੈਂਬਰ ਪੂਰੀ ਰਕਮ ਲੈਂਦਾ ਹੈ। Baqaya ਸਿਰਫ਼ ਰਿਕਾਰਡ ਰੱਖਦੀ ਹੈ; ਐਪ ਵਿੱਚ ਕੋਈ ਪੈਸਾ ਨਹੀਂ ਜਾਂਦਾ।</string>
+    <string name="zakat_intro">Zakat ਇਸਲਾਮ ਵਿੱਚ ਇੱਕ ਸਾਲਾਨਾ ਲਾਜ਼ਮੀ ਦਾਨ ਹੈ — ਇੱਕ ਚੰਦਰ ਸਾਲ ਰੱਖੀ ਯੋਗ ਸੰਪਤੀ ਦਾ 2.5%। ਅੰਦਾਜ਼ੇ ਲਈ ਹੇਠਾਂ ਆਪਣੀ ਸੰਪਤੀ ਭਰੋ।</string>
+    <string name="zakat_nisab_hint">Zakat ਤਾਂ ਹੀ ਦੇਣਯੋਗ ਹੈ ਜੇ ਤੁਹਾਡੀ ਸ਼ੁੱਧ ਸੰਪਤੀ Nisab ਤੋਂ ਵੱਧ ਹੋਵੇ — 85 ਗ੍ਰਾਮ ਸੋਨਾ ਜਾਂ 595 ਗ੍ਰਾਮ ਚਾਂਦੀ ਦੀ ਕੀਮਤ। ਕਿਸ ਨਾਲ ਮਾਪਣਾ ਹੈ ਚੁਣੋ; ਉਸ ਧਾਤ ਦਾ ਭਾਅ ਹੇਠਾਂ ਭਰੋ।</string>
+    <string name="zakat_gold_grams">ਤੁਹਾਡਾ ਸੋਨਾ (ਗ੍ਰਾਮ)</string>
+    <string name="zakat_silver_grams">ਤੁਹਾਡੀ ਚਾਂਦੀ (ਗ੍ਰਾਮ)</string>
+    <string name="app_install_pitch">📲 *Baqaya ਨਾਲ ਖਰਚੇ ਟ੍ਰੈਕ ਕਰੋ ਤੇ ਹਿਸਾਬ ਸੌਖਿਆਂ ਚੁਕਾਓ* — ਮੁਫ਼ਤ, ਆਫ਼ਲਾਈਨ ਅਤੇ ਪ੍ਰਾਈਵੇਟ।</string>
+    <string name="stc_section_title">STC Pay</string>
+    <string name="stc_label">STC Pay ਨੰਬਰ</string>
+    <string name="stc_hint">05XXXXXXXX</string>
+    <string name="stc_pay_to">📲 *STC Pay*
+%1$s</string>
+    <string name="stc_note">ਸੇਵ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਨੰਬਰ ਜਾਂਚੋ — STC Pay ਟ੍ਰਾਂਸਫਰ ਇਸੇ ਨੰਬਰ ਤੇ ਜਾਵੇਗਾ।</string>
+    <string name="stc_updated">STC Pay ਨੰਬਰ ਸੇਵ ਹੋਇਆ</string>
+    <string name="stc_removed">STC Pay ਨੰਬਰ ਹਟਾਇਆ</string>
 </resources>

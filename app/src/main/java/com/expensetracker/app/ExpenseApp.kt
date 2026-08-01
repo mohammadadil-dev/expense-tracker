@@ -9,8 +9,10 @@ import com.expensetracker.app.data.AppDatabase
 import com.expensetracker.app.data.CurrencyLocaleMapper
 import com.expensetracker.app.data.ExpenseRepository
 import com.expensetracker.app.data.FamilyRepository
+import com.expensetracker.app.data.JamiyaRepository
 import com.expensetracker.app.data.KhataRepository
 import com.expensetracker.app.data.SettingsRepository
+import com.expensetracker.app.data.SharedBillRepository
 import com.expensetracker.app.data.SplitRepository
 import com.expensetracker.app.util.LocaleHelper
 import com.expensetracker.app.util.ReminderReceiver
@@ -31,6 +33,8 @@ class ExpenseApp : Application() {
     lateinit var khataRepository: KhataRepository
     lateinit var familyRepository: FamilyRepository
     lateinit var splitRepository: SplitRepository
+    lateinit var jamiyaRepository: JamiyaRepository
+    lateinit var sharedBillRepository: SharedBillRepository
     lateinit var settings: SettingsRepository
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -96,6 +100,8 @@ class ExpenseApp : Application() {
             database.splitExpenseShareDao(),
             database
         )
+        jamiyaRepository = JamiyaRepository(database.jamiyaDao())
+        sharedBillRepository = SharedBillRepository(database)
         settings = SettingsRepository(this)
 
         // Detect the default currency from the phone's region on every launch,
@@ -163,8 +169,11 @@ class ExpenseApp : Application() {
         MobileAds.initialize(this) {}
 
         appScope.launch {
-            repository.seedDefaultCategoriesIfNeeded()
-            repository.ensureNewBuiltinCategories()
+            // India-market flag (detected currency = INR) gates India-only default categories
+            // like Farming, so a Saudi/other user doesn't get categories that read as foreign.
+            val isIndiaMarket = CurrencyLocaleMapper.isInrSymbol(settings.currencySymbol)
+            repository.seedDefaultCategoriesIfNeeded(isIndiaMarket)
+            repository.ensureNewBuiltinCategories(isIndiaMarket)
             // Fresh installs skip MIGRATION_16_17 entirely (Room creates the latest schema
             // directly), so this is what actually seeds Cash/Bank Account/Card for new users.
             repository.seedDefaultAccountsIfNeeded()

@@ -96,6 +96,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.ExpenseEntity
 import com.expensetracker.app.data.IncomeEntity
@@ -159,6 +160,7 @@ import com.expensetracker.app.util.CsvExporter
 import com.expensetracker.app.util.PdfExporter
 import com.expensetracker.app.util.accountDisplayName
 import com.expensetracker.app.util.categoryDisplayName
+import com.expensetracker.app.util.categoryEmoji
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -219,7 +221,9 @@ fun DashboardScreen(
     var trendExpanded by remember { mutableStateOf(false) }
     // Dashboard trim: Spending by Category and Recent Transactions are collapsed by default —
     // tapping either header reveals its rows.
-    var categoryBreakdownExpanded by remember { mutableStateOf(false) }
+    // Controls the relocated Spending-by-Category card inside the By-Category view; expanded by
+    // default there (it's the whole point of that view), unlike the old collapsed home card.
+    var categoryBreakdownExpanded by remember { mutableStateOf(true) }
     var recentTransactionsExpanded by remember { mutableStateOf(false) }
     @Suppress("UNUSED_VARIABLE")
     var showFamilySetupSheet by remember { mutableStateOf(false) } // reserved for Family Mode re-enable
@@ -252,11 +256,14 @@ fun DashboardScreen(
     // Pre-load the interstitial in the background so it's ready when the user taps Export PDF.
     LaunchedEffect(Unit) { activity?.let { InterstitialAdManager.preload(it) } }
 
-    // Cat_debt_payments is auto-managed; hide it from the manual Add Expense picker so
-    // users can't accidentally file an expense there by hand (debt payments create their
-    // linked expense automatically when recorded from the Debts screen).
+    // These three are auto-managed "system" categories: expenses in them are generated
+    // automatically by other features (Debt payments, Ledger/khata credit, Splits shares), not
+    // hand-entered. Hiding them from the manual picker AND category management stops users
+    // filing an expense into — or renaming/deleting — a system bucket by mistake. They still
+    // appear in the dashboard breakdown, since that spend is real.
     val expensePickerCategories = remember(categories) {
-        categories.filter { it.nameKey != "cat_debt_payments" && it.nameKey != "cat_khata" }
+        val systemKeys = setOf("cat_debt_payments", "cat_khata", "cat_splits")
+        categories.filter { it.nameKey !in systemKeys }
     }
 
     val categoryById = remember(categories) { categories.associateBy { it.id } }
@@ -478,17 +485,16 @@ fun DashboardScreen(
     val hasRecurringTemplates = recurringTemplates.isNotEmpty()
     val hasSecondaryTilesRow = hasSubscriptionSpend || hasRecurringTemplates
     val secondaryTilesRowOffset = if (hasSecondaryTilesRow) 0 else 1
-    // Trend chart now renders before Spending by Category / Recent Transactions (moved per
-    // request), so SpendingCategorySection sits one slot later than it used to —
-    // expenseListItemIndex is unchanged since the same 4 items (AI Insights, Trend, Category,
-    // Recent Transactions) still all sit before it, just reordered among themselves.
-    val breakdownItemIndex = 7 - secondaryTilesRowOffset
-    val expenseListItemIndex = 9 - secondaryTilesRowOffset
+    // The standalone "Spending by Category" home card was removed; its breakdown now renders
+    // inside the "By Category" view of the Expenses-This-Month section below. That drops one
+    // item from the feed, so the expense-list scroll anchor moves up by one (was 9).
+    val expenseListItemIndex = 8 - secondaryTilesRowOffset
     fun scrollToBreakdown() {
-        // Force-expand: this section is collapsed by default, so a tap that scrolls here
-        // (e.g. the Subscription tile) should also reveal its rows, not land on an empty header.
+        // The Subscription tile's tap now switches the month list into its By-Category view
+        // (where the breakdown lives) and scrolls to it, instead of landing on a standalone card.
+        viewMode = ExpenseViewMode.CATEGORY
         categoryBreakdownExpanded = true
-        coroutineScope.launch { listState.animateScrollToItem(breakdownItemIndex) }
+        coroutineScope.launch { listState.animateScrollToItem(expenseListItemIndex) }
     }
     fun scrollToExpenseList() {
         coroutineScope.launch { listState.animateScrollToItem(expenseListItemIndex) }
@@ -775,7 +781,7 @@ fun DashboardScreen(
             // card for a user with no subscription-tagged spend is just as pointless as the
             // Debts tile was, so both are gated the same way now. (hasSubscriptionSpend /
             // hasRecurringTemplates / hasSecondaryTilesRow are computed above, near
-            // breakdownItemIndex — the scroll-anchor math depends on this same condition.)
+            // secondaryTilesRowOffset — the scroll-anchor math depends on this same condition.)
             if (hasSecondaryTilesRow) {
                 item {
                     Row(
@@ -941,22 +947,9 @@ fun DashboardScreen(
                 }
             }
 
-            // ── item 5 ─────────────────────────────────────────────────────────
-            // Spending by Category — emoji squircle icons + coloured progress bars. Collapsed
-            // by default; scrollToBreakdown() force-expands it (see breakdownItemIndex comment
-            // near the top of this composable for the real ordinal position it targets).
-            item {
-                SpendingCategorySection(
-                    categoryTotals = categoryTotals,
-                    categories     = categories,
-                    totalThisMonth = totalThisMonth,
-                    currencySymbol = currencySymbol,
-                    onManageCategories = { showCategorySheet = true },
-                    expanded       = categoryBreakdownExpanded,
-                    onExpandToggle = { categoryBreakdownExpanded = !categoryBreakdownExpanded },
-                    modifier           = Modifier.fillMaxWidth()
-                )
-            }
+            // (The standalone "Spending by Category" card was removed from the home feed — its
+            // breakdown now renders inside the Expenses-This-Month section's "By Category" view,
+            // so the same card is reused only when the user actually filters by category.)
 
             // ── item 6 ─────────────────────────────────────────────────────────
             // Recent Transactions — last 5 expenses from this month.
@@ -1055,6 +1048,22 @@ fun DashboardScreen(
                 ExpenseViewModeToggle(current = viewMode, onSelect = { viewMode = it })
             }
 
+            // Spending-by-Category summary card — shown above the list in EVERY view mode
+            // (Day, Category, Grid, Calendar), so the coloured category breakdown (with its
+            // per-category badges/progress bars) is always visible regardless of the filter.
+            item {
+                SpendingCategorySection(
+                    categoryTotals = categoryTotals,
+                    categories     = categories,
+                    totalThisMonth = totalThisMonth,
+                    currencySymbol = currencySymbol,
+                    onManageCategories = { showCategorySheet = true },
+                    expanded       = categoryBreakdownExpanded,
+                    onExpandToggle = { categoryBreakdownExpanded = !categoryBreakdownExpanded },
+                    modifier       = Modifier.fillMaxWidth()
+                )
+            }
+
             // ── items 9+ ───────────────────────────────────────────────────────
             // Expense rows for the selected view mode.
             when (viewMode) {
@@ -1140,15 +1149,20 @@ fun DashboardScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
+                                        // Emoji squircle badge — matches the "Spending by
+                                        // Category" cards so each category group header reads
+                                        // the same way (badge + name) instead of a plain dot.
+                                        val badgeColor = category?.let { colorFromHex(it.colorHex) } ?: TextMuted
                                         Box(
                                             modifier = Modifier
-                                                .size(10.dp)
-                                                .background(
-                                                    color = category?.let { colorFromHex(it.colorHex) } ?: TextMuted,
-                                                    shape = CircleShape
-                                                )
-                                        )
-                                        Spacer(Modifier.width(8.dp))
+                                                .size(32.dp)
+                                                .clip(RoundedCornerShape(10.dp))
+                                                .background(badgeColor.copy(alpha = 0.12f)),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(text = categoryEmoji(category?.nameKey), fontSize = 16.sp)
+                                        }
+                                        Spacer(Modifier.width(10.dp))
                                         Text(
                                             text = category?.let { categoryDisplayName(it) } ?: "",
                                             style = MaterialTheme.typography.labelLarge,
@@ -1344,7 +1358,7 @@ fun DashboardScreen(
 
     if (showCategorySheet) {
         CategoryManageSheet(
-            categories = categories,
+            categories = expensePickerCategories,
             onDismiss = { showCategorySheet = false },
             onRename = { cat, name -> viewModel.renameCategory(cat, name) },
             onRecolor = { cat, hex -> viewModel.recolorCategory(cat, hex) },
@@ -1430,7 +1444,7 @@ fun DashboardScreen(
     if (showSmsReviewSheet) {
         SmsReviewSheet(
             items = pendingSmsExpenses,
-            categories = categories,
+            categories = expensePickerCategories,
             currencySymbol = currencySymbol,
             locale = locale,
             onDismiss = { showSmsReviewSheet = false },

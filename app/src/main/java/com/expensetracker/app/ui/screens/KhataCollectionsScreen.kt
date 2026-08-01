@@ -55,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -64,6 +65,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CurrencyLocaleMapper
+import com.expensetracker.app.util.SaudiBanks
 import com.expensetracker.app.data.KhataPartyEntity
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
 import com.expensetracker.app.ui.components.MoneyText
@@ -117,10 +119,17 @@ fun KhataCollectionsScreen(
     val theyOweParties  by khataViewModel.theyOweParties.collectAsState()
     val allEntries      by khataViewModel.allEntries.collectAsState()
 
+    val myIban          by expenseViewModel.myIban.collectAsState()
+    val myStcPay        by expenseViewModel.myStcPay.collectAsState()
     val whatsappNotInstalled = stringResource(R.string.khata_whatsapp_not_installed)
     val signatureTemplate    = stringResource(R.string.khata_reminder_signature)
     val reminderMsgTemplate  = stringResource(R.string.khata_reminder_msg_owe)
+    val ibanPayToTemplate    = stringResource(R.string.iban_pay_to)
+    val stcPayToTemplate     = stringResource(R.string.stc_pay_to)
+    val appInstallPitch      = stringResource(R.string.app_install_pitch)
     val doneTemplate         = stringResource(R.string.khata_bulk_reminder_done)
+    // Arabic bank name in an Arabic UI (see buildReminderMessage's IBAN line).
+    val ibanArabic = LocalConfiguration.current.locales[0].language == "ar"
 
     val agingRows = remember(theyOweParties, allEntries) {
         theyOweParties.mapNotNull { party ->
@@ -154,8 +163,18 @@ fun KhataCollectionsScreen(
         val signature = if (displayName.isNotBlank())
             "\n\n" + String.format(signatureTemplate, displayName)
         else ""
-        return String.format(reminderMsgTemplate, row.party.name, plainAmount) + signature +
-            "\n\n📲 play.google.com/store/apps/details?id=${context.packageName}"
+        // These are all THEY_OWE parties (collect flow), so include the user's IBAN for SAR —
+        // same as the single-party reminder on KhataDetailScreen.
+        val ibanLine = if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myIban.isNotBlank()) {
+            val bank = SaudiBanks.nameForIbanBody(myIban.removePrefix("SA"), ibanArabic)
+            val body = (if (bank != null) "🏛️ $bank\n" else "") + "*${SaudiBanks.formatGrouped(myIban)}*"
+            "\n\n" + String.format(ibanPayToTemplate, body)
+        } else ""
+        val stcLine = if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol) && myStcPay.isNotBlank())
+            "\n\n" + String.format(stcPayToTemplate, myStcPay) else ""
+        return String.format(reminderMsgTemplate, row.party.name, plainAmount) + ibanLine + stcLine + signature +
+            "\n\n━━━━━━━━━━\n" + appInstallPitch +
+            "\n👉 https://play.google.com/store/apps/details?id=${context.packageName}"
     }
 
     fun sendWhatsAppTo(row: AgingRow) {

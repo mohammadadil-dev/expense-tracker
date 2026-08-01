@@ -51,8 +51,9 @@ import androidx.compose.ui.unit.dp
 import com.expensetracker.app.R
 import com.expensetracker.app.data.CategoryEntity
 import com.expensetracker.app.data.ExpenseEntity
-import com.expensetracker.app.ui.components.AddEditExpenseSheet
+import com.expensetracker.app.ui.components.AddSubscriptionSheet
 import com.expensetracker.app.ui.components.AnimatedBlobBackground
+import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
@@ -62,6 +63,7 @@ import com.expensetracker.app.ui.theme.TextMuted
 import com.expensetracker.app.ui.theme.TextPrimary
 import com.expensetracker.app.util.DateUtils
 import com.expensetracker.app.util.Formatters
+import com.expensetracker.app.util.RecurringPeriod
 import com.expensetracker.app.util.categoryEmoji
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import java.time.LocalDate
@@ -84,7 +86,6 @@ fun SubscriptionsScreen(
 ) {
     val templates by viewModel.recurringTemplates.collectAsState()
     val categories by viewModel.categories.collectAsState()
-    val paymentAccounts by viewModel.paymentAccounts.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
     val locale = LocalConfiguration.current.locales[0]
 
@@ -92,7 +93,11 @@ fun SubscriptionsScreen(
     var editingTemplate by remember { mutableStateOf<ExpenseEntity?>(null) }
     var pendingDelete by remember { mutableStateOf<ExpenseEntity?>(null) }
 
-    val monthlyTotal = remember(templates) { templates.sumOf { it.amount } }
+    // Monthly-equivalent so the header stays meaningful when cycles are mixed: a yearly plan
+    // contributes amount/12, a quarterly one amount/3, etc.
+    val monthlyTotal = remember(templates) {
+        templates.sumOf { it.amount / RecurringPeriod.months(it.recurringPeriod) }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         AnimatedBlobBackground(
@@ -169,17 +174,26 @@ fun SubscriptionsScreen(
     }
 
     if (showAddSheet) {
-        AddEditExpenseSheet(
-            categories = categories.filter { it.nameKey != "cat_debt_payments" },
+        // Subscriptions always book to the dedicated "Subscriptions" category so the dashboard's
+        // subscription-cost heuristic keeps working; fall back to the first category only in the
+        // (unexpected) event the seed category is missing.
+        val subscriptionsCategoryId = categories.firstOrNull { it.nameKey == "cat_subscriptions" }?.id
+            ?: categories.firstOrNull()?.id
+        AddSubscriptionSheet(
             existing = editingTemplate,
-            defaultDate = DateUtils.todayIso(),
-            defaultRecurring = true,
-            accounts = paymentAccounts,
+            currencySymbol = currencySymbol,
             onDismiss = { showAddSheet = false; editingTemplate = null },
-            onSave = { id, catId, desc, amt, date, recurring, memberId, recurringDay, accountId ->
-                viewModel.saveExpense(id, catId, desc, amt, date, recurring, recurringDay, memberId, accountId) {
-                    showAddSheet = false
-                    editingTemplate = null
+            onSave = { id, name, amt, billingDay, period ->
+                val catId = subscriptionsCategoryId
+                val date = editingTemplate?.date ?: DateUtils.todayIso()
+                if (catId != null) {
+                    viewModel.saveExpense(
+                        id, catId, name, amt, date, true, billingDay, null, null,
+                        recurringPeriod = period
+                    ) {
+                        showAddSheet = false
+                        editingTemplate = null
+                    }
                 }
             }
         )
@@ -214,8 +228,8 @@ private fun SubscriptionsSummaryHeader(
             style = MaterialTheme.typography.labelLarge,
             color = TextMuted
         )
-        Text(
-            text = Formatters.money(monthlyTotal, currencySymbol),
+        MoneyText(
+            formatted = Formatters.money(monthlyTotal, currencySymbol),
             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
             color = TextPrimary
         )
@@ -264,18 +278,31 @@ private fun SubscriptionListItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    text = stringResource(
+                // Monthly plans show the concrete next-renewal date; longer cycles show the
+                // cadence label instead (the month-based date estimate only holds for monthly).
+                val secondaryText = if (RecurringPeriod.months(template.recurringPeriod) == 1) {
+                    stringResource(
                         R.string.subscriptions_next_renewal,
                         DateUtils.formatExpenseDate(nextRenewalIso, locale)
-                    ),
+                    )
+                } else {
+                    val cycleRes = when (template.recurringPeriod) {
+                        RecurringPeriod.QUARTERLY -> R.string.subscription_cycle_quarterly
+                        RecurringPeriod.HALF_YEARLY -> R.string.subscription_cycle_halfyearly
+                        RecurringPeriod.YEARLY -> R.string.subscription_cycle_yearly
+                        else -> R.string.subscription_cycle_monthly
+                    }
+                    stringResource(cycleRes)
+                }
+                Text(
+                    text = secondaryText,
                     style = MaterialTheme.typography.bodySmall,
                     color = TextMuted
                 )
             }
             Spacer(Modifier.width(8.dp))
-            Text(
-                text = Formatters.money(template.amount, currencySymbol),
+            MoneyText(
+                formatted = Formatters.money(template.amount, currencySymbol),
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 color = TextPrimary
             )

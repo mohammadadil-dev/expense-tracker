@@ -36,4 +36,8 @@ interface SplitExpenseDao {
 
     @Query("DELETE FROM split_expenses WHERE groupId = :groupId")
     suspend fun deleteAllForGroup(groupId: Long)
+
+    /** Rescales every split expense total when the user converts currency. */
+    @Query("UPDATE split_expenses SET amount = amount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

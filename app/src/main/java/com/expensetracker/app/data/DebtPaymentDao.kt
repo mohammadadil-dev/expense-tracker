@@ -33,4 +33,8 @@ interface DebtPaymentDao {
 
     @Query("DELETE FROM debt_payments")
     suspend fun deleteAll()
+
+    /** Rescales every debt payment when the user converts currency. */
+    @Query("UPDATE debt_payments SET amount = amount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

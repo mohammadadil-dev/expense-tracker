@@ -1,5 +1,6 @@
 package com.expensetracker.app.data
 
+import androidx.room.withTransaction
 import com.expensetracker.app.util.DateUtils
 import kotlinx.coroutines.flow.Flow
 
@@ -40,9 +41,9 @@ class ExpenseRepository(private val db: AppDatabase) {
     /** Total number of expenses ever logged — used only to time the in-app review prompt. */
     suspend fun countExpenses(): Int = db.expenseDao().count()
 
-    suspend fun seedDefaultCategoriesIfNeeded() {
+    suspend fun seedDefaultCategoriesIfNeeded(isIndiaMarket: Boolean) {
         if (db.categoryDao().count() == 0) {
-            defaultCategorySeed().forEach { db.categoryDao().insert(it) }
+            defaultCategorySeed(isIndiaMarket).forEach { db.categoryDao().insert(it) }
         }
     }
 
@@ -59,7 +60,10 @@ class ExpenseRepository(private val db: AppDatabase) {
         }
     }
 
-    private fun defaultCategorySeed(): List<CategoryEntity> = listOf(
+    // `cat_farming` is India-market-only — a Farming category reads as out of place for a Saudi
+    // (or urban) user, so it's seeded solely when the detected market is India (INR). Everything
+    // else is universal. listOfNotNull drops the farming entry cleanly when it's not applicable.
+    private fun defaultCategorySeed(isIndiaMarket: Boolean): List<CategoryEntity> = listOfNotNull(
         CategoryEntity(nameKey = "cat_housing", colorHex = "#6366F1", sortOrder = 0),
         CategoryEntity(nameKey = "cat_food", colorHex = "#F59E0B", sortOrder = 1),
         CategoryEntity(nameKey = "cat_transport", colorHex = "#10B981", sortOrder = 2),
@@ -74,9 +78,10 @@ class ExpenseRepository(private val db: AppDatabase) {
         CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
         CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
         CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
-        CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+        if (isIndiaMarket) CategoryEntity(nameKey = "cat_farming", colorHex = "#22C55E", sortOrder = 14) else null,
         CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
-        CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
+        CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16),
+        CategoryEntity(nameKey = "cat_charity",         colorHex = "#059669", sortOrder = 17)
     )
 
     /**
@@ -84,15 +89,18 @@ class ExpenseRepository(private val db: AppDatabase) {
      * app launch. New categories added in a later release appear automatically for existing
      * users without wiping their data.
      */
-    suspend fun ensureNewBuiltinCategories() {
+    suspend fun ensureNewBuiltinCategories(isIndiaMarket: Boolean) {
         val existing = db.categoryDao().getAllOnce().mapNotNull { it.nameKey }.toSet()
-        val toAdd = listOf(
+        // Farming stays India-only here too, so a Saudi user never has it re-added on launch.
+        // This only ever ADDs missing built-ins; an India user who already has farming keeps it.
+        val toAdd = listOfNotNull(
             CategoryEntity(nameKey = "cat_mobile_recharge", colorHex = "#06B6D4", sortOrder = 11),
             CategoryEntity(nameKey = "cat_electricity",     colorHex = "#EAB308", sortOrder = 12),
             CategoryEntity(nameKey = "cat_fuel",            colorHex = "#64748B", sortOrder = 13),
-            CategoryEntity(nameKey = "cat_farming",         colorHex = "#22C55E", sortOrder = 14),
+            if (isIndiaMarket) CategoryEntity(nameKey = "cat_farming", colorHex = "#22C55E", sortOrder = 14) else null,
             CategoryEntity(nameKey = "cat_khata",           colorHex = "#7C3AED", sortOrder = 15),
-            CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16)
+            CategoryEntity(nameKey = "cat_education",       colorHex = "#0EA5E9", sortOrder = 16),
+            CategoryEntity(nameKey = "cat_charity",         colorHex = "#059669", sortOrder = 17)
         )
         toAdd.forEach { cat ->
             if (cat.nameKey !in existing) db.categoryDao().insert(cat)
@@ -153,8 +161,12 @@ class ExpenseRepository(private val db: AppDatabase) {
         val templates = db.expenseDao().recurringTemplatesOnce()
 
         for (template in templates) {
-            // Start from the month after the template was created
-            var month = DateUtils.shiftMonthKey(template.monthKey, 1)
+            // Step by the template's cadence (1/3/6/12 months) instead of always monthly, so a
+            // quarterly/yearly subscription only generates a copy when it actually renews.
+            val intervalMonths = com.expensetracker.app.util.RecurringPeriod
+                .months(template.recurringPeriod).toLong()
+            // Start from the first renewal after the template was created.
+            var month = DateUtils.shiftMonthKey(template.monthKey, intervalMonths)
             while (month <= currentMonth) {
                 val alreadyExists =
                     db.expenseDao().countRecurringInstance(template.id, month) > 0
@@ -174,7 +186,7 @@ class ExpenseRepository(private val db: AppDatabase) {
                         )
                     )
                 }
-                month = DateUtils.shiftMonthKey(month, 1)
+                month = DateUtils.shiftMonthKey(month, intervalMonths)
             }
         }
     }
@@ -192,7 +204,28 @@ class ExpenseRepository(private val db: AppDatabase) {
 
     /** Multiplies every stored expense amount by [rate] — used when the user switches
      * currency and supplies a manual exchange rate. Purely local arithmetic, no network call. */
-    suspend fun convertAllAmounts(rate: Double) = db.expenseDao().scaleAllAmounts(rate)
+    /**
+     * Rescales EVERY monetary value in the database by [rate] when the user converts currency.
+     * Runs in a single transaction so the whole app's data flips atomically — previously only
+     * the expenses table was scaled, leaving budgets, income/salary, savings goals, debts, the
+     * Khata ledger, Splits and Committee amounts stranded in the old currency. (Settings-stored
+     * values like the monthly salary are scaled by the caller — see ExpenseViewModel.)
+     */
+    suspend fun convertAllAmounts(rate: Double) = db.withTransaction {
+        db.expenseDao().scaleAllAmounts(rate)
+        db.budgetDao().scaleAllAmounts(rate)
+        db.goalDao().scaleAllAmounts(rate)
+        db.incomeDao().scaleAllAmounts(rate)
+        db.debtDao().scaleAllAmounts(rate)
+        db.debtPaymentDao().scaleAllAmounts(rate)
+        db.khataDao().scaleAllEntryAmounts(rate)
+        db.khataDao().scaleAllCreditLimits(rate)
+        db.splitExpenseDao().scaleAllAmounts(rate)
+        db.splitExpenseShareDao().scaleAllShares(rate)
+        db.splitExpenseItemDao().scaleAllItemAmounts(rate)
+        db.jamiyaDao().scaleAllContributionAmounts(rate)
+        db.jamiyaDao().scaleAllContributions(rate)
+    }
 
     suspend fun addCategory(name: String, colorHex: String): Long {
         val sortOrder = db.categoryDao().count()
@@ -266,7 +299,7 @@ class ExpenseRepository(private val db: AppDatabase) {
         }
     }
 
-    suspend fun resetAllData() {
+    suspend fun resetAllData(isIndiaMarket: Boolean) {
         db.expenseDao().deleteAll()
         db.categoryDao().deleteAll()
         db.pendingSmsExpenseDao().deleteAll()
@@ -277,7 +310,7 @@ class ExpenseRepository(private val db: AppDatabase) {
         db.paymentAccountDao().deleteAll()
         // Goals are personal commitments — deliberately NOT wiped on data reset so users
         // don't lose their savings targets when clearing transaction history.
-        seedDefaultCategoriesIfNeeded()
+        seedDefaultCategoriesIfNeeded(isIndiaMarket)
         seedDefaultAccountsIfNeeded()
     }
 

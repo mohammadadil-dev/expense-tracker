@@ -41,4 +41,8 @@ interface IncomeDao {
 
     @Query("DELETE FROM income_entries")
     suspend fun deleteAll()
+
+    /** Rescales every income/salary entry when the user converts currency. */
+    @Query("UPDATE income_entries SET amount = amount * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

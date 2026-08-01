@@ -28,4 +28,9 @@ interface DebtDao {
 
     @Query("DELETE FROM debts")
     suspend fun deleteAll()
+
+    /** Rescales loan principal and EMI/minimum payment on currency conversion. The interest
+     *  RATE is a percentage, so it is deliberately left untouched. */
+    @Query("UPDATE debts SET principal = principal * :rate, minimumPayment = minimumPayment * :rate")
+    suspend fun scaleAllAmounts(rate: Double)
 }

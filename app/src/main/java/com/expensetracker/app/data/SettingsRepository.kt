@@ -42,6 +42,20 @@ class SettingsRepository(private val context: Context) {
         get() = prefs.getString(KEY_MY_UPI_ID, "") ?: ""
         set(value) = prefs.edit().putString(KEY_MY_UPI_ID, value).apply()
 
+    /** The user's own bank IBAN (KSA/GCC — Saudi IBANs are "SA" + 22 chars). The Saudi analog
+     * of [myUpiId]: included in Khata/Split reminders when someone owes the user money, so they
+     * can bank-transfer. Gated on the Saudi Riyal currency in the UI. Stored locally only. */
+    var myIban: String
+        get() = prefs.getString(KEY_MY_IBAN, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_MY_IBAN, value).apply()
+
+    /** The user's STC Pay mobile number (KSA mobile wallet). Like [myIban], it's included in
+     * Khata/Split reminders when someone owes the user money, so they can send via STC Pay.
+     * Gated on the Saudi Riyal currency in the UI. Stored locally only. */
+    var myStcPay: String
+        get() = prefs.getString(KEY_MY_STC_PAY, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_MY_STC_PAY, value).apply()
+
     // ── Business profile (optional) ───────────────────────────────────────────
     // Purely cosmetic — stamped onto exported PDF reports (Ledger statement, Split report,
     // Dashboard monthly report) in place of the generic app name, so a shop owner's export
@@ -230,6 +244,8 @@ class SettingsRepository(private val context: Context) {
         private const val KEY_CURRENCY_SETUP_DONE = "currency_setup_done"
         private const val KEY_DISPLAY_NAME = "display_name"
         private const val KEY_MY_UPI_ID = "my_upi_id"
+        private const val KEY_MY_IBAN = "my_iban"
+        private const val KEY_MY_STC_PAY = "my_stc_pay"
         private const val KEY_BUSINESS_NAME = "business_name"
         private const val KEY_BUSINESS_ADDRESS = "business_address"
         private const val KEY_BUSINESS_PHONE = "business_phone"

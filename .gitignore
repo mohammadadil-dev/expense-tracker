@@ -2,6 +2,8 @@
 build/
 app/build/
 .gradle/
+.kotlin/
+*.hprof
 local.properties
 
 # Android Studio / IntelliJ
@@ -22,3 +24,4 @@ gradle/wrapper/gradle-wrapper.jar
 # NDK
 .externalNativeBuild/
 .cxx/
+app/release/

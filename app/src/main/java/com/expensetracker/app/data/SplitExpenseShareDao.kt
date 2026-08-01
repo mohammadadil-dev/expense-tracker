@@ -35,4 +35,8 @@ interface SplitExpenseShareDao {
         WHERE expenseId IN (SELECT id FROM split_expenses WHERE groupId = :groupId)
     """)
     suspend fun deleteAllForGroup(groupId: Long)
+
+    /** Rescales every per-member share when the user converts currency. */
+    @Query("UPDATE split_expense_shares SET shareAmount = shareAmount * :rate")
+    suspend fun scaleAllShares(rate: Double)
 }

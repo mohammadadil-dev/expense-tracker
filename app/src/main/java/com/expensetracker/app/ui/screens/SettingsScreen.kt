@@ -47,6 +47,8 @@ import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 // import androidx.compose.material.icons.filled.FamilyRestroom  // reserved for Family Mode re-enable
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Info
@@ -56,7 +58,10 @@ import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Sms
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Store
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.CloudUpload
@@ -114,6 +119,8 @@ import com.expensetracker.app.ui.components.rememberIsScrollingUp
 import com.expensetracker.app.ui.components.MoneyText
 import com.expensetracker.app.ui.theme.AccentIndigo
 import com.expensetracker.app.ui.theme.AccentIndigoLight
+import androidx.compose.ui.platform.LocalConfiguration
+import com.expensetracker.app.util.SaudiBanks
 import com.expensetracker.app.ui.theme.CardWhite
 import com.expensetracker.app.ui.theme.DangerRed
 import com.expensetracker.app.ui.theme.NeonCyan
@@ -190,6 +197,8 @@ fun SettingsScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+    val clipboard = LocalClipboardManager.current
+    val copiedLabel = stringResource(R.string.copied)
     val clipboardManager = LocalClipboardManager.current
     val languagePref by viewModel.languagePref.collectAsState()
     val currencySymbol by viewModel.currencySymbol.collectAsState()
@@ -206,8 +215,22 @@ fun SettingsScreen(
     var nameInput by remember(displayName) { mutableStateOf(displayName) }
     val myUpiId by viewModel.myUpiId.collectAsState()
     var upiInput by remember(myUpiId) { mutableStateOf(myUpiId) }
+    val myIban by viewModel.myIban.collectAsState()
+    // "SA" is shown as a frozen, uneditable prefix on the field; this state holds ONLY the 22
+    // characters after it, so the prefix can never be deleted and length is naturally bounded.
+    var ibanInput by remember(myIban) { mutableStateOf(myIban.removePrefix("SA")) }
+    // IBAN section mode: show the input+Save while editing (or when nothing saved), else show the
+    // saved IBAN with Edit/Remove. Re-derives whenever the saved value changes.
+    var ibanEditing by remember(myIban) { mutableStateOf(myIban.isBlank()) }
+    val myStcPay by viewModel.myStcPay.collectAsState()
+    // "+966" is shown as a frozen prefix; this state holds only the local part (no country code,
+    // no trunk 0), so stored "966510375230" edits back to "510375230".
+    var stcInput by remember(myStcPay) { mutableStateOf(myStcPay.removePrefix("966").trimStart('0')) }
+    var stcEditing by remember(myStcPay) { mutableStateOf(myStcPay.isBlank()) }
     val businessName by viewModel.businessName.collectAsState()
     var businessNameInput by remember(businessName) { mutableStateOf(businessName) }
+    // Business Profile is collapsed by default (shopkeeper feature, India-only) to keep Settings tidy.
+    var businessProfileExpanded by remember { mutableStateOf(false) }
     val businessAddress by viewModel.businessAddress.collectAsState()
     var businessAddressInput by remember(businessAddress) { mutableStateOf(businessAddress) }
     val businessPhone by viewModel.businessPhone.collectAsState()
@@ -441,60 +464,79 @@ fun SettingsScreen(
             // Dashboard monthly report) in place of the app's own name/branding, so a shop
             // owner's export reads like it's from their business. All blank by default;
             // PdfExporter call sites fall back to today's behavior when businessName is blank.
-            AnimatedSection(visible = contentVisible, delayMillis = 11) {
-                SettingsSectionHeader(icon = Icons.Filled.Store, title = stringResource(R.string.settings_business_profile_title))
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.settings_business_profile_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.height(10.dp))
-                OutlinedTextField(
-                    value = businessNameInput,
-                    onValueChange = { businessNameInput = it },
-                    label = { Text(stringResource(R.string.business_name_label)) },
-                    placeholder = { Text(stringResource(R.string.business_name_hint)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = businessAddressInput,
-                    onValueChange = { businessAddressInput = it },
-                    label = { Text(stringResource(R.string.business_address_label)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = businessPhoneInput,
-                    onValueChange = { businessPhoneInput = it },
-                    label = { Text(stringResource(R.string.business_phone_label)) },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(Modifier.height(10.dp))
-                val businessProfileSavedLabel = stringResource(R.string.settings_business_profile_saved)
-                OutlinedButton(
-                    onClick = {
-                        viewModel.setBusinessName(businessNameInput.trim())
-                        viewModel.setBusinessAddress(businessAddressInput.trim())
-                        viewModel.setBusinessPhone(businessPhoneInput.trim())
-                        // Previously silent — tapping Save gave no feedback at all, so there was
-                        // no way to tell it had actually done anything.
-                        Toast.makeText(context, businessProfileSavedLabel, Toast.LENGTH_SHORT).show()
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.width(6.dp))
-                    Text(stringResource(R.string.save))
+            // Shopkeeper feature (stamped on PDF exports) — India-market only, and collapsed by
+            // default so it doesn't clutter Settings for the many users who don't run a shop.
+            if (CurrencyLocaleMapper.isInrSymbol(currencySymbol)) {
+                AnimatedSection(visible = contentVisible, delayMillis = 11) {
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().clickable { businessProfileExpanded = !businessProfileExpanded },
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            SettingsSectionHeader(icon = Icons.Filled.Store, title = stringResource(R.string.settings_business_profile_title))
+                            Icon(
+                                if (businessProfileExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        AnimatedVisibility(visible = businessProfileExpanded) {
+                            Column {
+                                Spacer(Modifier.height(8.dp))
+                                Text(
+                                    text = stringResource(R.string.settings_business_profile_hint),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(Modifier.height(10.dp))
+                                OutlinedTextField(
+                                    value = businessNameInput,
+                                    onValueChange = { businessNameInput = it },
+                                    label = { Text(stringResource(R.string.business_name_label)) },
+                                    placeholder = { Text(stringResource(R.string.business_name_hint)) },
+                                    singleLine = true,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Spacer(Modifier.height(8.dp))
+                                OutlinedTextField(
+                                    value = businessAddressInput,
+                                    onValueChange = { businessAddressInput = it },
+                                    label = { Text(stringResource(R.string.business_address_label)) },
+                                    singleLine = true,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Spacer(Modifier.height(8.dp))
+                                OutlinedTextField(
+                                    value = businessPhoneInput,
+                                    onValueChange = { businessPhoneInput = it },
+                                    label = { Text(stringResource(R.string.business_phone_label)) },
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Spacer(Modifier.height(10.dp))
+                                val businessProfileSavedLabel = stringResource(R.string.settings_business_profile_saved)
+                                OutlinedButton(
+                                    onClick = {
+                                        viewModel.setBusinessName(businessNameInput.trim())
+                                        viewModel.setBusinessAddress(businessAddressInput.trim())
+                                        viewModel.setBusinessPhone(businessPhoneInput.trim())
+                                        Toast.makeText(context, businessProfileSavedLabel, Toast.LENGTH_SHORT).show()
+                                    },
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(6.dp))
+                                    Text(stringResource(R.string.save))
+                                }
+                            }
+                        }
+                    }
                 }
-            }
 
-            Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(24.dp))
+            }
 
             // India-only: UPI only works with Indian bank accounts, so this section (and the
             // "Request via UPI" flow it powers on Khata entries) is hidden for every other
@@ -527,6 +569,218 @@ fun SettingsScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
+                }
+
+                Spacer(Modifier.height(24.dp))
+            }
+
+            // Saudi/GCC only: the IBAN analog of the UPI section above — shown for the Saudi
+            // Riyal so a user can store the IBAN that gets shared in Khata/Split reminders.
+            if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) {
+                AnimatedSection(visible = contentVisible, delayMillis = 22) {
+                    Column {
+                        SettingsSectionHeader(icon = Icons.Filled.AccountBalance, title = stringResource(R.string.iban_section_title))
+                        Spacer(Modifier.height(8.dp))
+                        // Arabic name in an Arabic UI, else English — used both while typing and
+                        // in the saved view.
+                        val ibanArabic = LocalConfiguration.current.locales[0].language == "ar"
+                        val ibanUpdatedLabel = stringResource(R.string.iban_updated)
+                        val ibanRemovedLabel = stringResource(R.string.iban_removed)
+
+                        if (myIban.isNotBlank() && !ibanEditing) {
+                            // Saved view: IBAN + detected bank on the left, with compact pencil /
+                            // trash icon actions on the right — no text labels, so it reads clean.
+                            val savedBank = SaudiBanks.nameForIbanBody(myIban.removePrefix("SA"), ibanArabic)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = myIban,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                    if (savedBank != null) {
+                                        Text(
+                                            text = savedBank,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = AccentIndigo
+                                        )
+                                    }
+                                }
+                                IconButton(onClick = {
+                                    clipboard.setText(AnnotatedString(myIban))
+                                    Toast.makeText(context, copiedLabel, Toast.LENGTH_SHORT).show()
+                                }) {
+                                    Icon(
+                                        Icons.Filled.ContentCopy,
+                                        contentDescription = stringResource(R.string.copied),
+                                        tint = AccentIndigo,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                                IconButton(onClick = { ibanEditing = true }) {
+                                    Icon(
+                                        Icons.Filled.Edit,
+                                        contentDescription = stringResource(R.string.edit),
+                                        tint = AccentIndigo
+                                    )
+                                }
+                                IconButton(onClick = {
+                                    viewModel.setMyIban("")
+                                    ibanInput = ""
+                                    ibanEditing = true
+                                    Toast.makeText(context, ibanRemovedLabel, Toast.LENGTH_SHORT).show()
+                                }) {
+                                    Icon(
+                                        Icons.Filled.Delete,
+                                        contentDescription = stringResource(R.string.remove),
+                                        tint = DangerRed
+                                    )
+                                }
+                            }
+                        } else {
+                            // Editor: a critical-accuracy note, the SA-frozen field, then Save.
+                            Text(
+                                text = stringResource(R.string.iban_note),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            val ibanComplete = ibanInput.length == 22
+                            val ibanValid = ibanInput.isBlank() || ibanComplete
+                            val detectedBank = if (ibanComplete)
+                                SaudiBanks.nameForIbanBody(ibanInput, ibanArabic) else null
+                            OutlinedTextField(
+                                value = ibanInput,
+                                onValueChange = { raw ->
+                                    // Keep only alphanumerics, uppercase, cap at 22 (SA + 22 = the
+                                    // full 24-char Saudi IBAN) so the user can't over-type.
+                                    ibanInput = raw.uppercase().filter { it.isLetterOrDigit() }.take(22)
+                                },
+                                // Frozen country prefix — rendered by the field, not part of the
+                                // editable text, so "SA" can never be removed.
+                                prefix = { Text("SA") },
+                                label = { Text(stringResource(R.string.iban_label)) },
+                                placeholder = { Text(stringResource(R.string.iban_hint)) },
+                                singleLine = true,
+                                isError = !ibanValid,
+                                supportingText = if (!ibanValid) {
+                                    { Text(stringResource(R.string.iban_invalid), color = DangerRed) }
+                                } else if (detectedBank != null) {
+                                    { Text(detectedBank!!, color = AccentIndigo) }
+                                } else null,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            OutlinedButton(
+                                enabled = ibanComplete,
+                                onClick = {
+                                    viewModel.setMyIban("SA$ibanInput")
+                                    ibanEditing = false
+                                    Toast.makeText(context, ibanUpdatedLabel, Toast.LENGTH_SHORT).show()
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.save))
+                            }
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(24.dp))
+            }
+
+            // Saudi/GCC only: STC Pay mobile-wallet number — a second sharable payment method
+            // alongside the IBAN. Reminders include whichever of the two the user has saved, so
+            // filling one, the other, or both is how the user picks what to share.
+            if (CurrencyLocaleMapper.isSaudiRiyalSymbol(currencySymbol)) {
+                AnimatedSection(visible = contentVisible, delayMillis = 22) {
+                    Column {
+                        SettingsSectionHeader(icon = Icons.Filled.Smartphone, title = stringResource(R.string.stc_section_title))
+                        Spacer(Modifier.height(8.dp))
+                        val stcUpdatedLabel = stringResource(R.string.stc_updated)
+                        val stcRemovedLabel = stringResource(R.string.stc_removed)
+
+                        if (myStcPay.isNotBlank() && !stcEditing) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "🇸🇦 +966 " + myStcPay.removePrefix("966").trimStart('0'),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                IconButton(onClick = {
+                                    clipboard.setText(AnnotatedString(myStcPay))
+                                    Toast.makeText(context, copiedLabel, Toast.LENGTH_SHORT).show()
+                                }) {
+                                    Icon(
+                                        Icons.Filled.ContentCopy,
+                                        contentDescription = stringResource(R.string.copied),
+                                        tint = AccentIndigo,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+                                IconButton(onClick = { stcEditing = true }) {
+                                    Icon(
+                                        Icons.Filled.Edit,
+                                        contentDescription = stringResource(R.string.edit),
+                                        tint = AccentIndigo
+                                    )
+                                }
+                                IconButton(onClick = {
+                                    viewModel.setMyStcPay("")
+                                    stcInput = ""
+                                    stcEditing = true
+                                    Toast.makeText(context, stcRemovedLabel, Toast.LENGTH_SHORT).show()
+                                }) {
+                                    Icon(
+                                        Icons.Filled.Delete,
+                                        contentDescription = stringResource(R.string.remove),
+                                        tint = DangerRed
+                                    )
+                                }
+                            }
+                        } else {
+                            Text(
+                                text = stringResource(R.string.stc_note),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            OutlinedTextField(
+                                value = stcInput,
+                                onValueChange = { raw ->
+                                    // Keep digits only; drop a pasted 966 country code and any
+                                    // leading trunk 0 so the field holds just the local number.
+                                    var d = raw.filter { it.isDigit() }
+                                    if (d.startsWith("966")) d = d.removePrefix("966")
+                                    stcInput = d.trimStart('0').take(10)
+                                },
+                                // Frozen Saudi country code — rendered by the field, not editable.
+                                prefix = { Text("🇸🇦 +966 ") },
+                                label = { Text(stringResource(R.string.stc_label)) },
+                                placeholder = { Text(stringResource(R.string.stc_hint)) },
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            Spacer(Modifier.height(10.dp))
+                            OutlinedButton(
+                                enabled = stcInput.isNotBlank(),
+                                onClick = {
+                                    viewModel.setMyStcPay("966" + stcInput.trim())
+                                    stcEditing = false
+                                    Toast.makeText(context, stcUpdatedLabel, Toast.LENGTH_SHORT).show()
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.save))
+                            }
+                        }
+                    }
                 }
 
                 Spacer(Modifier.height(24.dp))

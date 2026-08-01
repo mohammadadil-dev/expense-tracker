@@ -61,4 +61,8 @@ interface SplitExpenseItemDao {
         WHERE expenseId IN (SELECT id FROM split_expenses WHERE groupId = :groupId)
     """)
     suspend fun deleteAllItemsForGroup(groupId: Long)
+
+    /** Rescales every itemized line amount when the user converts currency. */
+    @Query("UPDATE split_expense_items SET amount = amount * :rate")
+    suspend fun scaleAllItemAmounts(rate: Double)
 }
